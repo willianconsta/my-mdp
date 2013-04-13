@@ -1,0 +1,43 @@
+package mymdp.util;
+
+import static com.google.common.base.Objects.equal;
+import static java.util.Objects.hash;
+
+public final class Trio<F, S, T> {
+    public final F first;
+    public final S second;
+    public final T third;
+
+    private Trio(final F first, final S second, final T third) {
+	this.first = first;
+	this.second = second;
+	this.third = third;
+    }
+
+    public static <F, S, T> Trio<F, S, T> newTrio(final F first,
+	    final S second, final T third) {
+	return new Trio<F, S, T>(first, second, third);
+    }
+
+    @Override
+    public int hashCode() {
+	return hash(first, second, third);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+	if (obj == null || !(obj instanceof Trio<?, ?, ?>)) {
+	    return false;
+	}
+	@SuppressWarnings("unchecked")
+	final Trio<F, S, T> other = (Trio<F, S, T>) obj;
+	return equal(first, other.first) && equal(second, other.second)
+		&& equal(third, other.third);
+    }
+
+    @Override
+    public String toString() {
+	return "Trio:(" + String.valueOf(first) + "," + String.valueOf(second)
+		+ "," + String.valueOf(third) + ")";
+    }
+}
