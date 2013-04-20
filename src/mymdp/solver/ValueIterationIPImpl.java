@@ -7,7 +7,11 @@ import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class ValueIterationIPImpl implements ValueIterationIP {
+    private static final Logger log = LogManager.getLogger(ValueIterationIPImpl.class);
 
     @Override
     public UtilityFunction solve(final MDPIP mdpip, final double maxError) {
@@ -28,7 +32,7 @@ public class ValueIterationIPImpl implements ValueIterationIP {
 	for (final State state : mdpip.getStates()) {
 	    final double oldUtility = oldFunction.getUtility(state);
 	    final double actualUtility = calculateUtilityIP(mdpip, state, oldFunction);
-	    System.out.println("Value of state " + state + " = " + actualUtility);
+	    log.trace("Value of state " + state + " = " + actualUtility);
 	    actualFunction.updateUtility(state, actualUtility);
 
 	    if (abs(actualUtility - oldUtility) > maxVariation) {

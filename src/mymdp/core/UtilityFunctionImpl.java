@@ -56,4 +56,9 @@ public class UtilityFunctionImpl implements UtilityFunction {
 	}
 	return utilities.equals(((UtilityFunctionImpl) arg0).utilities);
     }
+
+    @Override
+    public String toString() {
+	return utilities.toString();
+    }
 }
