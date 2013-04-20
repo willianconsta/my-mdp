@@ -1,4 +1,4 @@
-package mymdp.tests;
+package mymdp.core;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static mymdp.util.Pair.newPair;
@@ -8,16 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import mymdp.core.Action;
-import mymdp.core.MDPIP;
-import mymdp.core.Policy;
-import mymdp.core.State;
-import mymdp.core.UtilityFunction;
 import mymdp.solver.ModifiedPolicyEvaluatorIP;
 import mymdp.solver.PolicyIterationIPImpl;
+import mymdp.solver.SolveCaller;
 import mymdp.solver.ValueIterationIPImpl;
 import mymdp.util.Pair;
-import mymdp.util.SolveCaller;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,7 +36,6 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 
     @Test
     public void testPolicy() {
-	final double DELTA = 0.0001;
 	final Policy result = new PolicyIterationIPImpl(new ModifiedPolicyEvaluatorIP(10)).solve(createProblem());
 	System.out.println(result);
     }

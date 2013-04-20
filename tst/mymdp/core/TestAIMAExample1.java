@@ -1,4 +1,4 @@
-package mymdp.tests;
+package mymdp.core;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static java.lang.Math.max;

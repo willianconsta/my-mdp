@@ -1,4 +1,4 @@
-package mymdp.util;
+package mymdp.solver;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
