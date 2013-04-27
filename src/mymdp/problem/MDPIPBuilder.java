@@ -35,16 +35,21 @@ public class MDPIPBuilder {
 	}
 
 	@Override
+	public String getName() {
+	    return name;
+	}
+
+	@Override
 	public int hashCode() {
 	    return name.hashCode();
 	}
 
 	@Override
 	public boolean equals(final Object obj) {
-	    if (!(obj instanceof StateImpl)) {
+	    if (!(obj instanceof State)) {
 		return false;
 	    }
-	    return name.equals(((StateImpl) obj).name);
+	    return name.equals(((State) obj).getName());
 	}
 
 	@Override
@@ -110,7 +115,7 @@ public class MDPIPBuilder {
 
     public MDPIPBuilder actions(final String actionName, final Set<String[]> transitionDefs) {
 	final Action action = new ActionImpl(actionName);
-	String sumOne = "0";
+	final Map<State, String> sumOnePerState = new HashMap<>();
 	for (final String[] transitionDef : transitionDefs) {
 	    final State state1 = checkNotNull(states.get(transitionDef[0]));
 	    ((ActionImpl) action).appliableStates.add(state1);
@@ -130,12 +135,25 @@ public class MDPIPBuilder {
 
 	    final String var = "p" + i++;
 	    map.put(state2, checkNotNull(var));
-	    sumOne += "+" + var;
-	    restrictions.add(var + " >= " + transitionDef[2]);
-	    restrictions.add(var + " <= " + transitionDef[3]);
+	    String restrOne = sumOnePerState.get(state1);
+	    if (restrOne != null) {
+		restrOne += "+";
+	    } else {
+		restrOne = "";
+	    }
+	    restrOne += var;
+	    sumOnePerState.put(state1, restrOne);
+	    if (transitionDef[2].equals(transitionDef[3])) {
+		restrictions.add(var + " = " + transitionDef[2]);
+	    } else {
+		restrictions.add(var + " >= " + transitionDef[2]);
+		restrictions.add(var + " <= " + transitionDef[3]);
+	    }
 	    vars.put(Trio.newTrio(state1, action, state2), var);
 	}
-	restrictions.add(sumOne + "=1");
+	for (final String sumOne : sumOnePerState.values()) {
+	    restrictions.add(sumOne + "=1");
+	}
 	return this;
     }
 
@@ -171,11 +189,16 @@ public class MDPIPBuilder {
 	    }
 
 	    @Override
+	    public Set<Action> getAllActions() {
+		return transitions.keySet();
+	    }
+
+	    @Override
 	    public Set<Action> getActionsFor(final State state) {
 		final Set<Action> appliableActions = new HashSet<>();
-		for (final Action action : transitions.keySet()) {
-		    if (((ActionImpl) action).appliableStates.contains(state)) {
-			appliableActions.add(action);
+		for (final Entry<Action, Map<State, Map<State, String>>> entry : transitions.entrySet()) {
+		    if (entry.getValue().containsKey(state) && !entry.getValue().get(state).isEmpty()) {
+			appliableActions.add(entry.getKey());
 		    }
 		}
 		return appliableActions;

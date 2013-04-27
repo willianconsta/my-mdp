@@ -33,7 +33,7 @@ public class UtilityFunctionImpl implements UtilityFunction {
     @Override
     public void updateUtility(final State state, final double utility) {
 	if (utilities.get(state) == null) {
-	    throw new IllegalStateException("Updating inexistent state.");
+	    throw new IllegalStateException("Updating inexistent state: " + state);
 	}
 	utilities.put(state, utility);
     }

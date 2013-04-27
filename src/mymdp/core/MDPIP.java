@@ -14,4 +14,6 @@ public interface MDPIP {
     double getRewardFor(State state);
 
     double getDiscountFactor();
+
+    Set<Action> getAllActions();
 }

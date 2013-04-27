@@ -168,12 +168,10 @@ public final class MDPIPFileProblemReaderImpl {
 	    double prob1 = prob - epsilon;
 	    double prob2 = prob + epsilon;
 	    if (prob2 > 1.0) {
-		prob1 += 1.0 - prob2;
 		prob2 = 1.0;
 	    }
 	    if (prob1 < 0.0) {
 		prob1 = 0.0;
-		prob2 += -epsilon;
 	    }
 	    checkState(Range.closed(0.0, 1.0).contains(prob1));
 	    checkState(Range.closed(0.0, 1.0).contains(prob2));
@@ -220,7 +218,8 @@ public final class MDPIPFileProblemReaderImpl {
 	    }
 
 	    final String[] actionCost = trimmedLine.split(" ");
-	    checkState(transitions.containsKey(actionCost[0]));
+	    checkState(transitions.containsKey(actionCost[0]),
+		    "Action " + actionCost[0] + " undefined. Possible actions = " + transitions.keySet());
 	    costs.put(actionCost[0], Double.parseDouble(actionCost[1]));
 	    return;
 	}

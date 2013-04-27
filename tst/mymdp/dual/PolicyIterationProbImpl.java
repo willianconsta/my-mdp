@@ -1,4 +1,4 @@
-package mymdp.solver;
+package mymdp.dual;
 
 import static mymdp.solver.BellmanUtils.getGreedyActionForState;
 
@@ -11,17 +11,21 @@ import mymdp.core.PolicyImpl;
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
+import mymdp.solver.ModifiedPolicyEvaluatorIP;
+import mymdp.solver.PolicyIterationIP;
 import mymdp.util.Pair;
 
-public class PolicyIterationIPImpl implements PolicyIterationIP {
+public class PolicyIterationProbImpl implements PolicyIterationIP {
 
     private final ModifiedPolicyEvaluatorIP evaluator;
 
-    public PolicyIterationIPImpl(final ModifiedPolicyEvaluatorIP evaluator) {
+    public PolicyIterationProbImpl(final ModifiedPolicyEvaluatorIP evaluator) {
 	this.evaluator = evaluator;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see mymdp.solver.PolicyIterationIP#solve(mymdp.core.MDPIP)
      */
     @Override

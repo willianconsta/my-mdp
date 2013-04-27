@@ -1,6 +1,7 @@
 package mymdp.solver;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -23,6 +24,9 @@ public class ProbLinearSolver {
     public static Map<State, Double> minimizeExpectedValues(final Map<State, String> nextStates, final double initialReward,
 	    final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
 	final Map<State, Double> result = new HashMap<>();
+	if (nextStates.isEmpty()) {
+	    return result;
+	}
 
 	for (final Entry<State, String> pair : nextStates.entrySet()) {
 	    try {
@@ -42,11 +46,18 @@ public class ProbLinearSolver {
 
 	for (final Entry<State, String> entry : nextStates.entrySet()) {
 	    if (entry.getValue().contains("*0.0*") || entry.getValue().endsWith("*0.0")) {
+		log.debug("Escaping from zero probability. Restriction = " + entry.getValue());
 		continue;
 	    }
 
 	    final double value = function.getUtility(entry.getKey());
-	    if (Math.abs(value) < 0.001) {
+	    checkState(value != Double.POSITIVE_INFINITY);
+	    if (value == Double.NEGATIVE_INFINITY) {
+		log.debug("Escaping from useless utility. State = " + entry.getKey() + ", function = " + function);
+		continue;
+	    }
+	    if (Math.abs(value) < 0.00001) {
+		log.debug("Escaping from zero utility. State = " + entry.getKey() + ", function = " + function);
 		continue;
 	    }
 	    obj.add(entry.getValue() + "*" + value);
@@ -62,7 +73,12 @@ public class ProbLinearSolver {
 	final SolveCaller solveCaller = new SolveCaller("D:\\Programação\\Mestrado\\amplcml\\");
 	solveCaller.setFileName("prob1.txt");
 	solveCaller.salveAMPLFile(obj, ImmutableList.copyOf(variables), ImmutableList.copyOf(restrictions), false);
-	solveCaller.callSolver();
+	try {
+	    solveCaller.callSolver();
+	} catch (final RuntimeException e) {
+	    log.error(solveCaller.getLog());
+	    log.catching(e);
+	}
 	final Map<String, Float> currentValuesProb = solveCaller.getCurrentValuesProb();
 	if (currentValuesProb.isEmpty()) {
 	    log.error(solveCaller.getLog());

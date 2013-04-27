@@ -13,11 +13,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import mymdp.core.Action;
-import mymdp.core.MDP;
-import mymdp.core.Policy;
-import mymdp.core.State;
-import mymdp.core.UtilityFunction;
 import mymdp.solver.ModifiedPolicyEvaluator;
 import mymdp.solver.PolicyIterationImpl;
 import mymdp.solver.RTDP.ConvergencyCriteria;
@@ -36,6 +31,11 @@ public class TestAIMAExample1 {
 	private StateImpl(final int i, final int j) {
 	    this.i = i;
 	    this.j = j;
+	}
+
+	@Override
+	public String getName() {
+	    return toString();
 	}
 
 	@Override
@@ -60,8 +60,7 @@ public class TestAIMAExample1 {
 	    if (i == 2 && j == 2) {
 		return null;
 	    }
-	    final StateImpl s = new StateImpl(min(max(i, 1), 3), min(max(j, 1),
-		    4));
+	    final StateImpl s = new StateImpl(min(max(i, 1), 3), min(max(j, 1), 4));
 	    if (!allStates.containsKey(s)) {
 		allStates.put(s, s);
 	    }
@@ -268,102 +267,67 @@ public class TestAIMAExample1 {
 
     @Test
     public void testValueIteration() {
-	final UtilityFunction function = new ValueIterationImpl().solve(
-		createMDP(), 0.001);
+	final UtilityFunction function = new ValueIterationImpl().solve(createMDP(), 0.001);
 
-	assertEquals(0.705, function.getUtility(StateImpl.createState(1, 1)),
-		DELTA_THRESHOLD);
-	assertEquals(0.655, function.getUtility(StateImpl.createState(1, 2)),
-		DELTA_THRESHOLD);
-	assertEquals(0.611, function.getUtility(StateImpl.createState(1, 3)),
-		DELTA_THRESHOLD);
-	assertEquals(0.388, function.getUtility(StateImpl.createState(1, 4)),
-		DELTA_THRESHOLD);
+	assertEquals(0.705, function.getUtility(StateImpl.createState(1, 1)), DELTA_THRESHOLD);
+	assertEquals(0.655, function.getUtility(StateImpl.createState(1, 2)), DELTA_THRESHOLD);
+	assertEquals(0.611, function.getUtility(StateImpl.createState(1, 3)), DELTA_THRESHOLD);
+	assertEquals(0.388, function.getUtility(StateImpl.createState(1, 4)), DELTA_THRESHOLD);
 
-	assertEquals(0.762, function.getUtility(StateImpl.createState(2, 1)),
-		DELTA_THRESHOLD);
-	assertEquals(0.660, function.getUtility(StateImpl.createState(2, 3)),
-		DELTA_THRESHOLD);
-	assertEquals(-1.0, function.getUtility(StateImpl.createState(2, 4)),
-		DELTA_THRESHOLD);
+	assertEquals(0.762, function.getUtility(StateImpl.createState(2, 1)), DELTA_THRESHOLD);
+	assertEquals(0.660, function.getUtility(StateImpl.createState(2, 3)), DELTA_THRESHOLD);
+	assertEquals(-1.0, function.getUtility(StateImpl.createState(2, 4)), DELTA_THRESHOLD);
 
-	assertEquals(0.812, function.getUtility(StateImpl.createState(3, 1)),
-		DELTA_THRESHOLD);
-	assertEquals(0.868, function.getUtility(StateImpl.createState(3, 2)),
-		DELTA_THRESHOLD);
-	assertEquals(0.918, function.getUtility(StateImpl.createState(3, 3)),
-		DELTA_THRESHOLD);
-	assertEquals(1.0, function.getUtility(StateImpl.createState(3, 4)),
-		DELTA_THRESHOLD);
+	assertEquals(0.812, function.getUtility(StateImpl.createState(3, 1)), DELTA_THRESHOLD);
+	assertEquals(0.868, function.getUtility(StateImpl.createState(3, 2)), DELTA_THRESHOLD);
+	assertEquals(0.918, function.getUtility(StateImpl.createState(3, 3)), DELTA_THRESHOLD);
+	assertEquals(1.0, function.getUtility(StateImpl.createState(3, 4)), DELTA_THRESHOLD);
     }
 
     @Test
     public void testRTDP() {
-	final UtilityFunction function = new RTDPImpl(
-		new ConvergencyCriteria() {
-		    int iterations = 0;
-		    protected static final int MAX_ITERATIONS = 25000;
+	final UtilityFunction function = new RTDPImpl(new ConvergencyCriteria() {
+	    int iterations = 0;
+	    protected static final int MAX_ITERATIONS = 25000;
 
-		    @Override
-		    public boolean hasConverged() {
-			return iterations++ > MAX_ITERATIONS;
-		    }
-		}).solve(createMDP(),
-		Collections.<State> singleton(StateImpl.createState(1, 1)),
-		100);
+	    @Override
+	    public boolean hasConverged() {
+		return iterations++ > MAX_ITERATIONS;
+	    }
+	}).solve(createMDP(), Collections.<State> singleton(StateImpl.createState(1, 1)), 100);
 
-	assertEquals(0.705, function.getUtility(StateImpl.createState(1, 1)),
-		DELTA_THRESHOLD);
-	assertEquals(0.655, function.getUtility(StateImpl.createState(1, 2)),
-		DELTA_THRESHOLD);
-	assertEquals(0.611, function.getUtility(StateImpl.createState(1, 3)),
-		DELTA_THRESHOLD);
-	assertEquals(0.388, function.getUtility(StateImpl.createState(1, 4)),
-		DELTA_THRESHOLD);
+	assertEquals(0.705, function.getUtility(StateImpl.createState(1, 1)), DELTA_THRESHOLD);
+	assertEquals(0.655, function.getUtility(StateImpl.createState(1, 2)), DELTA_THRESHOLD);
+	assertEquals(0.611, function.getUtility(StateImpl.createState(1, 3)), DELTA_THRESHOLD);
+	assertEquals(0.388, function.getUtility(StateImpl.createState(1, 4)), DELTA_THRESHOLD);
 
-	assertEquals(0.762, function.getUtility(StateImpl.createState(2, 1)),
-		DELTA_THRESHOLD);
-	assertEquals(0.660, function.getUtility(StateImpl.createState(2, 3)),
-		DELTA_THRESHOLD);
-	assertEquals(-1.0, function.getUtility(StateImpl.createState(2, 4)),
-		DELTA_THRESHOLD);
+	assertEquals(0.762, function.getUtility(StateImpl.createState(2, 1)), DELTA_THRESHOLD);
+	assertEquals(0.660, function.getUtility(StateImpl.createState(2, 3)), DELTA_THRESHOLD);
+	assertEquals(-1.0, function.getUtility(StateImpl.createState(2, 4)), DELTA_THRESHOLD);
 
-	assertEquals(0.812, function.getUtility(StateImpl.createState(3, 1)),
-		DELTA_THRESHOLD);
-	assertEquals(0.868, function.getUtility(StateImpl.createState(3, 2)),
-		DELTA_THRESHOLD);
-	assertEquals(0.918, function.getUtility(StateImpl.createState(3, 3)),
-		DELTA_THRESHOLD);
-	assertEquals(1.0, function.getUtility(StateImpl.createState(3, 4)),
-		DELTA_THRESHOLD);
+	assertEquals(0.812, function.getUtility(StateImpl.createState(3, 1)), DELTA_THRESHOLD);
+	assertEquals(0.868, function.getUtility(StateImpl.createState(3, 2)), DELTA_THRESHOLD);
+	assertEquals(0.918, function.getUtility(StateImpl.createState(3, 3)), DELTA_THRESHOLD);
+	assertEquals(1.0, function.getUtility(StateImpl.createState(3, 4)), DELTA_THRESHOLD);
     }
 
     @Test
     public void testPolicyIteration() {
-	final Policy policy = new PolicyIterationImpl(
-		new ModifiedPolicyEvaluator(50)).solve(createMDP());
+	final Policy policy = new PolicyIterationImpl(new ModifiedPolicyEvaluator(50)).solve(createMDP());
 
-	assertEquals(new ActionUp(),
-		policy.getActionFor(StateImpl.createState(1, 1)));
-	assertEquals(new ActionUp(),
-		policy.getActionFor(StateImpl.createState(2, 1)));
-	assertEquals(new ActionRight(),
-		policy.getActionFor(StateImpl.createState(3, 1)));
+	assertEquals(new ActionUp(), policy.getActionFor(StateImpl.createState(1, 1)));
+	assertEquals(new ActionUp(), policy.getActionFor(StateImpl.createState(2, 1)));
+	assertEquals(new ActionRight(), policy.getActionFor(StateImpl.createState(3, 1)));
 
-	assertEquals(new ActionLeft(),
-		policy.getActionFor(StateImpl.createState(1, 2)));
-	assertEquals(new ActionRight(),
-		policy.getActionFor(StateImpl.createState(3, 2)));
+	assertEquals(new ActionLeft(), policy.getActionFor(StateImpl.createState(1, 2)));
+	assertEquals(new ActionRight(), policy.getActionFor(StateImpl.createState(3, 2)));
 
 	assertEquals(new ActionLeft(), // FIXME não deveria ser Up?
 		policy.getActionFor(StateImpl.createState(1, 3)));
-	assertEquals(new ActionUp(),
-		policy.getActionFor(StateImpl.createState(2, 3)));
-	assertEquals(new ActionRight(),
-		policy.getActionFor(StateImpl.createState(3, 3)));
+	assertEquals(new ActionUp(), policy.getActionFor(StateImpl.createState(2, 3)));
+	assertEquals(new ActionRight(), policy.getActionFor(StateImpl.createState(3, 3)));
 
-	assertEquals(new ActionLeft(),
-		policy.getActionFor(StateImpl.createState(1, 4)));
+	assertEquals(new ActionLeft(), policy.getActionFor(StateImpl.createState(1, 4)));
 	assertNull(policy.getActionFor(StateImpl.createState(2, 4)));
 	assertNull(policy.getActionFor(StateImpl.createState(3, 4)));
     }
@@ -372,9 +336,13 @@ public class TestAIMAExample1 {
 	return new MDP() {
 	    private Set<State> states;
 	    private final Map<State, Set<Action>> actionsByState = new HashMap<>();
-	    private final Set<Action> actions = newHashSet(new ActionUp(),
-		    new ActionDown(), new ActionLeft(), new ActionRight(),
+	    private final Set<Action> actions = newHashSet(new ActionUp(), new ActionDown(), new ActionLeft(), new ActionRight(),
 		    new ActionNone());
+
+	    @Override
+	    public Set<Action> getAllActions() {
+		return Collections.unmodifiableSet(actions);
+	    }
 
 	    @Override
 	    public Set<State> getStates() {
@@ -406,8 +374,7 @@ public class TestAIMAExample1 {
 	    }
 
 	    @Override
-	    public Map<State, Double> getPossibleStatesAndProbability(
-		    final State initialState, final Action action) {
+	    public Map<State, Double> getPossibleStatesAndProbability(final State initialState, final Action action) {
 		if (action instanceof ActionUp) {
 		    return ((ActionUp) action).applyOver(initialState);
 		}
@@ -441,8 +408,7 @@ public class TestAIMAExample1 {
 			    actions.add(action);
 			}
 		    }
-		    actionsByState.put(state,
-			    Collections.unmodifiableSet(actions));
+		    actionsByState.put(state, Collections.unmodifiableSet(actions));
 		}
 		return actions;
 	    }

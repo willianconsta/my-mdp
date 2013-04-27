@@ -106,15 +106,25 @@ public class SolveCaller {
 		if (pos >= 0) {
 		    final int profit = line.indexOf("Profit");
 		    if (profit >= 0) {
-			value = Float.valueOf(line.substring(profit + 8, line.length() - 1));// pos+characters
-											     // of
-											     // objective
-											     // +1
+			try {
+			    value = Float.valueOf(line.substring(profit + 8, line.length() - 1));
+			    // pos+characters of objective +1
+			} catch (final RuntimeException e) {
+			    while ((line = process_out.readLine()) != null) {
+				log += line;
+			    }
+			    throw e;
+			}
 		    } else {
-			value = Float.valueOf(line.substring(pos + 10));// pos+characters
-									// of
-									// objective
-									// +1
+			try {
+			    value = Float.valueOf(line.substring(pos + 10));
+			    // pos+characters of objective +1
+			} catch (final RuntimeException e) {
+			    while ((line = process_out.readLine()) != null) {
+				log += line;
+			    }
+			    throw e;
+			}
 			foundObj = true;
 		    }
 		}

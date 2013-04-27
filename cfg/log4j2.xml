@@ -6,7 +6,8 @@
 		</Console>
 	</appenders>
 	<loggers>
-		<logger name="mymdp.problem.FileProblemReaderImpl" level="TRACE"/>
+		<logger name="mymdp.dual" level="INFO"/>
+		<logger name="mymdp.solver" level="INFO"/>
 		<root level="error">
 			<appender-ref ref="Console" />
 		</root>

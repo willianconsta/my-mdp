@@ -44,6 +44,11 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 	C1_OFF, C1_ON;
 
 	final static Set<State> allStates = ImmutableSet.<State> copyOf(States.values());
+
+	@Override
+	public String getName() {
+	    return name();
+	}
     }
 
     private static enum Actions implements Action {
@@ -65,6 +70,11 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 	    }
 
 	    @Override
+	    public Set<Action> getAllActions() {
+		return Actions.allActions;
+	    }
+
+	    @Override
 	    public Set<Action> getActionsFor(final State state) {
 		return Actions.allActions;
 	    }
@@ -72,12 +82,12 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 	    @Override
 	    public double getRewardFor(final State state) {
 		switch ((States) state) {
-		case C1_OFF:
-		    return 0;
-		case C1_ON:
-		    return 1;
-		default:
-		    throw new IllegalStateException();
+		    case C1_OFF:
+			return 0;
+		    case C1_ON:
+			return 1;
+		    default:
+			throw new IllegalStateException();
 		}
 	    }
 

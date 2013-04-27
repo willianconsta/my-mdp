@@ -32,16 +32,21 @@ public class MDPBuilder {
 	}
 
 	@Override
+	public String getName() {
+	    return name;
+	}
+
+	@Override
 	public int hashCode() {
 	    return name.hashCode();
 	}
 
 	@Override
 	public boolean equals(final Object obj) {
-	    if (!(obj instanceof StateImpl)) {
+	    if (!(obj instanceof State)) {
 		return false;
 	    }
-	    return name.equals(((StateImpl) obj).name);
+	    return name.equals(((State) obj).getName());
 	}
 
 	@Override
@@ -144,6 +149,11 @@ public class MDPBuilder {
 	    @Override
 	    public Set<State> getStates() {
 		return states;
+	    }
+
+	    @Override
+	    public Set<Action> getAllActions() {
+		return transitions.keySet();
 	    }
 
 	    @Override

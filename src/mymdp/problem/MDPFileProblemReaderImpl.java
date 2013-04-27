@@ -204,7 +204,7 @@ public final class MDPFileProblemReaderImpl {
 	    }
 
 	    final String[] actionCost = trimmedLine.split(" ");
-	    checkState(transitions.containsKey(actionCost[0]));
+	    checkState(transitions.containsKey(actionCost[0]), "Action " + actionCost[0] + " undefined.");
 	    costs.put(actionCost[0], Double.parseDouble(actionCost[1]));
 	    return;
 	}
