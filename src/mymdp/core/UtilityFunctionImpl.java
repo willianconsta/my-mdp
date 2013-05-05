@@ -62,6 +62,6 @@ public class UtilityFunctionImpl implements UtilityFunction {
 
     @Override
     public String toString() {
-	return ImmutableSortedMap.orderedBy(Ordering.<State> usingToString()).putAll(utilities).build().toString();
+	return ImmutableSortedMap.orderedBy(Ordering.usingToString()).putAll(utilities).build().toString();
     }
 }
