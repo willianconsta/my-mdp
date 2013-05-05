@@ -4,9 +4,15 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</Console>
+		<File name="summary" filename="summary.log" immediateFlush="true">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n" />
+		</File>
 	</appenders>
 	<loggers>
-		<logger name="mymdp.dual" level="INFO"/>
+		<logger name="mymdp.dual" level="INFO">
+			<appender-ref ref="summary" />
+			<appender-ref ref="Console" />
+		</logger>
 		<logger name="mymdp.solver" level="INFO"/>
 		<root level="error">
 			<appender-ref ref="Console" />

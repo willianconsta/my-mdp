@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableSortedMap;
+import com.google.common.collect.Ordering;
+
 public class UtilityFunctionImpl implements UtilityFunction {
 
     private final Map<State, Double> utilities = new HashMap<>();
@@ -59,6 +62,6 @@ public class UtilityFunctionImpl implements UtilityFunction {
 
     @Override
     public String toString() {
-	return utilities.toString();
+	return ImmutableSortedMap.orderedBy(Ordering.<State> usingToString()).putAll(utilities).build().toString();
     }
 }
