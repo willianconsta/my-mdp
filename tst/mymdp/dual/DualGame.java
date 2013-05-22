@@ -40,20 +40,19 @@ public class DualGame {
 
     @Parameters
     public static Collection<Object[]> data() {
-	return Arrays.asList(new Object[][] { {
-		// "navigation01.net" }, {
-		// "navigation02.net" }, {
-		"navigation03.net" }
-		, { "navigation04.net" }
-		/*
-		 * , { "navigation05.net" }, { "navigation06.net" }, {
-		 * "navigation07.net" }, { "navigation08.net" }, {
-		 * "navigation09.net" }
-		 */
-		// {
-		// "navigation10.net" }, {
-		// "navigation11.net" }, {
-		// "navigation12.net" }, }
+	return Arrays.asList(new Object[][] {
+		{ "navigation01.net" },
+		{ "navigation02.net" },
+		{ "navigation03.net" },
+		{ "navigation04.net" },
+		{ "navigation05.net" },
+		{ "navigation06.net" },
+		{ "navigation07.net" },
+		{ "navigation08.net" },
+		{ "navigation09.net" },
+		{ "navigation10.net" },
+		{ "navigation11.net" },
+		{ "navigation12.net" },
 	});
     }
 

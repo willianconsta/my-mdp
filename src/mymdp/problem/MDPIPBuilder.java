@@ -2,6 +2,7 @@ package mymdp.problem;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.Iterables.getOnlyElement;
 import static mymdp.solver.ProbLinearSolver.solve;
 
@@ -118,6 +119,9 @@ public class MDPIPBuilder {
     public MDPIPBuilder actions(final String actionName, final Set<String[]> transitionDefs) {
 	final Action action = new ActionImpl(actionName);
 	final Map<State, String> sumOnePerState = new HashMap<>();
+	double lowestSum = 0.0;
+	double greatestSum = 0.0;
+
 	for (final String[] transitionDef : transitionDefs) {
 	    final State state1 = checkNotNull(states.get(transitionDef[0]));
 	    ((ActionImpl) action).appliableStates.add(state1);
@@ -145,6 +149,8 @@ public class MDPIPBuilder {
 	    }
 	    restrOne += var;
 	    sumOnePerState.put(state1, restrOne);
+	    lowestSum += Double.parseDouble(transitionDef[2]);
+	    greatestSum += Double.parseDouble(transitionDef[3]);
 	    if (transitionDef[2].equals(transitionDef[3])) {
 		map.put(state2, transitionDef[3]);
 		continue;
@@ -158,6 +164,9 @@ public class MDPIPBuilder {
 	    }
 	    vars.put(Trio.newTrio(state1, action, state2), var);
 	}
+
+	checkState(lowestSum <= 1);
+	checkState(greatestSum >= 1);
 
 	for (final Entry<State, String> sumOne : sumOnePerState.entrySet()) {
 	    if (sumOne.getValue().indexOf('p') < sumOne.getValue().lastIndexOf('p')) {
