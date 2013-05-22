@@ -3,6 +3,7 @@ package mymdp.solver;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -15,29 +16,139 @@ import mymdp.core.UtilityFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 public class ProbLinearSolver {
     private static final Logger log = LogManager.getLogger(ProbLinearSolver.class);
 
+    // FIXME: não devia estar hard-coded este path :(
+    private static final SolveCaller solveCaller;
+    static {
+	try {
+	    solveCaller = new SolveCaller("D:\\Programação\\Mestrado\\amplcml\\");
+	} catch (final IOException e) {
+	    throw Throwables.propagate(e);
+	}
+    }
+
+    public static enum SolutionType {
+	MAXIMIZE,
+	MINIMIZE;
+    }
+
+    /**
+     * Current mode of the solver
+     */
+    private static SolutionType solution = SolutionType.MINIMIZE;
+
+    /**
+     * Gets the current mode of the solver.
+     * 
+     * @return current mode.
+     */
+    public static SolutionType getMode() {
+	return solution;
+    }
+
+    /**
+     * Put the solver in maximize mode.
+     */
+    public static void setMaximizing() {
+	solution = SolutionType.MAXIMIZE;
+    }
+
+    /**
+     * Put the solver in maximize mode.
+     */
+    public static void setMode(final SolutionType mode) {
+	checkNotNull(mode);
+	solution = mode;
+    }
+
+    /**
+     * Put the solver in minimize mode.
+     */
+    public static void setMinimizing() {
+	solution = SolutionType.MINIMIZE;
+    }
+
+    /**
+     * Obtain the transition probabilities that minimize the expected value for
+     * all next states.
+     * 
+     * @param nextStates
+     *            map which keys are the next states and the values are
+     *            equations that define the probability of the transition
+     * @param initialReward
+     *            initial reward already obtained
+     * @param function
+     *            utility function of the actual step of the algorithm
+     * @param variables
+     *            names of the variables of the imprecise problem
+     * @param restrictions
+     *            restrictions over the variables
+     * 
+     * @return a map defining the next states and the probability to reach them
+     */
     public static Map<State, Double> minimizeExpectedValues(final Map<State, String> nextStates, final double initialReward,
 	    final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
+	return solve(SolutionType.MINIMIZE, nextStates, initialReward, function, variables, restrictions);
+    }
+
+    /**
+     * Obtain the transition probabilities that maximize the expected value for
+     * all next states.
+     * 
+     * @param nextStates
+     *            map which keys are the next states and the values are
+     *            equations that define the probability of the transition
+     * @param initialReward
+     *            initial reward already obtained
+     * @param function
+     *            utility function of the actual step of the algorithm
+     * @param variables
+     *            names of the variables of the imprecise problem
+     * @param restrictions
+     *            restrictions over the variables
+     * 
+     * @return a map defining the next states and the probability to reach them
+     */
+    public static Map<State, Double> maximizeExpectedValues(final Map<State, String> nextStates, final double initialReward,
+	    final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
+	return solve(SolutionType.MAXIMIZE, nextStates, initialReward, function, variables, restrictions);
+    }
+
+    public static Map<State, Double> solve(final Map<State, String> nextStates, final double initialReward,
+	    final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
+	return solve(solution, nextStates, initialReward, function, variables, restrictions);
+    }
+
+    private static Map<State, Double> solve(final SolutionType type, final Map<State, String> nextStates, final double initialReward,
+	    final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
 	final Map<State, Double> result = new HashMap<>();
+
+	// if there are no next states, return
 	if (nextStates.isEmpty()) {
 	    return result;
 	}
 
+	// if all equations are just constant there is no need to call the
+	// solver. Try to make them numbers.
 	for (final Entry<State, String> pair : nextStates.entrySet()) {
 	    try {
 		final double prob = Double.parseDouble(pair.getValue());
 		result.put(pair.getKey(), prob);
 	    } catch (final NumberFormatException e) {
+		// at least one probability is an equation, clear the result map
+		// to call the solver
 		result.clear();
 		break;
 	    }
 	}
 	if (!result.isEmpty()) {
+	    // all probabilities were constants, return
 	    return result;
 	}
 
@@ -63,25 +174,24 @@ public class ProbLinearSolver {
 	    obj.add(entry.getValue() + "*" + value);
 	}
 
-	if (obj.size() == 1) {
-	    for (final State state : nextStates.keySet()) {
-		result.put(state, 1.0 / nextStates.size());
-	    }
-	    return result;
-	}
+	// if (obj.size() == 1) {
+	// for (final State state : nextStates.keySet()) {
+	// result.put(state, 1.0 / nextStates.size());
+	// }
+	// return result;
+	// }
 
-	final SolveCaller solveCaller = new SolveCaller("D:\\Programação\\Mestrado\\amplcml\\");
-	solveCaller.setFileName("prob1.txt");
-	solveCaller.salveAMPLFile(obj, ImmutableList.copyOf(variables), ImmutableList.copyOf(restrictions), false);
+	solveCaller.salveAMPLFile(obj, ImmutableList.copyOf(variables), ImmutableList.copyOf(restrictions), type == SolutionType.MAXIMIZE);
 	try {
 	    solveCaller.callSolver();
 	} catch (final RuntimeException e) {
-	    log.error(solveCaller.getLog());
+	    log.error("Solver failed!\nProblem:" + solveCaller.getFileContents() + "\nError log: " + solveCaller.getLog());
 	    log.catching(e);
+	    throw Throwables.propagate(e);
 	}
-	final Map<String, Float> currentValuesProb = solveCaller.getCurrentValuesProb();
+	final Map<String, Double> currentValuesProb = solveCaller.getCurrentValuesProb();
 	if (currentValuesProb.isEmpty()) {
-	    log.error(solveCaller.getLog());
+	    log.error("Solver failed!\nProblem:" + solveCaller.getFileContents() + "\nError log: " + solveCaller.getLog());
 	    throw new IllegalStateException();
 	}
 
@@ -89,7 +199,8 @@ public class ProbLinearSolver {
 	    final String constr = entry.getValue();
 	    int i = 0;
 	    final String[] values = constr.split("[\\*]");
-	    Double value = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i]) : Double.parseDouble(values[i]);
+	    double value = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i]).doubleValue() : Double
+		    .parseDouble(values[i]);
 	    final String[] ops = constr.split("[^\\*]");
 	    for (final String op : ops) {
 		if (op.equals("*")) {

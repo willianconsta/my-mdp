@@ -3,6 +3,7 @@ package mymdp.core;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static mymdp.util.Pair.newPair;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import mymdp.util.Pair;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
@@ -137,13 +139,17 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 		    obj.add(pair.second + "*" + function.getUtility(pair.first));
 		}
 
-		final SolveCaller solveCaller = new SolveCaller("D:\\Programação\\Mestrado\\amplcml\\");
-		solveCaller.setFileName("prob1.txt");
+		SolveCaller solveCaller;
+		try {
+		    solveCaller = new SolveCaller("D:\\Programação\\Mestrado\\amplcml\\");
+		} catch (final IOException e) {
+		    throw Throwables.propagate(e);
+		}
 		final List<String> variables = ImmutableList.<String> of("p1", "p2", "p3", "p4");
 		solveCaller.salveAMPLFile(obj, variables,
 			ImmutableList.<String> of("p1 >= 0.85 + p2", "p1 <= 0.95", "p2 <= 0.10", "p3 = 1 - p1", "p4 = 1 - p2"), false);
 		solveCaller.callSolver();
-		final Map<String, Float> currentValuesProb = solveCaller.getCurrentValuesProb();
+		final Map<String, Double> currentValuesProb = solveCaller.getCurrentValuesProb();
 		if (currentValuesProb.isEmpty()) {
 		    System.out.println(solveCaller.getLog());
 		    throw new IllegalStateException();
@@ -153,12 +159,13 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 		    final String constr = pair.second;
 		    int i = 0;
 		    final String[] values = constr.split("[\\*]");
-		    Double value = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i]) : Double
+		    double value = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i]).doubleValue() : Double
 			    .parseDouble(values[i]);
 		    final String[] ops = constr.split("[^\\*]");
 		    for (final String op : ops) {
 			if (op.equals("*")) {
-			    final double val1 = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i]) : Double
+			    final double val1 = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i])
+				    .doubleValue() : Double
 				    .parseDouble(values[i]);
 			    value *= val1;
 			    i++;

@@ -13,7 +13,7 @@ public class TestNavigationIPFile01 {
 
     @Test
     public void test01() {
-	final MDPIPFileProblemReaderImpl reader = new MDPIPFileProblemReaderImpl(0.000001);
+	final MDPImpreciseFileProblemReaderImpl reader = new MDPImpreciseFileProblemReaderImpl(new ImprecisionGeneratorImpl(0.000001));
 	final MDPIP mdpip = reader.readFromFile("problems\\navigation01.net");
 	final double delta = 0.001;
 	final UtilityFunction result = new ValueIterationProbImpl(new UtilityFunctionImpl(mdpip.getStates())).solve(mdpip, delta);

@@ -27,6 +27,10 @@ public class ImpreciseProblemGenerator {
 	this.mdp = mdp;
     }
 
+    public ImpreciseProblemGenerator(final MDP mdp) {
+	this(null, mdp);
+    }
+
     public void writeToFile(final String path, final State initialState, final Set<State> goalStates) {
 	try (FileWriter fileWriter = new FileWriter(path)) {
 	    writeStates(fileWriter);
@@ -71,7 +75,11 @@ public class ImpreciseProblemGenerator {
 	fileWriter.write("cost\n");
 	final Set<Action> possibleActions = new HashSet<>();
 	for (final State s : mdp.getStates()) {
-	    possibleActions.add(result.getActionFor(s));
+	    if (result != null) {
+		possibleActions.add(result.getActionFor(s));
+	    } else {
+		possibleActions.addAll(mdp.getActionsFor(s));
+	    }
 	}
 
 	for (final Action a : possibleActions) {
@@ -84,7 +92,7 @@ public class ImpreciseProblemGenerator {
 	for (final Action a : mdp.getAllActions()) {
 	    fileWriter.write("action " + a.toString() + "\n");
 	    for (final State s : mdp.getStates()) {
-		if (a.isApplyableTo(s) && result.getActionFor(s).equals(a)) {
+		if (a.isApplyableTo(s) && (result == null || result.getActionFor(s).equals(a))) {
 		    for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a).entrySet()) {
 			fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
 				+ String.format(Locale.US, "%.8f", entry.getValue()) + "\n");

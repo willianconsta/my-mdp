@@ -2,11 +2,13 @@ package mymdp.problem;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static mymdp.solver.ProbLinearSolver.minimizeExpectedValues;
+import static com.google.common.collect.Iterables.getOnlyElement;
+import static mymdp.solver.ProbLinearSolver.solve;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -144,15 +146,34 @@ public class MDPIPBuilder {
 	    restrOne += var;
 	    sumOnePerState.put(state1, restrOne);
 	    if (transitionDef[2].equals(transitionDef[3])) {
-		restrictions.add(var + " = " + transitionDef[2]);
+		map.put(state2, transitionDef[3]);
+		continue;
 	    } else {
-		restrictions.add(var + " >= " + transitionDef[2]);
-		restrictions.add(var + " <= " + transitionDef[3]);
+		if (!transitionDef[2].equals("0.0")) {
+		    restrictions.add(var + " >= " + transitionDef[2]);
+		}
+		if (!transitionDef[3].equals("1.0")) {
+		    restrictions.add(var + " <= " + transitionDef[3]);
+		}
 	    }
 	    vars.put(Trio.newTrio(state1, action, state2), var);
 	}
-	for (final String sumOne : sumOnePerState.values()) {
-	    restrictions.add(sumOne + "=1");
+
+	for (final Entry<State, String> sumOne : sumOnePerState.entrySet()) {
+	    if (sumOne.getValue().indexOf('p') < sumOne.getValue().lastIndexOf('p')) {
+		restrictions.add(sumOne.getValue() + "=1");
+	    } else {
+		// always 1
+		final String var = sumOnePerState.values().iterator().next();
+		vars.values().remove(var);
+		for (final Iterator<String> it = restrictions.iterator(); it.hasNext();) {
+		    final String restriction = it.next();
+		    if (restriction.startsWith(var)) {
+			it.remove();
+		    }
+		}
+		getOnlyElement(transitions.get(action).get(sumOne.getKey()).entrySet()).setValue("1");
+	    }
 	}
 	return this;
     }
@@ -212,7 +233,7 @@ public class MDPIPBuilder {
 		    return Collections.emptyMap();
 		}
 
-		final Map<State, Double> minProb = minimizeExpectedValues(probabilityFunction, getRewardFor(initialState), function,
+		final Map<State, Double> minProb = solve(probabilityFunction, getRewardFor(initialState), function,
 			vars.values(), restrictions);
 		return minProb;
 	    }

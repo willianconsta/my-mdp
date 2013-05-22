@@ -17,8 +17,10 @@ import mymdp.core.MDPIP;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class MDPIPFileProblemReaderImpl {
-    private static Logger log = LogManager.getLogger(MDPIPFileProblemReaderImpl.class);
+import com.google.common.collect.Range;
+
+public final class MDPImpreciseFileProblemReaderImpl {
+    private static Logger log = LogManager.getLogger(MDPImpreciseFileProblemReaderImpl.class);
 
     private boolean readingStates;
     private final Set<String> allStates;
@@ -35,8 +37,10 @@ public final class MDPIPFileProblemReaderImpl {
     private String goalState;
     private boolean readingInitialState;
     private boolean readingGoalState;
+    private final ImprecisionGenerator generator;
 
-    public MDPIPFileProblemReaderImpl() {
+    public MDPImpreciseFileProblemReaderImpl(final ImprecisionGenerator generator) {
+	this.generator = generator;
 	readingStates = false;
 	allStates = new HashSet<>();
 	actualAction = null;
@@ -159,17 +163,16 @@ public final class MDPIPFileProblemReaderImpl {
 	    final String[] actionTransitions = trimmedLine.split(" ");
 	    checkState(allStates.contains(actionTransitions[0]));
 	    checkState(allStates.contains(actionTransitions[1]));
-	    final double lowerBound = Double.parseDouble(actionTransitions[2]);
-	    final double upperBound = Double.parseDouble(actionTransitions[3]);
-
+	    final double prob = Double.parseDouble(actionTransitions[2]);
+	    final Range<Double> range = generator.generateRange(actionTransitions[0], actualAction, actionTransitions[1], prob);
 	    Set<String[]> set = transitions.get(actualAction);
 	    if (set == null) {
 		set = new HashSet<>();
 		transitions.put(actualAction, set);
 	    }
-	    set.add(new String[] { actionTransitions[0], actionTransitions[1], Double.toString(lowerBound),
-		    Double.toString(upperBound) });
 
+	    set.add(new String[] { actionTransitions[0], actionTransitions[1], range.lowerEndpoint().toString(),
+		    range.upperEndpoint().toString() });
 	    return;
 	}
     }

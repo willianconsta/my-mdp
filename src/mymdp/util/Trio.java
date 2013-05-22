@@ -3,6 +3,18 @@ package mymdp.util;
 import static com.google.common.base.Objects.equal;
 import static java.util.Objects.hash;
 
+/**
+ * A trio of elements.
+ * 
+ * @author Willian
+ * 
+ * @param <F>
+ *            the first element
+ * @param <S>
+ *            the second element
+ * @param <T>
+ *            the third element
+ */
 public final class Trio<F, S, T> {
     public final F first;
     public final S second;
@@ -14,6 +26,14 @@ public final class Trio<F, S, T> {
 	this.third = third;
     }
 
+    /**
+     * Creates a new {@link Trio}.
+     * 
+     * @param first
+     * @param second
+     * @param third
+     * @return
+     */
     public static <F, S, T> Trio<F, S, T> newTrio(final F first,
 	    final S second, final T third) {
 	return new Trio<F, S, T>(first, second, third);

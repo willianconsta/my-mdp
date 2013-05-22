@@ -50,6 +50,10 @@ public class TestAIMAExample1 {
 
 	@Override
 	public boolean equals(final Object obj) {
+	    if (obj == null) {
+		return false;
+	    }
+
 	    final StateImpl other = (StateImpl) obj;
 	    return i == other.i && j == other.j;
 	}
