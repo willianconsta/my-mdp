@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +28,7 @@ public class SolveCaller {
 
     public SolveCaller(final String amplFile) throws IOException {
 	this.amplLocation = amplFile;
-	currentValuesProb = new HashMap<>();
+	currentValuesProb = new LinkedHashMap<>();
 	variablesName = new ArrayList<>();
 
 	// Open files for reading and writing

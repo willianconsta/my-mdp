@@ -26,7 +26,7 @@ public final class RTDPImpl implements RTDP {
     @Override
     public UtilityFunction solve(final MDP mdp) {
 	final int size = randomSeed.nextInt(mdp.getStates().size());
-	final Set<State> initials = Sets.newHashSetWithExpectedSize(size);
+	final Set<State> initials = Sets.newLinkedHashSetWithExpectedSize(size);
 	for (int i = 0; i < size; i++) {
 	    initials.add(Iterables.get(mdp.getStates(), i));
 	}

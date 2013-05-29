@@ -5,7 +5,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -127,7 +127,7 @@ public class ProbLinearSolver {
 
     private static Map<State, Double> solve(final SolutionType type, final Map<State, String> nextStates, final double initialReward,
 	    final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
-	final Map<State, Double> result = new HashMap<>();
+	final Map<State, Double> result = new LinkedHashMap<>();
 
 	// if there are no next states, return
 	if (nextStates.isEmpty()) {

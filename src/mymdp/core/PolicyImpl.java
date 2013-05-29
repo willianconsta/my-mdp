@@ -2,14 +2,14 @@ package mymdp.core;
 
 import static com.google.common.collect.Iterables.get;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
 public class PolicyImpl implements Policy {
 
-    private final Map<State, Action> policies = new HashMap<>();
+    private final Map<State, Action> policies = new LinkedHashMap<>();
 
     public PolicyImpl(final MDP mdp) {
 	for (final State state : mdp.getStates()) {

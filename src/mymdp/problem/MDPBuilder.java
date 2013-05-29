@@ -3,8 +3,8 @@ package mymdp.problem;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -57,7 +57,7 @@ public class MDPBuilder {
 
     @VisibleForTesting
     static class ActionImpl implements Action {
-	private final Set<State> appliableStates = new HashSet<>();
+	private final Set<State> appliableStates = new LinkedHashSet<>();
 	private final String name;
 
 	ActionImpl(final String name) {
@@ -94,8 +94,8 @@ public class MDPBuilder {
     private double discountRate;
 
     public MDPBuilder() {
-	states = new HashMap<>();
-	transitions = new HashMap<>();
+	states = new LinkedHashMap<>();
+	transitions = new LinkedHashMap<>();
     }
 
     public MDPBuilder states(final Set<String> stateDefs) {
@@ -113,14 +113,14 @@ public class MDPBuilder {
 
 	    Map<State, Map<State, Double>> probs = transitions.get(action);
 	    if (probs == null) {
-		probs = new HashMap<>();
+		probs = new LinkedHashMap<>();
 		transitions.put(action, probs);
 	    }
 
 	    final State state2 = checkNotNull(states.get(transitionDef[1]));
 	    Map<State, Double> map = probs.get(state1);
 	    if (map == null) {
-		map = new HashMap<>();
+		map = new LinkedHashMap<>();
 		probs.put(state1, map);
 	    }
 	    map.put(state2, Double.parseDouble(checkNotNull(transitionDef[2])));
@@ -158,7 +158,7 @@ public class MDPBuilder {
 
 	    @Override
 	    public Set<Action> getActionsFor(final State state) {
-		final Set<Action> appliableActions = new HashSet<>();
+		final Set<Action> appliableActions = new LinkedHashSet<>();
 		for (final Action action : transitions.keySet()) {
 		    if (((ActionImpl) action).appliableStates.contains(state)) {
 			appliableActions.add(action);

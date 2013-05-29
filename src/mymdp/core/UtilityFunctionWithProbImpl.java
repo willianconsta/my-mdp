@@ -1,6 +1,6 @@
 package mymdp.core;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,20 +11,20 @@ public class UtilityFunctionWithProbImpl extends UtilityFunctionImpl {
 
     public UtilityFunctionWithProbImpl(final Set<State> states) {
 	super(states);
-	this.actionAndProbByStates = new HashMap<>();
+	this.actionAndProbByStates = new LinkedHashMap<>();
     }
 
     public UtilityFunctionWithProbImpl(final Set<State> states, final double value) {
 	super(states, value);
-	this.actionAndProbByStates = new HashMap<>();
+	this.actionAndProbByStates = new LinkedHashMap<>();
     }
 
     public UtilityFunctionWithProbImpl(final UtilityFunction function) {
 	super(function);
 	if (!(function instanceof UtilityFunctionWithProbImpl)) {
-	    this.actionAndProbByStates = new HashMap<>();
+	    this.actionAndProbByStates = new LinkedHashMap<>();
 	} else {
-	    this.actionAndProbByStates = new HashMap<>(((UtilityFunctionWithProbImpl) function).actionAndProbByStates);
+	    this.actionAndProbByStates = new LinkedHashMap<>(((UtilityFunctionWithProbImpl) function).actionAndProbByStates);
 	}
     }
 

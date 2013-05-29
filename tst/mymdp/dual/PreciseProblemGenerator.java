@@ -1,5 +1,7 @@
 package mymdp.dual;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
@@ -14,6 +16,8 @@ import mymdp.core.UtilityFunctionWithProbImpl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Range;
 
 public class PreciseProblemGenerator {
     private static final Logger log = LogManager.getLogger(PreciseProblemGenerator.class);
@@ -55,13 +59,13 @@ public class PreciseProblemGenerator {
     }
 
     private void writeDiscountRate(final FileWriter fileWriter) throws IOException {
-	fileWriter.write("discount factor " + String.format(Locale.US, "%.8f", mdpip.getDiscountFactor()) + "\n\n");
+	fileWriter.write("discount factor " + String.format(Locale.US, "%.10f", mdpip.getDiscountFactor()) + "\n\n");
     }
 
     private void writeRewards(final FileWriter fileWriter) throws IOException {
 	fileWriter.write("reward\n");
 	for (final State s : mdpip.getStates()) {
-	    fileWriter.write("\t" + s.toString() + " " + String.format(Locale.US, "%.8f", mdpip.getRewardFor(s)) + "\n");
+	    fileWriter.write("\t" + s.toString() + " " + String.format(Locale.US, "%.10f", mdpip.getRewardFor(s)) + "\n");
 	}
 	fileWriter.write("endreward\n\n");
     }
@@ -69,7 +73,7 @@ public class PreciseProblemGenerator {
     private void writeCosts(final FileWriter fileWriter) throws IOException {
 	fileWriter.write("cost\n");
 	for (final Action a : mdpip.getAllActions()) {
-	    fileWriter.write("\t" + a.toString() + " " + String.format(Locale.US, "%.8f", 0.0) + "\n");
+	    fileWriter.write("\t" + a.toString() + " " + String.format(Locale.US, "%.10f", 0.0) + "\n");
 	}
 	fileWriter.write("endcost\n\n");
     }
@@ -79,10 +83,14 @@ public class PreciseProblemGenerator {
 	    fileWriter.write("action " + a.toString() + "\n");
 	    for (final State s : mdpip.getStates()) {
 		if (a.isApplyableTo(s)) {
+		    double sumShouldBeOne = 0.0;
 		    for (final Entry<State, Double> entry : mdpip.getPossibleStatesAndProbability(s, a, result).entrySet()) {
+			sumShouldBeOne += entry.getValue();
 			fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
-				+ String.format(Locale.US, "%.8f", entry.getValue()) + "\n");
+				+ String.format(Locale.US, "%.10f", entry.getValue()) + "\n");
 		    }
+		    checkState(Range.closed(0.0, 1.0).contains(sumShouldBeOne), "Action " + a + " in state " + s
+			    + " has total probability of " + sumShouldBeOne + " to go some state.");
 		}
 	    }
 	    fileWriter.write("endaction\n\n");

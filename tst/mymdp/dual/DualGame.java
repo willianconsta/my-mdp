@@ -37,45 +37,54 @@ public class DualGame {
 
     private static final String PROBLEMS_DIR = "precise_problems";
     private static final String SOLUTIONS_DIR = "solutions";
+    private static final double MAX_RELAXATION = 0.25;
+    private static final double STEP_RELAXATION = 0.10;
 
     @Parameters
     public static Collection<Object[]> data() {
 	return Arrays.asList(new Object[][] {
-		{ "navigation01.net" },
-		{ "navigation02.net" },
-		{ "navigation03.net" },
-		{ "navigation04.net" },
-		{ "navigation05.net" },
-		{ "navigation06.net" },
-		{ "navigation07.net" },
-		{ "navigation08.net" },
-		{ "navigation09.net" },
-		{ "navigation10.net" },
-		{ "navigation11.net" },
-		{ "navigation12.net" },
+		{ "navigation01.net", MAX_RELAXATION, STEP_RELAXATION },
+		{ "navigation02.net", MAX_RELAXATION, STEP_RELAXATION },
+		{ "navigation03.net", MAX_RELAXATION, STEP_RELAXATION },
+		{ "navigation04.net", MAX_RELAXATION, STEP_RELAXATION },
+		{ "navigation05.net", MAX_RELAXATION, STEP_RELAXATION },
+		{ "navigation06.net", MAX_RELAXATION, STEP_RELAXATION },
+		{ "navigation07.net", MAX_RELAXATION, STEP_RELAXATION },
+		{ "navigation08.net", MAX_RELAXATION, STEP_RELAXATION },
+		{ "navigation09.net", MAX_RELAXATION, STEP_RELAXATION },
+		// { "navigation10.net" },
+		// { "navigation11.net" },
+		// { "navigation12.net" },
 	});
     }
 
     private final String filename;
+    private final double maxRelaxation;
+    private final double stepRelaxation;
+    UtilityFunction result;
 
-    public DualGame(final String filename) {
+    public DualGame(final String filename, final double maxRelaxation, final double stepRelaxation) {
 	this.filename = filename;
+	this.maxRelaxation = stepRelaxation;
+	this.stepRelaxation = stepRelaxation;
     }
 
-    @Test(timeout = 600000L)
+    @Test(timeout = 6000000L)
     public void test() {
 	final ModifiedPolicyEvaluator policyEvaluator = new ModifiedPolicyEvaluator(100);
 
 	// Reads the MDP's definition from file and turns it to an imprecise
 	// problem
 	log.info("Current Problem: " + filename);
-	final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(0.25);
+	final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
 	final MDPImpreciseFileProblemReaderImpl initialReader = new MDPImpreciseFileProblemReaderImpl(initialProblemImprecisionGenerator);
 	final MDPIP initialMdpip = initialReader.readFromFile(PROBLEMS_DIR + "\\" + filename);
 
-	final ImprecisionGenerator imprecisionGenerator = new ImprecisionGeneratorByRanges(initialProblemImprecisionGenerator, 0.1);
+	final ImprecisionGenerator imprecisionGenerator = new ImprecisionGeneratorByRanges(initialProblemImprecisionGenerator,
+		stepRelaxation);
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
 	final ProbabilityEvaluator probabilityEvaluator = new MaxProbabilityEvaluator(SOLUTIONS_DIR + "\\initial_" + filename + ".txt");
+	// log.info("Initial problem is " + initialMdpip.toString());
 	SolveCaller.initializeCount();
 	final Stopwatch watchInitialGuess = new Stopwatch().start();
 	MDP mdp = probabilityEvaluator.evaluate(initialMdpip);
@@ -87,10 +96,12 @@ public class DualGame {
 	final Stopwatch watchMDP = new Stopwatch();
 	final Stopwatch watchMDPIP = new Stopwatch();
 	final Stopwatch watchAll = new Stopwatch().start();
+
+	UtilityFunction result1;
+	UtilityFunctionWithProbImpl result2;
 	while (true) {
 	    log.debug("Iteration " + i);
 	    final Policy result;
-	    final UtilityFunction result1;
 	    {
 		log.debug("Starting MDP");
 		watchMDP.start();
@@ -98,7 +109,7 @@ public class DualGame {
 		result = new PolicyIterationImpl(policyEvaluator).solve(mdp);
 		watch1.stop();
 		watchMDP.stop();
-		log.debug("End of MDP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
+		log.info("End of MDP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
 		result1 = policyEvaluator.policyEvaluation(result, new UtilityFunctionImpl(mdp.getStates()), mdp);
 		log.debug(result);
 		log.info("MDP: " + result1);
@@ -109,7 +120,6 @@ public class DualGame {
 	    final MDPImpreciseFileProblemReaderImpl reader2 = new MDPImpreciseFileProblemReaderImpl(imprecisionGenerator);
 	    final MDPIP mdpip = reader2.readFromFile(SOLUTIONS_DIR + "\\imprecise_problem" + i + ".txt");
 
-	    final UtilityFunctionWithProbImpl result2;
 	    {
 		log.debug("Starting MDPIP");
 		watchMDPIP.start();
@@ -117,7 +127,7 @@ public class DualGame {
 		result2 = (UtilityFunctionWithProbImpl) new ValueIterationProbImpl(result1).solve(mdpip, 0.001);
 		watch1.stop();
 		watchMDPIP.stop();
-		log.debug("End of MDPIP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
+		log.info("End of MDPIP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
 		log.info("MDPIP: " + result2);
 	    }
 
@@ -147,5 +157,6 @@ public class DualGame {
 	assertTrue(true);
 
 	log.info("End of problem " + filename + "\n\n\n\n\n");
+	this.result = result2;
     }
 }

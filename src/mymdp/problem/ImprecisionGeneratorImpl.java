@@ -3,7 +3,7 @@ package mymdp.problem;
 import static com.google.common.base.Preconditions.checkArgument;
 import static mymdp.util.Pair.newPair;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import mymdp.util.Pair;
@@ -18,7 +18,7 @@ public class ImprecisionGeneratorImpl implements ImprecisionGenerator {
     public ImprecisionGeneratorImpl(final double variation) {
 	checkArgument(probabilityRange.contains(Double.valueOf(variation)));
 	this.variation = variation;
-	this.cache = new HashMap<>();
+	this.cache = new LinkedHashMap<>();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ImprecisionGeneratorImpl implements ImprecisionGenerator {
 	final Pair<String, String> stateAction = newPair(initial, action);
 	Map<String, Range<Double>> consequences = cache.get(stateAction);
 	if (consequences == null) {
-	    consequences = new HashMap<>();
+	    consequences = new LinkedHashMap<>();
 	    cache.put(stateAction, consequences);
 	}
 	final Range<Double> probRange = Range.closed(actualProb - variation, actualProb + variation).intersection(probabilityRange);

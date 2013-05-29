@@ -112,7 +112,7 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 	    @Override
 	    public Map<State, Double> getPossibleStatesAndProbability(final State s, final Action a, final UtilityFunction function) {
 		final Pair<State, Action> transition = newPair(s, a);
-		final Map<State, Double> result = Maps.newHashMap();
+		final Map<State, Double> result = Maps.newLinkedHashMap();
 		final Collection<Pair<? extends State, String>> nextStates = probs.get(transition);
 
 		for (final Pair<? extends State, String> pair : nextStates) {

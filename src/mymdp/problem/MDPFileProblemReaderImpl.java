@@ -6,8 +6,8 @@ import static com.google.common.collect.ImmutableList.copyOf;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -40,13 +40,13 @@ public final class MDPFileProblemReaderImpl {
 
     public MDPFileProblemReaderImpl() {
 	readingStates = false;
-	allStates = new HashSet<>();
+	allStates = new LinkedHashSet<>();
 	actualAction = null;
-	transitions = new HashMap<>();
-	rewards = new HashMap<>();
+	transitions = new LinkedHashMap<>();
+	rewards = new LinkedHashMap<>();
 	readingRewards = false;
 	readingCosts = false;
-	costs = new HashMap<>();
+	costs = new LinkedHashMap<>();
 	discountFactor = -1.0;
 	initialState = null;
 	readingInitialState = false;
@@ -164,7 +164,7 @@ public final class MDPFileProblemReaderImpl {
 	    checkState(Range.closed(0.0, 1.0).contains(Double.parseDouble(actionTransitions[2])));
 	    Set<String[]> set = transitions.get(actualAction);
 	    if (set == null) {
-		set = new HashSet<>();
+		set = new LinkedHashSet<>();
 		transitions.put(actualAction, set);
 	    }
 	    set.add(actionTransitions);

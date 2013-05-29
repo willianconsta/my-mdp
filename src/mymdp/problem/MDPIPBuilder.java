@@ -7,12 +7,14 @@ import static com.google.common.collect.Iterables.getOnlyElement;
 import static mymdp.solver.ProbLinearSolver.solve;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
@@ -24,6 +26,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Range;
 
 public class MDPIPBuilder {
@@ -63,7 +66,7 @@ public class MDPIPBuilder {
 
     @VisibleForTesting
     static class ActionImpl implements Action {
-	private final Set<State> appliableStates = new HashSet<>();
+	private final Set<State> appliableStates = new LinkedHashSet<>();
 	private final String name;
 
 	ActionImpl(final String name) {
@@ -103,10 +106,10 @@ public class MDPIPBuilder {
     private int i = 0;
 
     public MDPIPBuilder() {
-	states = new HashMap<>();
-	transitions = new HashMap<>();
-	vars = new HashMap<>();
-	restrictions = new HashSet<>();
+	states = new LinkedHashMap<>();
+	transitions = new LinkedHashMap<>();
+	vars = new LinkedHashMap<>();
+	restrictions = new LinkedHashSet<>();
     }
 
     public MDPIPBuilder states(final Set<String> stateDefs) {
@@ -118,9 +121,9 @@ public class MDPIPBuilder {
 
     public MDPIPBuilder actions(final String actionName, final Set<String[]> transitionDefs) {
 	final Action action = new ActionImpl(actionName);
-	final Map<State, String> sumOnePerState = new HashMap<>();
-	double lowestSum = 0.0;
-	double greatestSum = 0.0;
+	final Map<State, String> sumOnePerState = new LinkedHashMap<>();
+	final Map<String, Double> lowestSum = new LinkedHashMap<>();
+	final Map<String, Double> greatestSum = new LinkedHashMap<>();
 
 	for (final String[] transitionDef : transitionDefs) {
 	    final State state1 = checkNotNull(states.get(transitionDef[0]));
@@ -128,29 +131,24 @@ public class MDPIPBuilder {
 
 	    Map<State, Map<State, String>> probs = transitions.get(action);
 	    if (probs == null) {
-		probs = new HashMap<>();
+		probs = new LinkedHashMap<>();
 		transitions.put(action, probs);
 	    }
 
 	    final State state2 = checkNotNull(states.get(transitionDef[1]));
 	    Map<State, String> map = probs.get(state1);
 	    if (map == null) {
-		map = new HashMap<>();
+		map = new LinkedHashMap<>();
 		probs.put(state1, map);
 	    }
 
 	    final String var = "p" + i++;
 	    map.put(state2, checkNotNull(var));
-	    String restrOne = sumOnePerState.get(state1);
-	    if (restrOne != null) {
-		restrOne += "+";
-	    } else {
-		restrOne = "";
-	    }
-	    restrOne += var;
-	    sumOnePerState.put(state1, restrOne);
-	    lowestSum += Double.parseDouble(transitionDef[2]);
-	    greatestSum += Double.parseDouble(transitionDef[3]);
+
+	    lowestSum.put(transitionDef[0], (lowestSum.containsKey(transitionDef[0]) ? lowestSum.get(transitionDef[0]) : 0)
+		    + Double.parseDouble(transitionDef[2]));
+	    greatestSum.put(transitionDef[0], (greatestSum.containsKey(transitionDef[0]) ? greatestSum.get(transitionDef[0]) : 0)
+		    + Double.parseDouble(transitionDef[3]));
 	    if (transitionDef[2].equals(transitionDef[3])) {
 		map.put(state2, transitionDef[3]);
 		continue;
@@ -162,25 +160,37 @@ public class MDPIPBuilder {
 		    restrictions.add(var + " <= " + transitionDef[3]);
 		}
 	    }
+	    String restrOne = sumOnePerState.get(state1);
+	    if (restrOne != null) {
+		restrOne += "+";
+	    } else {
+		restrOne = "";
+	    }
+	    restrOne += var;
+	    sumOnePerState.put(state1, restrOne);
 	    vars.put(Trio.newTrio(state1, action, state2), var);
 	}
 
-	checkState(lowestSum <= 1);
-	checkState(greatestSum >= 1);
+	checkState(Collections.max(lowestSum.values()) <= 1, "Expected leq than 1, got " + lowestSum);
+	checkState(Collections.min(greatestSum.values()) >= 1, "Expected geq than 1, got " + greatestSum);
 
+	// restrictions of sum one
 	for (final Entry<State, String> sumOne : sumOnePerState.entrySet()) {
 	    if (sumOne.getValue().indexOf('p') < sumOne.getValue().lastIndexOf('p')) {
+		// if there is more than one variable force their sum to be one.
 		restrictions.add(sumOne.getValue() + "=1");
 	    } else {
-		// always 1
-		final String var = sumOnePerState.values().iterator().next();
-		vars.values().remove(var);
+		// if there is only one variable it must be one.
+		final String var = sumOne.getValue();
+		checkState(vars.values().remove(var));
+		// removes other restrictions over the variable being removed
 		for (final Iterator<String> it = restrictions.iterator(); it.hasNext();) {
 		    final String restriction = it.next();
-		    if (restriction.startsWith(var)) {
+		    if (restriction.matches(".*?" + var + "(\\b|[^\\d].*?)")) {
 			it.remove();
 		    }
 		}
+		// force it to be one.
 		getOnlyElement(transitions.get(action).get(sumOne.getKey()).entrySet()).setValue("1");
 	    }
 	}
@@ -225,7 +235,7 @@ public class MDPIPBuilder {
 
 	    @Override
 	    public Set<Action> getActionsFor(final State state) {
-		final Set<Action> appliableActions = new HashSet<>();
+		final Set<Action> appliableActions = new LinkedHashSet<>();
 		for (final Entry<Action, Map<State, Map<State, String>>> entry : transitions.entrySet()) {
 		    if (entry.getValue().containsKey(state) && !entry.getValue().get(state).isEmpty()) {
 			appliableActions.add(entry.getKey());
@@ -259,7 +269,30 @@ public class MDPIPBuilder {
 
 	    @Override
 	    public String toString() {
-		return Objects.toStringHelper(this).add("states", states).add("transitions", transitions).add("discountRate", discountRate)
+		final Map<Action, Map<State, Map<State, String>>> transitions = new TreeMap<>(Ordering.usingToString());
+		transitions.putAll(this.transitions);
+
+		final Set<State> states = new TreeSet<>(Ordering.usingToString());
+		states.addAll(this.states);
+
+		final Map<Trio<State, Action, State>, String> vars = new TreeMap<>(Ordering.usingToString());
+		vars.putAll(this.vars);
+
+		final Set<String> restrictions = new TreeSet<>(this.restrictions);
+		restrictions.addAll(this.restrictions);
+
+		return Objects.toStringHelper(this)
+			.add("states",
+				states.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
+			.add("transitions",
+				transitions.toString().replaceAll("}, ", "},\n\t").replaceFirst("\\[", "\\[\n\t")
+					.replaceFirst("\\]", "\n\\]"))
+			.add("discountRate", discountRate)
+			.add("vars", vars.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t")
+				.replaceFirst("\\]", "\n\\]").replaceFirst("\\{", "\\{\n\t")
+				.replaceFirst("\\}", "\n\\}"))
+			.add("restrictions", restrictions.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t")
+				.replaceFirst("\\]", "\n\\]"))
 			.toString();
 	    }
 	};

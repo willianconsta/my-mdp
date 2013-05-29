@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class TestAIMAExample1 {
 	    return i == other.i && j == other.j;
 	}
 
-	private static Map<State, State> allStates = new HashMap<>();
+	private static Map<State, State> allStates = new LinkedHashMap<>();
 
 	static State createState(final int i, final int j) {
 	    if (i == 2 && j == 2) {
@@ -85,7 +85,7 @@ public class TestAIMAExample1 {
 	    }
 
 	    final StateImpl s = (StateImpl) state;
-	    final Map<State, Double> states = new HashMap<>(4);
+	    final Map<State, Double> states = new LinkedHashMap<>(4);
 	    State next1 = StateImpl.createState(s.i + 1, s.j);
 	    if (next1 == null) {
 		next1 = state;
@@ -129,7 +129,7 @@ public class TestAIMAExample1 {
 	    }
 
 	    final StateImpl s = (StateImpl) state;
-	    final Map<State, Double> states = new HashMap<>(4);
+	    final Map<State, Double> states = new LinkedHashMap<>(4);
 	    State next1 = StateImpl.createState(s.i - 1, s.j);
 	    if (next1 == null) {
 		next1 = state;
@@ -173,7 +173,7 @@ public class TestAIMAExample1 {
 	    }
 
 	    final StateImpl s = (StateImpl) state;
-	    final Map<State, Double> states = new HashMap<>(4);
+	    final Map<State, Double> states = new LinkedHashMap<>(4);
 	    State next1 = StateImpl.createState(s.i, s.j - 1);
 	    if (next1 == null) {
 		next1 = state;
@@ -217,7 +217,7 @@ public class TestAIMAExample1 {
 	    }
 
 	    final StateImpl s = (StateImpl) state;
-	    final Map<State, Double> states = new HashMap<>(4);
+	    final Map<State, Double> states = new LinkedHashMap<>(4);
 	    State next1 = StateImpl.createState(s.i, s.j + 1);
 	    if (next1 == null) {
 		next1 = state;
@@ -339,7 +339,7 @@ public class TestAIMAExample1 {
     private MDP createMDP() {
 	return new MDP() {
 	    private Set<State> states;
-	    private final Map<State, Set<Action>> actionsByState = new HashMap<>();
+	    private final Map<State, Set<Action>> actionsByState = new LinkedHashMap<>();
 	    private final Set<Action> actions = newHashSet(new ActionUp(), new ActionDown(), new ActionLeft(), new ActionRight(),
 		    new ActionNone());
 

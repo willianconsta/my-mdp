@@ -1,5 +1,7 @@
 package mymdp.dual;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
@@ -15,6 +17,8 @@ import mymdp.core.State;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Range;
 
 public class ImpreciseProblemGenerator {
     private static final Logger log = LogManager.getLogger(ImpreciseProblemGenerator.class);
@@ -60,13 +64,13 @@ public class ImpreciseProblemGenerator {
     }
 
     private void writeDiscountRate(final FileWriter fileWriter) throws IOException {
-	fileWriter.write("discount factor " + String.format(Locale.US, "%.8f", mdp.getDiscountFactor()) + "\n\n");
+	fileWriter.write("discount factor " + String.format(Locale.US, "%.10f", mdp.getDiscountFactor()) + "\n\n");
     }
 
     private void writeRewards(final FileWriter fileWriter) throws IOException {
 	fileWriter.write("reward\n");
 	for (final State s : mdp.getStates()) {
-	    fileWriter.write("\t" + s.toString() + " " + String.format(Locale.US, "%.8f", mdp.getRewardFor(s)) + "\n");
+	    fileWriter.write("\t" + s.toString() + " " + String.format(Locale.US, "%.10f", mdp.getRewardFor(s)) + "\n");
 	}
 	fileWriter.write("endreward\n\n");
     }
@@ -83,7 +87,7 @@ public class ImpreciseProblemGenerator {
 	}
 
 	for (final Action a : possibleActions) {
-	    fileWriter.write("\t" + a.toString() + " " + String.format(Locale.US, "%.8f", 0.0) + "\n");
+	    fileWriter.write("\t" + a.toString() + " " + String.format(Locale.US, "%.10f", 0.0) + "\n");
 	}
 	fileWriter.write("endcost\n\n");
     }
@@ -94,8 +98,10 @@ public class ImpreciseProblemGenerator {
 	    for (final State s : mdp.getStates()) {
 		if (a.isApplyableTo(s) && (result == null || result.getActionFor(s).equals(a))) {
 		    for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a).entrySet()) {
+			checkState(Range.closed(0.0, 1.0).contains(entry.getValue()), "Action " + a + " in state " + s
+				+ " has probability " + entry.getValue() + " to go to state " + entry.getKey());
 			fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
-				+ String.format(Locale.US, "%.8f", entry.getValue()) + "\n");
+				+ String.format(Locale.US, "%.10f", entry.getValue()) + "\n");
 		    }
 		}
 	    }

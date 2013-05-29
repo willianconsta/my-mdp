@@ -1,6 +1,6 @@
 package mymdp.problem;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -16,18 +16,18 @@ public class ImprecisionGeneratorByMDP implements ImprecisionGenerator {
 
     public ImprecisionGeneratorByMDP(final MDP mdp, final double maxVariation, final double stepVariation) {
 	this.stepVariation = stepVariation;
-	this.transitions = new HashMap<>();
+	this.transitions = new LinkedHashMap<>();
 	for (final State s : mdp.getStates()) {
 	    for (final Action a : mdp.getActionsFor(s)) {
 		for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a).entrySet()) {
 		    Map<String, Map<String, Range<Double>>> map = transitions.get(s.toString());
 		    if (map == null) {
-			map = new HashMap<>();
+			map = new LinkedHashMap<>();
 			transitions.put(s.toString(), map);
 		    }
 		    Map<String, Range<Double>> probs = map.get(a.toString());
 		    if (probs == null) {
-			probs = new HashMap<>();
+			probs = new LinkedHashMap<>();
 			map.put(a.toString(), probs);
 		    }
 		    probs.put(

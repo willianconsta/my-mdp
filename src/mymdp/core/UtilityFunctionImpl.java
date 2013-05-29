@@ -1,6 +1,6 @@
 package mymdp.core;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,7 +9,7 @@ import com.google.common.collect.Ordering;
 
 public class UtilityFunctionImpl implements UtilityFunction {
 
-    private final Map<State, Double> utilities = new HashMap<>();
+    private final Map<State, Double> utilities = new LinkedHashMap<>();
 
     public UtilityFunctionImpl(final Set<State> states, final double constantValue) {
 	for (final State state : states) {
