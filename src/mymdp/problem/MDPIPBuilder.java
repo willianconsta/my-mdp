@@ -247,7 +247,11 @@ public class MDPIPBuilder {
 	    @Override
 	    public Map<State, Double> getPossibleStatesAndProbability(final State initialState, final Action action,
 		    final UtilityFunction function) {
-		final Map<State, String> probabilityFunction = transitions.get(action).get(initialState);
+		final Map<State, Map<State, String>> actionMap = transitions.get(action);
+		if (actionMap == null) {
+		    return Collections.emptyMap();
+		}
+		final Map<State, String> probabilityFunction = actionMap.get(initialState);
 		if (probabilityFunction == null) {
 		    return Collections.emptyMap();
 		}

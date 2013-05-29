@@ -22,7 +22,7 @@ public class MaxProbabilityEvaluator implements ProbabilityEvaluator {
 	    final UtilityFunctionWithProbImpl result2 = (UtilityFunctionWithProbImpl) new ValueIterationProbImpl(
 		    new UtilityFunctionWithProbImpl(mdpip.getStates(), 0.0))
 		    .solve(mdpip, 0.1);
-	    final PreciseProblemGenerator generator2 = new PreciseProblemGenerator(result2, mdpip);
+	    final PreciseProblemGenerator generator2 = new PreciseProblemGenerator(result2, mdpip, mdpip);
 	    generator2
 		    .writeToFile(fullFilename, mdpip.getStates().iterator().next(), mdpip.getStates());
 	    return new MDPFileProblemReaderImpl().readFromFile(fullFilename);

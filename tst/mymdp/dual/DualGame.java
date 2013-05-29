@@ -44,17 +44,19 @@ public class DualGame {
     public static Collection<Object[]> data() {
 	return Arrays.asList(new Object[][] {
 		{ "navigation01.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation02.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation03.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation04.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation05.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation06.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation07.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation08.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation09.net", MAX_RELAXATION, STEP_RELAXATION },
-		// { "navigation10.net" },
-		// { "navigation11.net" },
-		// { "navigation12.net" },
+		/*
+		 * { "navigation02.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation03.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation04.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation05.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation06.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation07.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation08.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation09.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation10.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation11.net", MAX_RELAXATION, STEP_RELAXATION }, {
+		 * "navigation12.net", MAX_RELAXATION, STEP_RELAXATION },
+		 */
 	});
     }
 
@@ -116,9 +118,10 @@ public class DualGame {
 	    }
 
 	    final ImpreciseProblemGenerator generator = new ImpreciseProblemGenerator(result, mdp);
-	    generator.writeToFile(SOLUTIONS_DIR + "\\imprecise_problem" + i + ".txt", mdp.getStates().iterator().next(), mdp.getStates());
+	    generator.writeToFile(SOLUTIONS_DIR + "\\problem_for_evaluation_" + i + ".txt", mdp.getStates().iterator().next(), mdp
+		    .getStates());
 	    final MDPImpreciseFileProblemReaderImpl reader2 = new MDPImpreciseFileProblemReaderImpl(imprecisionGenerator);
-	    final MDPIP mdpip = reader2.readFromFile(SOLUTIONS_DIR + "\\imprecise_problem" + i + ".txt");
+	    final MDPIP mdpip = reader2.readFromFile(SOLUTIONS_DIR + "\\problem_for_evaluation_" + i + ".txt");
 
 	    {
 		log.debug("Starting MDPIP");
@@ -138,11 +141,12 @@ public class DualGame {
 		break;
 	    }
 
-	    final PreciseProblemGenerator generator2 = new PreciseProblemGenerator(result2, mdpip);
+	    final PreciseProblemGenerator generator2 = new PreciseProblemGenerator(result2, mdpip, initialMdpip);
 	    generator2
-		    .writeToFile(SOLUTIONS_DIR + "\\precise_problem" + i + ".txt", mdpip.getStates().iterator().next(), mdpip.getStates());
+		    .writeToFile(SOLUTIONS_DIR + "\\problem_for_select_best_" + i + ".txt", mdpip.getStates().iterator().next(), mdpip
+			    .getStates());
 
-	    mdp = reader.readFromFile(SOLUTIONS_DIR + "\\precise_problem" + i + ".txt");
+	    mdp = reader.readFromFile(SOLUTIONS_DIR + "\\problem_for_select_best_" + i + ".txt");
 	    i++;
 	}
 	log.info("Summary:");

@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -24,10 +25,12 @@ public class PreciseProblemGenerator {
 
     private final UtilityFunctionWithProbImpl result;
     private final MDPIP mdpip;
+    private final MDPIP fullMdpip;
 
-    public PreciseProblemGenerator(final UtilityFunctionWithProbImpl result, final MDPIP mdpip) {
+    public PreciseProblemGenerator(final UtilityFunctionWithProbImpl result, final MDPIP mdpip, final MDPIP fullMdpip) {
 	this.result = result;
 	this.mdpip = mdpip;
+	this.fullMdpip = fullMdpip;
     }
 
     public void writeToFile(final String path, final State initialState, final Set<State> goalStates) {
@@ -59,35 +62,44 @@ public class PreciseProblemGenerator {
     }
 
     private void writeDiscountRate(final FileWriter fileWriter) throws IOException {
-	fileWriter.write("discount factor " + String.format(Locale.US, "%.10f", mdpip.getDiscountFactor()) + "\n\n");
+	fileWriter.write("discount factor " + String.format(Locale.US, "%.10f", fullMdpip.getDiscountFactor()) + "\n\n");
     }
 
     private void writeRewards(final FileWriter fileWriter) throws IOException {
 	fileWriter.write("reward\n");
-	for (final State s : mdpip.getStates()) {
-	    fileWriter.write("\t" + s.toString() + " " + String.format(Locale.US, "%.10f", mdpip.getRewardFor(s)) + "\n");
+	for (final State s : fullMdpip.getStates()) {
+	    fileWriter.write("\t" + s.toString() + " " + String.format(Locale.US, "%.10f", fullMdpip.getRewardFor(s)) + "\n");
 	}
 	fileWriter.write("endreward\n\n");
     }
 
     private void writeCosts(final FileWriter fileWriter) throws IOException {
 	fileWriter.write("cost\n");
-	for (final Action a : mdpip.getAllActions()) {
+	for (final Action a : fullMdpip.getAllActions()) {
 	    fileWriter.write("\t" + a.toString() + " " + String.format(Locale.US, "%.10f", 0.0) + "\n");
 	}
 	fileWriter.write("endcost\n\n");
     }
 
     private void writeActions(final FileWriter fileWriter) throws IOException {
-	for (final Action a : mdpip.getAllActions()) {
+	for (final Action a : fullMdpip.getAllActions()) {
 	    fileWriter.write("action " + a.toString() + "\n");
-	    for (final State s : mdpip.getStates()) {
+	    for (final State s : fullMdpip.getStates()) {
 		if (a.isApplyableTo(s)) {
 		    double sumShouldBeOne = 0.0;
-		    for (final Entry<State, Double> entry : mdpip.getPossibleStatesAndProbability(s, a, result).entrySet()) {
-			sumShouldBeOne += entry.getValue();
-			fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
-				+ String.format(Locale.US, "%.10f", entry.getValue()) + "\n");
+		    Map<State, Double> specificTransitions = mdpip.getPossibleStatesAndProbability(s, a, result);
+		    if (!specificTransitions.isEmpty()) {
+			for (final Entry<State, Double> entry : specificTransitions.entrySet()) {
+			    sumShouldBeOne += entry.getValue();
+			    fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
+				    + String.format(Locale.US, "%.10f", entry.getValue()) + "\n");
+			}
+		    } else {
+			for (final Entry<State, Double> entry : fullMdpip.getPossibleStatesAndProbability(s, a, result).entrySet()) {
+			    sumShouldBeOne += entry.getValue();
+			    fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
+				    + String.format(Locale.US, "%.10f", entry.getValue()) + "\n");
+			}
 		    }
 		    checkState(Range.closed(0.0, 1.0).contains(sumShouldBeOne), "Action " + a + " in state " + s
 			    + " has total probability of " + sumShouldBeOne + " to go some state.");
@@ -99,7 +111,7 @@ public class PreciseProblemGenerator {
 
     private void writeStates(final FileWriter fileWriter) throws IOException {
 	fileWriter.write("states\n\t");
-	for (final Iterator<State> it = mdpip.getStates().iterator(); it.hasNext();) {
+	for (final Iterator<State> it = fullMdpip.getStates().iterator(); it.hasNext();) {
 	    final State s = it.next();
 	    fileWriter.write(s.toString());
 	    if (it.hasNext()) {
