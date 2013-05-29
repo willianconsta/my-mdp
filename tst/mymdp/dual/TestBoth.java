@@ -4,6 +4,8 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 import mymdp.core.UtilityFunction;
 import mymdp.util.UtilityFunctionDistanceEvaluator;
@@ -47,14 +49,35 @@ public class TestBoth {
 	this.stepRelaxation = stepRelaxation;
     }
 
+    private class SingleTask implements Callable<UtilityFunction> {
+	@Override
+	public UtilityFunction call() {
+	    final SingleGame singleGame = new SingleGame(filename, maxRelaxation, stepRelaxation);
+	    singleGame.test();
+	    return singleGame.result;
+	}
+    }
+
+    private class DualTask implements Callable<UtilityFunction> {
+	@Override
+	public UtilityFunction call() {
+	    final DualGame dualGame = new DualGame(filename, maxRelaxation, stepRelaxation);
+	    dualGame.test();
+	    return dualGame.result;
+	}
+    }
+
     @Test
-    public void both() {
-	final SingleGame singleGame = new SingleGame(filename, maxRelaxation, stepRelaxation);
-	final DualGame dualGame = new DualGame(filename, maxRelaxation, stepRelaxation);
-	singleGame.test();
-	dualGame.test();
-	final UtilityFunction singleResult = singleGame.result;
-	final UtilityFunction dualResult = dualGame.result;
+    public void both() throws InterruptedException, ExecutionException {
+	// final ExecutorService pool = Executors.newFixedThreadPool(2);
+	// final Future<UtilityFunction> singleFuture = pool.submit(new
+	// SingleTask());
+	// final Future<UtilityFunction> dualFuture = pool.submit(new
+	// DualTask());
+	// UtilityFunction singleResult = singleFuture.get();
+	// UtilityFunction dualResult = dualFuture.get();
+	final UtilityFunction singleResult = new SingleTask().call();
+	final UtilityFunction dualResult = new DualTask().call();
 	assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult, dualResult)).isLessThan(0.01);
     }
 }
