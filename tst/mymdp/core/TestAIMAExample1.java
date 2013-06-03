@@ -7,8 +7,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -34,7 +34,7 @@ public class TestAIMAExample1 {
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 	    return toString();
 	}
 
@@ -74,13 +74,18 @@ public class TestAIMAExample1 {
 
     private static class ActionUp implements Action {
 	@Override
-	public boolean isApplyableTo(final State state) {
+	public boolean isApplicableTo(final State state) {
 	    final StateImpl s = (StateImpl) state;
 	    return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
 	}
 
+	@Override
+	public String name() {
+	    return "ActionUp";
+	}
+
 	Map<State, Double> applyOver(final State state) {
-	    if (!isApplyableTo(state)) {
+	    if (!isApplicableTo(state)) {
 		return Collections.emptyMap();
 	    }
 
@@ -118,13 +123,18 @@ public class TestAIMAExample1 {
 
     private static class ActionDown implements Action {
 	@Override
-	public boolean isApplyableTo(final State state) {
+	public boolean isApplicableTo(final State state) {
 	    final StateImpl s = (StateImpl) state;
 	    return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
 	}
 
+	@Override
+	public String name() {
+	    return "ActionDown";
+	}
+
 	Map<State, Double> applyOver(final State state) {
-	    if (!isApplyableTo(state)) {
+	    if (!isApplicableTo(state)) {
 		return Collections.emptyMap();
 	    }
 
@@ -162,13 +172,18 @@ public class TestAIMAExample1 {
 
     private static class ActionLeft implements Action {
 	@Override
-	public boolean isApplyableTo(final State state) {
+	public boolean isApplicableTo(final State state) {
 	    final StateImpl s = (StateImpl) state;
 	    return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
 	}
 
+	@Override
+	public String name() {
+	    return "ActionLeft";
+	}
+
 	Map<State, Double> applyOver(final State state) {
-	    if (!isApplyableTo(state)) {
+	    if (!isApplicableTo(state)) {
 		return Collections.emptyMap();
 	    }
 
@@ -206,13 +221,18 @@ public class TestAIMAExample1 {
 
     private static class ActionRight implements Action {
 	@Override
-	public boolean isApplyableTo(final State state) {
+	public boolean isApplicableTo(final State state) {
 	    final StateImpl s = (StateImpl) state;
 	    return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
 	}
 
+	@Override
+	public String name() {
+	    return "ActionRight";
+	}
+
 	Map<State, Double> applyOver(final State state) {
-	    if (!isApplyableTo(state)) {
+	    if (!isApplicableTo(state)) {
 		return Collections.emptyMap();
 	    }
 
@@ -250,13 +270,18 @@ public class TestAIMAExample1 {
 
     private static class ActionNone implements Action {
 	@Override
-	public boolean isApplyableTo(final State state) {
+	public boolean isApplicableTo(final State state) {
 	    final StateImpl s = (StateImpl) state;
 	    return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
 	}
 
+	@Override
+	public String name() {
+	    return "ActionNone";
+	}
+
 	Map<State, Double> applyOver(final State state) {
-	    if (!isApplyableTo(state)) {
+	    if (!isApplicableTo(state)) {
 		return Collections.emptyMap();
 	    }
 
@@ -408,7 +433,7 @@ public class TestAIMAExample1 {
 		if (actions == null) {
 		    actions = new HashSet<>();
 		    for (final Action action : this.actions) {
-			if (action.isApplyableTo(state)) {
+			if (action.isApplicableTo(state)) {
 			    actions.add(action);
 			}
 		    }

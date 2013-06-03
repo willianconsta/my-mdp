@@ -8,12 +8,20 @@ package mymdp.core;
 public interface Action {
 
     /**
-     * Returns whether this action is applyable or not to a given state.
+     * Returns whether this action is applicable or not to a given state.
      * 
      * @param state
      *            a given state
-     * @return <code>true</code> if this action is applyable, <code>false</code>
-     *         if not.
+     * @return <code>true</code> if this action is applicable,
+     *         <code>false</code> if not.
      */
-    boolean isApplyableTo(State state);
+    boolean isApplicableTo(State state);
+
+    /**
+     * A name for the action. Actions with the same names <i>should</i> be
+     * equal.
+     * 
+     * @return the action's name.
+     */
+    String name();
 }

@@ -15,7 +15,7 @@ public class PolicyImpl implements Policy {
 	for (final State state : mdp.getStates()) {
 	    final Set<Action> actionsFor = mdp.getActionsFor(state);
 	    if (!actionsFor.isEmpty()) {
-		policies.put(state, get(actionsFor, new Random().nextInt(actionsFor.size())));
+		policies.put(state, get(actionsFor, new Random(1234).nextInt(actionsFor.size())));
 	    }
 	}
     }
@@ -24,7 +24,7 @@ public class PolicyImpl implements Policy {
 	for (final State state : mdpip.getStates()) {
 	    final Set<Action> actionsFor = mdpip.getActionsFor(state);
 	    if (!actionsFor.isEmpty()) {
-		policies.put(state, get(actionsFor, new Random().nextInt(actionsFor.size())));
+		policies.put(state, get(actionsFor, new Random(1234).nextInt(actionsFor.size())));
 	    }
 	}
     }
@@ -44,6 +44,21 @@ public class PolicyImpl implements Policy {
     @Override
     public Action getActionFor(final State state) {
 	return policies.get(state);
+    }
+
+    @Override
+    public boolean equals(final Object arg0) {
+	if (arg0 == null) {
+	    return false;
+	}
+	if (arg0 == this) {
+	    return true;
+	}
+	if (!(arg0 instanceof PolicyImpl)) {
+	    return false;
+	}
+	final PolicyImpl other = (PolicyImpl) arg0;
+	return policies.equals(other.policies);
     }
 
     @Override

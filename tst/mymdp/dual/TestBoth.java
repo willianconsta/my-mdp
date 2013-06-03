@@ -7,7 +7,9 @@ import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
+import mymdp.core.Policy;
 import mymdp.core.UtilityFunction;
+import mymdp.util.Pair;
 import mymdp.util.UtilityFunctionDistanceEvaluator;
 
 import org.junit.Test;
@@ -33,9 +35,6 @@ public class TestBoth {
 		{ "navigation07.net", MAX_RELAXATION, STEP_RELAXATION },
 		{ "navigation08.net", MAX_RELAXATION, STEP_RELAXATION },
 		{ "navigation09.net", MAX_RELAXATION, STEP_RELAXATION },
-		// { "navigation10.net" },
-		// { "navigation11.net" },
-		// { "navigation12.net" },
 	});
     }
 
@@ -49,35 +48,29 @@ public class TestBoth {
 	this.stepRelaxation = stepRelaxation;
     }
 
-    private class SingleTask implements Callable<UtilityFunction> {
+    private class SingleTask implements Callable<Pair<UtilityFunction, Policy>> {
 	@Override
-	public UtilityFunction call() {
-	    final SingleGame singleGame = new SingleGame(filename, maxRelaxation, stepRelaxation);
-	    singleGame.test();
-	    return singleGame.result;
+	public Pair<UtilityFunction, Policy> call() {
+	    final SingleGame singleGame = new SingleGame(filename, maxRelaxation);
+	    singleGame.solve();
+	    return Pair.newPair(singleGame.getValueResult(), singleGame.getPolicyResult());
 	}
     }
 
-    private class DualTask implements Callable<UtilityFunction> {
+    private class DualTask implements Callable<Pair<UtilityFunction, Policy>> {
 	@Override
-	public UtilityFunction call() {
+	public Pair<UtilityFunction, Policy> call() {
 	    final DualGame dualGame = new DualGame(filename, maxRelaxation, stepRelaxation);
-	    dualGame.test();
-	    return dualGame.result;
+	    dualGame.solve();
+	    return Pair.newPair(dualGame.getValueResult(), dualGame.getPolicyResult());
 	}
     }
 
     @Test
     public void both() throws InterruptedException, ExecutionException {
-	// final ExecutorService pool = Executors.newFixedThreadPool(2);
-	// final Future<UtilityFunction> singleFuture = pool.submit(new
-	// SingleTask());
-	// final Future<UtilityFunction> dualFuture = pool.submit(new
-	// DualTask());
-	// UtilityFunction singleResult = singleFuture.get();
-	// UtilityFunction dualResult = dualFuture.get();
-	final UtilityFunction singleResult = new SingleTask().call();
-	final UtilityFunction dualResult = new DualTask().call();
-	assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult, dualResult)).isLessThan(0.01);
+	final Pair<UtilityFunction, Policy> singleResult = new SingleTask().call();
+	final Pair<UtilityFunction, Policy> dualResult = new DualTask().call();
+	assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.first, dualResult.first)).isLessThan(0.01);
+	assertThat(singleResult.second).isEqualTo(dualResult.second);
     }
 }

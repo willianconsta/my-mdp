@@ -46,7 +46,7 @@ public class SolveCaller {
 	return numberOfSolverCalls;
     }
 
-    public void salveAMPLFile(final List<String> listaLegal, final List<String> listVariables, final List<String> listConstraint,
+    public void saveAMPLFile(final List<String> listaLegal, final List<String> listVariables, final List<String> listConstraint,
 	    final boolean isMaximize) {
 	String fileData = "";
 	try {

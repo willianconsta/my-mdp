@@ -7,7 +7,7 @@ import mymdp.problem.MDPFileProblemReaderImpl;
 import mymdp.solver.ProbLinearSolver;
 import mymdp.solver.ProbLinearSolver.SolutionType;
 
-public class MaxProbabilityEvaluator implements ProbabilityEvaluator {
+final class MaxProbabilityEvaluator implements ProbabilityEvaluator {
     private final String fullFilename;
 
     public MaxProbabilityEvaluator(final String fullFilename) {

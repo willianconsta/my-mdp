@@ -181,7 +181,7 @@ public class ProbLinearSolver {
 	// return result;
 	// }
 
-	solveCaller.salveAMPLFile(obj, ImmutableList.copyOf(variables), ImmutableList.copyOf(restrictions), type == SolutionType.MAXIMIZE);
+	solveCaller.saveAMPLFile(obj, ImmutableList.copyOf(variables), ImmutableList.copyOf(restrictions), type == SolutionType.MAXIMIZE);
 	try {
 	    solveCaller.callSolver();
 	} catch (final RuntimeException e) {

@@ -46,18 +46,13 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 	C1_OFF, C1_ON;
 
 	final static Set<State> allStates = ImmutableSet.<State> copyOf(States.values());
-
-	@Override
-	public String getName() {
-	    return name();
-	}
     }
 
     private static enum Actions implements Action {
 	NOP, REBOOT1;
 
 	@Override
-	public boolean isApplyableTo(final State state) {
+	public boolean isApplicableTo(final State state) {
 	    return true;
 	}
 
@@ -146,7 +141,7 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 		    throw Throwables.propagate(e);
 		}
 		final List<String> variables = ImmutableList.<String> of("p1", "p2", "p3", "p4");
-		solveCaller.salveAMPLFile(obj, variables,
+		solveCaller.saveAMPLFile(obj, variables,
 			ImmutableList.<String> of("p1 >= 0.85 + p2", "p1 <= 0.95", "p2 <= 0.10", "p3 = 1 - p1", "p4 = 1 - p2"), false);
 		solveCaller.callSolver();
 		final Map<String, Double> currentValuesProb = solveCaller.getCurrentValuesProb();

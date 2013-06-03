@@ -32,7 +32,7 @@ public class MDPBuilder {
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 	    return name;
 	}
 
@@ -46,7 +46,7 @@ public class MDPBuilder {
 	    if (!(obj instanceof State)) {
 		return false;
 	    }
-	    return name.equals(((State) obj).getName());
+	    return name.equals(((State) obj).name());
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class MDPBuilder {
 	}
 
 	@Override
-	public boolean isApplyableTo(final State state) {
+	public boolean isApplicableTo(final State state) {
 	    return appliableStates.contains(state);
 	}
 
@@ -76,11 +76,16 @@ public class MDPBuilder {
 	}
 
 	@Override
+	public String name() {
+	    return name;
+	}
+
+	@Override
 	public boolean equals(final Object obj) {
-	    if (!(obj instanceof ActionImpl)) {
+	    if (!(obj instanceof Action)) {
 		return false;
 	    }
-	    return name.equals(((ActionImpl) obj).name);
+	    return name.equals(((Action) obj).name());
 	}
 
 	@Override

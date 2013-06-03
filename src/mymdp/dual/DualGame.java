@@ -2,8 +2,6 @@ package mymdp.dual;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 import mymdp.core.MDP;
@@ -24,46 +22,20 @@ import mymdp.util.UtilityFunctionDistanceEvaluator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 import com.google.common.base.Stopwatch;
 
-@RunWith(Parameterized.class)
 public class DualGame {
     private static final Logger log = LogManager.getLogger(DualGame.class);
 
     private static final String PROBLEMS_DIR = "precise_problems";
     private static final String SOLUTIONS_DIR = "solutions";
-    private static final double MAX_RELAXATION = 0.25;
-    private static final double STEP_RELAXATION = 0.10;
-
-    @Parameters
-    public static Collection<Object[]> data() {
-	return Arrays.asList(new Object[][] {
-		{ "navigation01.net", MAX_RELAXATION, STEP_RELAXATION },
-		/*
-		 * { "navigation02.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation03.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation04.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation05.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation06.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation07.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation08.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation09.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation10.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation11.net", MAX_RELAXATION, STEP_RELAXATION }, {
-		 * "navigation12.net", MAX_RELAXATION, STEP_RELAXATION },
-		 */
-	});
-    }
 
     private final String filename;
     private final double maxRelaxation;
     private final double stepRelaxation;
-    UtilityFunction result;
+    private UtilityFunction valueResult;
+    private Policy policyResult;
 
     public DualGame(final String filename, final double maxRelaxation, final double stepRelaxation) {
 	this.filename = filename;
@@ -71,8 +43,7 @@ public class DualGame {
 	this.stepRelaxation = stepRelaxation;
     }
 
-    @Test(timeout = 6000000L)
-    public void test() {
+    public void solve() {
 	final ModifiedPolicyEvaluator policyEvaluator = new ModifiedPolicyEvaluator(100);
 
 	// Reads the MDP's definition from file and turns it to an imprecise
@@ -99,11 +70,11 @@ public class DualGame {
 	final Stopwatch watchMDPIP = new Stopwatch();
 	final Stopwatch watchAll = new Stopwatch().start();
 
+	Policy result;
 	UtilityFunction result1;
 	UtilityFunctionWithProbImpl result2;
 	while (true) {
 	    log.debug("Iteration " + i);
-	    final Policy result;
 	    {
 		log.debug("Starting MDP");
 		watchMDP.start();
@@ -113,7 +84,7 @@ public class DualGame {
 		watchMDP.stop();
 		log.info("End of MDP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
 		result1 = policyEvaluator.policyEvaluation(result, new UtilityFunctionImpl(mdp.getStates()), mdp);
-		log.debug(result);
+		log.info(result);
 		log.info("MDP: " + result1);
 	    }
 
@@ -161,6 +132,15 @@ public class DualGame {
 	assertTrue(true);
 
 	log.info("End of problem " + filename + "\n\n\n\n\n");
-	this.result = result2;
+	this.policyResult = result;
+	this.valueResult = result2;
+    }
+
+    public Policy getPolicyResult() {
+	return policyResult;
+    }
+
+    public UtilityFunction getValueResult() {
+	return valueResult;
     }
 }
