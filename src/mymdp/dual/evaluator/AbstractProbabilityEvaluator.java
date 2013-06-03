@@ -1,24 +1,26 @@
-package mymdp.dual;
+package mymdp.dual.evaluator;
 
 import mymdp.core.MDP;
 import mymdp.core.MDPIP;
 import mymdp.core.UtilityFunctionWithProbImpl;
+import mymdp.dual.PreciseProblemGenerator;
+import mymdp.dual.ValueIterationProbImpl;
 import mymdp.problem.MDPFileProblemReaderImpl;
 import mymdp.solver.ProbLinearSolver;
 import mymdp.solver.ProbLinearSolver.SolutionType;
 
-final class MaxProbabilityEvaluator implements ProbabilityEvaluator {
+abstract class AbstractProbabilityEvaluator implements ProbabilityEvaluator {
     private final String fullFilename;
 
-    public MaxProbabilityEvaluator(final String fullFilename) {
+    public AbstractProbabilityEvaluator(final String fullFilename) {
 	this.fullFilename = fullFilename;
     }
 
     @Override
-    public MDP evaluate(final MDPIP mdpip) {
+    public final MDP evaluate(final MDPIP mdpip) {
 	final SolutionType previousMode = ProbLinearSolver.getMode();
 	try {
-	    ProbLinearSolver.setMaximizing();
+	    setMode();
 	    final UtilityFunctionWithProbImpl result2 = (UtilityFunctionWithProbImpl) new ValueIterationProbImpl(
 		    new UtilityFunctionWithProbImpl(mdpip.getStates(), 0.0))
 		    .solve(mdpip, 0.1);
@@ -31,4 +33,5 @@ final class MaxProbabilityEvaluator implements ProbabilityEvaluator {
 	}
     }
 
+    abstract void setMode();
 }

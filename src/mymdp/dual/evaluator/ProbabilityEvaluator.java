@@ -1,4 +1,4 @@
-package mymdp.dual;
+package mymdp.dual.evaluator;
 
 import mymdp.core.MDP;
 import mymdp.core.MDPIP;

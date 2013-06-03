@@ -10,6 +10,8 @@ import mymdp.core.Policy;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
 import mymdp.core.UtilityFunctionWithProbImpl;
+import mymdp.dual.evaluator.ProbabilityEvaluator;
+import mymdp.dual.evaluator.ProbabilityEvaluatorFactory;
 import mymdp.problem.ImprecisionGenerator;
 import mymdp.problem.ImprecisionGeneratorByRanges;
 import mymdp.problem.ImprecisionGeneratorImpl;
@@ -56,7 +58,8 @@ public class DualGame {
 	final ImprecisionGenerator imprecisionGenerator = new ImprecisionGeneratorByRanges(initialProblemImprecisionGenerator,
 		stepRelaxation);
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final ProbabilityEvaluator probabilityEvaluator = new MaxProbabilityEvaluator(SOLUTIONS_DIR + "\\initial_" + filename + ".txt");
+	final ProbabilityEvaluator probabilityEvaluator = ProbabilityEvaluatorFactory.getMaxInstance(SOLUTIONS_DIR + "\\initial_"
+		+ filename + ".txt");
 	// log.info("Initial problem is " + initialMdpip.toString());
 	SolveCaller.initializeCount();
 	final Stopwatch watchInitialGuess = new Stopwatch().start();
