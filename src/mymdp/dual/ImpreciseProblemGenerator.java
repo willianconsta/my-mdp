@@ -97,7 +97,7 @@ final class ImpreciseProblemGenerator {
 	    fileWriter.write("action " + a.toString() + "\n");
 	    for (final State s : mdp.getStates()) {
 		if (a.isApplicableTo(s) && (result == null || result.getActionFor(s).equals(a))) {
-		    for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a).entrySet()) {
+		    for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a)) {
 			checkState(Range.closed(0.0, 1.0).contains(entry.getValue()), "Action " + a + " in state " + s
 				+ " has probability " + entry.getValue() + " to go to state " + entry.getKey());
 			fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "

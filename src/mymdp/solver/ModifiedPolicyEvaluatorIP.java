@@ -32,7 +32,7 @@ public class ModifiedPolicyEvaluatorIP {
 	for (final State s : mdpip.getStates()) {
 	    final Action a = policy.getActionFor(s);
 	    double value = 0.0;
-	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, function).entrySet()) {
+	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, function)) {
 		value += nextStateAndProb.getValue() * function.getUtility(nextStateAndProb.getKey());
 	    }
 	    evaluatedFunction.updateUtility(s, mdpip.getRewardFor(s) + mdpip.getDiscountFactor() * value);

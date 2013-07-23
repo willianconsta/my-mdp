@@ -20,7 +20,7 @@ public final class BellmanUtils {
 	}
 	for (final Action action : mdp.getActionsFor(state)) {
 	    double utilityOfAction = 0;
-	    for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(state, action).entrySet()) {
+	    for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(state, action)) {
 		utilityOfAction += nextStateAndProb.getValue().doubleValue() * function.getUtility(nextStateAndProb.getKey());
 	    }
 	    maxUtilityOfActions = max(maxUtilityOfActions, utilityOfAction);
@@ -35,7 +35,7 @@ public final class BellmanUtils {
 	}
 	for (final Action action : mdpip.getActionsFor(state)) {
 	    double utilityOfAction = 0;
-	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(state, action, function).entrySet()) {
+	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(state, action, function)) {
 		utilityOfAction += nextStateAndProb.getValue().doubleValue() * function.getUtility(nextStateAndProb.getKey());
 	    }
 	    maxUtilityOfActions = max(maxUtilityOfActions, utilityOfAction);
@@ -51,7 +51,7 @@ public final class BellmanUtils {
 	}
 	for (final Action a : mdp.getActionsFor(s)) {
 	    double value = 0.0;
-	    for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, a).entrySet()) {
+	    for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, a)) {
 		value += nextStateAndProb.getValue() * function.getUtility(nextStateAndProb.getKey());
 	    }
 	    if (value > maxValue) {
@@ -70,7 +70,7 @@ public final class BellmanUtils {
 	}
 	for (final Action a : mdpip.getActionsFor(s)) {
 	    double value = 0.0;
-	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, function).entrySet()) {
+	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, function)) {
 		value += nextStateAndProb.getValue() * function.getUtility(nextStateAndProb.getKey());
 	    }
 	    if (value > maxValue) {

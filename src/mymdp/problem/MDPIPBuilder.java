@@ -18,6 +18,7 @@ import java.util.TreeSet;
 
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
+import mymdp.core.ProbabilityFunction;
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 import mymdp.util.Trio;
@@ -250,20 +251,20 @@ public class MDPIPBuilder {
 	    }
 
 	    @Override
-	    public Map<State, Double> getPossibleStatesAndProbability(final State initialState, final Action action,
+	    public ProbabilityFunction getPossibleStatesAndProbability(final State initialState, final Action action,
 		    final UtilityFunction function) {
 		final Map<State, Map<State, String>> actionMap = transitions.get(action);
 		if (actionMap == null) {
-		    return Collections.emptyMap();
+		    return ProbabilityFunction.Instance.empty();
 		}
 		final Map<State, String> probabilityFunction = actionMap.get(initialState);
 		if (probabilityFunction == null) {
-		    return Collections.emptyMap();
+		    return ProbabilityFunction.Instance.empty();
 		}
 
 		final Map<State, Double> minProb = solve(probabilityFunction, getRewardFor(initialState), function,
 			vars.values(), restrictions);
-		return minProb;
+		return ProbabilityFunction.Instance.createSimple(minProb);
 	    }
 
 	    @Override

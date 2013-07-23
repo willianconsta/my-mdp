@@ -13,7 +13,7 @@ public class TestNavigationFile01 {
     @Test
     public void test01() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation01.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation01.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.991404955, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-4.684730495, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -33,7 +33,7 @@ public class TestNavigationFile01 {
     @Test
     public void test02() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation02.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation02.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-5.21617149554, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -56,7 +56,7 @@ public class TestNavigationFile01 {
     @Test
     public void test03() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation03.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation03.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-6.12416205153, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -84,7 +84,7 @@ public class TestNavigationFile01 {
     @Test
     public void test04() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation04.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation04.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-7.45517833585, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -122,7 +122,7 @@ public class TestNavigationFile01 {
     @Test
     public void test05() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation05.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation05.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-7.17484513073, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -160,7 +160,7 @@ public class TestNavigationFile01 {
     @Test
     public void test06() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation06.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation06.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-7.71068769604, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -208,7 +208,7 @@ public class TestNavigationFile01 {
     @Test
     public void test07() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation07.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation07.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-8.14465055407, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -266,7 +266,7 @@ public class TestNavigationFile01 {
     @Test
     public void test08() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation08.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation08.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-9.01436959336, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -334,7 +334,7 @@ public class TestNavigationFile01 {
     @Test
     public void test09() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation09.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation09.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-9.20070251077, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -422,7 +422,7 @@ public class TestNavigationFile01 {
     @Test
     public void test10() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation10.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation10.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-9.351562554, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -530,7 +530,7 @@ public class TestNavigationFile01 {
     @Test
     public void test11() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation11.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation11.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);
 	Assert.assertEquals(-9.91414335341, result.getUtility(new StateImpl("robot-at-x01y01")), 0.001);
@@ -738,7 +738,7 @@ public class TestNavigationFile01 {
     @Test
     public void test12() {
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final MDP mdp = reader.readFromFile("problems\\navigation12.net");
+	final MDP mdp = reader.readFromFile("precise_problems\\navigation12.net");
 	final UtilityFunction result = new ValueIterationImpl().solve(mdp, 0.001);
 
 	Assert.assertEquals(-9.99140495544, result.getUtility(new StateImpl("broken-robot")), 0.001);

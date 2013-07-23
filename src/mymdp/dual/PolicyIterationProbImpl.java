@@ -55,7 +55,7 @@ public class PolicyIterationProbImpl implements PolicyIterationIP {
 	    }
 	    double policyValue = 0.0;
 	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, policy.getActionFor(s),
-		    evaluatedFunction).entrySet()) {
+		    evaluatedFunction)) {
 		policyValue += nextStateAndProb.getValue() * evaluatedFunction.getUtility(nextStateAndProb.getKey());
 	    }
 

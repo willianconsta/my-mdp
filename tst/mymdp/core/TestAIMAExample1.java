@@ -403,23 +403,23 @@ public class TestAIMAExample1 {
 	    }
 
 	    @Override
-	    public Map<State, Double> getPossibleStatesAndProbability(final State initialState, final Action action) {
+	    public ProbabilityFunction getPossibleStatesAndProbability(final State initialState, final Action action) {
 		if (action instanceof ActionUp) {
-		    return ((ActionUp) action).applyOver(initialState);
+		    return ProbabilityFunction.Instance.createSimple(((ActionUp) action).applyOver(initialState));
 		}
 		if (action instanceof ActionDown) {
-		    return ((ActionDown) action).applyOver(initialState);
+		    return ProbabilityFunction.Instance.createSimple(((ActionDown) action).applyOver(initialState));
 		}
 		if (action instanceof ActionLeft) {
-		    return ((ActionLeft) action).applyOver(initialState);
+		    return ProbabilityFunction.Instance.createSimple(((ActionLeft) action).applyOver(initialState));
 		}
 		if (action instanceof ActionRight) {
-		    return ((ActionRight) action).applyOver(initialState);
+		    return ProbabilityFunction.Instance.createSimple(((ActionRight) action).applyOver(initialState));
 		}
 		if (action instanceof ActionNone) {
-		    return ((ActionNone) action).applyOver(initialState);
+		    return ProbabilityFunction.Instance.createSimple(((ActionNone) action).applyOver(initialState));
 		}
-		return Collections.emptyMap();
+		return ProbabilityFunction.Instance.empty();
 	    }
 
 	    @Override

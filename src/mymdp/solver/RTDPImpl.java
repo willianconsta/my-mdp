@@ -6,7 +6,6 @@ import static mymdp.solver.BellmanUtils.getGreedyActionForState;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
@@ -95,12 +94,9 @@ public final class RTDPImpl implements RTDP {
     }
 
     private State chooseNextState(final State s, final Action a, final MDP mdp) {
-	final Map<State, Double> possibleStatesAndProbability = mdp
-		.getPossibleStatesAndProbability(s, a);
 	final double random = randomSeed.nextDouble();
 	double accumulated = 0.0;
-	for (final Entry<State, Double> entry : possibleStatesAndProbability
-		.entrySet()) {
+	for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a)) {
 	    if (random < accumulated + entry.getValue().doubleValue()) {
 		return entry.getKey();
 	    }

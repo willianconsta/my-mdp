@@ -6,12 +6,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
+import mymdp.core.ProbabilityFunction;
 import mymdp.core.State;
 import mymdp.core.UtilityFunctionWithProbImpl;
 
@@ -87,15 +87,15 @@ public class PreciseProblemGenerator {
 	    for (final State s : fullMdpip.getStates()) {
 		if (a.isApplicableTo(s)) {
 		    double sumShouldBeOne = 0.0;
-		    Map<State, Double> specificTransitions = mdpip.getPossibleStatesAndProbability(s, a, result);
+		    final ProbabilityFunction specificTransitions = mdpip.getPossibleStatesAndProbability(s, a, result);
 		    if (!specificTransitions.isEmpty()) {
-			for (final Entry<State, Double> entry : specificTransitions.entrySet()) {
+			for (final Entry<State, Double> entry : specificTransitions) {
 			    sumShouldBeOne += entry.getValue();
 			    fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
 				    + String.format(Locale.US, "%.10f", entry.getValue()) + "\n");
 			}
 		    } else {
-			for (final Entry<State, Double> entry : fullMdpip.getPossibleStatesAndProbability(s, a, result).entrySet()) {
+			for (final Entry<State, Double> entry : fullMdpip.getPossibleStatesAndProbability(s, a, result)) {
 			    sumShouldBeOne += entry.getValue();
 			    fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
 				    + String.format(Locale.US, "%.10f", entry.getValue()) + "\n");

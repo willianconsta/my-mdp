@@ -4,9 +4,21 @@ import mymdp.core.MDP;
 import mymdp.core.Policy;
 import mymdp.core.UtilityFunction;
 
-public interface PolicyEvaluator {
+/**
+ * Policy evaluator for precise problems.
+ * 
+ * @author Willian
+ */
+interface PolicyEvaluator {
 
-    UtilityFunction policyEvaluation(Policy policy, UtilityFunction function,
-	    MDP mdp);
-
+    /**
+     * Evaluates the given policy for a MDP.
+     * 
+     * @param policy
+     *            the policy for evaluation
+     * @param function
+     * @param mdp
+     * @return
+     */
+    UtilityFunction policyEvaluation(Policy policy, UtilityFunction function, MDP mdp);
 }

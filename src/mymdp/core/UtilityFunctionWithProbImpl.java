@@ -7,7 +7,7 @@ import java.util.Set;
 import mymdp.util.Pair;
 
 public class UtilityFunctionWithProbImpl extends UtilityFunctionImpl {
-    private final Map<State, Pair<Action, Map<State, Double>>> actionAndProbByStates;
+    private final Map<State, Pair<Action, ProbabilityFunction>> actionAndProbByStates;
 
     public UtilityFunctionWithProbImpl(final Set<State> states) {
 	super(states);
@@ -28,12 +28,12 @@ public class UtilityFunctionWithProbImpl extends UtilityFunctionImpl {
 	}
     }
 
-    public void updateUtility(final State state, final double utility, final Action action, final Map<State, Double> prob) {
+    public void updateUtility(final State state, final double utility, final Action action, final ProbabilityFunction prob) {
 	super.updateUtility(state, utility);
 	actionAndProbByStates.put(state, Pair.newPair(action, prob));
     }
 
-    public Pair<Action, Map<State, Double>> getProbability(final State state) {
+    public Pair<Action, ProbabilityFunction> getProbability(final State state) {
 	return actionAndProbByStates.get(state);
     }
 }

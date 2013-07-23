@@ -11,6 +11,7 @@ import java.util.Set;
 
 import mymdp.core.Action;
 import mymdp.core.MDP;
+import mymdp.core.ProbabilityFunction;
 import mymdp.core.State;
 import mymdp.util.CollectionUtils;
 
@@ -173,8 +174,8 @@ public class MDPBuilder {
 	    }
 
 	    @Override
-	    public Map<State, Double> getPossibleStatesAndProbability(final State initialState, final Action action) {
-		return CollectionUtils.nullToEmpty(transitions.get(action).get(initialState));
+	    public ProbabilityFunction getPossibleStatesAndProbability(final State initialState, final Action action) {
+		return ProbabilityFunction.Instance.createSimple(CollectionUtils.nullToEmpty(transitions.get(action).get(initialState)));
 	    }
 
 	    @Override

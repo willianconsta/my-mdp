@@ -29,20 +29,15 @@ public class ModifiedPolicyEvaluator implements PolicyEvaluator {
 	return evaluatedFunction;
     }
 
-    private UtilityFunction singleEvaluation(final Policy policy,
-	    final UtilityFunction function, final MDP mdp) {
-	final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(
-		function);
+    private UtilityFunction singleEvaluation(final Policy policy, final UtilityFunction function, final MDP mdp) {
+	final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(function);
 	for (final State s : mdp.getStates()) {
 	    final Action a = policy.getActionFor(s);
 	    double value = 0.0;
-	    for (final Entry<State, Double> nextStateAndProb : mdp
-		    .getPossibleStatesAndProbability(s, a).entrySet()) {
-		value += nextStateAndProb.getValue()
-			* function.getUtility(nextStateAndProb.getKey());
+	    for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, a)) {
+		value += nextStateAndProb.getValue() * function.getUtility(nextStateAndProb.getKey());
 	    }
-	    evaluatedFunction.updateUtility(s,
-		    mdp.getRewardFor(s) + mdp.getDiscountFactor() * value);
+	    evaluatedFunction.updateUtility(s, mdp.getRewardFor(s) + mdp.getDiscountFactor() * value);
 	}
 	return evaluatedFunction;
     }

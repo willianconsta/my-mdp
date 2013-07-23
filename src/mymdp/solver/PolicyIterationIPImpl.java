@@ -21,7 +21,9 @@ public class PolicyIterationIPImpl implements PolicyIterationIP {
 	this.evaluator = evaluator;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see mymdp.solver.PolicyIterationIP#solve(mymdp.core.MDPIP)
      */
     @Override
@@ -51,7 +53,7 @@ public class PolicyIterationIPImpl implements PolicyIterationIP {
 	    }
 	    double policyValue = 0.0;
 	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, policy.getActionFor(s),
-		    evaluatedFunction).entrySet()) {
+		    evaluatedFunction)) {
 		policyValue += nextStateAndProb.getValue() * evaluatedFunction.getUtility(nextStateAndProb.getKey());
 	    }
 

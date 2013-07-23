@@ -1,6 +1,5 @@
 package mymdp.core;
 
-import java.util.Map;
 import java.util.Set;
 
 public interface MDPIP {
@@ -8,7 +7,7 @@ public interface MDPIP {
 
     Set<Action> getActionsFor(State state);
 
-    Map<State, Double> getPossibleStatesAndProbability(State initialState,
+    ProbabilityFunction getPossibleStatesAndProbability(State initialState,
 	    Action action, UtilityFunction function);
 
     double getRewardFor(State state);

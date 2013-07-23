@@ -1,7 +1,6 @@
 package mymdp.core;
 
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 
 import mymdp.solver.ValueIterationImpl;
@@ -31,8 +30,8 @@ public class TestEmptyMDP {
 	    }
 
 	    @Override
-	    public Map<State, Double> getPossibleStatesAndProbability(final State initialState, final Action action) {
-		return Collections.emptyMap();
+	    public ProbabilityFunction getPossibleStatesAndProbability(final State initialState, final Action action) {
+		return ProbabilityFunction.Instance.empty();
 	    }
 
 	    @Override

@@ -19,7 +19,7 @@ public class ImprecisionGeneratorByMDP implements ImprecisionGenerator {
 	this.transitions = new LinkedHashMap<>();
 	for (final State s : mdp.getStates()) {
 	    for (final Action a : mdp.getActionsFor(s)) {
-		for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a).entrySet()) {
+		for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a)) {
 		    Map<String, Map<String, Range<Double>>> map = transitions.get(s.toString());
 		    if (map == null) {
 			map = new LinkedHashMap<>();
