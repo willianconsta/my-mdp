@@ -54,7 +54,7 @@ public final class BellmanUtils {
 	    for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, a)) {
 		value += nextStateAndProb.getValue() * function.getUtility(nextStateAndProb.getKey());
 	    }
-	    if (value > maxValue) {
+	    if (value > maxValue || value == maxValue && maxA.name().compareTo(a.name()) < 0) {
 		maxA = a;
 		maxValue = value;
 	    }
@@ -73,7 +73,7 @@ public final class BellmanUtils {
 	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, function)) {
 		value += nextStateAndProb.getValue() * function.getUtility(nextStateAndProb.getKey());
 	    }
-	    if (value > maxValue) {
+	    if (value > maxValue || value == maxValue && maxA.name().compareTo(a.name()) < 0) {
 		maxA = a;
 		maxValue = value;
 	    }

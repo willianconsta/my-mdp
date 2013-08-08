@@ -1,5 +1,7 @@
 package mymdp.core;
 
+import com.google.common.base.Function;
+
 /**
  * Interface for actions.
  * 
@@ -24,4 +26,17 @@ public interface Action {
      * @return the action's name.
      */
     String name();
+
+    /**
+     * {@link Function} instance that retrieves the name of an action.
+     */
+    public static Function<Action, String> toName = new Function<Action, String>() {
+	@Override
+	public String apply(final Action input) {
+	    if (input == null) {
+		return null;
+	    }
+	    return input.name();
+	}
+    };
 }

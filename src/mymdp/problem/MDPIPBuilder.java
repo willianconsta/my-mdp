@@ -21,6 +21,8 @@ import mymdp.core.MDPIP;
 import mymdp.core.ProbabilityFunction;
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
+import mymdp.exception.InvalidProbabilityFunctionException;
+import mymdp.solver.ProbLinearSolver;
 import mymdp.util.Trio;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -264,7 +266,12 @@ public class MDPIPBuilder {
 
 		final Map<State, Double> minProb = solve(probabilityFunction, getRewardFor(initialState), function,
 			vars.values(), restrictions);
-		return ProbabilityFunction.Instance.createSimple(minProb);
+		try {
+		    return ProbabilityFunction.Instance.createSimple(minProb);
+		} catch (final InvalidProbabilityFunctionException e) {
+		    throw new IllegalStateException("Problem evaluating state " + initialState + " and action " + action + ". Log: "
+			    + ProbLinearSolver.getLastFullLog(), e);
+		}
 	    }
 
 	    @Override

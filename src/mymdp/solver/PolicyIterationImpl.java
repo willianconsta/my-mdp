@@ -53,7 +53,7 @@ public class PolicyIterationImpl implements PolicyIteration {
 		policyValue += nextStateAndProb.getValue() * evaluatedFunction.getUtility(nextStateAndProb.getKey());
 	    }
 
-	    if (maxValue > policyValue) {
+	    if (maxValue > policyValue || maxValue == policyValue && policy.getActionFor(s).name().compareTo(maxA.name()) < 0) {
 		policy.updatePolicy(s, maxA);
 		hasChanged = true;
 	    }

@@ -12,6 +12,9 @@
 		<logger name="mymdp.dual" level="INFO">
 			<appender-ref ref="summary" />
 		</logger>
+		<logger name="mymdp.solver" level="INFO">
+			<appender-ref ref="summary" />
+		</logger>
 		<root level="INFO">
 			<appender-ref ref="Console" />
 		</root>

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import mymdp.solver.ModifiedPolicyEvaluatorIP;
 import mymdp.solver.PolicyIterationIPImpl;
+import mymdp.solver.ProbLinearSolver.SolutionType;
 import mymdp.solver.SolveCaller;
 import mymdp.solver.ValueIterationIPImpl;
 import mymdp.util.Pair;
@@ -142,7 +143,8 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 		}
 		final List<String> variables = ImmutableList.<String> of("p1", "p2", "p3", "p4");
 		solveCaller.saveAMPLFile(obj, variables,
-			ImmutableList.<String> of("p1 >= 0.85 + p2", "p1 <= 0.95", "p2 <= 0.10", "p3 = 1 - p1", "p4 = 1 - p2"), false);
+			ImmutableList.<String> of("p1 >= 0.85 + p2", "p1 <= 0.95", "p2 <= 0.10", "p3 = 1 - p1", "p4 = 1 - p2"),
+			SolutionType.MINIMIZE);
 		solveCaller.callSolver();
 		final Map<String, Double> currentValuesProb = solveCaller.getCurrentValuesProb();
 		if (currentValuesProb.isEmpty()) {

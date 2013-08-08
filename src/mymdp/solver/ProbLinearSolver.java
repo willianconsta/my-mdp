@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
+import mymdp.util.Pair;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,13 +36,23 @@ public class ProbLinearSolver {
 
     public static enum SolutionType {
 	MAXIMIZE,
-	MINIMIZE;
+	MINIMIZE,
+	ANY_FEASIBLE;
     }
 
     /**
      * Current mode of the solver
      */
     private static SolutionType solution = SolutionType.MINIMIZE;
+
+    /**
+     * Gets the last solver call log.
+     * 
+     * @return a pair with the request and the result.
+     */
+    public static Pair<String, String> getLastFullLog() {
+	return Pair.newPair(solveCaller.getFileContents(), solveCaller.getLog());
+    }
 
     /**
      * Gets the current mode of the solver.
@@ -60,7 +71,10 @@ public class ProbLinearSolver {
     }
 
     /**
-     * Put the solver in maximize mode.
+     * Put the solver in the specified mode.
+     * 
+     * @param mode
+     *            the mode, must be not null.
      */
     public static void setMode(final SolutionType mode) {
 	checkNotNull(mode);
@@ -72,6 +86,13 @@ public class ProbLinearSolver {
      */
     public static void setMinimizing() {
 	solution = SolutionType.MINIMIZE;
+    }
+
+    /**
+     * Put the solver in feasibility-only mode.
+     */
+    public static void setFeasibilityOnly() {
+	solution = SolutionType.ANY_FEASIBLE;
     }
 
     /**
@@ -181,7 +202,7 @@ public class ProbLinearSolver {
 	// return result;
 	// }
 
-	solveCaller.saveAMPLFile(obj, ImmutableList.copyOf(variables), ImmutableList.copyOf(restrictions), type == SolutionType.MAXIMIZE);
+	solveCaller.saveAMPLFile(obj, ImmutableList.copyOf(variables), ImmutableList.copyOf(restrictions), type);
 	try {
 	    solveCaller.callSolver();
 	} catch (final RuntimeException e) {

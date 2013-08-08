@@ -58,7 +58,7 @@ public class DualGame {
 	final ImprecisionGenerator imprecisionGenerator = new ImprecisionGeneratorByRanges(initialProblemImprecisionGenerator,
 		stepRelaxation);
 	final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-	final ProbabilityEvaluator probabilityEvaluator = ProbabilityEvaluatorFactory.getMaxInstance(SOLUTIONS_DIR + "\\initial_"
+	final ProbabilityEvaluator probabilityEvaluator = ProbabilityEvaluatorFactory.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\initial_"
 		+ filename + ".txt");
 	// log.info("Initial problem is " + initialMdpip.toString());
 	SolveCaller.initializeCount();

@@ -18,6 +18,15 @@ public interface Policy {
     Action getActionFor(State state);
 
     /**
+     * Gets the action defined for the state with a given name.
+     * 
+     * @param state
+     *            a state name.
+     * @return the action for the state.
+     */
+    Action getActionFor(String stateName);
+
+    /**
      * Updates the policy associating the action with the state.
      * 
      * @param state

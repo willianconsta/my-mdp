@@ -18,7 +18,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestBoth {
+public class TestAgainstSatiaPolicyIteration {
 
     private static final double MAX_RELAXATION = 0.15;
     private static final double STEP_RELAXATION = 0.15;
@@ -42,7 +42,7 @@ public class TestBoth {
     private final double maxRelaxation;
     private final double stepRelaxation;
 
-    public TestBoth(final String filename, final double maxRelaxation, final double stepRelaxation) {
+    public TestAgainstSatiaPolicyIteration(final String filename, final double maxRelaxation, final double stepRelaxation) {
 	this.filename = filename;
 	this.maxRelaxation = maxRelaxation;
 	this.stepRelaxation = stepRelaxation;
@@ -51,7 +51,7 @@ public class TestBoth {
     private class SingleTask implements Callable<Pair<UtilityFunction, Policy>> {
 	@Override
 	public Pair<UtilityFunction, Policy> call() {
-	    final SingleGame singleGame = new SingleGame(filename, maxRelaxation);
+	    final PolicyIterationSatiaGame singleGame = new PolicyIterationSatiaGame(filename, maxRelaxation);
 	    singleGame.solve();
 	    return Pair.newPair(singleGame.getValueResult(), singleGame.getPolicyResult());
 	}
@@ -70,7 +70,8 @@ public class TestBoth {
     public void both() throws InterruptedException, ExecutionException {
 	final Pair<UtilityFunction, Policy> singleResult = new SingleTask().call();
 	final Pair<UtilityFunction, Policy> dualResult = new DualTask().call();
-	assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.first, dualResult.first)).isLessThan(0.01);
+	assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.first,
+		dualResult.first)).isLessThan(0.001);
 	assertThat(singleResult.second).isEqualTo(dualResult.second);
     }
 }

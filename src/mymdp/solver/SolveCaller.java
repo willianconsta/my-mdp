@@ -11,6 +11,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import mymdp.solver.ProbLinearSolver.SolutionType;
+
+import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
 
 public class SolveCaller {
@@ -21,6 +24,8 @@ public class SolveCaller {
     private List<String> variablesName;
     private Double value;
     private String log;
+
+    private final char[] lineArray = new char[32767];
 
     private final Process pros;
     private final BufferedReader process_out;
@@ -47,7 +52,7 @@ public class SolveCaller {
     }
 
     public void saveAMPLFile(final List<String> listaLegal, final List<String> listVariables, final List<String> listConstraint,
-	    final boolean isMaximize) {
+	    final SolutionType solutionType) {
 	String fileData = "";
 	try {
 	    final StringWriter output = new StringWriter();
@@ -58,15 +63,25 @@ public class SolveCaller {
 		output.write("var " + s + ">=0, <=1;\n");
 	    }
 
-	    fileData = listaLegal.get(0);
-	    for (int i = 1; i < listaLegal.size(); i++) {
-		fileData += " + " + listaLegal.get(i);
+	    if (solutionType != SolutionType.ANY_FEASIBLE) {
+		fileData = listaLegal.get(0);
+		for (int i = 1; i < listaLegal.size(); i++) {
+		    fileData += " + " + listaLegal.get(i);
+		}
 	    }
 
-	    if (isMaximize) {
-		output.write("maximize Profit: " + fileData + ";\n");
-	    } else {
-		output.write("minimize Profit: " + fileData + ";\n");
+	    switch (solutionType) {
+		case MAXIMIZE:
+		    output.write("maximize Profit: " + fileData + ";\n");
+		    break;
+		case MINIMIZE:
+		    output.write("minimize Profit: " + fileData + ";\n");
+		    break;
+		case ANY_FEASIBLE:
+		    output.write("minimize Profit: 1;\n");
+		    break;
+		default:
+		    throw new IllegalStateException();
 	    }
 
 	    int i = 0;
@@ -92,27 +107,26 @@ public class SolveCaller {
 	    process_in.println(fileContents);
 	    process_in.println("option solver '" + amplLocation + "gurobi';");
 	    process_in.println("solve;");
-
-	    String aux = variablesName.get(0);
-	    for (int i = 1; i < variablesName.size(); i++) {
-		aux += "," + variablesName.get(i);
-	    }
+	    final String aux = Joiner.on(',').skipNulls().join(variablesName);
 
 	    process_in.println("display " + aux + ";");
 	    process_in.println("display 'end';");
 	    process_in.flush();
 
-	    // Provide input to process (could come from any stream)
-	    String line = null;
+	    while (true) {
+		final int n = process_out.read(lineArray, 0, 32767);
+		if (n == -1) {
+		    break;
+		}
+		log += new String(lineArray, 0, n);
+		if (log.contains("end"))
+		    break;
+	    }
 
-	    // Get output from process (can also be used by BufferedReader to
-	    // get line-by-line... see how fis_reader is constructed).
-	    boolean foundObj = false;
-	    while (!foundObj) {
-		line = process_out.readLine();
+	    for (final String line : log.split("\n")) {
 		if (line != null) {
 		    if (line.contains("end")) {
-			throw new IllegalStateException();
+			return;
 		    }
 		    if (line.contains("Sorry")) {
 			// throws away the error message
@@ -125,7 +139,6 @@ public class SolveCaller {
 		if (line == null) {
 		    break;
 		}
-		log += line + "\n";
 
 		final int pos = line.indexOf("objective");
 		if (pos >= 0) {
@@ -135,9 +148,6 @@ public class SolveCaller {
 			    value = Double.valueOf(line.substring(profit + 8, line.length() - 1));
 			    // pos+characters of objective +1
 			} catch (final RuntimeException e) {
-			    while ((line = process_out.readLine()) != null) {
-				log += line;
-			    }
 			    throw e;
 			}
 		    } else {
@@ -145,23 +155,10 @@ public class SolveCaller {
 			    value = Double.valueOf(line.substring(pos + 10));
 			    // pos+characters of objective +1
 			} catch (final RuntimeException e) {
-			    while ((line = process_out.readLine()) != null) {
-				log += line;
-			    }
 			    throw e;
 			}
-			foundObj = true;
 		    }
 		}
-	    }
-
-	    while (true) {
-		line = process_out.readLine();
-		if (line == null || line.contains("end")) {
-		    break;
-		}
-
-		log += line + "\n";
 		if (line.indexOf("=") > 0) {
 		    final String key = line.substring(0, line.indexOf("=") - 1).trim();
 		    final String value = line.substring(line.indexOf("=") + 1, line.length()).trim();

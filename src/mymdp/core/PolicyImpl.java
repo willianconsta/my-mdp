@@ -9,41 +9,43 @@ import java.util.Set;
 
 public class PolicyImpl implements Policy {
 
-    private final Map<State, Action> policies = new LinkedHashMap<>();
+    private final Map<String, Action> policies = new LinkedHashMap<>();
 
     public PolicyImpl(final MDP mdp) {
 	for (final State state : mdp.getStates()) {
-	    final Set<Action> actionsFor = mdp.getActionsFor(state);
-	    if (!actionsFor.isEmpty()) {
-		policies.put(state, get(actionsFor, new Random(1234).nextInt(actionsFor.size())));
+	    final Set<Action> actionsForState = mdp.getActionsFor(state);
+	    if (!actionsForState.isEmpty()) {
+		policies.put(state.name(), get(actionsForState, new Random(1234).nextInt(actionsForState.size())));
 	    }
 	}
     }
 
     public PolicyImpl(final MDPIP mdpip) {
 	for (final State state : mdpip.getStates()) {
-	    final Set<Action> actionsFor = mdpip.getActionsFor(state);
-	    if (!actionsFor.isEmpty()) {
-		policies.put(state, get(actionsFor, new Random(1234).nextInt(actionsFor.size())));
+	    final Set<Action> actionsForState = mdpip.getActionsFor(state);
+	    if (!actionsForState.isEmpty()) {
+		policies.put(state.name(), get(actionsForState, new Random(1234).nextInt(actionsForState.size())));
 	    }
 	}
     }
 
-    public Set<State> getStates() {
-	return policies.keySet();
-    }
-
     @Override
     public void updatePolicy(final State state, final Action policy) {
-	if (policies.get(state) == null) {
+	final String stateName = state.name();
+	if (policies.get(stateName) == null) {
 	    throw new IllegalStateException("Updating inexistent state.");
 	}
-	policies.put(state, policy);
+	policies.put(stateName, policy);
     }
 
     @Override
     public Action getActionFor(final State state) {
-	return policies.get(state);
+	return getActionFor(state.name());
+    }
+
+    @Override
+    public Action getActionFor(final String stateName) {
+	return policies.get(stateName);
     }
 
     @Override

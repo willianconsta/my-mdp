@@ -14,7 +14,7 @@ public class TestNavigationIPFile01 {
     @Test
     public void test01() {
 	final MDPImpreciseFileProblemReaderImpl reader = new MDPImpreciseFileProblemReaderImpl(new ImprecisionGeneratorImpl(0.000001));
-	final MDPIP mdpip = reader.readFromFile("problems\\navigation01.net");
+	final MDPIP mdpip = reader.readFromFile("precise_problems\\navigation01.net");
 	final double delta = 0.001;
 	final UtilityFunction result = new ValueIterationProbImpl(new UtilityFunctionImpl(mdpip.getStates())).solve(mdpip, delta);
 	Assert.assertEquals(-9.991404955, result.getUtility(new StateImpl("broken-robot")), delta);

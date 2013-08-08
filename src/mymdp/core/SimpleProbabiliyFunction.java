@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import mymdp.exception.InvalidProbabilityFunctionException;
+
 import com.google.common.collect.ImmutableMap;
 
 final class SimpleProbabiliyFunction implements ProbabilityFunction {
@@ -17,7 +19,7 @@ final class SimpleProbabiliyFunction implements ProbabilityFunction {
 	    total += prob;
 	}
 	if (!(distributions.isEmpty() || Math.abs(1 - total) < 0.001)) {
-	    throw new IllegalArgumentException("Invalid distribution. Transitions must sum 1 but sum " + total);
+	    throw new InvalidProbabilityFunctionException("Invalid distribution. Transitions must sum 1 but sum " + total);
 	}
 
 	this.distributions = ImmutableMap.copyOf(distributions);

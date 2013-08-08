@@ -11,7 +11,7 @@ import mymdp.core.UtilityFunctionWithProbImpl;
 import mymdp.problem.ImprecisionGeneratorImpl;
 import mymdp.problem.MDPImpreciseFileProblemReaderImpl;
 import mymdp.solver.ModifiedPolicyEvaluatorIP;
-import mymdp.solver.PolicyIterationIPImpl;
+import mymdp.solver.PolicyIterationSatia;
 import mymdp.solver.SolveCaller;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,8 +19,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Stopwatch;
 
-public class SingleGame {
-    private static final Logger log = LogManager.getLogger(SingleGame.class);
+public class PolicyIterationSatiaGame {
+    private static final Logger log = LogManager.getLogger(PolicyIterationSatiaGame.class);
 
     private static final String PROBLEMS_DIR = "precise_problems";
 
@@ -29,7 +29,7 @@ public class SingleGame {
     private UtilityFunction valueResult;
     private Policy policyResult;
 
-    public SingleGame(final String filename, final double maxRelaxation) {
+    public PolicyIterationSatiaGame(final String filename, final double maxRelaxation) {
 	this.filename = filename;
 	this.maxRelaxation = maxRelaxation;
     }
@@ -48,7 +48,7 @@ public class SingleGame {
 	final Stopwatch watchMDPIP = new Stopwatch();
 	watchMDPIP.start();
 	final Stopwatch watch1 = new Stopwatch().start();
-	final Policy result = new PolicyIterationIPImpl(evaluator).solve(mdpip);
+	final Policy result = new PolicyIterationSatia(0.001).solve(mdpip);
 	watchMDPIP.stop();
 	log.debug("End of MDPIP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
 	log.info("MDPIP: " + result);
