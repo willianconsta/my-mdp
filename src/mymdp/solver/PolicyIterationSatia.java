@@ -26,111 +26,119 @@ import com.google.common.base.Stopwatch;
  * @author Willian
  */
 public final class PolicyIterationSatia {
-    private static final Logger log = LogManager.getLogger(PolicyIterationSatia.class);
-    private static final String SOLUTIONS_DIR = "solutions";
+	private static final Logger log = LogManager
+			.getLogger(PolicyIterationSatia.class);
+	private static final String SOLUTIONS_DIR = "solutions";
 
-    private final double delta;
-    private int i;
+	private final double delta;
+	private int i;
 
-    public PolicyIterationSatia(final double delta) {
-	this.delta = delta;
-    }
-
-    private double calculate(final MDPIP mdpip, final State s, final UtilityFunction value) {
-	double maxUtilityOfActions = 0;
-	if (mdpip.getActionsFor(s).size() > 0) {
-	    maxUtilityOfActions = Double.NEGATIVE_INFINITY;
+	public PolicyIterationSatia(final double delta) {
+		this.delta = delta;
 	}
-	for (final Action action : mdpip.getActionsFor(s)) {
-	    double utilityOfAction = 0;
-	    for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, action, value)) {
-		utilityOfAction += nextStateAndProb.getValue().doubleValue() * value.getUtility(nextStateAndProb.getKey());
-	    }
-	    maxUtilityOfActions = max(maxUtilityOfActions, utilityOfAction);
+
+	private double calculate(final MDPIP mdpip, final State s,
+			final UtilityFunction value) {
+		double maxUtilityOfActions = 0;
+		if (mdpip.getActionsFor(s).size() > 0) {
+			maxUtilityOfActions = Double.NEGATIVE_INFINITY;
+		}
+		for (final Action action : mdpip.getActionsFor(s)) {
+			double utilityOfAction = 0;
+			for (final Entry<State, Double> nextStateAndProb : mdpip
+					.getPossibleStatesAndProbability(s, action, value)) {
+				utilityOfAction += nextStateAndProb.getValue().doubleValue()
+						* value.getUtility(nextStateAndProb.getKey());
+			}
+			maxUtilityOfActions = max(maxUtilityOfActions, utilityOfAction);
+		}
+		return mdpip.getRewardFor(s) + mdpip.getDiscountFactor()
+				* maxUtilityOfActions;
 	}
-	return mdpip.getRewardFor(s) + mdpip.getDiscountFactor() * maxUtilityOfActions;
-    }
 
-    public Policy solve(final MDPIP mdpip) {
-	SolveCaller.initializeCount();
-	final Stopwatch watchEvaluating = new Stopwatch();
-	final Stopwatch watchImproving = new Stopwatch();
-	final Stopwatch watchAll = new Stopwatch().start();
-	final PolicyImpl policy = new PolicyImpl(mdpip);
-	boolean improved;
-	i = 0;
-	do {
-	    watchEvaluating.start();
-	    final UtilityFunction valueFunction = evaluate(mdpip, policy);
-	    watchEvaluating.stop();
-	    watchImproving.start();
-	    improved = improvement(mdpip, policy, valueFunction);
-	    watchImproving.stop();
-	    i++;
-	} while (improved);
-	watchAll.stop();
-	log.info("Summary:");
-	log.info("Number of iterations = " + i);
-	log.info("Number of solver calls in solving = " + SolveCaller.getNumberOfSolverCalls());
+	public Policy solve(final MDPIP mdpip) {
+		SolveCaller.initializeCount();
+		final Stopwatch watchEvaluating = new Stopwatch();
+		final Stopwatch watchImproving = new Stopwatch();
+		final Stopwatch watchAll = new Stopwatch().start();
+		final PolicyImpl policy = new PolicyImpl(mdpip);
+		boolean improved;
+		i = 0;
+		do {
+			watchEvaluating.start();
+			final UtilityFunction valueFunction = evaluate(mdpip, policy);
+			watchEvaluating.stop();
+			watchImproving.start();
+			improved = improvement(mdpip, policy, valueFunction);
+			watchImproving.stop();
+			i++;
+		} while (improved);
+		watchAll.stop();
+		log.info("Summary:");
+		log.info("Number of iterations = " + i);
+		log.info("Number of solver calls in solving = "
+				+ SolveCaller.getNumberOfSolverCalls());
 
-	log.info("Time in Evaluating = " + watchEvaluating.elapsed(TimeUnit.MILLISECONDS) + "ms.");
-	log.info("Time in Improving = " + watchImproving.elapsed(TimeUnit.MILLISECONDS) + "ms.");
-	log.info("Time Solving = " + watchAll.elapsed(TimeUnit.MILLISECONDS) + "ms.");
-	return policy;
-    }
-
-    private boolean improvement(final MDPIP mdpip, final PolicyImpl policy, final UtilityFunction valueFunction) {
-	// improvement
-	log.debug("Improving policy...");
-	boolean improvement = false;
-	for (final State s : mdpip.getStates()) {
-	    double maxUtilityOfActions = 0;
-	    Action maxAction = policy.getActionFor(s);
-	    if (mdpip.getActionsFor(s).size() > 0) {
-		maxUtilityOfActions = Double.NEGATIVE_INFINITY;
-	    }
-	    for (final Action action : mdpip.getActionsFor(s)) {
-		double utilityOfAction = 0;
-		for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, action, valueFunction)) {
-		    utilityOfAction += nextStateAndProb.getValue().doubleValue() * valueFunction.getUtility(nextStateAndProb.getKey());
-		}
-		if (maxUtilityOfActions < utilityOfAction || maxUtilityOfActions == utilityOfAction
-			&& maxAction.name().compareTo(action.name()) < 0) {
-		    maxUtilityOfActions = utilityOfAction;
-		    maxAction = action;
-		}
-	    }
-
-	    if (!policy.getActionFor(s).equals(maxAction)) {
-		log.debug("Policy improvement found. For state " + s + " was action " + policy.getActionFor(s) + " but turns out that "
-			+ maxAction + " is better.");
-		policy.updatePolicy(s, maxAction);
-		improvement = true;
-	    }
+		log.info("Time in Evaluating = "
+				+ watchEvaluating.elapsed(TimeUnit.MILLISECONDS) + "ms.");
+		log.info("Time in Improving = "
+				+ watchImproving.elapsed(TimeUnit.MILLISECONDS) + "ms.");
+		log.info("Time Solving = " + watchAll.elapsed(TimeUnit.MILLISECONDS)
+				+ "ms.");
+		return policy;
 	}
-	return improvement;
-    }
 
-    private UtilityFunction evaluate(final MDPIP mdpip, final PolicyImpl policy) {
-	// evaluation
-	log.debug("Evaluating policy...");
-	UtilityFunction value = new UtilityFunctionWithProbImpl(mdpip.getStates());
-	boolean improved;
-	ProbLinearSolver.setFeasibilityOnly();
-	final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\evaluating_satia_" + i
-		+ ".txt");
-	value = new ModifiedPolicyEvaluator(1000).policyEvaluation(policy, value, evaluator.evaluate(mdpip));
-	do {
-	    improved = false;
-	    ProbLinearSolver.setMinimizing();
-	    for (final State s : mdpip.getStates()) {
-		final double valueMinimizingP = calculate(mdpip, s, value);
-		if (Math.abs(value.getUtility(s) - valueMinimizingP) > delta) {
-		    value.updateUtility(s, valueMinimizingP);
-		    improved = true;
+	private boolean improvement(final MDPIP mdpip, final PolicyImpl policy,
+			final UtilityFunction valueFunction) {
+		// improvement
+		log.debug("Improving policy...");
+		boolean improvement = false;
+		for (final State s : mdpip.getStates()) {
+			double maxUtilityOfActions = 0;
+			Action maxAction = policy.getActionFor(s);
+			if (mdpip.getActionsFor(s).size() > 0) {
+				maxUtilityOfActions = Double.NEGATIVE_INFINITY;
+			}
+			for (final Action action : mdpip.getActionsFor(s)) {
+				double utilityOfAction = 0;
+				for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, action, valueFunction)) {
+					utilityOfAction += nextStateAndProb.getValue().doubleValue() * valueFunction.getUtility(nextStateAndProb.getKey());
+				}
+				if (maxUtilityOfActions < utilityOfAction || maxUtilityOfActions == utilityOfAction && maxAction.name().compareTo(action.name()) < 0) {
+					maxUtilityOfActions = utilityOfAction;
+					maxAction = action;
+				}
+			}
+
+			if (!policy.getActionFor(s).equals(maxAction)) {
+				log.debug("Policy improvement found. For state " + s + " was action " + policy.getActionFor(s) + " but turns out that " + maxAction
+						+ " is better.");
+				policy.updatePolicy(s, maxAction);
+				improvement = true;
+			}
 		}
-	    }
-	} while (improved);
-	return value;
-    }
+		return improvement;
+	}
+
+	private UtilityFunction evaluate(final MDPIP mdpip, final PolicyImpl policy) {
+		// evaluation
+		log.debug("Evaluating policy...");
+		UtilityFunction value = new UtilityFunctionWithProbImpl(mdpip.getStates());
+		boolean improved;
+		ProbLinearSolver.setFeasibilityOnly();
+		final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\evaluating_satia_" + i + ".txt");
+		value = new ModifiedPolicyEvaluator(1000).policyEvaluation(policy, value, evaluator.evaluate(mdpip));
+		do {
+			improved = false;
+			ProbLinearSolver.setMinimizing();
+			for (final State s : mdpip.getStates()) {
+				final double valueMinimizingP = calculate(mdpip, s, value);
+				if (Math.abs(value.getUtility(s) - valueMinimizingP) > delta) {
+					value.updateUtility(s, valueMinimizingP);
+					improved = true;
+				}
+			}
+		} while (improved);
+		return value;
+	}
 }

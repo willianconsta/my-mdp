@@ -20,58 +20,57 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestAgainstSatiaPolicyIteration {
 
-    private static final double MAX_RELAXATION = 0.15;
-    private static final double STEP_RELAXATION = 0.15;
+	private static final double MAX_RELAXATION = 0.15;
+	private static final double STEP_RELAXATION = 0.15;
 
-    @Parameters
-    public static Collection<Object[]> data() {
-	return Arrays.asList(new Object[][] {
-		{ "navigation01.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation02.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation03.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation04.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation05.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation06.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation07.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation08.net", MAX_RELAXATION, STEP_RELAXATION },
-		{ "navigation09.net", MAX_RELAXATION, STEP_RELAXATION },
-	});
-    }
-
-    private final String filename;
-    private final double maxRelaxation;
-    private final double stepRelaxation;
-
-    public TestAgainstSatiaPolicyIteration(final String filename, final double maxRelaxation, final double stepRelaxation) {
-	this.filename = filename;
-	this.maxRelaxation = maxRelaxation;
-	this.stepRelaxation = stepRelaxation;
-    }
-
-    private class SingleTask implements Callable<Pair<UtilityFunction, Policy>> {
-	@Override
-	public Pair<UtilityFunction, Policy> call() {
-	    final PolicyIterationSatiaGame singleGame = new PolicyIterationSatiaGame(filename, maxRelaxation);
-	    singleGame.solve();
-	    return Pair.newPair(singleGame.getValueResult(), singleGame.getPolicyResult());
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{ "navigation01.net", MAX_RELAXATION, STEP_RELAXATION },
+				{ "navigation02.net", MAX_RELAXATION, STEP_RELAXATION },
+				{ "navigation03.net", MAX_RELAXATION, STEP_RELAXATION },
+				{ "navigation04.net", MAX_RELAXATION, STEP_RELAXATION },
+				{ "navigation05.net", MAX_RELAXATION, STEP_RELAXATION },
+				{ "navigation06.net", MAX_RELAXATION, STEP_RELAXATION },
+				{ "navigation07.net", MAX_RELAXATION, STEP_RELAXATION },
+				{ "navigation08.net", MAX_RELAXATION, STEP_RELAXATION },
+				{ "navigation09.net", MAX_RELAXATION, STEP_RELAXATION },
+		});
 	}
-    }
 
-    private class DualTask implements Callable<Pair<UtilityFunction, Policy>> {
-	@Override
-	public Pair<UtilityFunction, Policy> call() {
-	    final DualGame dualGame = new DualGame(filename, maxRelaxation, stepRelaxation);
-	    dualGame.solve();
-	    return Pair.newPair(dualGame.getValueResult(), dualGame.getPolicyResult());
+	private final String filename;
+	private final double maxRelaxation;
+	private final double stepRelaxation;
+
+	public TestAgainstSatiaPolicyIteration(final String filename, final double maxRelaxation, final double stepRelaxation) {
+		this.filename = filename;
+		this.maxRelaxation = maxRelaxation;
+		this.stepRelaxation = stepRelaxation;
 	}
-    }
 
-    @Test
-    public void both() throws InterruptedException, ExecutionException {
-	final Pair<UtilityFunction, Policy> singleResult = new SingleTask().call();
-	final Pair<UtilityFunction, Policy> dualResult = new DualTask().call();
-	assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.first,
-		dualResult.first)).isLessThan(0.001);
-	assertThat(singleResult.second).isEqualTo(dualResult.second);
-    }
+	private class SingleTask implements Callable<Pair<UtilityFunction, Policy>> {
+		@Override
+		public Pair<UtilityFunction, Policy> call() {
+			final PolicyIterationSatiaGame singleGame = new PolicyIterationSatiaGame(filename, maxRelaxation);
+			singleGame.solve();
+			return Pair.newPair(singleGame.getValueResult(), singleGame.getPolicyResult());
+		}
+	}
+
+	private class DualTask implements Callable<Pair<UtilityFunction, Policy>> {
+		@Override
+		public Pair<UtilityFunction, Policy> call() {
+			final DualGame dualGame = new DualGame(filename, maxRelaxation, stepRelaxation);
+			dualGame.solve();
+			return Pair.newPair(dualGame.getValueResult(), dualGame.getPolicyResult());
+		}
+	}
+
+	@Test
+	public void both() throws InterruptedException, ExecutionException {
+		final Pair<UtilityFunction, Policy> singleResult = new SingleTask().call();
+		final Pair<UtilityFunction, Policy> dualResult = new DualTask().call();
+		assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.first, dualResult.first)).isLessThan(0.001);
+		assertThat(singleResult.second).isEqualTo(dualResult.second);
+	}
 }
