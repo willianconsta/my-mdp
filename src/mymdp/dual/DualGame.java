@@ -15,11 +15,10 @@ import mymdp.dual.evaluator.ProbabilityEvaluatorFactory;
 import mymdp.problem.ImprecisionGenerator;
 import mymdp.problem.ImprecisionGeneratorByRanges;
 import mymdp.problem.ImprecisionGeneratorImpl;
-import mymdp.problem.MDPFileProblemReaderImpl;
 import mymdp.problem.MDPImpreciseFileProblemReaderImpl;
 import mymdp.solver.ModifiedPolicyEvaluator;
 import mymdp.solver.PolicyIterationImpl;
-import mymdp.solver.SolveCaller;
+import mymdp.solver.ProbLinearSolver;
 import mymdp.util.UtilityFunctionDistanceEvaluator;
 
 import org.apache.logging.log4j.LogManager;
@@ -47,7 +46,7 @@ public class DualGame {
 	}
 
 	public void solve() {
-		SolveCaller.initializeCount();
+		ProbLinearSolver.initializeCount();
 		final ModifiedPolicyEvaluator policyEvaluator = new ModifiedPolicyEvaluator(100);
 
 		// Reads the MDP's definition from file and turns it to an imprecise
@@ -57,19 +56,19 @@ public class DualGame {
 		final MDPImpreciseFileProblemReaderImpl initialReader = new MDPImpreciseFileProblemReaderImpl(initialProblemImprecisionGenerator);
 		final MDPIP initialMdpip = initialReader.readFromFile(PROBLEMS_DIR + "\\" + filename);
 
-		final ImprecisionGenerator imprecisionGenerator = new ImprecisionGeneratorByRanges(initialProblemImprecisionGenerator, stepRelaxation);
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
+		final ImprecisionGenerator imprecisionGenerator = new ImprecisionGeneratorByRanges(initialProblemImprecisionGenerator,
+				stepRelaxation);
 		final ProbabilityEvaluator probabilityEvaluator = ProbabilityEvaluatorFactory
 				.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\initial_" + filename + ".txt");
 		// log.info("Initial problem is " + initialMdpip.toString());
-		SolveCaller.initializeCount();
+		ProbLinearSolver.initializeCount();
 		final Stopwatch watchInitialGuess = new Stopwatch().start();
 		MDP mdp = probabilityEvaluator.evaluate(initialMdpip);
 		watchInitialGuess.stop();
-		final int numberOfSolverCallsInInitialGuessing = SolveCaller.getNumberOfSolverCalls();
+		final int numberOfSolverCallsInInitialGuessing = ProbLinearSolver.getNumberOfSolverCalls();
 
 		int i = 1;
-		SolveCaller.initializeCount();
+		ProbLinearSolver.initializeCount();
 		final Stopwatch watchMDP = new Stopwatch();
 		final Stopwatch watchMDPIP = new Stopwatch();
 		final Stopwatch watchAll = new Stopwatch().start();
@@ -131,7 +130,7 @@ public class DualGame {
 		log.info("Summary:");
 		log.info("Number of iterations = " + i);
 		log.info("Number of solver calls in initial guess = " + numberOfSolverCallsInInitialGuessing);
-		log.info("Number of solver calls in solving = " + SolveCaller.getNumberOfSolverCalls());
+		log.info("Number of solver calls in solving = " + ProbLinearSolver.getNumberOfSolverCalls());
 
 		log.info("Time in Initial Guess = " + watchInitialGuess.elapsed(TimeUnit.MILLISECONDS) + "ms.");
 		log.info("Time in MDP = " + watchMDP.elapsed(TimeUnit.MILLISECONDS) + "ms.");

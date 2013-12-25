@@ -12,7 +12,7 @@ import mymdp.problem.ImprecisionGeneratorImpl;
 import mymdp.problem.MDPImpreciseFileProblemReaderImpl;
 import mymdp.solver.ModifiedPolicyEvaluatorIP;
 import mymdp.solver.PolicyIterationSatia;
-import mymdp.solver.SolveCaller;
+import mymdp.solver.ProbLinearSolver;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,17 +37,17 @@ public class PolicyIterationSatiaGame {
 	}
 
 	public void solve() {
-		SolveCaller.initializeCount();
+		ProbLinearSolver.initializeCount();
 		// Reads the MDP's definition from file and turns it to an imprecise
 		// problem
 		log.info("Current Problem: " + filename);
 		final ModifiedPolicyEvaluatorIP evaluator = new ModifiedPolicyEvaluatorIP(100);
 		final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
 		final MDPImpreciseFileProblemReaderImpl initialReader = new MDPImpreciseFileProblemReaderImpl(initialProblemImprecisionGenerator);
-		final MDPIP mdpip = initialReader.readFromFile(PROBLEMS_DIR + "\\"+ filename);
+		final MDPIP mdpip = initialReader.readFromFile(PROBLEMS_DIR + "\\" + filename);
 		// log.info("Initial problem is " + mdpip.toString());
 		log.debug("Starting MDPIP");
-		SolveCaller.initializeCount();
+		ProbLinearSolver.initializeCount();
 		final Stopwatch watchMDPIP = new Stopwatch();
 		watchMDPIP.start();
 		final Stopwatch watch1 = new Stopwatch().start();
@@ -57,7 +57,7 @@ public class PolicyIterationSatiaGame {
 		log.info("MDPIP: " + result);
 
 		log.info("Summary:");
-		log.info("Number of solver calls in solving = " + SolveCaller.getNumberOfSolverCalls());
+		log.info("Number of solver calls in solving = " + ProbLinearSolver.getNumberOfSolverCalls());
 		log.info("Time in MDPIP = " + watchMDPIP.elapsed(TimeUnit.MILLISECONDS) + "ms.");
 		assertTrue(true);
 
