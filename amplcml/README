@@ -1,0 +1,126 @@
+This directory contains material that will let you try out AMPL's
+table and scrolling-window facilities on a Microsoft Windows system
+(W9x or NT).  Contents include
+
+	ampl.exe	student AMPL processor
+
+	ampltabl.dll	standard ODBC table handler
+			for Microsoft Excel, Access, and other
+			database programs that use ODBC
+
+	cplex.exe	student CPLEX LP, MIP, and QP solver
+
+	cplex110.dll	used by cplex.exe; must be in the same directory
+
+	gurobi.exe	student GUROBI LP and MIP solver
+
+	README.cplex	text file documenting use of cplex.exe
+
+	README.gurobi	text file documenting use of gurobi.exe
+
+	LICENSE.txt	license agreement for cplex.exe and cplex110.dll
+
+	modinc		AMPL include command for easy access to the
+			MODELS and MODELS/NLMODELS subdirectories.
+
+	MODELS		subdirectory of examples from the AMPL book
+			and papers
+
+	MODELS/NLMODELS	nonlinear models assembled by Elena Bobrovnikova
+
+	minos.exe	student MINOS nonlinear solver
+
+	lpsolve.exe	LP and MIP solver (discussed below)
+
+	sw.exe		provides a scrolling window with cut and paste
+			to Win32 console binaries, such as the other
+			.exe files listed above
+
+	readme.sw	text file with more details about using sw.exe
+
+	TABLES		subdirectory of example files mentioned in
+			http://www.ampl.com/ampl/NEW/tables.html
+
+Your can run by clicking on (or otherwise invoking) sw.exe in this
+directory and typing "ampl".  Alternatively, you can move all the
+.exe, .dll, and .sw files to a directory on your search PATH.
+
+Aside from the TABLES directory, current versions of the above files
+appear in directory http://www.netlib.org/ampl/student/mswin .
+
+Many other examples of model and data files appear in the AMPL web
+site, http://www.ampl.com/ampl/, often accompanied by helpful
+discussions in .html files.  See
+
+	http://www.ampl.com/ampl/EXAMPLES/index.html
+
+for pointers to these examples.
+
+
+ILOG has also kindly made its documentation on using AMPL and cplex
+available as
+
+	http://www.netlib.org/ampl/solvers/cplex/ampl110.pdf
+
+Please note that ampl110.pdf refers to "cplexamp" rather than "cplex".
+Unrestricted versions of cplex sold by ILOG/CPLEX are called
+"cplexamp" when delivered.  You are free to name things as you wish
+(with suitable changes to "option solver" lines in AMPL scripts if
+necessary).  One approach that avoids changes to AMPL scripts is to
+call the interactive CPLEX front end provided by ILOG/CPLEX "icplex"
+rather than "cplex", and to use "cplex" for the solver that works with
+AMPL.
+
+
+Solver kestrel requires an internet connection and must be downloaded
+separately from http://neos.mcs.anl.gov/neos/kestrel.html.  With kestrel,
+you run AMPL locally and access NEOS solvers over the internet.  More
+details appear in http://www.ampl.com/ampl/REMOTE/ .  Three little
+AMPL command scripts mentioned in that web page (kestrelsub,
+kestrelret, and kestrelkill) appear in the models directory.
+
+
+Solver lpsolve is based on Michel Berkelaar's lp_solve 4.0.1.0, which
+is distributed under the GNU LESSER GENERAL PUBLIC LICENSE
+(Version 2.1, February 1999).  In accordance with this agreement,
+the complete source from which lpsolve.exe was compiled is
+available in directories
+
+	http://www.netlib.org/ampl/solvers
+and
+	http://www.netlib.org/ampl/solvers/lpsolve
+
+File lp_solve_4.0.tar.gz in the latter directory was copied from
+ftp://ftp.es.ele.tue.nl/pub/lp_solve/lp_solve.tar.gz in Jan. 2003
+and contains the GNU LESSER GENERAL PUBLIC LICENSE.
+
+
+If you start AMPL in this directory, you can easily access any of
+the examples in the MODELS or MODELS/NLMODELS directories if you
+first say
+
+	include modinc
+
+or
+	commands modinc;
+
+This sets option ampl_include to look first in this directory, then
+in the MODELS directory, then in MODELS/NLMODELS for files mentioned
+in "include" phrases and "model", "data", or "commands" commands.
+If you first start sw in this directory or are using a Command
+Prompt window in this directory, you can alternatively type
+
+	ampl modinc -
+
+to start AMPL and have it read "modinc" before accepting keyboard
+input (file -).  The examples in the TABLES directory have their
+own "option ampl_include" commands, so you can one of the .run files,
+such as diet.mdb.run, by typing
+
+	include TABLES/diet.mdb.run
+
+or simply invoking
+
+	ampl TABLES/diet.mdb.run
+
+(from sw or a Command Prompt window).
