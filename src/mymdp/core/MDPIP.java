@@ -3,15 +3,15 @@ package mymdp.core;
 import java.util.Set;
 
 public interface MDPIP {
-    Set<State> getStates();
+	Set<State> getStates();
 
-    Set<Action> getAllActions();
+	Set<Action> getAllActions();
 
-    Set<Action> getActionsFor(State state);
+	Set<Action> getActionsFor(State state);
 
-    ProbabilityFunction getPossibleStatesAndProbability(State initialState, Action action, UtilityFunction function);
+	ProbabilityFunction getPossibleStatesAndProbability(State initialState, Action action, UtilityFunction function);
 
-    double getRewardFor(State state);
+	double getRewardFor(State state);
 
-    double getDiscountFactor();
+	double getDiscountFactor();
 }

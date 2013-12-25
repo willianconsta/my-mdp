@@ -5,6 +5,6 @@ import mymdp.core.Policy;
 
 public interface PolicyIterationIP {
 
-    Policy solve(MDPIP mdpip);
+	Policy solve(MDPIP mdpip);
 
 }

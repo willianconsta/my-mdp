@@ -12,33 +12,33 @@ import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
 
 public class ModifiedPolicyEvaluator implements PolicyEvaluator {
-    private final int timesToExecute;
+	private final int timesToExecute;
 
-    public ModifiedPolicyEvaluator(final int k) {
-	checkArgument(k > 0);
-	this.timesToExecute = k;
-    }
-
-    @Override
-    public UtilityFunction policyEvaluation(final Policy policy,
-	    final UtilityFunction function, final MDP mdp) {
-	UtilityFunction evaluatedFunction = function;
-	for (int i = 0; i < timesToExecute; i++) {
-	    evaluatedFunction = singleEvaluation(policy, evaluatedFunction, mdp);
+	public ModifiedPolicyEvaluator(final int k) {
+		checkArgument(k > 0);
+		this.timesToExecute = k;
 	}
-	return evaluatedFunction;
-    }
 
-    private UtilityFunction singleEvaluation(final Policy policy, final UtilityFunction function, final MDP mdp) {
-	final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(function);
-	for (final State s : mdp.getStates()) {
-	    final Action a = policy.getActionFor(s);
-	    double value = 0.0;
-	    for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, a)) {
-		value += nextStateAndProb.getValue() * function.getUtility(nextStateAndProb.getKey());
-	    }
-	    evaluatedFunction.updateUtility(s, mdp.getRewardFor(s) + mdp.getDiscountFactor() * value);
+	@Override
+	public UtilityFunction policyEvaluation(final Policy policy,
+			final UtilityFunction function, final MDP mdp) {
+		UtilityFunction evaluatedFunction = function;
+		for (int i = 0; i < timesToExecute; i++) {
+			evaluatedFunction = singleEvaluation(policy, evaluatedFunction, mdp);
+		}
+		return evaluatedFunction;
 	}
-	return evaluatedFunction;
-    }
+
+	private UtilityFunction singleEvaluation(final Policy policy, final UtilityFunction function, final MDP mdp) {
+		final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(function);
+		for (final State s : mdp.getStates()) {
+			final Action a = policy.getActionFor(s);
+			double value = 0.0;
+			for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, a)) {
+				value += nextStateAndProb.getValue() * function.getUtility(nextStateAndProb.getKey());
+			}
+			evaluatedFunction.updateUtility(s, mdp.getRewardFor(s) + mdp.getDiscountFactor() * value);
+		}
+		return evaluatedFunction;
+	}
 }

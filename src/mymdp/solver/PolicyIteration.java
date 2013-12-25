@@ -4,5 +4,5 @@ import mymdp.core.MDP;
 import mymdp.core.Policy;
 
 public interface PolicyIteration {
-    Policy solve(MDP mdp);
+	Policy solve(MDP mdp);
 }

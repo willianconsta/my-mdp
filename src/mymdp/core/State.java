@@ -7,10 +7,10 @@ package mymdp.core;
  */
 public interface State {
 
-    /**
-     * A name for the state. States with the same names <i>should</i> be equal.
-     * 
-     * @return the state's name.
-     */
-    String name();
+	/**
+	 * A name for the state. States with the same names <i>should</i> be equal.
+	 * 
+	 * @return the state's name.
+	 */
+	String name();
 }

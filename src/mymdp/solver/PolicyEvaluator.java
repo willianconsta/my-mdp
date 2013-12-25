@@ -11,14 +11,14 @@ import mymdp.core.UtilityFunction;
  */
 interface PolicyEvaluator {
 
-    /**
-     * Evaluates the given policy for a MDP.
-     * 
-     * @param policy
-     *            the policy for evaluation
-     * @param function
-     * @param mdp
-     * @return
-     */
-    UtilityFunction policyEvaluation(Policy policy, UtilityFunction function, MDP mdp);
+	/**
+	 * Evaluates the given policy for a MDP.
+	 * 
+	 * @param policy
+	 *            the policy for evaluation
+	 * @param function
+	 * @param mdp
+	 * @return
+	 */
+	UtilityFunction policyEvaluation(Policy policy, UtilityFunction function, MDP mdp);
 }

@@ -3,15 +3,15 @@ package mymdp.core;
 import java.util.Set;
 
 public interface MDP {
-    Set<State> getStates();
+	Set<State> getStates();
 
-    Set<Action> getAllActions();
+	Set<Action> getAllActions();
 
-    Set<Action> getActionsFor(State state);
+	Set<Action> getActionsFor(State state);
 
-    ProbabilityFunction getPossibleStatesAndProbability(State initialState, Action action);
+	ProbabilityFunction getPossibleStatesAndProbability(State initialState, Action action);
 
-    double getRewardFor(State state);
+	double getRewardFor(State state);
 
-    double getDiscountFactor();
+	double getDiscountFactor();
 }

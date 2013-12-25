@@ -230,7 +230,8 @@ public class MDPIPBuilder {
 			private final Set<State> states = ImmutableSet.<State> copyOf(MDPIPBuilder.this.states.values());
 			private final Map<Action, Map<State, Map<State, String>>> transitions = ImmutableMap.copyOf(MDPIPBuilder.this.transitions);
 			private final Set<String> restrictions = ImmutableSet.<String> copyOf(MDPIPBuilder.this.restrictions);
-			private final Map<Trio<State, Action, State>, String> vars = ImmutableMap.<Trio<State, Action, State>, String> copyOf(MDPIPBuilder.this.vars);
+			private final Map<Trio<State, Action, State>, String> vars = ImmutableMap
+					.<Trio<State, Action, State>, String> copyOf(MDPIPBuilder.this.vars);
 
 			@Override
 			public Set<State> getStates() {
@@ -268,10 +269,12 @@ public class MDPIPBuilder {
 				}
 
 				ProbabilityFunction result;
-				if (cache.containsKey(ImmutableList.of(ProbLinearSolver.getMode(), initialState, action, actionMap.get(initialState).keySet(),
+				if (cache.containsKey(ImmutableList.of(ProbLinearSolver.getMode(), initialState, action, actionMap.get(initialState)
+						.keySet(),
 						getValues(actionMap.get(initialState)
 								.keySet(), function)))) {
-					result = cache.get(ImmutableList.of(ProbLinearSolver.getMode(), initialState, action, actionMap.get(initialState).keySet(),
+					result = cache.get(ImmutableList.of(ProbLinearSolver.getMode(), initialState, action, actionMap.get(initialState)
+							.keySet(),
 							getValues(actionMap.get(initialState)
 									.keySet(), function)));
 
@@ -280,7 +283,8 @@ public class MDPIPBuilder {
 							solve(probabilityFunction, getRewardFor(initialState),
 									function, vars.values(), restrictions)).equals(result);
 				} else {
-					final Map<State, Double> minProb = solve(probabilityFunction, getRewardFor(initialState), function, vars.values(), restrictions);
+					final Map<State, Double> minProb = solve(probabilityFunction, getRewardFor(initialState), function, vars.values(),
+							restrictions);
 					try {
 						result = ProbabilityFunction.Instance.createSimple(minProb);
 					} catch (final InvalidProbabilityFunctionException e) {
@@ -329,12 +333,17 @@ public class MDPIPBuilder {
 
 				return Objects
 						.toStringHelper(this)
-						.add("states", states.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
-						.add("transitions", transitions.toString().replaceAll("}, ", "},\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
+						.add("states",
+								states.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
+						.add("transitions",
+								transitions.toString().replaceAll("}, ", "},\n\t").replaceFirst("\\[", "\\[\n\t")
+										.replaceFirst("\\]", "\n\\]"))
 						.add("discountRate", discountRate)
 						.add("vars", vars.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]")
 								.replaceFirst("\\{", "\\{\n\t").replaceFirst("\\}", "\n\\}"))
-						.add("restrictions", restrictions.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
+						.add("restrictions",
+								restrictions.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t")
+										.replaceFirst("\\]", "\n\\]"))
 						.toString();
 			}
 		};

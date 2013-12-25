@@ -8,24 +8,24 @@ import mymdp.solver.ProbLinearSolver;
 import mymdp.solver.ProbLinearSolver.SolutionType;
 
 abstract class AbstractProbabilityEvaluator implements ProbabilityEvaluator {
-    private final String fullFilename;
+	private final String fullFilename;
 
-    public AbstractProbabilityEvaluator(final String fullFilename) {
-	this.fullFilename = fullFilename;
-    }
-
-    @Override
-    public final MDP evaluate(final MDPIP mdpip) {
-	final SolutionType previousMode = ProbLinearSolver.getMode();
-	try {
-	    setMode();
-	    final EvaluatedProblemGenerator generator = new EvaluatedProblemGenerator(mdpip);
-	    generator.writeToFile(fullFilename, mdpip.getStates().iterator().next(), mdpip.getStates());
-	    return new MDPFileProblemReaderImpl().readFromFile(fullFilename);
-	} finally {
-	    ProbLinearSolver.setMode(previousMode);
+	public AbstractProbabilityEvaluator(final String fullFilename) {
+		this.fullFilename = fullFilename;
 	}
-    }
 
-    abstract void setMode();
+	@Override
+	public final MDP evaluate(final MDPIP mdpip) {
+		final SolutionType previousMode = ProbLinearSolver.getMode();
+		try {
+			setMode();
+			final EvaluatedProblemGenerator generator = new EvaluatedProblemGenerator(mdpip);
+			generator.writeToFile(fullFilename, mdpip.getStates().iterator().next(), mdpip.getStates());
+			return new MDPFileProblemReaderImpl().readFromFile(fullFilename);
+		} finally {
+			ProbLinearSolver.setMode(previousMode);
+		}
+	}
+
+	abstract void setMode();
 }
