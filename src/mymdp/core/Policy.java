@@ -20,7 +20,7 @@ public interface Policy {
 	/**
 	 * Gets the action defined for the state with a given name.
 	 * 
-	 * @param state
+	 * @param stateName
 	 *            a state name.
 	 * @return the action for the state.
 	 */
