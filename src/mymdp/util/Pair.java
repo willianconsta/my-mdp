@@ -12,7 +12,7 @@ public final class Pair<F, S> {
 		this.second = second;
 	}
 
-	public static <F, S> Pair<F, S> newPair(final F first, final S second) {
+	public static <F, S> Pair<F, S> of(final F first, final S second) {
 		return new Pair<F, S>(first, second);
 	}
 
