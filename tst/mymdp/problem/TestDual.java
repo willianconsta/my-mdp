@@ -3,6 +3,7 @@ package mymdp.problem;
 import java.util.concurrent.Callable;
 
 import mymdp.core.Policy;
+import mymdp.core.SolutionReport;
 import mymdp.core.UtilityFunction;
 import mymdp.dual.DualGame;
 import mymdp.test.MDPAssertions;
@@ -13,14 +14,13 @@ import org.junit.Test;
 public class TestDual {
 	private static final String FILENAME = "navigation01.net";
 	private static final double MAX_RELAXATION = 0.15;
-	private static final double STEP_RELAXATION = 0.15;
 
 	private class DualTask implements Callable<Pair<UtilityFunction, Policy>> {
 		@Override
 		public Pair<UtilityFunction, Policy> call() {
-			final DualGame dualGame = new DualGame(FILENAME, MAX_RELAXATION, STEP_RELAXATION);
-			dualGame.solve();
-			return Pair.newPair(dualGame.getValueResult(), dualGame.getPolicyResult());
+			final DualGame dualGame = new DualGame(FILENAME, MAX_RELAXATION);
+			final SolutionReport report = dualGame.solve();
+			return Pair.of(report.getValueResult(), report.getPolicyResult());
 		}
 	}
 

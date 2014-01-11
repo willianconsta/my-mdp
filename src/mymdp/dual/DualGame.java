@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import mymdp.core.MDP;
 import mymdp.core.MDPIP;
 import mymdp.core.Policy;
+import mymdp.core.SolutionReport;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
 import mymdp.core.UtilityFunctionWithProbImpl;
@@ -15,7 +16,7 @@ import mymdp.dual.evaluator.ProbabilityEvaluatorFactory;
 import mymdp.problem.ImprecisionGenerator;
 import mymdp.problem.ImprecisionGeneratorByRanges;
 import mymdp.problem.ImprecisionGeneratorImpl;
-import mymdp.problem.MDPImpreciseFileProblemReaderImpl;
+import mymdp.problem.MDPImpreciseFileProblemReader;
 import mymdp.solver.ModifiedPolicyEvaluator;
 import mymdp.solver.PolicyIterationImpl;
 import mymdp.solver.ProbLinearSolver;
@@ -26,7 +27,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Stopwatch;
 
-public class DualGame {
+public class DualGame implements ProblemSolver {
 	private static final Logger log = LogManager.getLogger(DualGame.class);
 
 	private static final String PROBLEMS_DIR = "precise_problems";
@@ -35,17 +36,22 @@ public class DualGame {
 	private final String filename;
 	private final double maxRelaxation;
 	private final double stepRelaxation;
-	private UtilityFunction valueResult;
-	private Policy policyResult;
+	private final double maxError;
+
+	public DualGame(final String filename, final double maxRelaxation) {
+		this(filename, maxRelaxation, maxRelaxation, 0.001);
+	}
 
 	public DualGame(final String filename, final double maxRelaxation,
-			final double stepRelaxation) {
+			final double stepRelaxation, final double maxError) {
 		this.filename = filename;
 		this.maxRelaxation = stepRelaxation;
 		this.stepRelaxation = stepRelaxation;
+		this.maxError = maxError;
 	}
 
-	public void solve() {
+	@Override
+	public SolutionReport solve() {
 		ProbLinearSolver.initializeCount();
 		final ModifiedPolicyEvaluator policyEvaluator = new ModifiedPolicyEvaluator(100);
 
@@ -53,8 +59,8 @@ public class DualGame {
 		// problem
 		log.info("Current Problem: " + filename);
 		final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
-		final MDPImpreciseFileProblemReaderImpl initialReader = new MDPImpreciseFileProblemReaderImpl(initialProblemImprecisionGenerator);
-		final MDPIP initialMdpip = initialReader.readFromFile(PROBLEMS_DIR + "\\" + filename);
+		final MDPIP initialMdpip = MDPImpreciseFileProblemReader.readFromFile(PROBLEMS_DIR + "\\" + filename,
+				initialProblemImprecisionGenerator);
 
 		final ImprecisionGenerator imprecisionGenerator = new ImprecisionGeneratorByRanges(initialProblemImprecisionGenerator,
 				stepRelaxation);
@@ -92,16 +98,16 @@ public class DualGame {
 			}
 
 			final ImpreciseProblemGenerator generator = new ImpreciseProblemGenerator(result, mdp);
-			generator.writeToFile(SOLUTIONS_DIR + "\\problem_for_evaluation_"
-					+ i + ".txt", mdp.getStates().iterator().next(), mdp.getStates());
-			final MDPImpreciseFileProblemReaderImpl reader2 = new MDPImpreciseFileProblemReaderImpl(imprecisionGenerator);
-			final MDPIP mdpip = reader2.readFromFile(SOLUTIONS_DIR + "\\problem_for_evaluation_" + i + ".txt");
+			generator.writeToFile(SOLUTIONS_DIR + "\\problem_for_evaluation_" + i + ".txt", mdp.getStates().iterator().next(),
+					mdp.getStates());
+			final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile(SOLUTIONS_DIR + "\\problem_for_evaluation_" + i + ".txt",
+					imprecisionGenerator);
 
 			{
 				log.debug("Starting MDPIP");
 				watchMDPIP.start();
 				final Stopwatch watch1 = new Stopwatch().start();
-				result2 = (UtilityFunctionWithProbImpl) new ValueIterationProbImpl(result1).solve(mdpip, 0.001);
+				result2 = (UtilityFunctionWithProbImpl) new ValueIterationProbImpl(result1).solve(mdpip, maxError);
 				watch1.stop();
 				watchMDPIP.stop();
 				log.info("End of MDPIP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
@@ -115,14 +121,6 @@ public class DualGame {
 				break;
 			}
 
-			// final PreciseProblemGenerator generator2 = new
-			// PreciseProblemGenerator(result2, mdpip, initialMdpip);
-			// generator2.writeToFile(SOLUTIONS_DIR +
-			// "\\problem_for_select_best_" + i + ".txt",
-			// mdpip.getStates().iterator().next(), mdpip.getStates());
-
-			// mdp = reader.readFromFile(SOLUTIONS_DIR +
-			// "\\problem_for_select_best_" + i + ".txt");
 			mdp = new DelegateMDP(initialMdpip);
 			((DelegateMDP) mdp).setFunction(result2);
 			i++;
@@ -139,15 +137,6 @@ public class DualGame {
 		assertTrue(true);
 
 		log.info("End of problem " + filename + "\n\n\n\n\n");
-		this.policyResult = result;
-		this.valueResult = result2;
-	}
-
-	public Policy getPolicyResult() {
-		return policyResult;
-	}
-
-	public UtilityFunction getValueResult() {
-		return valueResult;
+		return new SolutionReport(result, result2);
 	}
 }
