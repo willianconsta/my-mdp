@@ -19,8 +19,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Range;
 
-public final class MDPImpreciseFileProblemReaderImpl {
-	private static Logger log = LogManager.getLogger(MDPImpreciseFileProblemReaderImpl.class);
+public final class MDPImpreciseFileProblemReader {
+	private static Logger log = LogManager.getLogger(MDPImpreciseFileProblemReader.class);
 
 	private boolean readingStates;
 	private final Set<String> allStates;
@@ -39,7 +39,7 @@ public final class MDPImpreciseFileProblemReaderImpl {
 	private boolean readingGoalState;
 	private final ImprecisionGenerator generator;
 
-	public MDPImpreciseFileProblemReaderImpl(final ImprecisionGenerator generator) {
+	private MDPImpreciseFileProblemReader(final ImprecisionGenerator generator) {
 		this.generator = generator;
 		readingStates = false;
 		allStates = new LinkedHashSet<>();
@@ -56,24 +56,11 @@ public final class MDPImpreciseFileProblemReaderImpl {
 		readingGoalState = false;
 	}
 
-	private void init() {
-		readingStates = false;
-		allStates.clear();
-		transitions.clear();
-		actualAction = null;
-		rewards.clear();
-		readingRewards = false;
-		readingCosts = false;
-		costs.clear();
-		discountFactor = -1.0;
-		initialState = null;
-		readingInitialState = false;
-		goalState = null;
-		readingGoalState = false;
+	public static MDPIP readFromFile(final String absoluteFilepath, final ImprecisionGenerator generator) {
+		return new MDPImpreciseFileProblemReader(generator).read(absoluteFilepath);
 	}
 
-	public MDPIP readFromFile(final String absoluteFilepath) {
-		init();
+	private MDPIP read(final String absoluteFilepath) {
 		try (BufferedReader reader = new BufferedReader(new FileReader(absoluteFilepath))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
