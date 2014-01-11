@@ -17,8 +17,8 @@ import mymdp.core.MDPIP;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class MDPIPFileProblemReaderImpl {
-	private static Logger log = LogManager.getLogger(MDPIPFileProblemReaderImpl.class);
+public final class MDPIPFileProblemReader {
+	private static Logger log = LogManager.getLogger(MDPIPFileProblemReader.class);
 
 	private boolean readingStates;
 	private final Set<String> allStates;
@@ -36,7 +36,7 @@ public final class MDPIPFileProblemReaderImpl {
 	private boolean readingInitialState;
 	private boolean readingGoalState;
 
-	public MDPIPFileProblemReaderImpl() {
+	private MDPIPFileProblemReader() {
 		readingStates = false;
 		allStates = new LinkedHashSet<>();
 		actualAction = null;
@@ -52,24 +52,11 @@ public final class MDPIPFileProblemReaderImpl {
 		readingGoalState = false;
 	}
 
-	private void init() {
-		readingStates = false;
-		allStates.clear();
-		transitions.clear();
-		actualAction = null;
-		rewards.clear();
-		readingRewards = false;
-		readingCosts = false;
-		costs.clear();
-		discountFactor = -1.0;
-		initialState = null;
-		readingInitialState = false;
-		goalState = null;
-		readingGoalState = false;
+	public static MDPIP readFromFile(final String absoluteFilepath) {
+		return new MDPIPFileProblemReader().read(absoluteFilepath);
 	}
 
-	public MDPIP readFromFile(final String absoluteFilepath) {
-		init();
+	private MDPIP read(final String absoluteFilepath) {
 		try (BufferedReader reader = new BufferedReader(new FileReader(absoluteFilepath))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
