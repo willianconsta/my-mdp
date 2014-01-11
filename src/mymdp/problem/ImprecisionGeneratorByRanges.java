@@ -1,7 +1,7 @@
 package mymdp.problem;
 
 import static com.google.common.base.Preconditions.checkState;
-import static mymdp.util.Pair.newPair;
+import static mymdp.util.Pair.of;
 
 import com.google.common.collect.Range;
 import com.google.common.math.DoubleMath;
@@ -18,7 +18,7 @@ public class ImprecisionGeneratorByRanges
 
 	@Override
 	public Range<Double> generateRange(final String initial, final String action, final String next, final double actualProb) {
-		final Range<Double> originalRange = generator.cache.get(newPair(initial, action)).get(next);
+		final Range<Double> originalRange = generator.cache.get(of(initial, action)).get(next);
 		checkState(Range.closed(0.0, 1.0).encloses(originalRange));
 		checkState(
 				DoubleMath.fuzzyEquals(actualProb, originalRange.lowerEndpoint(), 0.000001)

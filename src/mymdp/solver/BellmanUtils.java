@@ -1,7 +1,7 @@
 package mymdp.solver;
 
 import static java.lang.Math.max;
-import static mymdp.util.Pair.newPair;
+import static mymdp.util.Pair.of;
 
 import java.util.Map.Entry;
 
@@ -59,7 +59,7 @@ public final class BellmanUtils {
 				maxValue = value;
 			}
 		}
-		return newPair(maxA, maxValue);
+		return of(maxA, maxValue);
 	}
 
 	public static Pair<Action, Double> getGreedyActionForState(final State s, final UtilityFunction function, final MDPIP mdpip) {
@@ -78,6 +78,6 @@ public final class BellmanUtils {
 				maxValue = value;
 			}
 		}
-		return newPair(maxA, maxValue);
+		return of(maxA, maxValue);
 	}
 }

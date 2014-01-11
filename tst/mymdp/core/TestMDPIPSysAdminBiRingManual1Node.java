@@ -1,7 +1,7 @@
 package mymdp.core;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static mymdp.util.Pair.newPair;
+import static mymdp.util.Pair.of;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -96,18 +96,18 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 
 			private final Multimap<Pair<? extends State, ? extends Action>, Pair<? extends State, String>> probs = ImmutableMultimap
 					.<Pair<? extends State, ? extends Action>, Pair<? extends State, String>> builder()
-					.put(newPair(States.C1_OFF, Actions.NOP), newPair(States.C1_OFF, "p2"))
-					.put(newPair(States.C1_OFF, Actions.NOP), newPair(States.C1_ON, "p4"))
-					.put(newPair(States.C1_OFF, Actions.REBOOT1), newPair(States.C1_OFF, "0"))
-					.put(newPair(States.C1_OFF, Actions.REBOOT1), newPair(States.C1_ON, "1"))
-					.put(newPair(States.C1_ON, Actions.NOP), newPair(States.C1_OFF, "p3"))
-					.put(newPair(States.C1_ON, Actions.NOP), newPair(States.C1_ON, "p1"))
-					.put(newPair(States.C1_ON, Actions.REBOOT1), newPair(States.C1_OFF, "0"))
-					.put(newPair(States.C1_ON, Actions.REBOOT1), newPair(States.C1_ON, "1")).build();
+					.put(of(States.C1_OFF, Actions.NOP), of(States.C1_OFF, "p2"))
+					.put(of(States.C1_OFF, Actions.NOP), of(States.C1_ON, "p4"))
+					.put(of(States.C1_OFF, Actions.REBOOT1), of(States.C1_OFF, "0"))
+					.put(of(States.C1_OFF, Actions.REBOOT1), of(States.C1_ON, "1"))
+					.put(of(States.C1_ON, Actions.NOP), of(States.C1_OFF, "p3"))
+					.put(of(States.C1_ON, Actions.NOP), of(States.C1_ON, "p1"))
+					.put(of(States.C1_ON, Actions.REBOOT1), of(States.C1_OFF, "0"))
+					.put(of(States.C1_ON, Actions.REBOOT1), of(States.C1_ON, "1")).build();
 
 			@Override
 			public ProbabilityFunction getPossibleStatesAndProbability(final State s, final Action a, final UtilityFunction function) {
-				final Pair<State, Action> transition = newPair(s, a);
+				final Pair<State, Action> transition = of(s, a);
 				final Map<State, Double> result = Maps.newLinkedHashMap();
 				final Collection<Pair<? extends State, String>> nextStates = probs.get(transition);
 

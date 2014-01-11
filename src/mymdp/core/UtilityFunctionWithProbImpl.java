@@ -30,7 +30,7 @@ public class UtilityFunctionWithProbImpl extends UtilityFunctionImpl {
 
 	public void updateUtility(final State state, final double utility, final Action action, final ProbabilityFunction prob) {
 		super.updateUtility(state, utility);
-		actionAndProbByStates.put(state, Pair.newPair(action, prob));
+		actionAndProbByStates.put(state, Pair.of(action, prob));
 	}
 
 	public Pair<Action, ProbabilityFunction> getProbability(final State state) {

@@ -61,7 +61,7 @@ public class ProbLinearSolver {
 	 * @return a pair with the request and the result.
 	 */
 	public static Pair<String, String> getLastFullLog() {
-		return Pair.newPair(solveCaller.getFileContents(), solveCaller.getLog());
+		return Pair.of(solveCaller.getFileContents(), solveCaller.getLog());
 	}
 
 	/**

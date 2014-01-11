@@ -1,7 +1,7 @@
 package mymdp.problem;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static mymdp.util.Pair.newPair;
+import static mymdp.util.Pair.of;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class ImprecisionGeneratorImpl implements ImprecisionGenerator {
 
 	@Override
 	public Range<Double> generateRange(final String initial, final String action, final String next, final double actualProb) {
-		final Pair<String, String> stateAction = newPair(initial, action);
+		final Pair<String, String> stateAction = of(initial, action);
 		Map<String, Range<Double>> consequences = cache.get(stateAction);
 		if (consequences == null) {
 			consequences = new LinkedHashMap<>();
