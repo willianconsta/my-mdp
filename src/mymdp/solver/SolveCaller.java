@@ -42,22 +42,32 @@ public class SolveCaller {
 		process_in = new PrintWriter(new BufferedOutputStream(pros.getOutputStream(), 32767), true);
 	}
 
-	public void saveAMPLFile(final List<String> listaLegal, final List<String> listVariables, final List<String> listConstraint,
+	/**
+	 * Saves the file containing the problem definition for solving.
+	 * 
+	 * @param objectiveFunctionMembers
+	 * @param allVariables
+	 * @param constraints
+	 * @param solutionType
+	 */
+	public void saveAMPLFile(final List<String> objectiveFunctionMembers,
+			final List<String> allVariables,
+			final List<String> constraints,
 			final SolutionType solutionType) {
 		String fileData = "";
 		try {
 			final StringWriter output = new StringWriter();
 
-			setVariablesName(listVariables);
+			setVariablesName(allVariables);
 
-			for (final String s : listVariables) {
+			for (final String s : allVariables) {
 				output.write("var " + s + ">=0, <=1;\n");
 			}
 
 			if (solutionType != SolutionType.ANY_FEASIBLE) {
-				fileData = listaLegal.get(0);
-				for (int i = 1; i < listaLegal.size(); i++) {
-					fileData += " + " + listaLegal.get(i);
+				fileData = objectiveFunctionMembers.get(0);
+				for (int i = 1; i < objectiveFunctionMembers.size(); i++) {
+					fileData += " + " + objectiveFunctionMembers.get(i);
 				}
 			}
 
@@ -76,15 +86,14 @@ public class SolveCaller {
 			}
 
 			int i = 0;
-			for (final String s : listConstraint) {
+			for (final String s : constraints) {
 				output.write("subject to Constraint" + i++ + ": " + s + ";\n");
 			}
 
 			output.close();
 			fileContents = output.getBuffer().toString();
 		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw Throwables.propagate(e);
 		}
 
 	}
