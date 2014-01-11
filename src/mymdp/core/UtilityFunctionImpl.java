@@ -10,10 +10,13 @@ import com.google.common.collect.Ordering;
 public class UtilityFunctionImpl implements UtilityFunction {
 
 	private final Map<State, Double> utilities = new LinkedHashMap<>();
+	private final Map<String, Double> utilitiesByName = new LinkedHashMap<>();
 
 	public UtilityFunctionImpl(final Set<State> states, final double constantValue) {
 		for (final State state : states) {
-			utilities.put(state, Double.valueOf(constantValue));
+			final Double value = Double.valueOf(constantValue);
+			utilities.put(state, value);
+			utilitiesByName.put(state.name(), value);
 		}
 	}
 
@@ -39,12 +42,17 @@ public class UtilityFunctionImpl implements UtilityFunction {
 			throw new IllegalStateException("Updating inexistent state: " + state);
 		}
 		utilities.put(state, utility);
+		utilitiesByName.put(state.name(), utility);
 	}
 
 	@Override
 	public double getUtility(final State state) {
-		final Double utility = utilities.get(state);
-		return utility.doubleValue();
+		return utilities.get(state).doubleValue();
+	}
+
+	@Override
+	public double getUtility(final String stateName) {
+		return utilitiesByName.get(stateName).doubleValue();
 	}
 
 	@Override
