@@ -5,7 +5,6 @@ import mymdp.core.MDPIP;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
 import mymdp.dual.ValueIterationProbImpl;
-import mymdp.problem.MDPIPBuilder.StateImpl;
 
 import org.fest.assertions.Delta;
 import org.junit.Test;
@@ -14,8 +13,8 @@ public class TestNavigationIPFile01 {
 
 	@Test
 	public void test01() {
-		final MDPImpreciseFileProblemReaderImpl reader = new MDPImpreciseFileProblemReaderImpl(new ImprecisionGeneratorImpl(0.000001));
-		final MDPIP mdpip = reader.readFromFile("precise_problems\\navigation01.net");
+		final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile("precise_problems\\navigation01.net", new ImprecisionGeneratorImpl(
+				0.000001));
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationProbImpl(new UtilityFunctionImpl(mdpip.getStates())).solve(mdpip,
 				delta.doubleValue());

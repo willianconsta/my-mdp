@@ -10,8 +10,8 @@ import org.junit.Test;
 public class PolicyIterationSatiaTest {
 	@Test
 	public void test() {
-		final MDPImpreciseFileProblemReaderImpl reader = new MDPImpreciseFileProblemReaderImpl(new ImprecisionGeneratorImpl(0.15));
-		final MDPIP mdpip = reader.readFromFile("precise_problems\\navigation01.net");
+		final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile("precise_problems\\navigation01.net", new ImprecisionGeneratorImpl(
+				0.15));
 		final double delta = 0.001;
 		final Policy result = new PolicyIterationSatia(delta).solve(mdpip);
 		MDPAssertions.assertThat(result)

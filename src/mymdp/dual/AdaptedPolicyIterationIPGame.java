@@ -9,7 +9,7 @@ import mymdp.core.Policy;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionWithProbImpl;
 import mymdp.problem.ImprecisionGeneratorImpl;
-import mymdp.problem.MDPImpreciseFileProblemReaderImpl;
+import mymdp.problem.MDPImpreciseFileProblemReader;
 import mymdp.solver.ModifiedPolicyEvaluatorIP;
 import mymdp.solver.PolicyIterationIPImpl;
 import mymdp.solver.ProbLinearSolver;
@@ -40,8 +40,7 @@ public class AdaptedPolicyIterationIPGame {
 		log.info("Current Problem: " + filename);
 		final ModifiedPolicyEvaluatorIP evaluator = new ModifiedPolicyEvaluatorIP(100);
 		final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
-		final MDPImpreciseFileProblemReaderImpl initialReader = new MDPImpreciseFileProblemReaderImpl(initialProblemImprecisionGenerator);
-		final MDPIP mdpip = initialReader.readFromFile(PROBLEMS_DIR + "\\" + filename);
+		final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile(PROBLEMS_DIR + "\\" + filename, initialProblemImprecisionGenerator);
 		// log.info("Initial problem is " + mdpip.toString());
 		log.debug("Starting MDPIP");
 		ProbLinearSolver.initializeCount();
