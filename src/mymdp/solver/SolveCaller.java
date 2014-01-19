@@ -1,26 +1,33 @@
 package mymdp.solver;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import mymdp.solver.ProbLinearSolver.SolutionType;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 
 public class SolveCaller {
 	private final String amplLocation;
 	private final Map<String, Double> currentValuesProb;
 	private String fileContents;
-	private List<String> variablesName;
+	private Set<String> variablesName;
 	private Double value;
 	private String log;
 
@@ -33,7 +40,7 @@ public class SolveCaller {
 	public SolveCaller(final String amplFile) throws IOException {
 		this.amplLocation = amplFile;
 		currentValuesProb = new LinkedHashMap<>();
-		variablesName = new ArrayList<>();
+		variablesName = new HashSet<>();
 
 		// Open files for reading and writing
 		// BufferedReader fis_reader = new BufferedReader(_rReader);
@@ -46,22 +53,32 @@ public class SolveCaller {
 	 * Saves the file containing the problem definition for solving.
 	 * 
 	 * @param objectiveFunctionMembers
-	 * @param allVariables
+	 * @param allProbabilityVariables
+	 *            the name of all variables that represent a probability (their
+	 *            values belong to [0,1])
+	 * @param allRealVariables
+	 *            the name of all variables defined within the real set.
 	 * @param constraints
 	 * @param solutionType
 	 */
 	public void saveAMPLFile(final List<String> objectiveFunctionMembers,
-			final List<String> allVariables,
-			final List<String> constraints,
+			final Set<String> allProbabilityVariables,
+			final Set<String> allRealVariables,
+			final Collection<String> constraints,
 			final SolutionType solutionType) {
 		String fileData = "";
 		try {
 			final StringWriter output = new StringWriter();
 
-			setVariablesName(allVariables);
+			checkState(Collections.disjoint(allRealVariables, allProbabilityVariables));
 
-			for (final String s : allVariables) {
+			setVariablesName(ImmutableSet.copyOf(Iterables.concat(allProbabilityVariables, allRealVariables)));
+
+			for (final String s : allProbabilityVariables) {
 				output.write("var " + s + ">=0, <=1;\n");
+			}
+			for (final String s : allRealVariables) {
+				output.write("var " + s + ";\n");
 			}
 
 			if (solutionType != SolutionType.ANY_FEASIBLE) {
@@ -185,8 +202,8 @@ public class SolveCaller {
 		return currentValuesProb;
 	}
 
-	private void setVariablesName(final List<String> variablesName) {
-		this.variablesName = variablesName;
+	private void setVariablesName(final Set<String> variablesName) {
+		this.variablesName = ImmutableSet.copyOf(variablesName);
 	}
 
 	public Double getCurrentValue() {

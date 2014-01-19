@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 public class ProbLinearSolver {
@@ -206,14 +207,8 @@ public class ProbLinearSolver {
 			obj.add(entry.getValue() + "*" + value);
 		}
 
-		// if (obj.size() == 1) {
-		// for (final State state : nextStates.keySet()) {
-		// result.put(state, 1.0 / nextStates.size());
-		// }
-		// return result;
-		// }
-
-		solveCaller.saveAMPLFile(obj, ImmutableList.copyOf(variables), ImmutableList.copyOf(restrictions), type);
+		solveCaller.saveAMPLFile(obj, ImmutableSet.copyOf(variables), ImmutableSet.<String> of(), ImmutableList.copyOf(restrictions),
+				type);
 		try {
 			solveCaller.callSolver();
 		} catch (final RuntimeException e) {
