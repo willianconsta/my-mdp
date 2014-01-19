@@ -3,7 +3,7 @@ package mymdp.dual.evaluator;
 import mymdp.core.MDP;
 import mymdp.core.MDPIP;
 import mymdp.dual.EvaluatedProblemGenerator;
-import mymdp.problem.MDPFileProblemReaderImpl;
+import mymdp.problem.MDPFileProblemReader;
 import mymdp.solver.ProbLinearSolver;
 import mymdp.solver.ProbLinearSolver.SolutionType;
 
@@ -21,7 +21,7 @@ abstract class AbstractProbabilityEvaluator implements ProbabilityEvaluator {
 			setMode();
 			final EvaluatedProblemGenerator generator = new EvaluatedProblemGenerator(mdpip);
 			generator.writeToFile(fullFilename, mdpip.getStates().iterator().next(), mdpip.getStates());
-			return new MDPFileProblemReaderImpl().readFromFile(fullFilename);
+			return MDPFileProblemReader.readFromFile(fullFilename);
 		} finally {
 			ProbLinearSolver.setMode(previousMode);
 		}

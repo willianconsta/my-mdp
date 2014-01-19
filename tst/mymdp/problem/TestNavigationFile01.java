@@ -13,8 +13,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest01() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation01.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation01.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -35,8 +34,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest02() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation02.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation02.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -60,8 +58,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest03() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation03.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation03.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -90,8 +87,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest04() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation04.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation04.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -130,8 +126,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest05() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation05.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation05.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -170,8 +165,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest06() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation06.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation06.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -220,8 +214,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest07() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation07.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation07.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -280,8 +273,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest08() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation08.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation08.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -350,8 +342,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest09() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation09.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation09.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -440,8 +431,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest10() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation10.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation10.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -550,8 +540,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest11() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation11.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation11.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
@@ -760,8 +749,7 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest12() {
-		final MDPFileProblemReaderImpl reader = new MDPFileProblemReaderImpl();
-		final MDP mdp = reader.readFromFile("precise_problems\\navigation12.net");
+		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation12.net");
 		final Delta delta = Delta.delta(0.001);
 		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
 		assertThat(result)
