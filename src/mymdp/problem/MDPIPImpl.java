@@ -115,10 +115,30 @@ final class MDPIPImpl implements MDPIP {
 		return result;
 	}
 
+	/**
+	 * Gets the variable names associated with all transitions
+	 * <currentState,action,nextState>.
+	 * 
+	 * @return
+	 */
 	Map<Trio<State, Action, State>, String> getVars() {
 		return Collections.unmodifiableMap(vars);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Map<Action, Map<State, Map<State, String>>> getTransitions() {
+		return Collections.unmodifiableMap(transitions);
+	}
+
+	/**
+	 * Gets the restrictions applied over the transition variables.
+	 * 
+	 * @return
+	 * @see #getVars()
+	 */
 	Set<String> getRestrictions() {
 		return Collections.unmodifiableSet(restrictions);
 	}
