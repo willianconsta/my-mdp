@@ -14,12 +14,16 @@ public class ValueAssert extends GenericAssert<ValueAssert, UtilityFunction> {
 	}
 
 	public ValueAssert stateHasValue(final State state, final double expectedValue, final Delta delta) {
-		final double actualValue = actual.getUtility(state);
+		return stateHasValue(state.name(), expectedValue, delta);
+	}
+
+	public ValueAssert stateHasValue(final String stateName, final double expectedValue, final Delta delta) {
+		final double actualValue = actual.getUtility(stateName);
 		if (equals(expectedValue, actualValue, delta)) {
 			return this;
 		}
 		failIfCustomMessageIsSet();
-		throw failure("Utility Function has not the expected value for the state. State = " + state.name() +
+		throw failure("Utility Function has not the expected value for the state. State = " + stateName +
 				", Expected Value =" + expectedValue + ", Actual Value = " + actualValue);
 	}
 
