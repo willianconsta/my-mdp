@@ -141,8 +141,8 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 				} catch (final IOException e) {
 					throw Throwables.propagate(e);
 				}
-				final List<String> variables = ImmutableList.<String> of("p1", "p2", "p3", "p4");
-				solveCaller.saveAMPLFile(obj, variables,
+				final Set<String> variables = ImmutableSet.<String> of("p1", "p2", "p3", "p4");
+				solveCaller.saveAMPLFile(obj, variables, ImmutableSet.<String> of(),
 						ImmutableList.<String> of("p1 >= 0.85 + p2", "p1 <= 0.95", "p2 <= 0.10", "p3 = 1 - p1", "p4 = 1 - p2"),
 						SolutionType.MINIMIZE);
 				solveCaller.callSolver();
