@@ -94,7 +94,7 @@ public class MDPIPBuilder {
 			}
 			restrOne += var;
 			sumOnePerState.put(state1, restrOne);
-			vars.put(Trio.newTrio(state1, action, state2), var);
+			vars.put(Trio.of(state1, action, state2), var);
 		}
 
 		checkState(Collections.max(lowestSum.values()) <= 1, "Expected leq than 1, got " + lowestSum);

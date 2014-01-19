@@ -85,6 +85,6 @@ public class ValueIterationProbImpl implements ValueIterationIP {
 		if (maxUtilityOfActions == Double.NEGATIVE_INFINITY) {
 			maxUtilityOfActions = 0;
 		}
-		return Trio.newTrio(mdpip.getRewardFor(state) + mdpip.getDiscountFactor() * maxUtilityOfActions, maxAction, probOfMaxAction);
+		return Trio.of(mdpip.getRewardFor(state) + mdpip.getDiscountFactor() * maxUtilityOfActions, maxAction, probOfMaxAction);
 	}
 }

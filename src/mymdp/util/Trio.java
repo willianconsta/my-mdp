@@ -34,7 +34,7 @@ public final class Trio<F, S, T> {
 	 * @param third
 	 * @return
 	 */
-	public static <F, S, T> Trio<F, S, T> newTrio(final F first,
+	public static <F, S, T> Trio<F, S, T> of(final F first,
 			final S second, final T third) {
 		return new Trio<F, S, T>(first, second, third);
 	}
