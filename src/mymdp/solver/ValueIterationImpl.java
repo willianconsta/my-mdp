@@ -23,7 +23,7 @@ public class ValueIterationImpl implements ValueIteration {
 			actualFunction = new UtilityFunctionImpl(oldFunction);
 			actualError = iteration(mdp, oldFunction, actualFunction);
 			oldFunction = actualFunction;
-		} while (actualError > maxError);
+		} while (actualError >= maxError);
 		return actualFunction;
 	}
 
@@ -35,9 +35,7 @@ public class ValueIterationImpl implements ValueIteration {
 			log.trace("Value of state " + state + " = " + actualUtility);
 			actualFunction.updateUtility(state, actualUtility);
 
-			if (abs(actualUtility - oldUtility) > maxVariation) {
-				maxVariation = abs(actualUtility - oldUtility);
-			}
+			maxVariation = Math.max(maxVariation, abs(actualUtility - oldUtility));
 		}
 		return maxVariation;
 	}
