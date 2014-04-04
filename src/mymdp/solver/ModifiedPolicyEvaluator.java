@@ -1,9 +1,7 @@
 package mymdp.solver;
 
 import static com.google.common.base.Preconditions.checkArgument;
-
-import java.util.Map.Entry;
-
+import static mymdp.solver.BellmanUtils.calculateUtility;
 import mymdp.core.Action;
 import mymdp.core.MDP;
 import mymdp.core.Policy;
@@ -33,11 +31,8 @@ public class ModifiedPolicyEvaluator implements PolicyEvaluator {
 		final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(function);
 		for (final State s : mdp.getStates()) {
 			final Action a = policy.getActionFor(s);
-			double value = 0.0;
-			for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, a)) {
-				value += nextStateAndProb.getValue() * function.getUtility(nextStateAndProb.getKey());
-			}
-			evaluatedFunction.updateUtility(s, mdp.getRewardFor(s) + mdp.getDiscountFactor() * value);
+			double utility = calculateUtility(mdp, s, policy, evaluatedFunction);
+			evaluatedFunction.updateUtility(s, utility);
 		}
 		return evaluatedFunction;
 	}

@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import mymdp.core.Action;
 import mymdp.core.MDP;
 import mymdp.core.MDPIP;
+import mymdp.core.Policy;
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 import mymdp.util.Pair;
@@ -25,6 +26,19 @@ public final class BellmanUtils {
 			}
 			maxUtilityOfActions = max(maxUtilityOfActions, utilityOfAction);
 		}
+		return mdp.getRewardFor(state) + mdp.getDiscountFactor() * maxUtilityOfActions;
+	}
+
+	public static double calculateUtility(final MDP mdp, final State state, final Policy policy, final UtilityFunction function) {
+		double maxUtilityOfActions = Double.NEGATIVE_INFINITY;
+		final Action action = policy.getActionFor(state);
+
+		double utilityOfAction = 0;
+		for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(state, action)) {
+			utilityOfAction += nextStateAndProb.getValue().doubleValue() * function.getUtility(nextStateAndProb.getKey());
+		}
+		maxUtilityOfActions = max(maxUtilityOfActions, utilityOfAction);
+
 		return mdp.getRewardFor(state) + mdp.getDiscountFactor() * maxUtilityOfActions;
 	}
 

@@ -9,7 +9,7 @@ import mymdp.core.UtilityFunction;
  * 
  * @author Willian
  */
-interface PolicyEvaluator {
+public interface PolicyEvaluator {
 
 	/**
 	 * Evaluates the given policy for a MDP.
