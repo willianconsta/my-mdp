@@ -9,7 +9,7 @@ public interface MDP {
 
 	Set<Action> getActionsFor(State state);
 
-	ProbabilityFunction getPossibleStatesAndProbability(State initialState, Action action);
+	TransitionProbability getPossibleStatesAndProbability(State initialState, Action action);
 
 	double getRewardFor(State state);
 

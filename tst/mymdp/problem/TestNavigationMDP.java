@@ -1,20 +1,77 @@
 package mymdp.problem;
 
 import static mymdp.test.MDPAssertions.assertThat;
+
+import java.util.Arrays;
+import java.util.Collection;
+
 import mymdp.core.MDP;
 import mymdp.core.UtilityFunction;
+import mymdp.core.UtilityFunctionImpl;
+import mymdp.solver.ErrorBoundModifiedPolicyEvaluator;
+import mymdp.solver.FileMDPDualLinearProgrammingSolver;
+import mymdp.solver.ModifiedPolicyEvaluator;
+import mymdp.solver.PolicyIterationImpl;
 import mymdp.solver.ValueIterationImpl;
 
 import org.fest.assertions.Delta;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-public class TestNavigationFile01 {
+@RunWith(Parameterized.class)
+public class TestNavigationMDP {
+	private static final double ERROR = 0.01;
+
+	private interface Testable {
+		UtilityFunction solve(String file, double maxError);
+	}
+
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{
+						new Testable() {
+							@Override
+							public UtilityFunction solve(final String file, final double maxError) {
+								final MDP mdp = MDPFileProblemReader.readFromFile(file);
+								return new ValueIterationImpl().solve(mdp, maxError);
+							}
+						}
+		},
+				{
+						new Testable() {
+							@Override
+							public UtilityFunction solve(final String file, final double maxError) {
+								final MDP mdp = MDPFileProblemReader.readFromFile(file);
+								final ErrorBoundModifiedPolicyEvaluator evaluator = new ErrorBoundModifiedPolicyEvaluator(ERROR / 10.0);
+								return evaluator.policyEvaluation(new PolicyIterationImpl(new ModifiedPolicyEvaluator(100)).solve(mdp),
+										new UtilityFunctionImpl(mdp.getStates()), mdp);
+							}
+						}
+		},
+				{
+						new Testable() {
+							@Override
+							public UtilityFunction solve(final String file, final double maxError) {
+								return new FileMDPDualLinearProgrammingSolver(file).solve().getValueResult();
+							}
+						}
+		}
+		});
+	}
+
+	private final Testable subject;
+
+	public TestNavigationMDP(final Testable testable) {
+		this.subject = testable;
+	}
 
 	@Test
 	public void valueTest01() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation01.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation01.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.991404955, delta)
 				.stateHasValue("robot-at-x01y01", -4.684730495, delta)
@@ -33,9 +90,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest02() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation02.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation02.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -5.21617149554, delta)
@@ -57,9 +113,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest03() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation03.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation03.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -6.12416205153, delta)
@@ -86,9 +141,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest04() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation04.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation04.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -7.45517833585, delta)
@@ -125,9 +179,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest05() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation05.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation05.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -7.17484513073, delta)
@@ -164,9 +217,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest06() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation06.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation06.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -7.71068769604, delta)
@@ -213,9 +265,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest07() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation07.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation07.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -8.14465055407, delta)
@@ -272,9 +323,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest08() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation08.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation08.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.01436959336, delta)
@@ -341,9 +391,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest09() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation09.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation09.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.20070251077, delta)
@@ -430,9 +479,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest10() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation10.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation10.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.351562554, delta)
@@ -539,9 +587,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest11() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation11.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation11.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.91414335341, delta)
@@ -748,9 +795,8 @@ public class TestNavigationFile01 {
 
 	@Test
 	public void valueTest12() {
-		final MDP mdp = MDPFileProblemReader.readFromFile("precise_problems\\navigation12.net");
-		final Delta delta = Delta.delta(0.001);
-		final UtilityFunction result = new ValueIterationImpl().solve(mdp, delta.doubleValue());
+		final Delta delta = Delta.delta(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation12.net", delta.doubleValue() / 10.0);
 		assertThat(result)
 				.stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.96530575102, delta)

@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
-import mymdp.core.ProbabilityFunction;
+import mymdp.core.TransitionProbability;
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionWithProbImpl;
@@ -47,7 +47,7 @@ public class ValueIterationProbImpl implements ValueIterationIP {
 		double maxVariation = 0;
 		for (final State state : mdpip.getStates()) {
 			final double oldUtility = oldFunction.getUtility(state);
-			final Trio<Double, Action, ProbabilityFunction> trio =
+			final Trio<Double, Action, TransitionProbability> trio =
 					calculateUtilityIP(mdpip, state, oldFunction);
 			final double actualUtility = trio.first;
 			log.trace("Value of state " + state + " = " + actualUtility);
@@ -62,9 +62,9 @@ public class ValueIterationProbImpl implements ValueIterationIP {
 		return maxVariation;
 	}
 
-	private static Trio<Double, Action, ProbabilityFunction> calculateUtilityIP(final MDPIP mdpip, final State state,
+	private static Trio<Double, Action, TransitionProbability> calculateUtilityIP(final MDPIP mdpip, final State state,
 			final UtilityFunctionWithProbImpl oldFunction) {
-		ProbabilityFunction probOfMaxAction = null;
+		TransitionProbability probOfMaxAction = null;
 		Action maxAction = null;
 		double maxUtilityOfActions = 0;
 		if (!mdpip.getActionsFor(state).isEmpty()) {
@@ -72,7 +72,7 @@ public class ValueIterationProbImpl implements ValueIterationIP {
 		}
 		for (final Action action : mdpip.getActionsFor(state)) {
 			double utilityOfAction = 0;
-			final ProbabilityFunction possibleStatesAndProbability = mdpip.getPossibleStatesAndProbability(state, action, oldFunction);
+			final TransitionProbability possibleStatesAndProbability = mdpip.getPossibleStatesAndProbability(state, action, oldFunction);
 			for (final Entry<State, Double> nextStateAndProb : possibleStatesAndProbability) {
 				utilityOfAction += nextStateAndProb.getValue().doubleValue() * oldFunction.getUtility(nextStateAndProb.getKey());
 			}

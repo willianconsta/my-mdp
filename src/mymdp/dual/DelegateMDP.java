@@ -5,7 +5,7 @@ import java.util.Set;
 import mymdp.core.Action;
 import mymdp.core.MDP;
 import mymdp.core.MDPIP;
-import mymdp.core.ProbabilityFunction;
+import mymdp.core.TransitionProbability;
 import mymdp.core.State;
 import mymdp.core.UtilityFunctionWithProbImpl;
 
@@ -15,6 +15,11 @@ public class DelegateMDP implements MDP {
 
 	public DelegateMDP(final MDPIP mdpip) {
 		this.mdpip = mdpip;
+		for (final State s : mdpip.getStates()) {
+			for (final Action a : mdpip.getAllActions()) {
+
+			}
+		}
 	}
 
 	@Override
@@ -33,7 +38,7 @@ public class DelegateMDP implements MDP {
 	}
 
 	@Override
-	public ProbabilityFunction getPossibleStatesAndProbability(final State initialState, final Action action) {
+	public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action) {
 		// if (function.getProbability(initialState).first.equals(action)) {
 		// return function.getProbability(initialState).second;
 		// } else {

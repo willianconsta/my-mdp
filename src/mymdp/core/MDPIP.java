@@ -9,7 +9,10 @@ public interface MDPIP {
 
 	Set<Action> getActionsFor(State state);
 
-	ProbabilityFunction getPossibleStatesAndProbability(State initialState, Action action, UtilityFunction function);
+	TransitionProbability getPossibleStatesAndProbability(State initialState, Action action, UtilityFunction function);
+
+	// to be added
+	// ProbabilityDensityFunction getProbabilityFunction();
 
 	double getRewardFor(State state);
 

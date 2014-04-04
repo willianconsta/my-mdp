@@ -3,9 +3,13 @@ package mymdp.core;
 import static com.google.common.collect.Sets.newHashSet;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static mymdp.test.MDPAssertions.assertThat;
+import static org.fest.assertions.Delta.delta;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -13,14 +17,21 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import mymdp.solver.MDPDualLinearProgrammingSolver;
 import mymdp.solver.ModifiedPolicyEvaluator;
 import mymdp.solver.PolicyIterationImpl;
 import mymdp.solver.RTDP.ConvergencyCriteria;
 import mymdp.solver.RTDPImpl;
 import mymdp.solver.ValueIterationImpl;
 
+import org.fest.assertions.Delta;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class TestAIMAExample1 {
 	public static final double DELTA_THRESHOLD = 1e-3;
 
@@ -40,7 +51,7 @@ public class TestAIMAExample1 {
 
 		@Override
 		public String toString() {
-			return "(x=" + i + ",y=" + j + ")";
+			return String.format("x%02dy%02d", i, j);
 		}
 
 		@Override
@@ -294,26 +305,70 @@ public class TestAIMAExample1 {
 		}
 	}
 
-	@Test
-	public void testValueIteration() {
-		final UtilityFunction function = new ValueIterationImpl().solve(createMDP(), 0.001);
+	private interface Testable {
+		UtilityFunction solve(MDP mdp, double maxError);
+	}
 
-		assertEquals(0.705, function.getUtility(StateImpl.createState(1, 1)), DELTA_THRESHOLD);
-		assertEquals(0.655, function.getUtility(StateImpl.createState(1, 2)), DELTA_THRESHOLD);
-		assertEquals(0.611, function.getUtility(StateImpl.createState(1, 3)), DELTA_THRESHOLD);
-		assertEquals(0.388, function.getUtility(StateImpl.createState(1, 4)), DELTA_THRESHOLD);
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{
+						new Testable() {
+							@Override
+							public UtilityFunction solve(final MDP mdp, final double maxError) {
+								return new ValueIterationImpl().solve(mdp, maxError);
+							}
+						}
+		},
+				{
+						new Testable() {
+							@Override
+							public UtilityFunction solve(final MDP mdp, final double maxError) {
+								final ModifiedPolicyEvaluator evaluator = new ModifiedPolicyEvaluator(100);
+								return evaluator.policyEvaluation(new PolicyIterationImpl(evaluator).solve(mdp),
+										new UtilityFunctionImpl(mdp.getStates()), mdp);
+							}
+						}
+		},
+				{
+						new Testable() {
+							@Override
+							public UtilityFunction solve(final MDP mdp, final double maxError) {
+								return new MDPDualLinearProgrammingSolver("AIMA Example", mdp).solve().getValueResult();
+							}
+						}
+		}
+		});
+	}
 
-		assertEquals(0.762, function.getUtility(StateImpl.createState(2, 1)), DELTA_THRESHOLD);
-		assertEquals(0.660, function.getUtility(StateImpl.createState(2, 3)), DELTA_THRESHOLD);
-		assertEquals(-1.0, function.getUtility(StateImpl.createState(2, 4)), DELTA_THRESHOLD);
+	private final Testable subject;
 
-		assertEquals(0.812, function.getUtility(StateImpl.createState(3, 1)), DELTA_THRESHOLD);
-		assertEquals(0.868, function.getUtility(StateImpl.createState(3, 2)), DELTA_THRESHOLD);
-		assertEquals(0.918, function.getUtility(StateImpl.createState(3, 3)), DELTA_THRESHOLD);
-		assertEquals(1.0, function.getUtility(StateImpl.createState(3, 4)), DELTA_THRESHOLD);
+	public TestAIMAExample1(final Testable testable) {
+		this.subject = testable;
 	}
 
 	@Test
+	public void testValueIteration() {
+		final UtilityFunction function = subject.solve(createMDP(), DELTA_THRESHOLD);
+
+		final Delta delta = delta(DELTA_THRESHOLD);
+		assertThat(function).stateHasValue("x01y01", 0.705, delta);
+		assertThat(function).stateHasValue("x01y02", 0.655, delta);
+		assertThat(function).stateHasValue("x01y03", 0.611, delta);
+		assertThat(function).stateHasValue("x01y04", 0.388, delta);
+
+		assertThat(function).stateHasValue("x02y01", 0.762, delta);
+		assertThat(function).stateHasValue("x02y03", 0.660, delta);
+		assertThat(function).stateHasValue("x02y04", -1.00, delta);
+
+		assertThat(function).stateHasValue("x03y01", 0.812, delta);
+		assertThat(function).stateHasValue("x03y02", 0.868, delta);
+		assertThat(function).stateHasValue("x03y03", 0.918, delta);
+		assertThat(function).stateHasValue("x03y04", 1.000, delta);
+	}
+
+	@Test
+	@Ignore
 	public void testRTDP() {
 		final UtilityFunction function = new RTDPImpl(new ConvergencyCriteria() {
 			int iterations = 0;
@@ -341,6 +396,7 @@ public class TestAIMAExample1 {
 	}
 
 	@Test
+	@Ignore
 	public void testPolicyIteration() {
 		final Policy policy = new PolicyIterationImpl(new ModifiedPolicyEvaluator(50)).solve(createMDP());
 
@@ -403,23 +459,24 @@ public class TestAIMAExample1 {
 			}
 
 			@Override
-			public ProbabilityFunction getPossibleStatesAndProbability(final State initialState, final Action action) {
+			public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action) {
 				if (action instanceof ActionUp) {
-					return ProbabilityFunction.Instance.createSimple(((ActionUp) action).applyOver(initialState));
+					return TransitionProbability.Instance.createSimple(initialState, action, ((ActionUp) action).applyOver(initialState));
 				}
 				if (action instanceof ActionDown) {
-					return ProbabilityFunction.Instance.createSimple(((ActionDown) action).applyOver(initialState));
+					return TransitionProbability.Instance.createSimple(initialState, action, ((ActionDown) action).applyOver(initialState));
 				}
 				if (action instanceof ActionLeft) {
-					return ProbabilityFunction.Instance.createSimple(((ActionLeft) action).applyOver(initialState));
+					return TransitionProbability.Instance.createSimple(initialState, action, ((ActionLeft) action).applyOver(initialState));
 				}
 				if (action instanceof ActionRight) {
-					return ProbabilityFunction.Instance.createSimple(((ActionRight) action).applyOver(initialState));
+					return TransitionProbability.Instance
+							.createSimple(initialState, action, ((ActionRight) action).applyOver(initialState));
 				}
 				if (action instanceof ActionNone) {
-					return ProbabilityFunction.Instance.createSimple(((ActionNone) action).applyOver(initialState));
+					return TransitionProbability.Instance.createSimple(initialState, action, ((ActionNone) action).applyOver(initialState));
 				}
-				return ProbabilityFunction.Instance.empty();
+				return TransitionProbability.Instance.empty();
 			}
 
 			@Override

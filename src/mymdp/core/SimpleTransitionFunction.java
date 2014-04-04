@@ -1,6 +1,7 @@
 package mymdp.core;
 
 import static com.google.common.base.Objects.firstNonNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -11,10 +12,15 @@ import mymdp.exception.InvalidProbabilityFunctionException;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 
-final class SimpleProbabiliyFunction implements ProbabilityFunction {
+final class SimpleTransitionFunction implements TransitionProbability {
 	private final Map<State, Double> distributions;
+	private final State currentState;
+	private final Action action;
 
-	SimpleProbabiliyFunction(final Map<State, Double> distributions) {
+	SimpleTransitionFunction(final State currentState, final Action action, final Map<State, Double> distributions) {
+		this.currentState = checkNotNull(currentState);
+		this.action = checkNotNull(action);
+
 		double total = 0.0;
 		for (final Double prob : distributions.values()) {
 			total += prob;
@@ -37,18 +43,28 @@ final class SimpleProbabiliyFunction implements ProbabilityFunction {
 	}
 
 	@Override
-	public Double getProbabilityFor(final State state) {
+	public double getProbabilityFor(final State state) {
 		return firstNonNull(distributions.get(state), Double.valueOf(0.0));
 	}
 
 	@Override
+	public State getCurrentState() {
+		return currentState;
+	}
+
+	@Override
+	public Action getAction() {
+		return action;
+	}
+
+	@Override
 	public boolean equals(final Object arg0) {
-		if (!(arg0 instanceof ProbabilityFunction)) {
+		if (!(arg0 instanceof TransitionProbability)) {
 			return false;
 		}
 		if (arg0 == this) {
 			return true;
 		}
-		return Sets.newHashSet(this).equals(Sets.newHashSet((ProbabilityFunction) arg0));
+		return Sets.newHashSet(this).equals(Sets.newHashSet((TransitionProbability) arg0));
 	}
 }

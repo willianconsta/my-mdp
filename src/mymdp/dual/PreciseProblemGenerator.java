@@ -11,7 +11,7 @@ import java.util.Set;
 
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
-import mymdp.core.ProbabilityFunction;
+import mymdp.core.TransitionProbability;
 import mymdp.core.State;
 import mymdp.core.UtilityFunctionWithProbImpl;
 
@@ -87,7 +87,7 @@ public class PreciseProblemGenerator {
 			for (final State s : fullMdpip.getStates()) {
 				if (a.isApplicableTo(s)) {
 					double sumShouldBeOne = 0.0;
-					final ProbabilityFunction specificTransitions = mdpip.getPossibleStatesAndProbability(s, a, result);
+					final TransitionProbability specificTransitions = mdpip.getPossibleStatesAndProbability(s, a, result);
 					if (!specificTransitions.isEmpty()) {
 						for (final Entry<State, Double> entry : specificTransitions) {
 							sumShouldBeOne += entry.getValue();

@@ -15,8 +15,8 @@ import java.util.TreeSet;
 
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
-import mymdp.core.ProbabilityFunction;
 import mymdp.core.State;
+import mymdp.core.TransitionProbability;
 import mymdp.core.UtilityFunction;
 import mymdp.exception.InvalidProbabilityFunctionException;
 import mymdp.solver.ProbLinearSolver;
@@ -34,7 +34,7 @@ final class MDPIPImpl implements MDPIP {
 	private final Map<Action, Map<State, Map<State, String>>> transitions;
 	private final Set<String> restrictions;
 	private final Map<Trio<State, Action, State>, String> vars;
-	private final Map<Object, ProbabilityFunction> cache;
+	private final Map<Object, TransitionProbability> cache;
 	private final double discountFactor;
 
 	MDPIPImpl(
@@ -75,18 +75,18 @@ final class MDPIPImpl implements MDPIP {
 	}
 
 	@Override
-	public ProbabilityFunction getPossibleStatesAndProbability(final State initialState, final Action action,
+	public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action,
 			final UtilityFunction function) {
 		final Map<State, Map<State, String>> actionMap = transitions.get(action);
 		if (actionMap == null) {
-			return ProbabilityFunction.Instance.empty();
+			return TransitionProbability.Instance.empty();
 		}
 		final Map<State, String> probabilityFunction = actionMap.get(initialState);
 		if (probabilityFunction == null) {
-			return ProbabilityFunction.Instance.empty();
+			return TransitionProbability.Instance.empty();
 		}
 
-		ProbabilityFunction result;
+		TransitionProbability result;
 		final ImmutableList<Object> key = ImmutableList.of(
 				ProbLinearSolver.getMode(),
 				initialState,
@@ -98,14 +98,15 @@ final class MDPIPImpl implements MDPIP {
 			result = cache.get(key);
 
 			// FIXME: testar melhor URGENTEMENTE
-			assert ProbabilityFunction.Instance.createSimple(
+			assert TransitionProbability.Instance.createSimple(
+					initialState, action,
 					solve(probabilityFunction, getRewardFor(initialState),
 							function, vars.values(), restrictions)).equals(result);
 		} else {
 			final Map<State, Double> minProb = solve(probabilityFunction, getRewardFor(initialState), function, vars.values(),
 					restrictions);
 			try {
-				result = ProbabilityFunction.Instance.createSimple(minProb);
+				result = TransitionProbability.Instance.createSimple(initialState, action, minProb);
 			} catch (final InvalidProbabilityFunctionException e) {
 				throw new IllegalStateException("Problem evaluating state " + initialState + " and action " + action + ". Log: "
 						+ ProbLinearSolver.getLastFullLog(), e);

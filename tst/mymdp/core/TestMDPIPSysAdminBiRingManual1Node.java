@@ -106,7 +106,7 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 					.put(of(States.C1_ON, Actions.REBOOT1), of(States.C1_ON, "1")).build();
 
 			@Override
-			public ProbabilityFunction getPossibleStatesAndProbability(final State s, final Action a, final UtilityFunction function) {
+			public TransitionProbability getPossibleStatesAndProbability(final State s, final Action a, final UtilityFunction function) {
 				final Pair<State, Action> transition = of(s, a);
 				final Map<State, Double> result = Maps.newLinkedHashMap();
 				final Collection<Pair<? extends State, String>> nextStates = probs.get(transition);
@@ -121,7 +121,7 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 					}
 				}
 				if (!result.isEmpty()) {
-					return ProbabilityFunction.Instance.empty();
+					return TransitionProbability.Instance.empty();
 				}
 
 				final List<String> obj = Lists.newArrayList();
@@ -171,7 +171,7 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 					checkNotNull(value);
 					result.put(pair.first, value);
 				}
-				return ProbabilityFunction.Instance.createSimple(result);
+				return TransitionProbability.Instance.createSimple(s, a, result);
 			}
 		};
 	}

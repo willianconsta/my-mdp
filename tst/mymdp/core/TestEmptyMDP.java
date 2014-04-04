@@ -30,8 +30,8 @@ public class TestEmptyMDP {
 			}
 
 			@Override
-			public ProbabilityFunction getPossibleStatesAndProbability(final State initialState, final Action action) {
-				return ProbabilityFunction.Instance.empty();
+			public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action) {
+				return TransitionProbability.Instance.empty();
 			}
 
 			@Override
