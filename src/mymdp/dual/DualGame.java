@@ -2,12 +2,16 @@ package mymdp.dual;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
+import mymdp.core.Action;
 import mymdp.core.MDP;
 import mymdp.core.MDPIP;
 import mymdp.core.Policy;
+import mymdp.core.PolicyImpl;
 import mymdp.core.SolutionReport;
+import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
 import mymdp.core.UtilityFunctionWithProbImpl;
@@ -52,8 +56,9 @@ public class DualGame implements ProblemSolver {
 
 	@Override
 	public SolutionReport solve() {
+		ProbLinearSolver.setMinimizing();
 		ProbLinearSolver.initializeCount();
-		final ModifiedPolicyEvaluator policyEvaluator = new ModifiedPolicyEvaluator(100);
+		final ModifiedPolicyEvaluator policyEvaluator = new ModifiedPolicyEvaluator(400);
 
 		// Reads the MDP's definition from file and turns it to an imprecise
 		// problem
@@ -73,28 +78,35 @@ public class DualGame implements ProblemSolver {
 		watchInitialGuess.stop();
 		final int numberOfSolverCallsInInitialGuessing = ProbLinearSolver.getNumberOfSolverCalls();
 
+		int numberOfSolverCallsInImprovement = 0;
+		int numberOfSolverCallsInEvaluation = 0;
+
 		int i = 1;
 		ProbLinearSolver.initializeCount();
 		final Stopwatch watchMDP = new Stopwatch();
 		final Stopwatch watchMDPIP = new Stopwatch();
 		final Stopwatch watchAll = new Stopwatch().start();
 
-		Policy result;
+		Policy result = new PolicyImpl(mdp);
 		UtilityFunction result1;
-		UtilityFunctionWithProbImpl result2;
+		UtilityFunctionWithProbImpl result2 = new UtilityFunctionWithProbImpl(mdp.getStates(), -10.0);
 		while (true) {
 			log.debug("Iteration " + i);
 			{
-				log.debug("Starting MDP");
+				// log.debug("Starting MDP");
 				watchMDP.start();
 				final Stopwatch watch1 = new Stopwatch().start();
-				result = new PolicyIterationImpl(policyEvaluator).solve(mdp);
+				final int numSolverCalls = ProbLinearSolver.getNumberOfSolverCalls();
+				result = new PolicyIterationImpl(policyEvaluator).solve(mdp, result, result2);
 				watch1.stop();
 				watchMDP.stop();
-				log.info("End of MDP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
+				// log.info("End of MDP: " +
+				// watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
 				result1 = policyEvaluator.policyEvaluation(result, new UtilityFunctionImpl(mdp.getStates()), mdp);
-				log.info(result);
-				log.info("MDP: " + result1);
+				// checkState(result1.compareTo(result2) >= 0);
+				// log.info(result);
+				numberOfSolverCallsInImprovement += ProbLinearSolver.getNumberOfSolverCalls() - numSolverCalls;
+				log.info("Values after improve: " + result1);
 			}
 
 			final ImpreciseProblemGenerator generator = new ImpreciseProblemGenerator(result, mdp);
@@ -104,19 +116,24 @@ public class DualGame implements ProblemSolver {
 					imprecisionGenerator);
 
 			{
-				log.debug("Starting MDPIP");
+				// log.debug("Starting MDPIP");
 				watchMDPIP.start();
 				final Stopwatch watch1 = new Stopwatch().start();
-				result2 = (UtilityFunctionWithProbImpl) new ValueIterationProbImpl(result1).solve(mdpip, maxError);
+				final int numSolverCalls = ProbLinearSolver.getNumberOfSolverCalls();
+				result2 = evaluate(result1, mdpip, result);
 				watch1.stop();
 				watchMDPIP.stop();
-				log.info("End of MDPIP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
-				log.info("MDPIP: " + result2);
+				// log.info("End of MDPIP: " +
+				// watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
+				// log.info("MDPIP: " + result2);
+				numberOfSolverCallsInEvaluation += ProbLinearSolver.getNumberOfSolverCalls() - numSolverCalls;
+				log.info("Values after evaluation: " + result2);
 			}
 
 			final double actualError = UtilityFunctionDistanceEvaluator.distanceBetween(result1, result2);
 			log.debug("Error between two MDPs = " + actualError);
 			if (actualError < 0.01) {
+				log.info("Values: " + result2);
 				watchAll.stop();
 				break;
 			}
@@ -129,6 +146,8 @@ public class DualGame implements ProblemSolver {
 		log.info("Number of iterations = " + i);
 		log.info("Number of solver calls in initial guess = " + numberOfSolverCallsInInitialGuessing);
 		log.info("Number of solver calls in solving = " + ProbLinearSolver.getNumberOfSolverCalls());
+		log.info("Number of solver calls in evaluation = " + numberOfSolverCallsInEvaluation);
+		log.info("Number of solver calls in improvement = " + numberOfSolverCallsInImprovement);
 
 		log.info("Time in Initial Guess = " + watchInitialGuess.elapsed(TimeUnit.MILLISECONDS) + "ms.");
 		log.info("Time in MDP = " + watchMDP.elapsed(TimeUnit.MILLISECONDS) + "ms.");
@@ -138,5 +157,33 @@ public class DualGame implements ProblemSolver {
 
 		log.info("End of problem " + filename + "\n\n\n\n\n");
 		return new SolutionReport(result, result2);
+	}
+
+	private UtilityFunctionWithProbImpl evaluate(final UtilityFunction baseValue, final MDPIP mdpip, final Policy policy) {
+		// evaluation
+		log.debug("Evaluating policy...");
+		UtilityFunction value = new UtilityFunctionWithProbImpl(baseValue);
+		ProbLinearSolver.setFeasibilityOnly();
+		final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\evaluating_dual"
+				+ ".txt");
+		value = new ModifiedPolicyEvaluator(1000).policyEvaluation(policy, value, evaluator.evaluate(mdpip));
+		UtilityFunction newValue = new UtilityFunctionWithProbImpl(value);
+		ProbLinearSolver.setMinimizing();
+		do {
+			value = newValue;
+			newValue = new UtilityFunctionWithProbImpl(value);
+			for (final State s : mdpip.getStates()) {
+				newValue.updateUtility(s, calculate(mdpip, s, policy.getActionFor(s), value));
+			}
+		} while (UtilityFunctionDistanceEvaluator.distanceBetween(value, newValue) > maxError);
+		return new UtilityFunctionWithProbImpl(value);
+	}
+
+	private double calculate(final MDPIP mdpip, final State s, final Action a, final UtilityFunction value) {
+		double utilityOfAction = 0;
+		for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, value)) {
+			utilityOfAction += nextStateAndProb.getValue().doubleValue() * value.getUtility(nextStateAndProb.getKey());
+		}
+		return mdpip.getRewardFor(s) + mdpip.getDiscountFactor() * utilityOfAction;
 	}
 }
