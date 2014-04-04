@@ -184,6 +184,7 @@ public class SolveCaller {
 							currentValuesProb.put(key, Double.valueOf(value));
 						} catch (final NumberFormatException e) {
 							System.out.println(value);
+							System.err.println(fileContents);
 							throw e;
 						}
 					}

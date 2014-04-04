@@ -159,7 +159,6 @@ public class ProbLinearSolver {
 
 	private static Map<State, Double> solve(final SolutionType type, final Map<State, String> nextStates, final double initialReward,
 			final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
-		numberOfSolverCalls++;
 		final Map<State, Double> result = new LinkedHashMap<>();
 
 		// if there are no next states, return
@@ -184,6 +183,8 @@ public class ProbLinearSolver {
 			// all probabilities were constants, return
 			return result;
 		}
+
+		numberOfSolverCalls++;
 
 		final List<String> obj = Lists.newArrayList();
 		obj.add(String.valueOf(initialReward));
