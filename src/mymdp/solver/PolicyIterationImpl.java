@@ -20,10 +20,8 @@ public class PolicyIterationImpl implements PolicyIteration {
 		this.evaluator = evaluator;
 	}
 
-	@Override
-	public Policy solve(final MDP mdp) {
-		final UtilityFunction function = new UtilityFunctionImpl(mdp.getStates());
-		final Policy policy = new PolicyImpl(mdp);
+	public Policy solve(final MDP mdp, final Policy policy, final UtilityFunction function) {
+		assert function.getStates().equals(mdp.getStates());
 
 		boolean hasChanged = false;
 		do {
@@ -31,6 +29,11 @@ public class PolicyIterationImpl implements PolicyIteration {
 		} while (hasChanged);
 
 		return policy;
+	}
+
+	@Override
+	public Policy solve(final MDP mdp) {
+		return solve(mdp, new PolicyImpl(mdp), new UtilityFunctionImpl(mdp.getStates()));
 	}
 
 	private boolean iteration(final Policy policy, final UtilityFunction function, final MDP mdp) {
