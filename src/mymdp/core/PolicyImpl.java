@@ -2,10 +2,14 @@ package mymdp.core;
 
 import static com.google.common.collect.Iterables.get;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Maps;
 
 public class PolicyImpl implements Policy {
 
@@ -15,7 +19,10 @@ public class PolicyImpl implements Policy {
 		for (final State state : mdp.getStates()) {
 			final Set<Action> actionsForState = mdp.getActionsFor(state);
 			if (!actionsForState.isEmpty()) {
-				policies.put(state.name(), get(actionsForState, new Random(1234).nextInt(actionsForState.size())));
+
+				final String actionName = Collections.min(Collections2.transform(actionsForState, Action.toName));
+				final Action action = Maps.uniqueIndex(actionsForState, Action.toName).get(actionName);
+				policies.put(state.name(), action);
 			}
 		}
 	}
