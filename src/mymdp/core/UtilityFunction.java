@@ -2,7 +2,7 @@ package mymdp.core;
 
 import java.util.Set;
 
-public interface UtilityFunction {
+public interface UtilityFunction extends Comparable<UtilityFunction> {
 	double getUtility(State state);
 
 	double getUtility(String stateName);

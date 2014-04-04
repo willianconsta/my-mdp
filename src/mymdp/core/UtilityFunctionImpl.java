@@ -7,7 +7,7 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
 
-public class UtilityFunctionImpl implements UtilityFunction {
+public class UtilityFunctionImpl implements UtilityFunction, Comparable<UtilityFunction> {
 
 	private final Map<State, Double> utilities = new LinkedHashMap<>();
 	private final Map<String, Double> utilitiesByName = new LinkedHashMap<>();
@@ -71,5 +71,31 @@ public class UtilityFunctionImpl implements UtilityFunction {
 	@Override
 	public String toString() {
 		return ImmutableSortedMap.orderedBy(Ordering.usingToString()).putAll(utilities).build().toString();
+	}
+
+	@Override
+	public int compareTo(final UtilityFunction o) {
+		UtilityFunction potentialGreater = null;
+		for (final State s : getStates()) {
+			final int result = Double.compare(o.getUtility(s), getUtility(s));
+			if (result > 0) {
+				if (potentialGreater == this) {
+					// nada se pode afirmar
+					return 0;
+				}
+				potentialGreater = o;
+			}
+			if (result < 0) {
+				if (potentialGreater == o) {
+					// nada se pode afirmar
+					return 0;
+				}
+				potentialGreater = this;
+			}
+		}
+		if (potentialGreater == null) {
+			return 0;
+		}
+		return potentialGreater == this ? 1 : -1;
 	}
 }
