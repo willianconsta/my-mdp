@@ -44,10 +44,10 @@ public class PolicyIterationSatiaGame implements ProblemSolver {
 		// Reads the MDP's definition from file and turns it to an imprecise
 		// problem
 		log.info("Current Problem: " + filename);
-		final ModifiedPolicyEvaluatorIP evaluator = new ModifiedPolicyEvaluatorIP(100);
 		final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
 		final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile(PROBLEMS_DIR + "\\" + filename, initialProblemImprecisionGenerator);
 		// log.info("Initial problem is " + mdpip.toString());
+		log.info("Problem read.");
 		log.debug("Starting MDPIP");
 		ProbLinearSolver.initializeCount();
 		final Stopwatch watchMDPIP = new Stopwatch();
@@ -63,7 +63,12 @@ public class PolicyIterationSatiaGame implements ProblemSolver {
 		log.info("Time in MDPIP = " + watchMDPIP.elapsed(TimeUnit.MILLISECONDS) + "ms.");
 		assertTrue(true);
 
-		log.info("End of problem " + filename + "\n\n\n\n\n");
-		return new SolutionReport(result, evaluator.policyEvaluation(result, new UtilityFunctionWithProbImpl(mdpip.getStates()), mdpip));
+		log.info("Solving done. Generating report...\n");
+		try {
+			final ModifiedPolicyEvaluatorIP evaluator = new ModifiedPolicyEvaluatorIP(10);
+			return new SolutionReport(result, evaluator.policyEvaluation(result, new UtilityFunctionWithProbImpl(mdpip.getStates()), mdpip));
+		} finally {
+			log.info("End of problem " + filename + "\n\n\n\n\n");
+		}
 	}
 }
