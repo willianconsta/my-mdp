@@ -2,1540 +2,3630 @@ states
 	robot-at-x01y01, robot-at-x01y02, robot-at-x01y03, robot-at-x01y04, robot-at-x01y05, robot-at-x01y06, robot-at-x01y07, robot-at-x01y08, robot-at-x01y09, robot-at-x01y10, robot-at-x01y11, robot-at-x01y12, robot-at-x01y13, robot-at-x01y14, robot-at-x01y15, robot-at-x01y16, robot-at-x01y17, robot-at-x01y18, robot-at-x01y19, robot-at-x01y20, robot-at-x02y01, robot-at-x02y02, robot-at-x02y03, robot-at-x02y04, robot-at-x02y05, robot-at-x02y06, robot-at-x02y07, robot-at-x02y08, robot-at-x02y09, robot-at-x02y10, robot-at-x02y11, robot-at-x02y12, robot-at-x02y13, robot-at-x02y14, robot-at-x02y15, robot-at-x02y16, robot-at-x02y17, robot-at-x02y18, robot-at-x02y19, robot-at-x02y20, robot-at-x03y01, robot-at-x03y02, robot-at-x03y03, robot-at-x03y04, robot-at-x03y05, robot-at-x03y06, robot-at-x03y07, robot-at-x03y08, robot-at-x03y09, robot-at-x03y10, robot-at-x03y11, robot-at-x03y12, robot-at-x03y13, robot-at-x03y14, robot-at-x03y15, robot-at-x03y16, robot-at-x03y17, robot-at-x03y18, robot-at-x03y19, robot-at-x03y20, robot-at-x04y01, robot-at-x04y02, robot-at-x04y03, robot-at-x04y04, robot-at-x04y05, robot-at-x04y06, robot-at-x04y07, robot-at-x04y08, robot-at-x04y09, robot-at-x04y10, robot-at-x04y11, robot-at-x04y12, robot-at-x04y13, robot-at-x04y14, robot-at-x04y15, robot-at-x04y16, robot-at-x04y17, robot-at-x04y18, robot-at-x04y19, robot-at-x04y20, robot-at-x05y01, robot-at-x05y02, robot-at-x05y03, robot-at-x05y04, robot-at-x05y05, robot-at-x05y06, robot-at-x05y07, robot-at-x05y08, robot-at-x05y09, robot-at-x05y10, robot-at-x05y11, robot-at-x05y12, robot-at-x05y13, robot-at-x05y14, robot-at-x05y15, robot-at-x05y16, robot-at-x05y17, robot-at-x05y18, robot-at-x05y19, robot-at-x05y20, robot-at-x06y01, robot-at-x06y02, robot-at-x06y03, robot-at-x06y04, robot-at-x06y05, robot-at-x06y06, robot-at-x06y07, robot-at-x06y08, robot-at-x06y09, robot-at-x06y10, robot-at-x06y11, robot-at-x06y12, robot-at-x06y13, robot-at-x06y14, robot-at-x06y15, robot-at-x06y16, robot-at-x06y17, robot-at-x06y18, robot-at-x06y19, robot-at-x06y20, robot-at-x07y01, robot-at-x07y02, robot-at-x07y03, robot-at-x07y04, robot-at-x07y05, robot-at-x07y06, robot-at-x07y07, robot-at-x07y08, robot-at-x07y09, robot-at-x07y10, robot-at-x07y11, robot-at-x07y12, robot-at-x07y13, robot-at-x07y14, robot-at-x07y15, robot-at-x07y16, robot-at-x07y17, robot-at-x07y18, robot-at-x07y19, robot-at-x07y20, robot-at-x08y01, robot-at-x08y02, robot-at-x08y03, robot-at-x08y04, robot-at-x08y05, robot-at-x08y06, robot-at-x08y07, robot-at-x08y08, robot-at-x08y09, robot-at-x08y10, robot-at-x08y11, robot-at-x08y12, robot-at-x08y13, robot-at-x08y14, robot-at-x08y15, robot-at-x08y16, robot-at-x08y17, robot-at-x08y18, robot-at-x08y19, robot-at-x08y20, robot-at-x09y01, robot-at-x09y02, robot-at-x09y03, robot-at-x09y04, robot-at-x09y05, robot-at-x09y06, robot-at-x09y07, robot-at-x09y08, robot-at-x09y09, robot-at-x09y10, robot-at-x09y11, robot-at-x09y12, robot-at-x09y13, robot-at-x09y14, robot-at-x09y15, robot-at-x09y16, robot-at-x09y17, robot-at-x09y18, robot-at-x09y19, robot-at-x09y20, robot-at-x10y01, robot-at-x10y02, robot-at-x10y03, robot-at-x10y04, robot-at-x10y05, robot-at-x10y06, robot-at-x10y07, robot-at-x10y08, robot-at-x10y09, robot-at-x10y10, robot-at-x10y11, robot-at-x10y12, robot-at-x10y13, robot-at-x10y14, robot-at-x10y15, robot-at-x10y16, robot-at-x10y17, robot-at-x10y18, robot-at-x10y19, robot-at-x10y20, broken-robot
 endstates
 
+vars
+	p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50, p51, p52, p53, p54, p55, p56, p57, p58, p59, p60, p61, p62, p63, p64, p65, p66, p67, p68, p69, p70, p71, p72, p73, p74, p75, p76, p77, p78, p79, p80, p81, p82, p83, p84, p85, p86, p87, p88, p89, p90, p91, p92, p93, p94, p95, p96, p97, p98, p99, p100, p101, p102, p103, p104, p105, p106, p107, p108, p109, p110, p111, p112, p113, p114, p115, p116, p117, p118, p119, p120, p121, p122, p123, p124, p125, p126, p127, p128, p129, p130, p131, p132, p133, p134, p135, p136, p137, p138, p139, p140, p141, p142, p143, p144, p145, p146, p147, p148, p149, p150, p151, p152, p153, p154, p155, p156, p157, p158, p159, p160, p161, p162, p163, p164, p165, p166, p167, p168, p169, p170, p171, p172, p173, p174, p175, p176, p177, p178, p179, p180, p181, p182, p183, p184, p185, p186, p187, p188, p189, p190, p191, p192, p193, p194, p195, p196, p197, p198, p199, p200, p201, p202, p203, p204, p205, p206, p207, p208, p209, p210, p211, p212, p213, p214, p215, p216, p217, p218, p219, p220, p221, p222, p223, p224, p225, p226, p227, p228, p229, p230, p231, p232, p233, p234, p235, p236, p237, p238, p239, p240, p241, p242, p243, p244, p245, p246, p247, p248, p249, p250, p251, p252, p253, p254, p255, p256, p257, p258, p259, p260, p261, p262, p263, p264, p265, p266, p267, p268, p269, p270, p271, p272, p273, p274, p275, p276, p277, p278, p279, p280, p281, p282, p283, p284, p285, p286, p287, p288, p289, p290, p291, p292, p293, p294, p295, p296, p297, p298, p299, p300, p301, p302, p303, p304, p305, p306, p307, p308, p309, p310, p311, p312, p313, p314, p315, p316, p317, p318, p319, p320, p321, p322, p323, p324, p325, p326, p327, p328, p329, p330, p331, p332, p333, p334, p335, p336, p337, p338, p339, p340, p341, p342, p343, p344, p345, p346, p347, p348, p349, p350, p351, p352, p353, p354, p355, p356, p357, p358, p359, p360, p361, p362, p363, p364, p365, p366, p367, p368, p369, p370, p371, p372, p373, p374, p375, p376, p377, p378, p379, p380, p381, p382, p383, p384, p385, p386, p387, p388, p389, p390, p391, p392, p393, p394, p395, p396, p397, p398, p399, p400, p401, p402, p403, p404, p405, p406, p407, p408, p409, p410, p411, p412, p413, p414, p415, p416, p417, p418, p419, p420, p421, p422, p423, p424, p425, p426, p427, p428, p429, p430, p431, p432, p433, p434, p435, p436, p437, p438, p439, p440, p441, p442, p443, p444, p445, p446, p447, p448, p449, p450, p451, p452, p453, p454, p455, p456, p457, p458, p459, p460, p461, p462, p463, p464, p465, p466, p467, p468, p469, p470, p471, p472, p473, p474, p475, p476, p477, p478, p479, p480, p481, p482, p483, p484, p485, p486, p487, p488, p489, p490, p491, p492, p493, p494, p495, p496, p497, p498, p499, p500, p501, p502, p503, p504, p505, p506, p507, p508, p509, p510, p511, p512, p513, p514, p515, p516, p517, p518, p519, p520, p521, p522, p523, p524, p525, p526, p527, p528, p529, p530, p531, p532, p533, p534, p535, p536, p537, p538, p539, p540, p541, p542, p543, p544, p545, p546, p547, p548, p549, p550, p551, p552, p553, p554, p555, p556, p557, p558, p559, p560, p561, p562, p563, p564, p565, p566, p567, p568, p569, p570, p571, p572, p573, p574, p575, p576, p577, p578, p579, p580, p581, p582, p583, p584, p585, p586, p587, p588, p589, p590, p591, p592, p593, p594, p595, p596, p597, p598, p599, p600, p601, p602, p603, p604, p605, p606, p607, p608, p609, p610, p611, p612, p613, p614, p615, p616, p617, p618, p619, p620, p621, p622, p623, p624, p625, p626, p627, p628, p629, p630, p631, p632, p633, p634, p635, p636, p637, p638, p639, p640, p641, p642, p643, p644, p645, p646, p647, p648, p649, p650, p651, p652, p653, p654, p655, p656, p657, p658, p659, p660, p661, p662, p663, p664, p665, p666, p667, p668, p669, p670, p671, p672, p673, p674, p675, p676, p677, p678, p679, p680, p681, p682, p683, p684, p685, p686, p687, p688, p689, p690, p691, p692, p693, p694, p695, p696, p697, p698, p699, p700, p701, p702, p703, p704, p705, p706, p707, p708, p709, p710, p711, p712, p713, p714, p715, p716, p717, p718, p719, p720, p721, p722, p723, p724, p725, p726, p727, p728, p729, p730, p731, p732, p733, p734, p735, p736, p737, p738, p739, p740, p741, p742, p743, p744, p745, p746, p747, p748, p749, p750, p751, p752, p753, p754, p755, p756, p757, p758, p759, p760, p761, p762, p763, p764, p765, p766, p767, p768, p769, p770, p771, p772, p773, p774, p775, p776, p777, p778, p779, p780, p781, p782, p783, p784, p785, p786, p787, p788, p789, p790, p791, p792, p793, p794, p795, p796, p797, p798, p799, p800, p801, p802, p803, p804, p805, p806, p807, p808, p809, p810, p811, p812, p813, p814, p815, p816, p817, p818, p819, p820, p821, p822, p823, p824, p825, p826, p827, p828, p829, p830, p831, p832, p833, p834, p835, p836, p837, p838, p839, p840, p841, p842, p843, p844, p845, p846, p847, p848, p849, p850, p851, p852, p853, p854, p855, p856, p857, p858, p859, p860, p861, p862, p863, p864, p865, p866, p867, p868, p869, p870, p871, p872, p873, p874, p875, p876, p877, p878, p879, p880, p881, p882, p883, p884, p885, p886, p887, p888, p889, p890, p891, p892, p893, p894, p895, p896, p897, p898, p899, p900, p901, p902, p903, p904, p905, p906, p907, p908, p909, p910, p911, p912, p913, p914, p915, p916, p917, p918, p919, p920, p921, p922, p923, p924, p925, p926, p927, p928, p929, p930, p931, p932, p933, p934, p935, p936, p937, p938, p939, p940, p941, p942, p943, p944, p945, p946, p947, p948, p949, p950, p951, p952, p953, p954, p955, p956, p957, p958, p959, p960, p961, p962, p963, p964, p965, p966, p967, p968, p969, p970, p971, p972, p973, p974, p975, p976, p977, p978, p979, p980, p981, p982, p983, p984, p985, p986, p987, p988, p989, p990, p991, p992, p993, p994, p995, p996, p997, p998, p999, p1000, p1001, p1002, p1003, p1004, p1005, p1006, p1007, p1008, p1009, p1010, p1011, p1012, p1013, p1014, p1015, p1016, p1017, p1018, p1019, p1020, p1021, p1022, p1023, p1024, p1025, p1026, p1027, p1028, p1029, p1030, p1031, p1032, p1033, p1034, p1035, p1036, p1037, p1038, p1039, p1040, p1041, p1042, p1043, p1044, p1045, p1046, p1047, p1048, p1049, p1050, p1051, p1052, p1053, p1054, p1055, p1056, p1057, p1058, p1059, p1060, p1061, p1062, p1063, p1064, p1065, p1066, p1067, p1068, p1069, p1070, p1071, p1072, p1073, p1074, p1075, p1076, p1077, p1078, p1079, p1080, p1081, p1082, p1083, p1084, p1085, p1086, p1087, p1088, p1089, p1090, p1091, p1092, p1093, p1094, p1095, p1096, p1097, p1098, p1099, p1100, p1101, p1102, p1103, p1104, p1105, p1106, p1107, p1108, p1109, p1110, p1111, p1112, p1113, p1114, p1115, p1116, p1117, p1118, p1119, p1120, p1121, p1122, p1123, p1124, p1125, p1126, p1127, p1128, p1129, p1130, p1131, p1132, p1133, p1134, p1135, p1136, p1137, p1138, p1139, p1140, p1141, p1142, p1143, p1144, p1145, p1146, p1147, p1148, p1149, p1150, p1151, p1152, p1153, p1154, p1155, p1156, p1157, p1158, p1159, p1160, p1161, p1162, p1163, p1164, p1165, p1166, p1167, p1168, p1169, p1170, p1171, p1172, p1173, p1174, p1175, p1176, p1177, p1178, p1179, p1180, p1181, p1182, p1183, p1184, p1185, p1186, p1187, p1188, p1189, p1190, p1191, p1192, p1193, p1194, p1195, p1196, p1197, p1198, p1199, p1200, p1201, p1202, p1203, p1204, p1205, p1206, p1207, p1208, p1209, p1210, p1211, p1212, p1213, p1214, p1215, p1216, p1217, p1218, p1219, p1220, p1221, p1222, p1223, p1224, p1225, p1226, p1227, p1228, p1229, p1230, p1231, p1232, p1233, p1234, p1235, p1236, p1237, p1238, p1239, p1240, p1241, p1242, p1243, p1244, p1245, p1246, p1247, p1248, p1249, p1250, p1251, p1252, p1253, p1254, p1255, p1256, p1257, p1258, p1259, p1260, p1261, p1262, p1263, p1264, p1265, p1266, p1267, p1268, p1269, p1270, p1271, p1272, p1273, p1274, p1275, p1276, p1277, p1278, p1279, p1280, p1281, p1282, p1283, p1284, p1285, p1286, p1287, p1288, p1289, p1290, p1291, p1292, p1293, p1294, p1295, p1296, p1297, p1298, p1299, p1300, p1301, p1302, p1303, p1304, p1305, p1306, p1307, p1308, p1309, p1310, p1311, p1312, p1313, p1314, p1315, p1316, p1317, p1318, p1319, p1320, p1321, p1322, p1323, p1324, p1325, p1326, p1327, p1328, p1329, p1330, p1331, p1332, p1333, p1334, p1335, p1336, p1337, p1338, p1339, p1340, p1341, p1342, p1343, p1344, p1345, p1346, p1347, p1348, p1349, p1350, p1351, p1352, p1353, p1354, p1355, p1356, p1357, p1358, p1359, p1360, p1361, p1362, p1363, p1364, p1365, p1366, p1367, p1368, p1369, p1370, p1371, p1372, p1373, p1374, p1375, p1376, p1377, p1378, p1379, p1380, p1381, p1382, p1383, p1384, p1385, p1386, p1387, p1388, p1389, p1390, p1391, p1392, p1393, p1394, p1395, p1396, p1397, p1398, p1399, p1400, p1401, p1402, p1403, p1404, p1405, p1406, p1407
+endvars
+
 action move-south
-	robot-at-x01y01 robot-at-x01y01 1.000000 1.000000
-	robot-at-x01y02 robot-at-x01y01 1.000000 1.000000
-	robot-at-x01y03 robot-at-x01y02 0.650000 1.00000
-	robot-at-x01y03 broken-robot 0.000000 0.350000
-	robot-at-x01y04 robot-at-x01y03 0.650000 1.00000
-	robot-at-x01y04 broken-robot 0.000000 0.350000
-	robot-at-x01y05 robot-at-x01y04 0.650000 1.00000
-	robot-at-x01y05 broken-robot 0.000000 0.350000
-	robot-at-x01y06 robot-at-x01y05 0.650000 1.00000
-	robot-at-x01y06 broken-robot 0.000000 0.350000
-	robot-at-x01y07 robot-at-x01y06 0.650000 1.00000
-	robot-at-x01y07 broken-robot 0.000000 0.350000
-	robot-at-x01y08 robot-at-x01y07 0.650000 1.00000
-	robot-at-x01y08 broken-robot 0.000000 0.350000
-	robot-at-x01y09 robot-at-x01y08 0.650000 1.00000
-	robot-at-x01y09 broken-robot 0.000000 0.350000
-	robot-at-x01y10 robot-at-x01y09 0.650000 1.00000
-	robot-at-x01y10 broken-robot 0.000000 0.350000
-	robot-at-x01y11 robot-at-x01y10 0.650000 1.00000
-	robot-at-x01y11 broken-robot 0.000000 0.350000
-	robot-at-x01y12 robot-at-x01y11 0.650000 1.00000
-	robot-at-x01y12 broken-robot 0.000000 0.350000
-	robot-at-x01y13 robot-at-x01y12 0.650000 1.00000
-	robot-at-x01y13 broken-robot 0.000000 0.350000
-	robot-at-x01y14 robot-at-x01y13 0.650000 1.00000
-	robot-at-x01y14 broken-robot 0.000000 0.350000
-	robot-at-x01y15 robot-at-x01y14 0.650000 1.00000
-	robot-at-x01y15 broken-robot 0.000000 0.350000
-	robot-at-x01y16 robot-at-x01y15 0.650000 1.00000
-	robot-at-x01y16 broken-robot 0.000000 0.350000
-	robot-at-x01y17 robot-at-x01y16 0.650000 1.00000
-	robot-at-x01y17 broken-robot 0.000000 0.350000
-	robot-at-x01y18 robot-at-x01y17 0.650000 1.00000
-	robot-at-x01y18 broken-robot 0.000000 0.350000
-	robot-at-x01y19 robot-at-x01y18 0.650000 1.00000
-	robot-at-x01y19 broken-robot 0.000000 0.350000
-	robot-at-x01y20 robot-at-x01y19 0.650000 1.00000
-	robot-at-x01y20 broken-robot 0.000000 0.350000
-	robot-at-x02y01 robot-at-x02y01 1.000000 1.000000
-	robot-at-x02y02 robot-at-x02y01 1.000000 1.000000
-	robot-at-x02y03 robot-at-x02y02 0.561111 1.000000
-	robot-at-x02y03 broken-robot 0.000000 0.438889
-	robot-at-x02y04 robot-at-x02y03 0.561111 1.000000
-	robot-at-x02y04 broken-robot 0.000000 0.438889
-	robot-at-x02y05 robot-at-x02y04 0.561111 1.000000
-	robot-at-x02y05 broken-robot 0.000000 0.438889
-	robot-at-x02y06 robot-at-x02y05 0.561111 1.000000
-	robot-at-x02y06 broken-robot 0.000000 0.438889
-	robot-at-x02y07 robot-at-x02y06 0.561111 1.000000
-	robot-at-x02y07 broken-robot 0.000000 0.438889
-	robot-at-x02y08 robot-at-x02y07 0.561111 1.000000
-	robot-at-x02y08 broken-robot 0.000000 0.438889
-	robot-at-x02y09 robot-at-x02y08 0.561111 1.000000
-	robot-at-x02y09 broken-robot 0.000000 0.438889
-	robot-at-x02y10 robot-at-x02y09 0.561111 1.000000
-	robot-at-x02y10 broken-robot 0.000000 0.438889
-	robot-at-x02y11 robot-at-x02y10 0.561111 1.000000
-	robot-at-x02y11 broken-robot 0.000000 0.438889
-	robot-at-x02y12 robot-at-x02y11 0.561111 1.000000
-	robot-at-x02y12 broken-robot 0.000000 0.438889
-	robot-at-x02y13 robot-at-x02y12 0.561111 1.000000
-	robot-at-x02y13 broken-robot 0.000000 0.438889
-	robot-at-x02y14 robot-at-x02y13 0.561111 1.000000
-	robot-at-x02y14 broken-robot 0.000000 0.438889
-	robot-at-x02y15 robot-at-x02y14 0.561111 1.000000
-	robot-at-x02y15 broken-robot 0.000000 0.438889
-	robot-at-x02y16 robot-at-x02y15 0.561111 1.000000
-	robot-at-x02y16 broken-robot 0.000000 0.438889
-	robot-at-x02y17 robot-at-x02y16 0.561111 1.000000
-	robot-at-x02y17 broken-robot 0.000000 0.438889
-	robot-at-x02y18 robot-at-x02y17 0.561111 1.000000
-	robot-at-x02y18 broken-robot 0.000000 0.438889
-	robot-at-x02y19 robot-at-x02y18 0.561111 1.000000
-	robot-at-x02y19 broken-robot 0.000000 0.438889
-	robot-at-x02y20 robot-at-x02y19 0.561111 1.000000
-	robot-at-x02y20 broken-robot 0.000000 0.438889
-	robot-at-x03y01 robot-at-x03y01 1.000000 1.000000
-	robot-at-x03y02 robot-at-x03y01 1.000000 1.000000
-	robot-at-x03y03 robot-at-x03y02 0.472222 0.972222
-	robot-at-x03y03 broken-robot 0.027778 0.527778
-	robot-at-x03y04 robot-at-x03y03 0.472222 0.972222
-	robot-at-x03y04 broken-robot 0.027778 0.527778
-	robot-at-x03y05 robot-at-x03y04 0.472222 0.972222
-	robot-at-x03y05 broken-robot 0.027778 0.527778
-	robot-at-x03y06 robot-at-x03y05 0.472222 0.972222
-	robot-at-x03y06 broken-robot 0.027778 0.527778
-	robot-at-x03y07 robot-at-x03y06 0.472222 0.972222
-	robot-at-x03y07 broken-robot 0.027778 0.527778
-	robot-at-x03y08 robot-at-x03y07 0.472222 0.972222
-	robot-at-x03y08 broken-robot 0.027778 0.527778
-	robot-at-x03y09 robot-at-x03y08 0.472222 0.972222
-	robot-at-x03y09 broken-robot 0.027778 0.527778
-	robot-at-x03y10 robot-at-x03y09 0.472222 0.972222
-	robot-at-x03y10 broken-robot 0.027778 0.527778
-	robot-at-x03y11 robot-at-x03y10 0.472222 0.972222
-	robot-at-x03y11 broken-robot 0.027778 0.527778
-	robot-at-x03y12 robot-at-x03y11 0.472222 0.972222
-	robot-at-x03y12 broken-robot 0.027778 0.527778
-	robot-at-x03y13 robot-at-x03y12 0.472222 0.972222
-	robot-at-x03y13 broken-robot 0.027778 0.527778
-	robot-at-x03y14 robot-at-x03y13 0.472222 0.972222
-	robot-at-x03y14 broken-robot 0.027778 0.527778
-	robot-at-x03y15 robot-at-x03y14 0.472222 0.972222
-	robot-at-x03y15 broken-robot 0.027778 0.527778
-	robot-at-x03y16 robot-at-x03y15 0.472222 0.972222
-	robot-at-x03y16 broken-robot 0.027778 0.527778
-	robot-at-x03y17 robot-at-x03y16 0.472222 0.972222
-	robot-at-x03y17 broken-robot 0.027778 0.527778
-	robot-at-x03y18 robot-at-x03y17 0.472222 0.972222
-	robot-at-x03y18 broken-robot 0.027778 0.527778
-	robot-at-x03y19 robot-at-x03y18 0.472222 0.972222
-	robot-at-x03y19 broken-robot 0.027778 0.527778
-	robot-at-x03y20 robot-at-x03y19 0.472222 0.972222
-	robot-at-x03y20 broken-robot 0.027778 0.527778
-	robot-at-x04y01 robot-at-x04y01 1.000000 1.000000
-	robot-at-x04y02 robot-at-x04y01 1.000000 1.000000
-	robot-at-x04y03 robot-at-x04y02 0.383333 0.883333
-	robot-at-x04y03 broken-robot 0.116667 0.616667
-	robot-at-x04y04 robot-at-x04y03 0.383333 0.883333
-	robot-at-x04y04 broken-robot 0.116667 0.616667
-	robot-at-x04y05 robot-at-x04y04 0.383333 0.883333
-	robot-at-x04y05 broken-robot 0.116667 0.616667
-	robot-at-x04y06 robot-at-x04y05 0.383333 0.883333
-	robot-at-x04y06 broken-robot 0.116667 0.616667
-	robot-at-x04y07 robot-at-x04y06 0.383333 0.883333
-	robot-at-x04y07 broken-robot 0.116667 0.616667
-	robot-at-x04y08 robot-at-x04y07 0.383333 0.883333
-	robot-at-x04y08 broken-robot 0.116667 0.616667
-	robot-at-x04y09 robot-at-x04y08 0.383333 0.883333
-	robot-at-x04y09 broken-robot 0.116667 0.616667
-	robot-at-x04y10 robot-at-x04y09 0.383333 0.883333
-	robot-at-x04y10 broken-robot 0.116667 0.616667
-	robot-at-x04y11 robot-at-x04y10 0.383333 0.883333
-	robot-at-x04y11 broken-robot 0.116667 0.616667
-	robot-at-x04y12 robot-at-x04y11 0.383333 0.883333
-	robot-at-x04y12 broken-robot 0.116667 0.616667
-	robot-at-x04y13 robot-at-x04y12 0.383333 0.883333
-	robot-at-x04y13 broken-robot 0.116667 0.616667
-	robot-at-x04y14 robot-at-x04y13 0.383333 0.883333
-	robot-at-x04y14 broken-robot 0.116667 0.616667
-	robot-at-x04y15 robot-at-x04y14 0.383333 0.883333
-	robot-at-x04y15 broken-robot 0.116667 0.616667
-	robot-at-x04y16 robot-at-x04y15 0.383333 0.883333
-	robot-at-x04y16 broken-robot 0.116667 0.616667
-	robot-at-x04y17 robot-at-x04y16 0.383333 0.883333
-	robot-at-x04y17 broken-robot 0.116667 0.616667
-	robot-at-x04y18 robot-at-x04y17 0.383333 0.883333
-	robot-at-x04y18 broken-robot 0.116667 0.616667
-	robot-at-x04y19 robot-at-x04y18 0.383333 0.883333
-	robot-at-x04y19 broken-robot 0.116667 0.616667
-	robot-at-x04y20 robot-at-x04y19 0.383333 0.883333
-	robot-at-x04y20 broken-robot 0.116667 0.616667
-	robot-at-x05y01 robot-at-x05y01 1.000000 1.000000
-	robot-at-x05y02 robot-at-x05y01 1.000000 1.000000
-	robot-at-x05y03 robot-at-x05y02 0.294444 0.794444
-	robot-at-x05y03 broken-robot 0.205556 0.705556
-	robot-at-x05y04 robot-at-x05y03 0.294444 0.794444
-	robot-at-x05y04 broken-robot 0.205556 0.705556
-	robot-at-x05y05 robot-at-x05y04 0.294444 0.794444
-	robot-at-x05y05 broken-robot 0.205556 0.705556
-	robot-at-x05y06 robot-at-x05y05 0.294444 0.794444
-	robot-at-x05y06 broken-robot 0.205556 0.705556
-	robot-at-x05y07 robot-at-x05y06 0.294444 0.794444
-	robot-at-x05y07 broken-robot 0.205556 0.705556
-	robot-at-x05y08 robot-at-x05y07 0.294444 0.794444
-	robot-at-x05y08 broken-robot 0.205556 0.705556
-	robot-at-x05y09 robot-at-x05y08 0.294444 0.794444
-	robot-at-x05y09 broken-robot 0.205556 0.705556
-	robot-at-x05y10 robot-at-x05y09 0.294444 0.794444
-	robot-at-x05y10 broken-robot 0.205556 0.705556
-	robot-at-x05y11 robot-at-x05y10 0.294444 0.794444
-	robot-at-x05y11 broken-robot 0.205556 0.705556
-	robot-at-x05y12 robot-at-x05y11 0.294444 0.794444
-	robot-at-x05y12 broken-robot 0.205556 0.705556
-	robot-at-x05y13 robot-at-x05y12 0.294444 0.794444
-	robot-at-x05y13 broken-robot 0.205556 0.705556
-	robot-at-x05y14 robot-at-x05y13 0.294444 0.794444
-	robot-at-x05y14 broken-robot 0.205556 0.705556
-	robot-at-x05y15 robot-at-x05y14 0.294444 0.794444
-	robot-at-x05y15 broken-robot 0.205556 0.705556
-	robot-at-x05y16 robot-at-x05y15 0.294444 0.794444
-	robot-at-x05y16 broken-robot 0.205556 0.705556
-	robot-at-x05y17 robot-at-x05y16 0.294444 0.794444
-	robot-at-x05y17 broken-robot 0.205556 0.705556
-	robot-at-x05y18 robot-at-x05y17 0.294444 0.794444
-	robot-at-x05y18 broken-robot 0.205556 0.705556
-	robot-at-x05y19 robot-at-x05y18 0.294444 0.794444
-	robot-at-x05y19 broken-robot 0.205556 0.705556
-	robot-at-x05y20 robot-at-x05y19 0.294444 0.794444
-	robot-at-x05y20 broken-robot 0.205556 0.705556
-	robot-at-x06y01 robot-at-x06y01 1.000000 1.000000
-	robot-at-x06y02 robot-at-x06y01 1.000000 1.000000
-	robot-at-x06y03 robot-at-x06y02 0.205556 0.705556
-	robot-at-x06y03 broken-robot 0.294444 0.794444
-	robot-at-x06y04 robot-at-x06y03 0.205556 0.705556
-	robot-at-x06y04 broken-robot 0.294444 0.794444
-	robot-at-x06y05 robot-at-x06y04 0.205556 0.705556
-	robot-at-x06y05 broken-robot 0.294444 0.794444
-	robot-at-x06y06 robot-at-x06y05 0.205556 0.705556
-	robot-at-x06y06 broken-robot 0.294444 0.794444
-	robot-at-x06y07 robot-at-x06y06 0.205556 0.705556
-	robot-at-x06y07 broken-robot 0.294444 0.794444
-	robot-at-x06y08 robot-at-x06y07 0.205556 0.705556
-	robot-at-x06y08 broken-robot 0.294444 0.794444
-	robot-at-x06y09 robot-at-x06y08 0.205556 0.705556
-	robot-at-x06y09 broken-robot 0.294444 0.794444
-	robot-at-x06y10 robot-at-x06y09 0.205556 0.705556
-	robot-at-x06y10 broken-robot 0.294444 0.794444
-	robot-at-x06y11 robot-at-x06y10 0.205556 0.705556
-	robot-at-x06y11 broken-robot 0.294444 0.794444
-	robot-at-x06y12 robot-at-x06y11 0.205556 0.705556
-	robot-at-x06y12 broken-robot 0.294444 0.794444
-	robot-at-x06y13 robot-at-x06y12 0.205556 0.705556
-	robot-at-x06y13 broken-robot 0.294444 0.794444
-	robot-at-x06y14 robot-at-x06y13 0.205556 0.705556
-	robot-at-x06y14 broken-robot 0.294444 0.794444
-	robot-at-x06y15 robot-at-x06y14 0.205556 0.705556
-	robot-at-x06y15 broken-robot 0.294444 0.794444
-	robot-at-x06y16 robot-at-x06y15 0.205556 0.705556
-	robot-at-x06y16 broken-robot 0.294444 0.794444
-	robot-at-x06y17 robot-at-x06y16 0.205556 0.705556
-	robot-at-x06y17 broken-robot 0.294444 0.794444
-	robot-at-x06y18 robot-at-x06y17 0.205556 0.705556
-	robot-at-x06y18 broken-robot 0.294444 0.794444
-	robot-at-x06y19 robot-at-x06y18 0.205556 0.705556
-	robot-at-x06y19 broken-robot 0.294444 0.794444
-	robot-at-x06y20 robot-at-x06y19 0.205556 0.705556
-	robot-at-x06y20 broken-robot 0.294444 0.794444
-	robot-at-x07y01 robot-at-x07y01 1.000000 1.000000
-	robot-at-x07y02 robot-at-x07y01 1.000000 1.000000
-	robot-at-x07y03 robot-at-x07y02 0.116667 0.616667
-	robot-at-x07y03 broken-robot 0.383333 0.883333
-	robot-at-x07y04 robot-at-x07y03 0.116667 0.616667
-	robot-at-x07y04 broken-robot 0.383333 0.883333
-	robot-at-x07y05 robot-at-x07y04 0.116667 0.616667
-	robot-at-x07y05 broken-robot 0.383333 0.883333
-	robot-at-x07y06 robot-at-x07y05 0.116667 0.616667
-	robot-at-x07y06 broken-robot 0.383333 0.883333
-	robot-at-x07y07 robot-at-x07y06 0.116667 0.616667
-	robot-at-x07y07 broken-robot 0.383333 0.883333
-	robot-at-x07y08 robot-at-x07y07 0.116667 0.616667
-	robot-at-x07y08 broken-robot 0.383333 0.883333
-	robot-at-x07y09 robot-at-x07y08 0.116667 0.616667
-	robot-at-x07y09 broken-robot 0.383333 0.883333
-	robot-at-x07y10 robot-at-x07y09 0.116667 0.616667
-	robot-at-x07y10 broken-robot 0.383333 0.883333
-	robot-at-x07y11 robot-at-x07y10 0.116667 0.616667
-	robot-at-x07y11 broken-robot 0.383333 0.883333
-	robot-at-x07y12 robot-at-x07y11 0.116667 0.616667
-	robot-at-x07y12 broken-robot 0.383333 0.883333
-	robot-at-x07y13 robot-at-x07y12 0.116667 0.616667
-	robot-at-x07y13 broken-robot 0.383333 0.883333
-	robot-at-x07y14 robot-at-x07y13 0.116667 0.616667
-	robot-at-x07y14 broken-robot 0.383333 0.883333
-	robot-at-x07y15 robot-at-x07y14 0.116667 0.616667
-	robot-at-x07y15 broken-robot 0.383333 0.883333
-	robot-at-x07y16 robot-at-x07y15 0.116667 0.616667
-	robot-at-x07y16 broken-robot 0.383333 0.883333
-	robot-at-x07y17 robot-at-x07y16 0.116667 0.616667
-	robot-at-x07y17 broken-robot 0.383333 0.883333
-	robot-at-x07y18 robot-at-x07y17 0.116667 0.616667
-	robot-at-x07y18 broken-robot 0.383333 0.883333
-	robot-at-x07y19 robot-at-x07y18 0.116667 0.616667
-	robot-at-x07y19 broken-robot 0.383333 0.883333
-	robot-at-x07y20 robot-at-x07y19 0.116667 0.616667
-	robot-at-x07y20 broken-robot 0.383333 0.883333
-	robot-at-x08y01 robot-at-x08y01 1.000000 1.000000
-	robot-at-x08y02 robot-at-x08y01 1.000000 1.000000
-	robot-at-x08y03 robot-at-x08y02 0.027778 0.527778
-	robot-at-x08y03 broken-robot 0.472222 0.972222
-	robot-at-x08y04 robot-at-x08y03 0.027778 0.527778
-	robot-at-x08y04 broken-robot 0.472222 0.972222
-	robot-at-x08y05 robot-at-x08y04 0.027778 0.527778
-	robot-at-x08y05 broken-robot 0.472222 0.972222
-	robot-at-x08y06 robot-at-x08y05 0.027778 0.527778
-	robot-at-x08y06 broken-robot 0.472222 0.972222
-	robot-at-x08y07 robot-at-x08y06 0.027778 0.527778
-	robot-at-x08y07 broken-robot 0.472222 0.972222
-	robot-at-x08y08 robot-at-x08y07 0.027778 0.527778
-	robot-at-x08y08 broken-robot 0.472222 0.972222
-	robot-at-x08y09 robot-at-x08y08 0.027778 0.527778
-	robot-at-x08y09 broken-robot 0.472222 0.972222
-	robot-at-x08y10 robot-at-x08y09 0.027778 0.527778
-	robot-at-x08y10 broken-robot 0.472222 0.972222
-	robot-at-x08y11 robot-at-x08y10 0.027778 0.527778
-	robot-at-x08y11 broken-robot 0.472222 0.972222
-	robot-at-x08y12 robot-at-x08y11 0.027778 0.527778
-	robot-at-x08y12 broken-robot 0.472222 0.972222
-	robot-at-x08y13 robot-at-x08y12 0.027778 0.527778
-	robot-at-x08y13 broken-robot 0.472222 0.972222
-	robot-at-x08y14 robot-at-x08y13 0.027778 0.527778
-	robot-at-x08y14 broken-robot 0.472222 0.972222
-	robot-at-x08y15 robot-at-x08y14 0.027778 0.527778
-	robot-at-x08y15 broken-robot 0.472222 0.972222
-	robot-at-x08y16 robot-at-x08y15 0.027778 0.527778
-	robot-at-x08y16 broken-robot 0.472222 0.972222
-	robot-at-x08y17 robot-at-x08y16 0.027778 0.527778
-	robot-at-x08y17 broken-robot 0.472222 0.972222
-	robot-at-x08y18 robot-at-x08y17 0.027778 0.527778
-	robot-at-x08y18 broken-robot 0.472222 0.972222
-	robot-at-x08y19 robot-at-x08y18 0.027778 0.527778
-	robot-at-x08y19 broken-robot 0.472222 0.972222
-	robot-at-x08y20 robot-at-x08y19 0.027778 0.527778
-	robot-at-x08y20 broken-robot 0.472222 0.972222
-	robot-at-x09y01 robot-at-x09y01 1.000000 1.000000
-	robot-at-x09y02 robot-at-x09y01 1.000000 1.000000
-	robot-at-x09y03 robot-at-x09y02 0.000000 0.438889
-	robot-at-x09y03 broken-robot 0.561111 1.000000
-	robot-at-x09y04 robot-at-x09y03 0.000000 0.438889
-	robot-at-x09y04 broken-robot 0.561111 1.000000
-	robot-at-x09y05 robot-at-x09y04 0.000000 0.438889
-	robot-at-x09y05 broken-robot 0.561111 1.000000
-	robot-at-x09y06 robot-at-x09y05 0.000000 0.438889
-	robot-at-x09y06 broken-robot 0.561111 1.000000
-	robot-at-x09y07 robot-at-x09y06 0.000000 0.438889
-	robot-at-x09y07 broken-robot 0.561111 1.000000
-	robot-at-x09y08 robot-at-x09y07 0.000000 0.438889
-	robot-at-x09y08 broken-robot 0.561111 1.000000
-	robot-at-x09y09 robot-at-x09y08 0.000000 0.438889
-	robot-at-x09y09 broken-robot 0.561111 1.000000
-	robot-at-x09y10 robot-at-x09y09 0.000000 0.438889
-	robot-at-x09y10 broken-robot 0.561111 1.000000
-	robot-at-x09y11 robot-at-x09y10 0.000000 0.438889
-	robot-at-x09y11 broken-robot 0.561111 1.000000
-	robot-at-x09y12 robot-at-x09y11 0.000000 0.438889
-	robot-at-x09y12 broken-robot 0.561111 1.000000
-	robot-at-x09y13 robot-at-x09y12 0.000000 0.438889
-	robot-at-x09y13 broken-robot 0.561111 1.000000
-	robot-at-x09y14 robot-at-x09y13 0.000000 0.438889
-	robot-at-x09y14 broken-robot 0.561111 1.000000
-	robot-at-x09y15 robot-at-x09y14 0.000000 0.438889
-	robot-at-x09y15 broken-robot 0.561111 1.000000
-	robot-at-x09y16 robot-at-x09y15 0.000000 0.438889
-	robot-at-x09y16 broken-robot 0.561111 1.000000
-	robot-at-x09y17 robot-at-x09y16 0.000000 0.438889
-	robot-at-x09y17 broken-robot 0.561111 1.000000
-	robot-at-x09y18 robot-at-x09y17 0.000000 0.438889
-	robot-at-x09y18 broken-robot 0.561111 1.000000
-	robot-at-x09y19 robot-at-x09y18 0.000000 0.438889
-	robot-at-x09y19 broken-robot 0.561111 1.000000
-	robot-at-x09y20 robot-at-x09y19 0.000000 0.438889
-	robot-at-x09y20 broken-robot 0.561111 1.000000
-	robot-at-x10y01 robot-at-x10y01 1.000000 1.000000
-	robot-at-x10y02 robot-at-x10y01 1.000000 1.000000
-	robot-at-x10y03 robot-at-x10y02 0.000000 0.350000
-	robot-at-x10y03 broken-robot 0.650000 1.00000
-	robot-at-x10y04 robot-at-x10y03 0.000000 0.350000
-	robot-at-x10y04 broken-robot 0.650000 1.00000
-	robot-at-x10y05 robot-at-x10y04 0.000000 0.350000
-	robot-at-x10y05 broken-robot 0.650000 1.00000
-	robot-at-x10y06 robot-at-x10y05 0.000000 0.350000
-	robot-at-x10y06 broken-robot 0.650000 1.00000
-	robot-at-x10y07 robot-at-x10y06 0.000000 0.350000
-	robot-at-x10y07 broken-robot 0.650000 1.00000
-	robot-at-x10y08 robot-at-x10y07 0.000000 0.350000
-	robot-at-x10y08 broken-robot 0.650000 1.00000
-	robot-at-x10y09 robot-at-x10y08 0.000000 0.350000
-	robot-at-x10y09 broken-robot 0.650000 1.00000
-	robot-at-x10y10 robot-at-x10y09 0.000000 0.350000
-	robot-at-x10y10 broken-robot 0.650000 1.00000
-	robot-at-x10y11 robot-at-x10y10 0.000000 0.350000
-	robot-at-x10y11 broken-robot 0.650000 1.00000
-	robot-at-x10y12 robot-at-x10y11 0.000000 0.350000
-	robot-at-x10y12 broken-robot 0.650000 1.00000
-	robot-at-x10y13 robot-at-x10y12 0.000000 0.350000
-	robot-at-x10y13 broken-robot 0.650000 1.00000
-	robot-at-x10y14 robot-at-x10y13 0.000000 0.350000
-	robot-at-x10y14 broken-robot 0.650000 1.00000
-	robot-at-x10y15 robot-at-x10y14 0.000000 0.350000
-	robot-at-x10y15 broken-robot 0.650000 1.00000
-	robot-at-x10y16 robot-at-x10y15 0.000000 0.350000
-	robot-at-x10y16 broken-robot 0.650000 1.00000
-	robot-at-x10y17 robot-at-x10y16 0.000000 0.350000
-	robot-at-x10y17 broken-robot 0.650000 1.00000
-	robot-at-x10y18 robot-at-x10y17 0.000000 0.350000
-	robot-at-x10y18 broken-robot 0.650000 1.00000
-	robot-at-x10y19 robot-at-x10y18 0.000000 0.350000
-	robot-at-x10y19 broken-robot 0.650000 1.00000
-	robot-at-x10y20 robot-at-x10y20 1.000000 1.000000
-	broken-robot broken-robot 1.000000 1.000000
+	robot-at-x01y01 robot-at-x01y01 1.000000
+	robot-at-x01y02 robot-at-x01y01 1.000000
+	robot-at-x01y03 robot-at-x01y02 p1
+	robot-at-x01y03 broken-robot p2
+	robot-at-x01y04 robot-at-x01y03 p3
+	robot-at-x01y04 broken-robot p4
+	robot-at-x01y05 robot-at-x01y04 p5
+	robot-at-x01y05 broken-robot p6
+	robot-at-x01y06 robot-at-x01y05 p7
+	robot-at-x01y06 broken-robot p8
+	robot-at-x01y07 robot-at-x01y06 p9
+	robot-at-x01y07 broken-robot p10
+	robot-at-x01y08 robot-at-x01y07 p11
+	robot-at-x01y08 broken-robot p12
+	robot-at-x01y09 robot-at-x01y08 p13
+	robot-at-x01y09 broken-robot p14
+	robot-at-x01y10 robot-at-x01y09 p15
+	robot-at-x01y10 broken-robot p16
+	robot-at-x01y11 robot-at-x01y10 p17
+	robot-at-x01y11 broken-robot p18
+	robot-at-x01y12 robot-at-x01y11 p19
+	robot-at-x01y12 broken-robot p20
+	robot-at-x01y13 robot-at-x01y12 p21
+	robot-at-x01y13 broken-robot p22
+	robot-at-x01y14 robot-at-x01y13 p23
+	robot-at-x01y14 broken-robot p24
+	robot-at-x01y15 robot-at-x01y14 p25
+	robot-at-x01y15 broken-robot p26
+	robot-at-x01y16 robot-at-x01y15 p27
+	robot-at-x01y16 broken-robot p28
+	robot-at-x01y17 robot-at-x01y16 p29
+	robot-at-x01y17 broken-robot p30
+	robot-at-x01y18 robot-at-x01y17 p31
+	robot-at-x01y18 broken-robot p32
+	robot-at-x01y19 robot-at-x01y18 p33
+	robot-at-x01y19 broken-robot p34
+	robot-at-x01y20 robot-at-x01y19 p35
+	robot-at-x01y20 broken-robot p36
+	robot-at-x02y01 robot-at-x02y01 1.000000
+	robot-at-x02y02 robot-at-x02y01 1.000000
+	robot-at-x02y03 robot-at-x02y02 p37
+	robot-at-x02y03 broken-robot p38
+	robot-at-x02y04 robot-at-x02y03 p39
+	robot-at-x02y04 broken-robot p40
+	robot-at-x02y05 robot-at-x02y04 p41
+	robot-at-x02y05 broken-robot p42
+	robot-at-x02y06 robot-at-x02y05 p43
+	robot-at-x02y06 broken-robot p44
+	robot-at-x02y07 robot-at-x02y06 p45
+	robot-at-x02y07 broken-robot p46
+	robot-at-x02y08 robot-at-x02y07 p47
+	robot-at-x02y08 broken-robot p48
+	robot-at-x02y09 robot-at-x02y08 p49
+	robot-at-x02y09 broken-robot p50
+	robot-at-x02y10 robot-at-x02y09 p51
+	robot-at-x02y10 broken-robot p52
+	robot-at-x02y11 robot-at-x02y10 p53
+	robot-at-x02y11 broken-robot p54
+	robot-at-x02y12 robot-at-x02y11 p55
+	robot-at-x02y12 broken-robot p56
+	robot-at-x02y13 robot-at-x02y12 p57
+	robot-at-x02y13 broken-robot p58
+	robot-at-x02y14 robot-at-x02y13 p59
+	robot-at-x02y14 broken-robot p60
+	robot-at-x02y15 robot-at-x02y14 p61
+	robot-at-x02y15 broken-robot p62
+	robot-at-x02y16 robot-at-x02y15 p63
+	robot-at-x02y16 broken-robot p64
+	robot-at-x02y17 robot-at-x02y16 p65
+	robot-at-x02y17 broken-robot p66
+	robot-at-x02y18 robot-at-x02y17 p67
+	robot-at-x02y18 broken-robot p68
+	robot-at-x02y19 robot-at-x02y18 p69
+	robot-at-x02y19 broken-robot p70
+	robot-at-x02y20 robot-at-x02y19 p71
+	robot-at-x02y20 broken-robot p72
+	robot-at-x03y01 robot-at-x03y01 1.000000
+	robot-at-x03y02 robot-at-x03y01 1.000000
+	robot-at-x03y03 robot-at-x03y02 p73
+	robot-at-x03y03 broken-robot p74
+	robot-at-x03y04 robot-at-x03y03 p75
+	robot-at-x03y04 broken-robot p76
+	robot-at-x03y05 robot-at-x03y04 p77
+	robot-at-x03y05 broken-robot p78
+	robot-at-x03y06 robot-at-x03y05 p79
+	robot-at-x03y06 broken-robot p80
+	robot-at-x03y07 robot-at-x03y06 p81
+	robot-at-x03y07 broken-robot p82
+	robot-at-x03y08 robot-at-x03y07 p83
+	robot-at-x03y08 broken-robot p84
+	robot-at-x03y09 robot-at-x03y08 p85
+	robot-at-x03y09 broken-robot p86
+	robot-at-x03y10 robot-at-x03y09 p87
+	robot-at-x03y10 broken-robot p88
+	robot-at-x03y11 robot-at-x03y10 p89
+	robot-at-x03y11 broken-robot p90
+	robot-at-x03y12 robot-at-x03y11 p91
+	robot-at-x03y12 broken-robot p92
+	robot-at-x03y13 robot-at-x03y12 p93
+	robot-at-x03y13 broken-robot p94
+	robot-at-x03y14 robot-at-x03y13 p95
+	robot-at-x03y14 broken-robot p96
+	robot-at-x03y15 robot-at-x03y14 p97
+	robot-at-x03y15 broken-robot p98
+	robot-at-x03y16 robot-at-x03y15 p99
+	robot-at-x03y16 broken-robot p100
+	robot-at-x03y17 robot-at-x03y16 p101
+	robot-at-x03y17 broken-robot p102
+	robot-at-x03y18 robot-at-x03y17 p103
+	robot-at-x03y18 broken-robot p104
+	robot-at-x03y19 robot-at-x03y18 p105
+	robot-at-x03y19 broken-robot p106
+	robot-at-x03y20 robot-at-x03y19 p107
+	robot-at-x03y20 broken-robot p108
+	robot-at-x04y01 robot-at-x04y01 1.000000
+	robot-at-x04y02 robot-at-x04y01 1.000000
+	robot-at-x04y03 robot-at-x04y02 p109
+	robot-at-x04y03 broken-robot p110
+	robot-at-x04y04 robot-at-x04y03 p111
+	robot-at-x04y04 broken-robot p112
+	robot-at-x04y05 robot-at-x04y04 p113
+	robot-at-x04y05 broken-robot p114
+	robot-at-x04y06 robot-at-x04y05 p115
+	robot-at-x04y06 broken-robot p116
+	robot-at-x04y07 robot-at-x04y06 p117
+	robot-at-x04y07 broken-robot p118
+	robot-at-x04y08 robot-at-x04y07 p119
+	robot-at-x04y08 broken-robot p120
+	robot-at-x04y09 robot-at-x04y08 p121
+	robot-at-x04y09 broken-robot p122
+	robot-at-x04y10 robot-at-x04y09 p123
+	robot-at-x04y10 broken-robot p124
+	robot-at-x04y11 robot-at-x04y10 p125
+	robot-at-x04y11 broken-robot p126
+	robot-at-x04y12 robot-at-x04y11 p127
+	robot-at-x04y12 broken-robot p128
+	robot-at-x04y13 robot-at-x04y12 p129
+	robot-at-x04y13 broken-robot p130
+	robot-at-x04y14 robot-at-x04y13 p131
+	robot-at-x04y14 broken-robot p132
+	robot-at-x04y15 robot-at-x04y14 p133
+	robot-at-x04y15 broken-robot p134
+	robot-at-x04y16 robot-at-x04y15 p135
+	robot-at-x04y16 broken-robot p136
+	robot-at-x04y17 robot-at-x04y16 p137
+	robot-at-x04y17 broken-robot p138
+	robot-at-x04y18 robot-at-x04y17 p139
+	robot-at-x04y18 broken-robot p140
+	robot-at-x04y19 robot-at-x04y18 p141
+	robot-at-x04y19 broken-robot p142
+	robot-at-x04y20 robot-at-x04y19 p143
+	robot-at-x04y20 broken-robot p144
+	robot-at-x05y01 robot-at-x05y01 1.000000
+	robot-at-x05y02 robot-at-x05y01 1.000000
+	robot-at-x05y03 robot-at-x05y02 p145
+	robot-at-x05y03 broken-robot p146
+	robot-at-x05y04 robot-at-x05y03 p147
+	robot-at-x05y04 broken-robot p148
+	robot-at-x05y05 robot-at-x05y04 p149
+	robot-at-x05y05 broken-robot p150
+	robot-at-x05y06 robot-at-x05y05 p151
+	robot-at-x05y06 broken-robot p152
+	robot-at-x05y07 robot-at-x05y06 p153
+	robot-at-x05y07 broken-robot p154
+	robot-at-x05y08 robot-at-x05y07 p155
+	robot-at-x05y08 broken-robot p156
+	robot-at-x05y09 robot-at-x05y08 p157
+	robot-at-x05y09 broken-robot p158
+	robot-at-x05y10 robot-at-x05y09 p159
+	robot-at-x05y10 broken-robot p160
+	robot-at-x05y11 robot-at-x05y10 p161
+	robot-at-x05y11 broken-robot p162
+	robot-at-x05y12 robot-at-x05y11 p163
+	robot-at-x05y12 broken-robot p164
+	robot-at-x05y13 robot-at-x05y12 p165
+	robot-at-x05y13 broken-robot p166
+	robot-at-x05y14 robot-at-x05y13 p167
+	robot-at-x05y14 broken-robot p168
+	robot-at-x05y15 robot-at-x05y14 p169
+	robot-at-x05y15 broken-robot p170
+	robot-at-x05y16 robot-at-x05y15 p171
+	robot-at-x05y16 broken-robot p172
+	robot-at-x05y17 robot-at-x05y16 p173
+	robot-at-x05y17 broken-robot p174
+	robot-at-x05y18 robot-at-x05y17 p175
+	robot-at-x05y18 broken-robot p176
+	robot-at-x05y19 robot-at-x05y18 p177
+	robot-at-x05y19 broken-robot p178
+	robot-at-x05y20 robot-at-x05y19 p179
+	robot-at-x05y20 broken-robot p180
+	robot-at-x06y01 robot-at-x06y01 1.000000
+	robot-at-x06y02 robot-at-x06y01 1.000000
+	robot-at-x06y03 robot-at-x06y02 p181
+	robot-at-x06y03 broken-robot p182
+	robot-at-x06y04 robot-at-x06y03 p183
+	robot-at-x06y04 broken-robot p184
+	robot-at-x06y05 robot-at-x06y04 p185
+	robot-at-x06y05 broken-robot p186
+	robot-at-x06y06 robot-at-x06y05 p187
+	robot-at-x06y06 broken-robot p188
+	robot-at-x06y07 robot-at-x06y06 p189
+	robot-at-x06y07 broken-robot p190
+	robot-at-x06y08 robot-at-x06y07 p191
+	robot-at-x06y08 broken-robot p192
+	robot-at-x06y09 robot-at-x06y08 p193
+	robot-at-x06y09 broken-robot p194
+	robot-at-x06y10 robot-at-x06y09 p195
+	robot-at-x06y10 broken-robot p196
+	robot-at-x06y11 robot-at-x06y10 p197
+	robot-at-x06y11 broken-robot p198
+	robot-at-x06y12 robot-at-x06y11 p199
+	robot-at-x06y12 broken-robot p200
+	robot-at-x06y13 robot-at-x06y12 p201
+	robot-at-x06y13 broken-robot p202
+	robot-at-x06y14 robot-at-x06y13 p203
+	robot-at-x06y14 broken-robot p204
+	robot-at-x06y15 robot-at-x06y14 p205
+	robot-at-x06y15 broken-robot p206
+	robot-at-x06y16 robot-at-x06y15 p207
+	robot-at-x06y16 broken-robot p208
+	robot-at-x06y17 robot-at-x06y16 p209
+	robot-at-x06y17 broken-robot p210
+	robot-at-x06y18 robot-at-x06y17 p211
+	robot-at-x06y18 broken-robot p212
+	robot-at-x06y19 robot-at-x06y18 p213
+	robot-at-x06y19 broken-robot p214
+	robot-at-x06y20 robot-at-x06y19 p215
+	robot-at-x06y20 broken-robot p216
+	robot-at-x07y01 robot-at-x07y01 1.000000
+	robot-at-x07y02 robot-at-x07y01 1.000000
+	robot-at-x07y03 robot-at-x07y02 p217
+	robot-at-x07y03 broken-robot p218
+	robot-at-x07y04 robot-at-x07y03 p219
+	robot-at-x07y04 broken-robot p220
+	robot-at-x07y05 robot-at-x07y04 p221
+	robot-at-x07y05 broken-robot p222
+	robot-at-x07y06 robot-at-x07y05 p223
+	robot-at-x07y06 broken-robot p224
+	robot-at-x07y07 robot-at-x07y06 p225
+	robot-at-x07y07 broken-robot p226
+	robot-at-x07y08 robot-at-x07y07 p227
+	robot-at-x07y08 broken-robot p228
+	robot-at-x07y09 robot-at-x07y08 p229
+	robot-at-x07y09 broken-robot p230
+	robot-at-x07y10 robot-at-x07y09 p231
+	robot-at-x07y10 broken-robot p232
+	robot-at-x07y11 robot-at-x07y10 p233
+	robot-at-x07y11 broken-robot p234
+	robot-at-x07y12 robot-at-x07y11 p235
+	robot-at-x07y12 broken-robot p236
+	robot-at-x07y13 robot-at-x07y12 p237
+	robot-at-x07y13 broken-robot p238
+	robot-at-x07y14 robot-at-x07y13 p239
+	robot-at-x07y14 broken-robot p240
+	robot-at-x07y15 robot-at-x07y14 p241
+	robot-at-x07y15 broken-robot p242
+	robot-at-x07y16 robot-at-x07y15 p243
+	robot-at-x07y16 broken-robot p244
+	robot-at-x07y17 robot-at-x07y16 p245
+	robot-at-x07y17 broken-robot p246
+	robot-at-x07y18 robot-at-x07y17 p247
+	robot-at-x07y18 broken-robot p248
+	robot-at-x07y19 robot-at-x07y18 p249
+	robot-at-x07y19 broken-robot p250
+	robot-at-x07y20 robot-at-x07y19 p251
+	robot-at-x07y20 broken-robot p252
+	robot-at-x08y01 robot-at-x08y01 1.000000
+	robot-at-x08y02 robot-at-x08y01 1.000000
+	robot-at-x08y03 robot-at-x08y02 p253
+	robot-at-x08y03 broken-robot p254
+	robot-at-x08y04 robot-at-x08y03 p255
+	robot-at-x08y04 broken-robot p256
+	robot-at-x08y05 robot-at-x08y04 p257
+	robot-at-x08y05 broken-robot p258
+	robot-at-x08y06 robot-at-x08y05 p259
+	robot-at-x08y06 broken-robot p260
+	robot-at-x08y07 robot-at-x08y06 p261
+	robot-at-x08y07 broken-robot p262
+	robot-at-x08y08 robot-at-x08y07 p263
+	robot-at-x08y08 broken-robot p264
+	robot-at-x08y09 robot-at-x08y08 p265
+	robot-at-x08y09 broken-robot p266
+	robot-at-x08y10 robot-at-x08y09 p267
+	robot-at-x08y10 broken-robot p268
+	robot-at-x08y11 robot-at-x08y10 p269
+	robot-at-x08y11 broken-robot p270
+	robot-at-x08y12 robot-at-x08y11 p271
+	robot-at-x08y12 broken-robot p272
+	robot-at-x08y13 robot-at-x08y12 p273
+	robot-at-x08y13 broken-robot p274
+	robot-at-x08y14 robot-at-x08y13 p275
+	robot-at-x08y14 broken-robot p276
+	robot-at-x08y15 robot-at-x08y14 p277
+	robot-at-x08y15 broken-robot p278
+	robot-at-x08y16 robot-at-x08y15 p279
+	robot-at-x08y16 broken-robot p280
+	robot-at-x08y17 robot-at-x08y16 p281
+	robot-at-x08y17 broken-robot p282
+	robot-at-x08y18 robot-at-x08y17 p283
+	robot-at-x08y18 broken-robot p284
+	robot-at-x08y19 robot-at-x08y18 p285
+	robot-at-x08y19 broken-robot p286
+	robot-at-x08y20 robot-at-x08y19 p287
+	robot-at-x08y20 broken-robot p288
+	robot-at-x09y01 robot-at-x09y01 1.000000
+	robot-at-x09y02 robot-at-x09y01 1.000000
+	robot-at-x09y03 robot-at-x09y02 p289
+	robot-at-x09y03 broken-robot p290
+	robot-at-x09y04 robot-at-x09y03 p291
+	robot-at-x09y04 broken-robot p292
+	robot-at-x09y05 robot-at-x09y04 p293
+	robot-at-x09y05 broken-robot p294
+	robot-at-x09y06 robot-at-x09y05 p295
+	robot-at-x09y06 broken-robot p296
+	robot-at-x09y07 robot-at-x09y06 p297
+	robot-at-x09y07 broken-robot p298
+	robot-at-x09y08 robot-at-x09y07 p299
+	robot-at-x09y08 broken-robot p300
+	robot-at-x09y09 robot-at-x09y08 p301
+	robot-at-x09y09 broken-robot p302
+	robot-at-x09y10 robot-at-x09y09 p303
+	robot-at-x09y10 broken-robot p304
+	robot-at-x09y11 robot-at-x09y10 p305
+	robot-at-x09y11 broken-robot p306
+	robot-at-x09y12 robot-at-x09y11 p307
+	robot-at-x09y12 broken-robot p308
+	robot-at-x09y13 robot-at-x09y12 p309
+	robot-at-x09y13 broken-robot p310
+	robot-at-x09y14 robot-at-x09y13 p311
+	robot-at-x09y14 broken-robot p312
+	robot-at-x09y15 robot-at-x09y14 p313
+	robot-at-x09y15 broken-robot p314
+	robot-at-x09y16 robot-at-x09y15 p315
+	robot-at-x09y16 broken-robot p316
+	robot-at-x09y17 robot-at-x09y16 p317
+	robot-at-x09y17 broken-robot p318
+	robot-at-x09y18 robot-at-x09y17 p319
+	robot-at-x09y18 broken-robot p320
+	robot-at-x09y19 robot-at-x09y18 p321
+	robot-at-x09y19 broken-robot p322
+	robot-at-x09y20 robot-at-x09y19 p323
+	robot-at-x09y20 broken-robot p324
+	robot-at-x10y01 robot-at-x10y01 1.000000
+	robot-at-x10y02 robot-at-x10y01 1.000000
+	robot-at-x10y03 robot-at-x10y02 p325
+	robot-at-x10y03 broken-robot p326
+	robot-at-x10y04 robot-at-x10y03 p327
+	robot-at-x10y04 broken-robot p328
+	robot-at-x10y05 robot-at-x10y04 p329
+	robot-at-x10y05 broken-robot p330
+	robot-at-x10y06 robot-at-x10y05 p331
+	robot-at-x10y06 broken-robot p332
+	robot-at-x10y07 robot-at-x10y06 p333
+	robot-at-x10y07 broken-robot p334
+	robot-at-x10y08 robot-at-x10y07 p335
+	robot-at-x10y08 broken-robot p336
+	robot-at-x10y09 robot-at-x10y08 p337
+	robot-at-x10y09 broken-robot p338
+	robot-at-x10y10 robot-at-x10y09 p339
+	robot-at-x10y10 broken-robot p340
+	robot-at-x10y11 robot-at-x10y10 p341
+	robot-at-x10y11 broken-robot p342
+	robot-at-x10y12 robot-at-x10y11 p343
+	robot-at-x10y12 broken-robot p344
+	robot-at-x10y13 robot-at-x10y12 p345
+	robot-at-x10y13 broken-robot p346
+	robot-at-x10y14 robot-at-x10y13 p347
+	robot-at-x10y14 broken-robot p348
+	robot-at-x10y15 robot-at-x10y14 p349
+	robot-at-x10y15 broken-robot p350
+	robot-at-x10y16 robot-at-x10y15 p351
+	robot-at-x10y16 broken-robot p352
+	robot-at-x10y17 robot-at-x10y16 p353
+	robot-at-x10y17 broken-robot p354
+	robot-at-x10y18 robot-at-x10y17 p355
+	robot-at-x10y18 broken-robot p356
+	robot-at-x10y19 robot-at-x10y18 p357
+	robot-at-x10y19 broken-robot p358
+	robot-at-x10y20 robot-at-x10y20 1.000000
+	broken-robot broken-robot 1.000000
 endaction
 
 action move-north
-	robot-at-x01y20 robot-at-x01y20 1.000000 1.000000
-	robot-at-x01y19 robot-at-x01y20 1.000000 1.000000
-	robot-at-x01y01 robot-at-x01y02 0.650000 1.00000
-	robot-at-x01y01 broken-robot 0.000000 0.350000
-	robot-at-x01y02 robot-at-x01y03 0.650000 1.00000
-	robot-at-x01y02 broken-robot 0.000000 0.350000
-	robot-at-x01y03 robot-at-x01y04 0.650000 1.00000
-	robot-at-x01y03 broken-robot 0.000000 0.350000
-	robot-at-x01y04 robot-at-x01y05 0.650000 1.00000
-	robot-at-x01y04 broken-robot 0.000000 0.350000
-	robot-at-x01y05 robot-at-x01y06 0.650000 1.00000
-	robot-at-x01y05 broken-robot 0.000000 0.350000
-	robot-at-x01y06 robot-at-x01y07 0.650000 1.00000
-	robot-at-x01y06 broken-robot 0.000000 0.350000
-	robot-at-x01y07 robot-at-x01y08 0.650000 1.00000
-	robot-at-x01y07 broken-robot 0.000000 0.350000
-	robot-at-x01y08 robot-at-x01y09 0.650000 1.00000
-	robot-at-x01y08 broken-robot 0.000000 0.350000
-	robot-at-x01y09 robot-at-x01y10 0.650000 1.00000
-	robot-at-x01y09 broken-robot 0.000000 0.350000
-	robot-at-x01y10 robot-at-x01y11 0.650000 1.00000
-	robot-at-x01y10 broken-robot 0.000000 0.350000
-	robot-at-x01y11 robot-at-x01y12 0.650000 1.00000
-	robot-at-x01y11 broken-robot 0.000000 0.350000
-	robot-at-x01y12 robot-at-x01y13 0.650000 1.00000
-	robot-at-x01y12 broken-robot 0.000000 0.350000
-	robot-at-x01y13 robot-at-x01y14 0.650000 1.00000
-	robot-at-x01y13 broken-robot 0.000000 0.350000
-	robot-at-x01y14 robot-at-x01y15 0.650000 1.00000
-	robot-at-x01y14 broken-robot 0.000000 0.350000
-	robot-at-x01y15 robot-at-x01y16 0.650000 1.00000
-	robot-at-x01y15 broken-robot 0.000000 0.350000
-	robot-at-x01y16 robot-at-x01y17 0.650000 1.00000
-	robot-at-x01y16 broken-robot 0.000000 0.350000
-	robot-at-x01y17 robot-at-x01y18 0.650000 1.00000
-	robot-at-x01y17 broken-robot 0.000000 0.350000
-	robot-at-x01y18 robot-at-x01y19 0.650000 1.00000
-	robot-at-x01y18 broken-robot 0.000000 0.350000
-	robot-at-x02y20 robot-at-x02y20 1.000000 1.000000
-	robot-at-x02y19 robot-at-x02y20 1.000000 1.000000
-	robot-at-x02y01 robot-at-x02y02 0.561111 1.000000
-	robot-at-x02y01 broken-robot 0.000000 0.438889
-	robot-at-x02y02 robot-at-x02y03 0.561111 1.000000
-	robot-at-x02y02 broken-robot 0.000000 0.438889
-	robot-at-x02y03 robot-at-x02y04 0.561111 1.000000
-	robot-at-x02y03 broken-robot 0.000000 0.438889
-	robot-at-x02y04 robot-at-x02y05 0.561111 1.000000
-	robot-at-x02y04 broken-robot 0.000000 0.438889
-	robot-at-x02y05 robot-at-x02y06 0.561111 1.000000
-	robot-at-x02y05 broken-robot 0.000000 0.438889
-	robot-at-x02y06 robot-at-x02y07 0.561111 1.000000
-	robot-at-x02y06 broken-robot 0.000000 0.438889
-	robot-at-x02y07 robot-at-x02y08 0.561111 1.000000
-	robot-at-x02y07 broken-robot 0.000000 0.438889
-	robot-at-x02y08 robot-at-x02y09 0.561111 1.000000
-	robot-at-x02y08 broken-robot 0.000000 0.438889
-	robot-at-x02y09 robot-at-x02y10 0.561111 1.000000
-	robot-at-x02y09 broken-robot 0.000000 0.438889
-	robot-at-x02y10 robot-at-x02y11 0.561111 1.000000
-	robot-at-x02y10 broken-robot 0.000000 0.438889
-	robot-at-x02y11 robot-at-x02y12 0.561111 1.000000
-	robot-at-x02y11 broken-robot 0.000000 0.438889
-	robot-at-x02y12 robot-at-x02y13 0.561111 1.000000
-	robot-at-x02y12 broken-robot 0.000000 0.438889
-	robot-at-x02y13 robot-at-x02y14 0.561111 1.000000
-	robot-at-x02y13 broken-robot 0.000000 0.438889
-	robot-at-x02y14 robot-at-x02y15 0.561111 1.000000
-	robot-at-x02y14 broken-robot 0.000000 0.438889
-	robot-at-x02y15 robot-at-x02y16 0.561111 1.000000
-	robot-at-x02y15 broken-robot 0.000000 0.438889
-	robot-at-x02y16 robot-at-x02y17 0.561111 1.000000
-	robot-at-x02y16 broken-robot 0.000000 0.438889
-	robot-at-x02y17 robot-at-x02y18 0.561111 1.000000
-	robot-at-x02y17 broken-robot 0.000000 0.438889
-	robot-at-x02y18 robot-at-x02y19 0.561111 1.000000
-	robot-at-x02y18 broken-robot 0.000000 0.438889
-	robot-at-x03y20 robot-at-x03y20 1.000000 1.000000
-	robot-at-x03y19 robot-at-x03y20 1.000000 1.000000
-	robot-at-x03y01 robot-at-x03y02 0.472222 0.972222
-	robot-at-x03y01 broken-robot 0.027778 0.527778
-	robot-at-x03y02 robot-at-x03y03 0.472222 0.972222
-	robot-at-x03y02 broken-robot 0.027778 0.527778
-	robot-at-x03y03 robot-at-x03y04 0.472222 0.972222
-	robot-at-x03y03 broken-robot 0.027778 0.527778
-	robot-at-x03y04 robot-at-x03y05 0.472222 0.972222
-	robot-at-x03y04 broken-robot 0.027778 0.527778
-	robot-at-x03y05 robot-at-x03y06 0.472222 0.972222
-	robot-at-x03y05 broken-robot 0.027778 0.527778
-	robot-at-x03y06 robot-at-x03y07 0.472222 0.972222
-	robot-at-x03y06 broken-robot 0.027778 0.527778
-	robot-at-x03y07 robot-at-x03y08 0.472222 0.972222
-	robot-at-x03y07 broken-robot 0.027778 0.527778
-	robot-at-x03y08 robot-at-x03y09 0.472222 0.972222
-	robot-at-x03y08 broken-robot 0.027778 0.527778
-	robot-at-x03y09 robot-at-x03y10 0.472222 0.972222
-	robot-at-x03y09 broken-robot 0.027778 0.527778
-	robot-at-x03y10 robot-at-x03y11 0.472222 0.972222
-	robot-at-x03y10 broken-robot 0.027778 0.527778
-	robot-at-x03y11 robot-at-x03y12 0.472222 0.972222
-	robot-at-x03y11 broken-robot 0.027778 0.527778
-	robot-at-x03y12 robot-at-x03y13 0.472222 0.972222
-	robot-at-x03y12 broken-robot 0.027778 0.527778
-	robot-at-x03y13 robot-at-x03y14 0.472222 0.972222
-	robot-at-x03y13 broken-robot 0.027778 0.527778
-	robot-at-x03y14 robot-at-x03y15 0.472222 0.972222
-	robot-at-x03y14 broken-robot 0.027778 0.527778
-	robot-at-x03y15 robot-at-x03y16 0.472222 0.972222
-	robot-at-x03y15 broken-robot 0.027778 0.527778
-	robot-at-x03y16 robot-at-x03y17 0.472222 0.972222
-	robot-at-x03y16 broken-robot 0.027778 0.527778
-	robot-at-x03y17 robot-at-x03y18 0.472222 0.972222
-	robot-at-x03y17 broken-robot 0.027778 0.527778
-	robot-at-x03y18 robot-at-x03y19 0.472222 0.972222
-	robot-at-x03y18 broken-robot 0.027778 0.527778
-	robot-at-x04y20 robot-at-x04y20 1.000000 1.000000
-	robot-at-x04y19 robot-at-x04y20 1.000000 1.000000
-	robot-at-x04y01 robot-at-x04y02 0.383333 0.883333
-	robot-at-x04y01 broken-robot 0.116667 0.616667
-	robot-at-x04y02 robot-at-x04y03 0.383333 0.883333
-	robot-at-x04y02 broken-robot 0.116667 0.616667
-	robot-at-x04y03 robot-at-x04y04 0.383333 0.883333
-	robot-at-x04y03 broken-robot 0.116667 0.616667
-	robot-at-x04y04 robot-at-x04y05 0.383333 0.883333
-	robot-at-x04y04 broken-robot 0.116667 0.616667
-	robot-at-x04y05 robot-at-x04y06 0.383333 0.883333
-	robot-at-x04y05 broken-robot 0.116667 0.616667
-	robot-at-x04y06 robot-at-x04y07 0.383333 0.883333
-	robot-at-x04y06 broken-robot 0.116667 0.616667
-	robot-at-x04y07 robot-at-x04y08 0.383333 0.883333
-	robot-at-x04y07 broken-robot 0.116667 0.616667
-	robot-at-x04y08 robot-at-x04y09 0.383333 0.883333
-	robot-at-x04y08 broken-robot 0.116667 0.616667
-	robot-at-x04y09 robot-at-x04y10 0.383333 0.883333
-	robot-at-x04y09 broken-robot 0.116667 0.616667
-	robot-at-x04y10 robot-at-x04y11 0.383333 0.883333
-	robot-at-x04y10 broken-robot 0.116667 0.616667
-	robot-at-x04y11 robot-at-x04y12 0.383333 0.883333
-	robot-at-x04y11 broken-robot 0.116667 0.616667
-	robot-at-x04y12 robot-at-x04y13 0.383333 0.883333
-	robot-at-x04y12 broken-robot 0.116667 0.616667
-	robot-at-x04y13 robot-at-x04y14 0.383333 0.883333
-	robot-at-x04y13 broken-robot 0.116667 0.616667
-	robot-at-x04y14 robot-at-x04y15 0.383333 0.883333
-	robot-at-x04y14 broken-robot 0.116667 0.616667
+	robot-at-x01y20 robot-at-x01y20 1.000000
+	robot-at-x01y19 robot-at-x01y20 1.000000
+	robot-at-x01y01 robot-at-x01y02 p359
+	robot-at-x01y01 broken-robot p360
+	robot-at-x01y02 robot-at-x01y03 p361
+	robot-at-x01y02 broken-robot p362
+	robot-at-x01y03 robot-at-x01y04 p363
+	robot-at-x01y03 broken-robot p364
+	robot-at-x01y04 robot-at-x01y05 p365
+	robot-at-x01y04 broken-robot p366
+	robot-at-x01y05 robot-at-x01y06 p367
+	robot-at-x01y05 broken-robot p368
+	robot-at-x01y06 robot-at-x01y07 p369
+	robot-at-x01y06 broken-robot p370
+	robot-at-x01y07 robot-at-x01y08 p371
+	robot-at-x01y07 broken-robot p372
+	robot-at-x01y08 robot-at-x01y09 p373
+	robot-at-x01y08 broken-robot p374
+	robot-at-x01y09 robot-at-x01y10 p375
+	robot-at-x01y09 broken-robot p376
+	robot-at-x01y10 robot-at-x01y11 p377
+	robot-at-x01y10 broken-robot p378
+	robot-at-x01y11 robot-at-x01y12 p379
+	robot-at-x01y11 broken-robot p380
+	robot-at-x01y12 robot-at-x01y13 p381
+	robot-at-x01y12 broken-robot p382
+	robot-at-x01y13 robot-at-x01y14 p383
+	robot-at-x01y13 broken-robot p384
+	robot-at-x01y14 robot-at-x01y15 p385
+	robot-at-x01y14 broken-robot p386
+	robot-at-x01y15 robot-at-x01y16 p387
+	robot-at-x01y15 broken-robot p388
+	robot-at-x01y16 robot-at-x01y17 p389
+	robot-at-x01y16 broken-robot p390
+	robot-at-x01y17 robot-at-x01y18 p391
+	robot-at-x01y17 broken-robot p392
+	robot-at-x01y18 robot-at-x01y19 p393
+	robot-at-x01y18 broken-robot p394
+	robot-at-x02y20 robot-at-x02y20 1.000000
+	robot-at-x02y19 robot-at-x02y20 1.000000
+	robot-at-x02y01 robot-at-x02y02 p395
+	robot-at-x02y01 broken-robot p396
+	robot-at-x02y02 robot-at-x02y03 p397
+	robot-at-x02y02 broken-robot p398
+	robot-at-x02y03 robot-at-x02y04 p399
+	robot-at-x02y03 broken-robot p400
+	robot-at-x02y04 robot-at-x02y05 p401
+	robot-at-x02y04 broken-robot p402
+	robot-at-x02y05 robot-at-x02y06 p403
+	robot-at-x02y05 broken-robot p404
+	robot-at-x02y06 robot-at-x02y07 p405
+	robot-at-x02y06 broken-robot p406
+	robot-at-x02y07 robot-at-x02y08 p407
+	robot-at-x02y07 broken-robot p408
+	robot-at-x02y08 robot-at-x02y09 p409
+	robot-at-x02y08 broken-robot p410
+	robot-at-x02y09 robot-at-x02y10 p411
+	robot-at-x02y09 broken-robot p412
+	robot-at-x02y10 robot-at-x02y11 p413
+	robot-at-x02y10 broken-robot p414
+	robot-at-x02y11 robot-at-x02y12 p415
+	robot-at-x02y11 broken-robot p416
+	robot-at-x02y12 robot-at-x02y13 p417
+	robot-at-x02y12 broken-robot p418
+	robot-at-x02y13 robot-at-x02y14 p419
+	robot-at-x02y13 broken-robot p420
+	robot-at-x02y14 robot-at-x02y15 p421
+	robot-at-x02y14 broken-robot p422
+	robot-at-x02y15 robot-at-x02y16 p423
+	robot-at-x02y15 broken-robot p424
+	robot-at-x02y16 robot-at-x02y17 p425
+	robot-at-x02y16 broken-robot p426
+	robot-at-x02y17 robot-at-x02y18 p427
+	robot-at-x02y17 broken-robot p428
+	robot-at-x02y18 robot-at-x02y19 p429
+	robot-at-x02y18 broken-robot p430
+	robot-at-x03y20 robot-at-x03y20 1.000000
+	robot-at-x03y19 robot-at-x03y20 1.000000
+	robot-at-x03y01 robot-at-x03y02 p431
+	robot-at-x03y01 broken-robot p432
+	robot-at-x03y02 robot-at-x03y03 p433
+	robot-at-x03y02 broken-robot p434
+	robot-at-x03y03 robot-at-x03y04 p435
+	robot-at-x03y03 broken-robot p436
+	robot-at-x03y04 robot-at-x03y05 p437
+	robot-at-x03y04 broken-robot p438
+	robot-at-x03y05 robot-at-x03y06 p439
+	robot-at-x03y05 broken-robot p440
+	robot-at-x03y06 robot-at-x03y07 p441
+	robot-at-x03y06 broken-robot p442
+	robot-at-x03y07 robot-at-x03y08 p443
+	robot-at-x03y07 broken-robot p444
+	robot-at-x03y08 robot-at-x03y09 p445
+	robot-at-x03y08 broken-robot p446
+	robot-at-x03y09 robot-at-x03y10 p447
+	robot-at-x03y09 broken-robot p448
+	robot-at-x03y10 robot-at-x03y11 p449
+	robot-at-x03y10 broken-robot p450
+	robot-at-x03y11 robot-at-x03y12 p451
+	robot-at-x03y11 broken-robot p452
+	robot-at-x03y12 robot-at-x03y13 p453
+	robot-at-x03y12 broken-robot p454
+	robot-at-x03y13 robot-at-x03y14 p455
+	robot-at-x03y13 broken-robot p456
+	robot-at-x03y14 robot-at-x03y15 p457
+	robot-at-x03y14 broken-robot p458
+	robot-at-x03y15 robot-at-x03y16 p459
+	robot-at-x03y15 broken-robot p460
+	robot-at-x03y16 robot-at-x03y17 p461
+	robot-at-x03y16 broken-robot p462
+	robot-at-x03y17 robot-at-x03y18 p463
+	robot-at-x03y17 broken-robot p464
+	robot-at-x03y18 robot-at-x03y19 p465
+	robot-at-x03y18 broken-robot p466
+	robot-at-x04y20 robot-at-x04y20 1.000000
+	robot-at-x04y19 robot-at-x04y20 1.000000
+	robot-at-x04y01 robot-at-x04y02 p467
+	robot-at-x04y01 broken-robot p468
+	robot-at-x04y02 robot-at-x04y03 p469
+	robot-at-x04y02 broken-robot p470
+	robot-at-x04y03 robot-at-x04y04 p471
+	robot-at-x04y03 broken-robot p472
+	robot-at-x04y04 robot-at-x04y05 p473
+	robot-at-x04y04 broken-robot p474
+	robot-at-x04y05 robot-at-x04y06 p475
+	robot-at-x04y05 broken-robot p476
+	robot-at-x04y06 robot-at-x04y07 p477
+	robot-at-x04y06 broken-robot p478
+	robot-at-x04y07 robot-at-x04y08 p479
+	robot-at-x04y07 broken-robot p480
+	robot-at-x04y08 robot-at-x04y09 p481
+	robot-at-x04y08 broken-robot p482
+	robot-at-x04y09 robot-at-x04y10 p483
+	robot-at-x04y09 broken-robot p484
+	robot-at-x04y10 robot-at-x04y11 p485
+	robot-at-x04y10 broken-robot p486
+	robot-at-x04y11 robot-at-x04y12 p487
+	robot-at-x04y11 broken-robot p488
+	robot-at-x04y12 robot-at-x04y13 p489
+	robot-at-x04y12 broken-robot p490
+	robot-at-x04y13 robot-at-x04y14 p491
+	robot-at-x04y13 broken-robot p492
+	robot-at-x04y14 robot-at-x04y15 p493
+	robot-at-x04y14 broken-robot p494
 	robot-at-x04y15 robot-at-x04y16 0.383333 0.883333
-	robot-at-x04y15 broken-robot 0.116667 0.616667
-	robot-at-x04y16 robot-at-x04y17 0.383333 0.883333
-	robot-at-x04y16 broken-robot 0.116667 0.616667
-	robot-at-x04y17 robot-at-x04y18 0.383333 0.883333
-	robot-at-x04y17 broken-robot 0.116667 0.616667
-	robot-at-x04y18 robot-at-x04y19 0.383333 0.883333
+	robot-at-x04y15 broken-robot p496
+	robot-at-x04y16 robot-at-x04y17 p497
+	robot-at-x04y16 broken-robot p498
+	robot-at-x04y17 robot-at-x04y18 p499
+	robot-at-x04y17 broken-robot p500
+	robot-at-x04y18 robot-at-x04y19 p501
 	robot-at-x04y18 broken-robot 0.116667 0.616667
-	robot-at-x05y20 robot-at-x05y20 1.000000 1.000000
-	robot-at-x05y19 robot-at-x05y20 1.000000 1.000000
-	robot-at-x05y01 robot-at-x05y02 0.294444 0.794444
-	robot-at-x05y01 broken-robot 0.205556 0.705556
-	robot-at-x05y02 robot-at-x05y03 0.294444 0.794444
-	robot-at-x05y02 broken-robot 0.205556 0.705556
-	robot-at-x05y03 robot-at-x05y04 0.294444 0.794444
-	robot-at-x05y03 broken-robot 0.205556 0.705556
-	robot-at-x05y04 robot-at-x05y05 0.294444 0.794444
-	robot-at-x05y04 broken-robot 0.205556 0.705556
-	robot-at-x05y05 robot-at-x05y06 0.294444 0.794444
-	robot-at-x05y05 broken-robot 0.205556 0.705556
-	robot-at-x05y06 robot-at-x05y07 0.294444 0.794444
-	robot-at-x05y06 broken-robot 0.205556 0.705556
+	robot-at-x05y20 robot-at-x05y20 1.000000
+	robot-at-x05y19 robot-at-x05y20 1.000000
+	robot-at-x05y01 robot-at-x05y02 p503
+	robot-at-x05y01 broken-robot p504
+	robot-at-x05y02 robot-at-x05y03 p505
+	robot-at-x05y02 broken-robot p506
+	robot-at-x05y03 robot-at-x05y04 p507
+	robot-at-x05y03 broken-robot p508
+	robot-at-x05y04 robot-at-x05y05 p509
+	robot-at-x05y04 broken-robot p510
+	robot-at-x05y05 robot-at-x05y06 p511
+	robot-at-x05y05 broken-robot p512
+	robot-at-x05y06 robot-at-x05y07 p513
+	robot-at-x05y06 broken-robot p514
 	robot-at-x05y07 robot-at-x05y08 0.294444 0.794444
-	robot-at-x05y07 broken-robot 0.205556 0.705556
-	robot-at-x05y08 robot-at-x05y09 0.294444 0.794444
-	robot-at-x05y08 broken-robot 0.205556 0.705556
-	robot-at-x05y09 robot-at-x05y10 0.294444 0.794444
-	robot-at-x05y09 broken-robot 0.205556 0.705556
-	robot-at-x05y10 robot-at-x05y11 0.294444 0.794444
-	robot-at-x05y10 broken-robot 0.205556 0.705556
-	robot-at-x05y11 robot-at-x05y12 0.294444 0.794444
-	robot-at-x05y11 broken-robot 0.205556 0.705556
-	robot-at-x05y12 robot-at-x05y13 0.294444 0.794444
-	robot-at-x05y12 broken-robot 0.205556 0.705556
-	robot-at-x05y13 robot-at-x05y14 0.294444 0.794444
-	robot-at-x05y13 broken-robot 0.205556 0.705556
-	robot-at-x05y14 robot-at-x05y15 0.294444 0.794444
-	robot-at-x05y14 broken-robot 0.205556 0.705556
-	robot-at-x05y15 robot-at-x05y16 0.294444 0.794444
-	robot-at-x05y15 broken-robot 0.205556 0.705556
-	robot-at-x05y16 robot-at-x05y17 0.294444 0.794444
-	robot-at-x05y16 broken-robot 0.205556 0.705556
-	robot-at-x05y17 robot-at-x05y18 0.294444 0.794444
-	robot-at-x05y17 broken-robot 0.205556 0.705556
-	robot-at-x05y18 robot-at-x05y19 0.294444 0.794444
-	robot-at-x05y18 broken-robot 0.205556 0.705556
-	robot-at-x06y20 robot-at-x06y20 1.000000 1.000000
+	robot-at-x05y07 broken-robot p516
+	robot-at-x05y08 robot-at-x05y09 p517
+	robot-at-x05y08 broken-robot p518
+	robot-at-x05y09 robot-at-x05y10 p519
+	robot-at-x05y09 broken-robot p520
+	robot-at-x05y10 robot-at-x05y11 p521
+	robot-at-x05y10 broken-robot p522
+	robot-at-x05y11 robot-at-x05y12 p523
+	robot-at-x05y11 broken-robot p524
+	robot-at-x05y12 robot-at-x05y13 p525
+	robot-at-x05y12 broken-robot p526
+	robot-at-x05y13 robot-at-x05y14 p527
+	robot-at-x05y13 broken-robot p528
+	robot-at-x05y14 robot-at-x05y15 p529
+	robot-at-x05y14 broken-robot p530
+	robot-at-x05y15 robot-at-x05y16 p531
+	robot-at-x05y15 broken-robot p532
+	robot-at-x05y16 robot-at-x05y17 p533
+	robot-at-x05y16 broken-robot p534
+	robot-at-x05y17 robot-at-x05y18 p535
+	robot-at-x05y17 broken-robot p536
+	robot-at-x05y18 robot-at-x05y19 p537
+	robot-at-x05y18 broken-robot p538
+	robot-at-x06y20 robot-at-x06y20 1.000000
 	robot-at-x06y19 robot-at-x06y20 1.000000 1.000000
-	robot-at-x06y01 robot-at-x06y02 0.205556 0.705556
-	robot-at-x06y01 broken-robot 0.294444 0.794444
-	robot-at-x06y02 robot-at-x06y03 0.205556 0.705556
-	robot-at-x06y02 broken-robot 0.294444 0.794444
-	robot-at-x06y03 robot-at-x06y04 0.205556 0.705556
-	robot-at-x06y03 broken-robot 0.294444 0.794444
-	robot-at-x06y04 robot-at-x06y05 0.205556 0.705556
-	robot-at-x06y04 broken-robot 0.294444 0.794444
-	robot-at-x06y05 robot-at-x06y06 0.205556 0.705556
-	robot-at-x06y05 broken-robot 0.294444 0.794444
-	robot-at-x06y06 robot-at-x06y07 0.205556 0.705556
-	robot-at-x06y06 broken-robot 0.294444 0.794444
-	robot-at-x06y07 robot-at-x06y08 0.205556 0.705556
-	robot-at-x06y07 broken-robot 0.294444 0.794444
-	robot-at-x06y08 robot-at-x06y09 0.205556 0.705556
-	robot-at-x06y08 broken-robot 0.294444 0.794444
-	robot-at-x06y09 robot-at-x06y10 0.205556 0.705556
-	robot-at-x06y09 broken-robot 0.294444 0.794444
-	robot-at-x06y10 robot-at-x06y11 0.205556 0.705556
-	robot-at-x06y10 broken-robot 0.294444 0.794444
-	robot-at-x06y11 robot-at-x06y12 0.205556 0.705556
-	robot-at-x06y11 broken-robot 0.294444 0.794444
-	robot-at-x06y12 robot-at-x06y13 0.205556 0.705556
-	robot-at-x06y12 broken-robot 0.294444 0.794444
-	robot-at-x06y13 robot-at-x06y14 0.205556 0.705556
-	robot-at-x06y13 broken-robot 0.294444 0.794444
-	robot-at-x06y14 robot-at-x06y15 0.205556 0.705556
-	robot-at-x06y14 broken-robot 0.294444 0.794444
-	robot-at-x06y15 robot-at-x06y16 0.205556 0.705556
-	robot-at-x06y15 broken-robot 0.294444 0.794444
-	robot-at-x06y16 robot-at-x06y17 0.205556 0.705556
-	robot-at-x06y16 broken-robot 0.294444 0.794444
-	robot-at-x06y17 robot-at-x06y18 0.205556 0.705556
-	robot-at-x06y17 broken-robot 0.294444 0.794444
-	robot-at-x06y18 robot-at-x06y19 0.205556 0.705556
-	robot-at-x06y18 broken-robot 0.294444 0.794444
-	robot-at-x07y20 robot-at-x07y20 1.000000 1.000000
-	robot-at-x07y19 robot-at-x07y20 1.000000 1.000000
-	robot-at-x07y01 robot-at-x07y02 0.116667 0.616667
-	robot-at-x07y01 broken-robot 0.383333 0.883333
-	robot-at-x07y02 robot-at-x07y03 0.116667 0.616667
-	robot-at-x07y02 broken-robot 0.383333 0.883333
-	robot-at-x07y03 robot-at-x07y04 0.116667 0.616667
-	robot-at-x07y03 broken-robot 0.383333 0.883333
-	robot-at-x07y04 robot-at-x07y05 0.116667 0.616667
-	robot-at-x07y04 broken-robot 0.383333 0.883333
-	robot-at-x07y05 robot-at-x07y06 0.116667 0.616667
-	robot-at-x07y05 broken-robot 0.383333 0.883333
-	robot-at-x07y06 robot-at-x07y07 0.116667 0.616667
-	robot-at-x07y06 broken-robot 0.383333 0.883333
-	robot-at-x07y07 robot-at-x07y08 0.116667 0.616667
-	robot-at-x07y07 broken-robot 0.383333 0.883333
-	robot-at-x07y08 robot-at-x07y09 0.116667 0.616667
-	robot-at-x07y08 broken-robot 0.383333 0.883333
-	robot-at-x07y09 robot-at-x07y10 0.116667 0.616667
-	robot-at-x07y09 broken-robot 0.383333 0.883333
-	robot-at-x07y10 robot-at-x07y11 0.116667 0.616667
-	robot-at-x07y10 broken-robot 0.383333 0.883333
-	robot-at-x07y11 robot-at-x07y12 0.116667 0.616667
-	robot-at-x07y11 broken-robot 0.383333 0.883333
-	robot-at-x07y12 robot-at-x07y13 0.116667 0.616667
-	robot-at-x07y12 broken-robot 0.383333 0.883333
-	robot-at-x07y13 robot-at-x07y14 0.116667 0.616667
-	robot-at-x07y13 broken-robot 0.383333 0.883333
-	robot-at-x07y14 robot-at-x07y15 0.116667 0.616667
-	robot-at-x07y14 broken-robot 0.383333 0.883333
-	robot-at-x07y15 robot-at-x07y16 0.116667 0.616667
-	robot-at-x07y15 broken-robot 0.383333 0.883333
-	robot-at-x07y16 robot-at-x07y17 0.116667 0.616667
-	robot-at-x07y16 broken-robot 0.383333 0.883333
-	robot-at-x07y17 robot-at-x07y18 0.116667 0.616667
-	robot-at-x07y17 broken-robot 0.383333 0.883333
-	robot-at-x07y18 robot-at-x07y19 0.116667 0.616667
-	robot-at-x07y18 broken-robot 0.383333 0.883333
-	robot-at-x08y20 robot-at-x08y20 1.000000 1.000000
-	robot-at-x08y19 robot-at-x08y20 1.000000 1.000000
-	robot-at-x08y01 robot-at-x08y02 0.027778 0.527778
-	robot-at-x08y01 broken-robot 0.472222 0.972222
-	robot-at-x08y02 robot-at-x08y03 0.027778 0.527778
-	robot-at-x08y02 broken-robot 0.472222 0.972222
-	robot-at-x08y03 robot-at-x08y04 0.027778 0.527778
-	robot-at-x08y03 broken-robot 0.472222 0.972222
-	robot-at-x08y04 robot-at-x08y05 0.027778 0.527778
-	robot-at-x08y04 broken-robot 0.472222 0.972222
-	robot-at-x08y05 robot-at-x08y06 0.027778 0.527778
-	robot-at-x08y05 broken-robot 0.472222 0.972222
-	robot-at-x08y06 robot-at-x08y07 0.027778 0.527778
-	robot-at-x08y06 broken-robot 0.472222 0.972222
-	robot-at-x08y07 robot-at-x08y08 0.027778 0.527778
-	robot-at-x08y07 broken-robot 0.472222 0.972222
-	robot-at-x08y08 robot-at-x08y09 0.027778 0.527778
-	robot-at-x08y08 broken-robot 0.472222 0.972222
-	robot-at-x08y09 robot-at-x08y10 0.027778 0.527778
-	robot-at-x08y09 broken-robot 0.472222 0.972222
-	robot-at-x08y10 robot-at-x08y11 0.027778 0.527778
-	robot-at-x08y10 broken-robot 0.472222 0.972222
-	robot-at-x08y11 robot-at-x08y12 0.027778 0.527778
-	robot-at-x08y11 broken-robot 0.472222 0.972222
-	robot-at-x08y12 robot-at-x08y13 0.027778 0.527778
-	robot-at-x08y12 broken-robot 0.472222 0.972222
-	robot-at-x08y13 robot-at-x08y14 0.027778 0.527778
-	robot-at-x08y13 broken-robot 0.472222 0.972222
-	robot-at-x08y14 robot-at-x08y15 0.027778 0.527778
-	robot-at-x08y14 broken-robot 0.472222 0.972222
-	robot-at-x08y15 robot-at-x08y16 0.027778 0.527778
-	robot-at-x08y15 broken-robot 0.472222 0.972222
-	robot-at-x08y16 robot-at-x08y17 0.027778 0.527778
-	robot-at-x08y16 broken-robot 0.472222 0.972222
-	robot-at-x08y17 robot-at-x08y18 0.027778 0.527778
-	robot-at-x08y17 broken-robot 0.472222 0.972222
-	robot-at-x08y18 robot-at-x08y19 0.027778 0.527778
-	robot-at-x08y18 broken-robot 0.472222 0.972222
-	robot-at-x09y20 robot-at-x09y20 1.000000 1.000000
-	robot-at-x09y19 robot-at-x09y20 1.000000 1.000000
-	robot-at-x09y01 robot-at-x09y02 0.000000 0.438889
-	robot-at-x09y01 broken-robot 0.561111 1.000000
-	robot-at-x09y02 robot-at-x09y03 0.000000 0.438889
-	robot-at-x09y02 broken-robot 0.561111 1.000000
-	robot-at-x09y03 robot-at-x09y04 0.000000 0.438889
-	robot-at-x09y03 broken-robot 0.561111 1.000000
-	robot-at-x09y04 robot-at-x09y05 0.000000 0.438889
-	robot-at-x09y04 broken-robot 0.561111 1.000000
-	robot-at-x09y05 robot-at-x09y06 0.000000 0.438889
-	robot-at-x09y05 broken-robot 0.561111 1.000000
-	robot-at-x09y06 robot-at-x09y07 0.000000 0.438889
-	robot-at-x09y06 broken-robot 0.561111 1.000000
-	robot-at-x09y07 robot-at-x09y08 0.000000 0.438889
-	robot-at-x09y07 broken-robot 0.561111 1.000000
-	robot-at-x09y08 robot-at-x09y09 0.000000 0.438889
-	robot-at-x09y08 broken-robot 0.561111 1.000000
-	robot-at-x09y09 robot-at-x09y10 0.000000 0.438889
-	robot-at-x09y09 broken-robot 0.561111 1.000000
-	robot-at-x09y10 robot-at-x09y11 0.000000 0.438889
-	robot-at-x09y10 broken-robot 0.561111 1.000000
-	robot-at-x09y11 robot-at-x09y12 0.000000 0.438889
-	robot-at-x09y11 broken-robot 0.561111 1.000000
-	robot-at-x09y12 robot-at-x09y13 0.000000 0.438889
-	robot-at-x09y12 broken-robot 0.561111 1.000000
-	robot-at-x09y13 robot-at-x09y14 0.000000 0.438889
-	robot-at-x09y13 broken-robot 0.561111 1.000000
-	robot-at-x09y14 robot-at-x09y15 0.000000 0.438889
-	robot-at-x09y14 broken-robot 0.561111 1.000000
-	robot-at-x09y15 robot-at-x09y16 0.000000 0.438889
-	robot-at-x09y15 broken-robot 0.561111 1.000000
-	robot-at-x09y16 robot-at-x09y17 0.000000 0.438889
-	robot-at-x09y16 broken-robot 0.561111 1.000000
-	robot-at-x09y17 robot-at-x09y18 0.000000 0.438889
-	robot-at-x09y17 broken-robot 0.561111 1.000000
-	robot-at-x09y18 robot-at-x09y19 0.000000 0.438889
-	robot-at-x09y18 broken-robot 0.561111 1.000000
-	robot-at-x10y20 robot-at-x10y20 1.000000 1.000000
-	robot-at-x10y19 robot-at-x10y20 1.000000 1.000000
-	robot-at-x10y01 robot-at-x10y02 0.000000 0.350000
-	robot-at-x10y01 broken-robot 0.650000 1.00000
-	robot-at-x10y02 robot-at-x10y03 0.000000 0.350000
-	robot-at-x10y02 broken-robot 0.650000 1.00000
-	robot-at-x10y03 robot-at-x10y04 0.000000 0.350000
-	robot-at-x10y03 broken-robot 0.650000 1.00000
-	robot-at-x10y04 robot-at-x10y05 0.000000 0.350000
-	robot-at-x10y04 broken-robot 0.650000 1.00000
-	robot-at-x10y05 robot-at-x10y06 0.000000 0.350000
-	robot-at-x10y05 broken-robot 0.650000 1.00000
-	robot-at-x10y06 robot-at-x10y07 0.000000 0.350000
-	robot-at-x10y06 broken-robot 0.650000 1.00000
-	robot-at-x10y07 robot-at-x10y08 0.000000 0.350000
-	robot-at-x10y07 broken-robot 0.650000 1.00000
-	robot-at-x10y08 robot-at-x10y09 0.000000 0.350000
-	robot-at-x10y08 broken-robot 0.650000 1.00000
-	robot-at-x10y09 robot-at-x10y10 0.000000 0.350000
-	robot-at-x10y09 broken-robot 0.650000 1.00000
-	robot-at-x10y10 robot-at-x10y11 0.000000 0.350000
-	robot-at-x10y10 broken-robot 0.650000 1.00000
-	robot-at-x10y11 robot-at-x10y12 0.000000 0.350000
-	robot-at-x10y11 broken-robot 0.650000 1.00000
-	robot-at-x10y12 robot-at-x10y13 0.000000 0.350000
-	robot-at-x10y12 broken-robot 0.650000 1.00000
-	robot-at-x10y13 robot-at-x10y14 0.000000 0.350000
-	robot-at-x10y13 broken-robot 0.650000 1.00000
-	robot-at-x10y14 robot-at-x10y15 0.000000 0.350000
-	robot-at-x10y14 broken-robot 0.650000 1.00000
-	robot-at-x10y15 robot-at-x10y16 0.000000 0.350000
-	robot-at-x10y15 broken-robot 0.650000 1.00000
-	robot-at-x10y16 robot-at-x10y17 0.000000 0.350000
-	robot-at-x10y16 broken-robot 0.650000 1.00000
-	robot-at-x10y17 robot-at-x10y18 0.000000 0.350000
-	robot-at-x10y17 broken-robot 0.650000 1.00000
-	robot-at-x10y18 robot-at-x10y19 0.000000 0.350000
-	robot-at-x10y18 broken-robot 0.650000 1.00000
-	broken-robot broken-robot 1.000000 1.000000
+	robot-at-x06y01 robot-at-x06y02 p539
+	robot-at-x06y01 broken-robot p540
+	robot-at-x06y02 robot-at-x06y03 p541
+	robot-at-x06y02 broken-robot p542
+	robot-at-x06y03 robot-at-x06y04 p543
+	robot-at-x06y03 broken-robot p544
+	robot-at-x06y04 robot-at-x06y05 p545
+	robot-at-x06y04 broken-robot p546
+	robot-at-x06y05 robot-at-x06y06 p547
+	robot-at-x06y05 broken-robot p548
+	robot-at-x06y06 robot-at-x06y07 p549
+	robot-at-x06y06 broken-robot p550
+	robot-at-x06y07 robot-at-x06y08 p551
+	robot-at-x06y07 broken-robot p552
+	robot-at-x06y08 robot-at-x06y09 p553
+	robot-at-x06y08 broken-robot p554
+	robot-at-x06y09 robot-at-x06y10 p555
+	robot-at-x06y09 broken-robot p556
+	robot-at-x06y10 robot-at-x06y11 p557
+	robot-at-x06y10 broken-robot p558
+	robot-at-x06y11 robot-at-x06y12 p559
+	robot-at-x06y11 broken-robot p560
+	robot-at-x06y12 robot-at-x06y13 p561
+	robot-at-x06y12 broken-robot p562
+	robot-at-x06y13 robot-at-x06y14 p563
+	robot-at-x06y13 broken-robot p564
+	robot-at-x06y14 robot-at-x06y15 p565
+	robot-at-x06y14 broken-robot p566
+	robot-at-x06y15 robot-at-x06y16 p567
+	robot-at-x06y15 broken-robot p568
+	robot-at-x06y16 robot-at-x06y17 p569
+	robot-at-x06y16 broken-robot p570
+	robot-at-x06y17 robot-at-x06y18 p571
+	robot-at-x06y17 broken-robot p572
+	robot-at-x06y18 robot-at-x06y19 p573
+	robot-at-x06y18 broken-robot p574
+	robot-at-x07y20 robot-at-x07y20 1.000000
+	robot-at-x07y19 robot-at-x07y20 1.000000
+	robot-at-x07y01 robot-at-x07y02 p575
+	robot-at-x07y01 broken-robot p576
+	robot-at-x07y02 robot-at-x07y03 p577
+	robot-at-x07y02 broken-robot p578
+	robot-at-x07y03 robot-at-x07y04 p579
+	robot-at-x07y03 broken-robot p580
+	robot-at-x07y04 robot-at-x07y05 p581
+	robot-at-x07y04 broken-robot p582
+	robot-at-x07y05 robot-at-x07y06 p583
+	robot-at-x07y05 broken-robot p584
+	robot-at-x07y06 robot-at-x07y07 p585
+	robot-at-x07y06 broken-robot p586
+	robot-at-x07y07 robot-at-x07y08 p587
+	robot-at-x07y07 broken-robot p588
+	robot-at-x07y08 robot-at-x07y09 p589
+	robot-at-x07y08 broken-robot p590
+	robot-at-x07y09 robot-at-x07y10 p591
+	robot-at-x07y09 broken-robot p592
+	robot-at-x07y10 robot-at-x07y11 p593
+	robot-at-x07y10 broken-robot p594
+	robot-at-x07y11 robot-at-x07y12 p595
+	robot-at-x07y11 broken-robot p596
+	robot-at-x07y12 robot-at-x07y13 p597
+	robot-at-x07y12 broken-robot p598
+	robot-at-x07y13 robot-at-x07y14 p599
+	robot-at-x07y13 broken-robot p600
+	robot-at-x07y14 robot-at-x07y15 p601
+	robot-at-x07y14 broken-robot p602
+	robot-at-x07y15 robot-at-x07y16 p603
+	robot-at-x07y15 broken-robot p604
+	robot-at-x07y16 robot-at-x07y17 p605
+	robot-at-x07y16 broken-robot p606
+	robot-at-x07y17 robot-at-x07y18 p607
+	robot-at-x07y17 broken-robot p608
+	robot-at-x07y18 robot-at-x07y19 p609
+	robot-at-x07y18 broken-robot p610
+	robot-at-x08y20 robot-at-x08y20 1.000000
+	robot-at-x08y19 robot-at-x08y20 1.000000
+	robot-at-x08y01 robot-at-x08y02 p611
+	robot-at-x08y01 broken-robot p612
+	robot-at-x08y02 robot-at-x08y03 p613
+	robot-at-x08y02 broken-robot p614
+	robot-at-x08y03 robot-at-x08y04 p615
+	robot-at-x08y03 broken-robot p616
+	robot-at-x08y04 robot-at-x08y05 p617
+	robot-at-x08y04 broken-robot p618
+	robot-at-x08y05 robot-at-x08y06 p619
+	robot-at-x08y05 broken-robot p620
+	robot-at-x08y06 robot-at-x08y07 p621
+	robot-at-x08y06 broken-robot p622
+	robot-at-x08y07 robot-at-x08y08 p623
+	robot-at-x08y07 broken-robot p624
+	robot-at-x08y08 robot-at-x08y09 p625
+	robot-at-x08y08 broken-robot p626
+	robot-at-x08y09 robot-at-x08y10 p627
+	robot-at-x08y09 broken-robot p628
+	robot-at-x08y10 robot-at-x08y11 p629
+	robot-at-x08y10 broken-robot p630
+	robot-at-x08y11 robot-at-x08y12 p631
+	robot-at-x08y11 broken-robot p632
+	robot-at-x08y12 robot-at-x08y13 p633
+	robot-at-x08y12 broken-robot p634
+	robot-at-x08y13 robot-at-x08y14 p635
+	robot-at-x08y13 broken-robot p636
+	robot-at-x08y14 robot-at-x08y15 p637
+	robot-at-x08y14 broken-robot p638
+	robot-at-x08y15 robot-at-x08y16 p639
+	robot-at-x08y15 broken-robot p640
+	robot-at-x08y16 robot-at-x08y17 p641
+	robot-at-x08y16 broken-robot p642
+	robot-at-x08y17 robot-at-x08y18 p643
+	robot-at-x08y17 broken-robot p644
+	robot-at-x08y18 robot-at-x08y19 p645
+	robot-at-x08y18 broken-robot p646
+	robot-at-x09y20 robot-at-x09y20 1.000000
+	robot-at-x09y19 robot-at-x09y20 1.000000
+	robot-at-x09y01 robot-at-x09y02 p647
+	robot-at-x09y01 broken-robot p648
+	robot-at-x09y02 robot-at-x09y03 p649
+	robot-at-x09y02 broken-robot p650
+	robot-at-x09y03 robot-at-x09y04 p651
+	robot-at-x09y03 broken-robot p652
+	robot-at-x09y04 robot-at-x09y05 p653
+	robot-at-x09y04 broken-robot p654
+	robot-at-x09y05 robot-at-x09y06 p655
+	robot-at-x09y05 broken-robot p656
+	robot-at-x09y06 robot-at-x09y07 p657
+	robot-at-x09y06 broken-robot p658
+	robot-at-x09y07 robot-at-x09y08 p659
+	robot-at-x09y07 broken-robot p660
+	robot-at-x09y08 robot-at-x09y09 p661
+	robot-at-x09y08 broken-robot p662
+	robot-at-x09y09 robot-at-x09y10 p663
+	robot-at-x09y09 broken-robot p664
+	robot-at-x09y10 robot-at-x09y11 p665
+	robot-at-x09y10 broken-robot p666
+	robot-at-x09y11 robot-at-x09y12 p667
+	robot-at-x09y11 broken-robot p668
+	robot-at-x09y12 robot-at-x09y13 p669
+	robot-at-x09y12 broken-robot p670
+	robot-at-x09y13 robot-at-x09y14 p671
+	robot-at-x09y13 broken-robot p672
+	robot-at-x09y14 robot-at-x09y15 p673
+	robot-at-x09y14 broken-robot p674
+	robot-at-x09y15 robot-at-x09y16 p675
+	robot-at-x09y15 broken-robot p676
+	robot-at-x09y16 robot-at-x09y17 p677
+	robot-at-x09y16 broken-robot p678
+	robot-at-x09y17 robot-at-x09y18 p679
+	robot-at-x09y17 broken-robot p680
+	robot-at-x09y18 robot-at-x09y19 p681
+	robot-at-x09y18 broken-robot p682
+	robot-at-x10y20 robot-at-x10y20 1.000000
+	robot-at-x10y19 robot-at-x10y20 1.000000
+	robot-at-x10y01 robot-at-x10y02 p683
+	robot-at-x10y01 broken-robot p684
+	robot-at-x10y02 robot-at-x10y03 p685
+	robot-at-x10y02 broken-robot p686
+	robot-at-x10y03 robot-at-x10y04 p687
+	robot-at-x10y03 broken-robot p688
+	robot-at-x10y04 robot-at-x10y05 p689
+	robot-at-x10y04 broken-robot p690
+	robot-at-x10y05 robot-at-x10y06 p691
+	robot-at-x10y05 broken-robot p692
+	robot-at-x10y06 robot-at-x10y07 p693
+	robot-at-x10y06 broken-robot p694
+	robot-at-x10y07 robot-at-x10y08 p695
+	robot-at-x10y07 broken-robot p696
+	robot-at-x10y08 robot-at-x10y09 p697
+	robot-at-x10y08 broken-robot p698
+	robot-at-x10y09 robot-at-x10y10 p699
+	robot-at-x10y09 broken-robot p700
+	robot-at-x10y10 robot-at-x10y11 p701
+	robot-at-x10y10 broken-robot p702
+	robot-at-x10y11 robot-at-x10y12 p703
+	robot-at-x10y11 broken-robot p704
+	robot-at-x10y12 robot-at-x10y13 p705
+	robot-at-x10y12 broken-robot p706
+	robot-at-x10y13 robot-at-x10y14 p707
+	robot-at-x10y13 broken-robot p708
+	robot-at-x10y14 robot-at-x10y15 p709
+	robot-at-x10y14 broken-robot p710
+	robot-at-x10y15 robot-at-x10y16 p711
+	robot-at-x10y15 broken-robot p712
+	robot-at-x10y16 robot-at-x10y17 p713
+	robot-at-x10y16 broken-robot p714
+	robot-at-x10y17 robot-at-x10y18 p715
+	robot-at-x10y17 broken-robot p716
+	robot-at-x10y18 robot-at-x10y19 p717
+	robot-at-x10y18 broken-robot p718
+	broken-robot broken-robot 1.000000
 endaction
 
 action move-west
-	robot-at-x01y01 robot-at-x01y01 1.000000 1.000000
-	robot-at-x02y01 robot-at-x01y01 1.000000 1.000000
-	robot-at-x03y01 robot-at-x02y01 1.000000 1.000000
-	robot-at-x04y01 robot-at-x03y01 1.000000 1.000000
-	robot-at-x05y01 robot-at-x04y01 1.000000 1.000000
-	robot-at-x06y01 robot-at-x05y01 1.000000 1.000000
-	robot-at-x07y01 robot-at-x06y01 1.000000 1.000000
-	robot-at-x08y01 robot-at-x07y01 1.000000 1.000000
-	robot-at-x09y01 robot-at-x08y01 1.000000 1.000000
-	robot-at-x10y01 robot-at-x09y01 1.000000 1.000000
-	robot-at-x01y02 robot-at-x01y02 0.650000 1.00000
-	robot-at-x01y02 broken-robot 0.000000 0.350000
-	robot-at-x02y02 robot-at-x01y02 0.650000 1.00000
-	robot-at-x02y02 broken-robot 0.000000 0.350000
-	robot-at-x03y02 robot-at-x02y02 0.561111 1.000000
-	robot-at-x03y02 broken-robot 0.000000 0.438889
-	robot-at-x04y02 robot-at-x03y02 0.472222 0.972222
-	robot-at-x04y02 broken-robot 0.027778 0.527778
-	robot-at-x05y02 robot-at-x04y02 0.383333 0.883333
-	robot-at-x05y02 broken-robot 0.116667 0.616667
-	robot-at-x06y02 robot-at-x05y02 0.294444 0.794444
-	robot-at-x06y02 broken-robot 0.205556 0.705556
-	robot-at-x07y02 robot-at-x06y02 0.205556 0.705556
-	robot-at-x07y02 broken-robot 0.294444 0.794444
-	robot-at-x08y02 robot-at-x07y02 0.116667 0.616667
-	robot-at-x08y02 broken-robot 0.383333 0.883333
-	robot-at-x09y02 robot-at-x08y02 0.027778 0.527778
-	robot-at-x09y02 broken-robot 0.472222 0.972222
-	robot-at-x10y02 robot-at-x09y02 0.000000 0.438889
-	robot-at-x10y02 broken-robot 0.561111 1.000000
-	robot-at-x01y03 robot-at-x01y03 0.650000 1.00000
-	robot-at-x01y03 broken-robot 0.000000 0.350000
-	robot-at-x02y03 robot-at-x01y03 0.650000 1.00000
-	robot-at-x02y03 broken-robot 0.000000 0.350000
-	robot-at-x03y03 robot-at-x02y03 0.561111 1.000000
-	robot-at-x03y03 broken-robot 0.000000 0.438889
-	robot-at-x04y03 robot-at-x03y03 0.472222 0.972222
-	robot-at-x04y03 broken-robot 0.027778 0.527778
-	robot-at-x05y03 robot-at-x04y03 0.383333 0.883333
-	robot-at-x05y03 broken-robot 0.116667 0.616667
-	robot-at-x06y03 robot-at-x05y03 0.294444 0.794444
-	robot-at-x06y03 broken-robot 0.205556 0.705556
-	robot-at-x07y03 robot-at-x06y03 0.205556 0.705556
-	robot-at-x07y03 broken-robot 0.294444 0.794444
-	robot-at-x08y03 robot-at-x07y03 0.116667 0.616667
-	robot-at-x08y03 broken-robot 0.383333 0.883333
-	robot-at-x09y03 robot-at-x08y03 0.027778 0.527778
-	robot-at-x09y03 broken-robot 0.472222 0.972222
-	robot-at-x10y03 robot-at-x09y03 0.000000 0.438889
-	robot-at-x10y03 broken-robot 0.561111 1.000000
-	robot-at-x01y04 robot-at-x01y04 0.650000 1.00000
-	robot-at-x01y04 broken-robot 0.000000 0.350000
-	robot-at-x02y04 robot-at-x01y04 0.650000 1.00000
-	robot-at-x02y04 broken-robot 0.000000 0.350000
-	robot-at-x03y04 robot-at-x02y04 0.561111 1.000000
-	robot-at-x03y04 broken-robot 0.000000 0.438889
-	robot-at-x04y04 robot-at-x03y04 0.472222 0.972222
-	robot-at-x04y04 broken-robot 0.027778 0.527778
-	robot-at-x05y04 robot-at-x04y04 0.383333 0.883333
-	robot-at-x05y04 broken-robot 0.116667 0.616667
-	robot-at-x06y04 robot-at-x05y04 0.294444 0.794444
-	robot-at-x06y04 broken-robot 0.205556 0.705556
-	robot-at-x07y04 robot-at-x06y04 0.205556 0.705556
-	robot-at-x07y04 broken-robot 0.294444 0.794444
-	robot-at-x08y04 robot-at-x07y04 0.116667 0.616667
-	robot-at-x08y04 broken-robot 0.383333 0.883333
-	robot-at-x09y04 robot-at-x08y04 0.027778 0.527778
-	robot-at-x09y04 broken-robot 0.472222 0.972222
-	robot-at-x10y04 robot-at-x09y04 0.000000 0.438889
-	robot-at-x10y04 broken-robot 0.561111 1.000000
-	robot-at-x01y05 robot-at-x01y05 0.650000 1.00000
-	robot-at-x01y05 broken-robot 0.000000 0.350000
-	robot-at-x02y05 robot-at-x01y05 0.650000 1.00000
-	robot-at-x02y05 broken-robot 0.000000 0.350000
-	robot-at-x03y05 robot-at-x02y05 0.561111 1.000000
-	robot-at-x03y05 broken-robot 0.000000 0.438889
-	robot-at-x04y05 robot-at-x03y05 0.472222 0.972222
-	robot-at-x04y05 broken-robot 0.027778 0.527778
-	robot-at-x05y05 robot-at-x04y05 0.383333 0.883333
-	robot-at-x05y05 broken-robot 0.116667 0.616667
-	robot-at-x06y05 robot-at-x05y05 0.294444 0.794444
-	robot-at-x06y05 broken-robot 0.205556 0.705556
-	robot-at-x07y05 robot-at-x06y05 0.205556 0.705556
-	robot-at-x07y05 broken-robot 0.294444 0.794444
-	robot-at-x08y05 robot-at-x07y05 0.116667 0.616667
-	robot-at-x08y05 broken-robot 0.383333 0.883333
-	robot-at-x09y05 robot-at-x08y05 0.027778 0.527778
-	robot-at-x09y05 broken-robot 0.472222 0.972222
-	robot-at-x10y05 robot-at-x09y05 0.000000 0.438889
-	robot-at-x10y05 broken-robot 0.561111 1.000000
-	robot-at-x01y06 robot-at-x01y06 0.650000 1.00000
-	robot-at-x01y06 broken-robot 0.000000 0.350000
-	robot-at-x02y06 robot-at-x01y06 0.650000 1.00000
-	robot-at-x02y06 broken-robot 0.000000 0.350000
-	robot-at-x03y06 robot-at-x02y06 0.561111 1.000000
-	robot-at-x03y06 broken-robot 0.000000 0.438889
-	robot-at-x04y06 robot-at-x03y06 0.472222 0.972222
-	robot-at-x04y06 broken-robot 0.027778 0.527778
-	robot-at-x05y06 robot-at-x04y06 0.383333 0.883333
-	robot-at-x05y06 broken-robot 0.116667 0.616667
-	robot-at-x06y06 robot-at-x05y06 0.294444 0.794444
-	robot-at-x06y06 broken-robot 0.205556 0.705556
-	robot-at-x07y06 robot-at-x06y06 0.205556 0.705556
-	robot-at-x07y06 broken-robot 0.294444 0.794444
-	robot-at-x08y06 robot-at-x07y06 0.116667 0.616667
-	robot-at-x08y06 broken-robot 0.383333 0.883333
-	robot-at-x09y06 robot-at-x08y06 0.027778 0.527778
-	robot-at-x09y06 broken-robot 0.472222 0.972222
-	robot-at-x10y06 robot-at-x09y06 0.000000 0.438889
-	robot-at-x10y06 broken-robot 0.561111 1.000000
-	robot-at-x01y07 robot-at-x01y07 0.650000 1.00000
-	robot-at-x01y07 broken-robot 0.000000 0.350000
-	robot-at-x02y07 robot-at-x01y07 0.650000 1.00000
-	robot-at-x02y07 broken-robot 0.000000 0.350000
-	robot-at-x03y07 robot-at-x02y07 0.561111 1.000000
-	robot-at-x03y07 broken-robot 0.000000 0.438889
-	robot-at-x04y07 robot-at-x03y07 0.472222 0.972222
-	robot-at-x04y07 broken-robot 0.027778 0.527778
-	robot-at-x05y07 robot-at-x04y07 0.383333 0.883333
-	robot-at-x05y07 broken-robot 0.116667 0.616667
-	robot-at-x06y07 robot-at-x05y07 0.294444 0.794444
-	robot-at-x06y07 broken-robot 0.205556 0.705556
-	robot-at-x07y07 robot-at-x06y07 0.205556 0.705556
-	robot-at-x07y07 broken-robot 0.294444 0.794444
-	robot-at-x08y07 robot-at-x07y07 0.116667 0.616667
-	robot-at-x08y07 broken-robot 0.383333 0.883333
-	robot-at-x09y07 robot-at-x08y07 0.027778 0.527778
-	robot-at-x09y07 broken-robot 0.472222 0.972222
-	robot-at-x10y07 robot-at-x09y07 0.000000 0.438889
-	robot-at-x10y07 broken-robot 0.561111 1.000000
-	robot-at-x01y08 robot-at-x01y08 0.650000 1.00000
-	robot-at-x01y08 broken-robot 0.000000 0.350000
-	robot-at-x02y08 robot-at-x01y08 0.650000 1.00000
-	robot-at-x02y08 broken-robot 0.000000 0.350000
-	robot-at-x03y08 robot-at-x02y08 0.561111 1.000000
-	robot-at-x03y08 broken-robot 0.000000 0.438889
-	robot-at-x04y08 robot-at-x03y08 0.472222 0.972222
-	robot-at-x04y08 broken-robot 0.027778 0.527778
-	robot-at-x05y08 robot-at-x04y08 0.383333 0.883333
-	robot-at-x05y08 broken-robot 0.116667 0.616667
-	robot-at-x06y08 robot-at-x05y08 0.294444 0.794444
-	robot-at-x06y08 broken-robot 0.205556 0.705556
-	robot-at-x07y08 robot-at-x06y08 0.205556 0.705556
-	robot-at-x07y08 broken-robot 0.294444 0.794444
-	robot-at-x08y08 robot-at-x07y08 0.116667 0.616667
-	robot-at-x08y08 broken-robot 0.383333 0.883333
-	robot-at-x09y08 robot-at-x08y08 0.027778 0.527778
-	robot-at-x09y08 broken-robot 0.472222 0.972222
-	robot-at-x10y08 robot-at-x09y08 0.000000 0.438889
-	robot-at-x10y08 broken-robot 0.561111 1.000000
-	robot-at-x01y09 robot-at-x01y09 0.650000 1.00000
-	robot-at-x01y09 broken-robot 0.000000 0.350000
-	robot-at-x02y09 robot-at-x01y09 0.650000 1.00000
-	robot-at-x02y09 broken-robot 0.000000 0.350000
-	robot-at-x03y09 robot-at-x02y09 0.561111 1.000000
-	robot-at-x03y09 broken-robot 0.000000 0.438889
-	robot-at-x04y09 robot-at-x03y09 0.472222 0.972222
-	robot-at-x04y09 broken-robot 0.027778 0.527778
-	robot-at-x05y09 robot-at-x04y09 0.383333 0.883333
-	robot-at-x05y09 broken-robot 0.116667 0.616667
-	robot-at-x06y09 robot-at-x05y09 0.294444 0.794444
-	robot-at-x06y09 broken-robot 0.205556 0.705556
-	robot-at-x07y09 robot-at-x06y09 0.205556 0.705556
-	robot-at-x07y09 broken-robot 0.294444 0.794444
-	robot-at-x08y09 robot-at-x07y09 0.116667 0.616667
-	robot-at-x08y09 broken-robot 0.383333 0.883333
-	robot-at-x09y09 robot-at-x08y09 0.027778 0.527778
-	robot-at-x09y09 broken-robot 0.472222 0.972222
-	robot-at-x10y09 robot-at-x09y09 0.000000 0.438889
-	robot-at-x10y09 broken-robot 0.561111 1.000000
-	robot-at-x01y10 robot-at-x01y10 0.650000 1.00000
-	robot-at-x01y10 broken-robot 0.000000 0.350000
-	robot-at-x02y10 robot-at-x01y10 0.650000 1.00000
-	robot-at-x02y10 broken-robot 0.000000 0.350000
-	robot-at-x03y10 robot-at-x02y10 0.561111 1.000000
-	robot-at-x03y10 broken-robot 0.000000 0.438889
-	robot-at-x04y10 robot-at-x03y10 0.472222 0.972222
-	robot-at-x04y10 broken-robot 0.027778 0.527778
-	robot-at-x05y10 robot-at-x04y10 0.383333 0.883333
-	robot-at-x05y10 broken-robot 0.116667 0.616667
-	robot-at-x06y10 robot-at-x05y10 0.294444 0.794444
-	robot-at-x06y10 broken-robot 0.205556 0.705556
-	robot-at-x07y10 robot-at-x06y10 0.205556 0.705556
-	robot-at-x07y10 broken-robot 0.294444 0.794444
-	robot-at-x08y10 robot-at-x07y10 0.116667 0.616667
-	robot-at-x08y10 broken-robot 0.383333 0.883333
-	robot-at-x09y10 robot-at-x08y10 0.027778 0.527778
-	robot-at-x09y10 broken-robot 0.472222 0.972222
-	robot-at-x10y10 robot-at-x09y10 0.000000 0.438889
-	robot-at-x10y10 broken-robot 0.561111 1.000000
-	robot-at-x01y11 robot-at-x01y11 0.650000 1.00000
-	robot-at-x01y11 broken-robot 0.000000 0.350000
-	robot-at-x02y11 robot-at-x01y11 0.650000 1.00000
-	robot-at-x02y11 broken-robot 0.000000 0.350000
-	robot-at-x03y11 robot-at-x02y11 0.561111 1.000000
-	robot-at-x03y11 broken-robot 0.000000 0.438889
-	robot-at-x04y11 robot-at-x03y11 0.472222 0.972222
-	robot-at-x04y11 broken-robot 0.027778 0.527778
-	robot-at-x05y11 robot-at-x04y11 0.383333 0.883333
-	robot-at-x05y11 broken-robot 0.116667 0.616667
-	robot-at-x06y11 robot-at-x05y11 0.294444 0.794444
-	robot-at-x06y11 broken-robot 0.205556 0.705556
-	robot-at-x07y11 robot-at-x06y11 0.205556 0.705556
-	robot-at-x07y11 broken-robot 0.294444 0.794444
-	robot-at-x08y11 robot-at-x07y11 0.116667 0.616667
-	robot-at-x08y11 broken-robot 0.383333 0.883333
-	robot-at-x09y11 robot-at-x08y11 0.027778 0.527778
-	robot-at-x09y11 broken-robot 0.472222 0.972222
-	robot-at-x10y11 robot-at-x09y11 0.000000 0.438889
-	robot-at-x10y11 broken-robot 0.561111 1.000000
-	robot-at-x01y12 robot-at-x01y12 0.650000 1.00000
-	robot-at-x01y12 broken-robot 0.000000 0.350000
-	robot-at-x02y12 robot-at-x01y12 0.650000 1.00000
-	robot-at-x02y12 broken-robot 0.000000 0.350000
-	robot-at-x03y12 robot-at-x02y12 0.561111 1.000000
-	robot-at-x03y12 broken-robot 0.000000 0.438889
-	robot-at-x04y12 robot-at-x03y12 0.472222 0.972222
-	robot-at-x04y12 broken-robot 0.027778 0.527778
-	robot-at-x05y12 robot-at-x04y12 0.383333 0.883333
-	robot-at-x05y12 broken-robot 0.116667 0.616667
-	robot-at-x06y12 robot-at-x05y12 0.294444 0.794444
-	robot-at-x06y12 broken-robot 0.205556 0.705556
-	robot-at-x07y12 robot-at-x06y12 0.205556 0.705556
-	robot-at-x07y12 broken-robot 0.294444 0.794444
-	robot-at-x08y12 robot-at-x07y12 0.116667 0.616667
-	robot-at-x08y12 broken-robot 0.383333 0.883333
-	robot-at-x09y12 robot-at-x08y12 0.027778 0.527778
-	robot-at-x09y12 broken-robot 0.472222 0.972222
-	robot-at-x10y12 robot-at-x09y12 0.000000 0.438889
-	robot-at-x10y12 broken-robot 0.561111 1.000000
-	robot-at-x01y13 robot-at-x01y13 0.650000 1.00000
-	robot-at-x01y13 broken-robot 0.000000 0.350000
-	robot-at-x02y13 robot-at-x01y13 0.650000 1.00000
-	robot-at-x02y13 broken-robot 0.000000 0.350000
-	robot-at-x03y13 robot-at-x02y13 0.561111 1.000000
-	robot-at-x03y13 broken-robot 0.000000 0.438889
-	robot-at-x04y13 robot-at-x03y13 0.472222 0.972222
-	robot-at-x04y13 broken-robot 0.027778 0.527778
-	robot-at-x05y13 robot-at-x04y13 0.383333 0.883333
-	robot-at-x05y13 broken-robot 0.116667 0.616667
-	robot-at-x06y13 robot-at-x05y13 0.294444 0.794444
-	robot-at-x06y13 broken-robot 0.205556 0.705556
-	robot-at-x07y13 robot-at-x06y13 0.205556 0.705556
-	robot-at-x07y13 broken-robot 0.294444 0.794444
-	robot-at-x08y13 robot-at-x07y13 0.116667 0.616667
-	robot-at-x08y13 broken-robot 0.383333 0.883333
-	robot-at-x09y13 robot-at-x08y13 0.027778 0.527778
-	robot-at-x09y13 broken-robot 0.472222 0.972222
-	robot-at-x10y13 robot-at-x09y13 0.000000 0.438889
-	robot-at-x10y13 broken-robot 0.561111 1.000000
-	robot-at-x01y14 robot-at-x01y14 0.650000 1.00000
-	robot-at-x01y14 broken-robot 0.000000 0.350000
-	robot-at-x02y14 robot-at-x01y14 0.650000 1.00000
-	robot-at-x02y14 broken-robot 0.000000 0.350000
-	robot-at-x03y14 robot-at-x02y14 0.561111 1.000000
-	robot-at-x03y14 broken-robot 0.000000 0.438889
-	robot-at-x04y14 robot-at-x03y14 0.472222 0.972222
-	robot-at-x04y14 broken-robot 0.027778 0.527778
-	robot-at-x05y14 robot-at-x04y14 0.383333 0.883333
-	robot-at-x05y14 broken-robot 0.116667 0.616667
-	robot-at-x06y14 robot-at-x05y14 0.294444 0.794444
-	robot-at-x06y14 broken-robot 0.205556 0.705556
-	robot-at-x07y14 robot-at-x06y14 0.205556 0.705556
-	robot-at-x07y14 broken-robot 0.294444 0.794444
-	robot-at-x08y14 robot-at-x07y14 0.116667 0.616667
-	robot-at-x08y14 broken-robot 0.383333 0.883333
-	robot-at-x09y14 robot-at-x08y14 0.027778 0.527778
-	robot-at-x09y14 broken-robot 0.472222 0.972222
-	robot-at-x10y14 robot-at-x09y14 0.000000 0.438889
-	robot-at-x10y14 broken-robot 0.561111 1.000000
-	robot-at-x01y15 robot-at-x01y15 0.650000 1.00000
-	robot-at-x01y15 broken-robot 0.000000 0.350000
-	robot-at-x02y15 robot-at-x01y15 0.650000 1.00000
-	robot-at-x02y15 broken-robot 0.000000 0.350000
-	robot-at-x03y15 robot-at-x02y15 0.561111 1.000000
-	robot-at-x03y15 broken-robot 0.000000 0.438889
-	robot-at-x04y15 robot-at-x03y15 0.472222 0.972222
-	robot-at-x04y15 broken-robot 0.027778 0.527778
-	robot-at-x05y15 robot-at-x04y15 0.383333 0.883333
-	robot-at-x05y15 broken-robot 0.116667 0.616667
-	robot-at-x06y15 robot-at-x05y15 0.294444 0.794444
-	robot-at-x06y15 broken-robot 0.205556 0.705556
-	robot-at-x07y15 robot-at-x06y15 0.205556 0.705556
-	robot-at-x07y15 broken-robot 0.294444 0.794444
-	robot-at-x08y15 robot-at-x07y15 0.116667 0.616667
-	robot-at-x08y15 broken-robot 0.383333 0.883333
-	robot-at-x09y15 robot-at-x08y15 0.027778 0.527778
-	robot-at-x09y15 broken-robot 0.472222 0.972222
-	robot-at-x10y15 robot-at-x09y15 0.000000 0.438889
-	robot-at-x10y15 broken-robot 0.561111 1.000000
-	robot-at-x01y16 robot-at-x01y16 0.650000 1.00000
-	robot-at-x01y16 broken-robot 0.000000 0.350000
-	robot-at-x02y16 robot-at-x01y16 0.650000 1.00000
-	robot-at-x02y16 broken-robot 0.000000 0.350000
-	robot-at-x03y16 robot-at-x02y16 0.561111 1.000000
-	robot-at-x03y16 broken-robot 0.000000 0.438889
-	robot-at-x04y16 robot-at-x03y16 0.472222 0.972222
-	robot-at-x04y16 broken-robot 0.027778 0.527778
-	robot-at-x05y16 robot-at-x04y16 0.383333 0.883333
-	robot-at-x05y16 broken-robot 0.116667 0.616667
-	robot-at-x06y16 robot-at-x05y16 0.294444 0.794444
-	robot-at-x06y16 broken-robot 0.205556 0.705556
-	robot-at-x07y16 robot-at-x06y16 0.205556 0.705556
-	robot-at-x07y16 broken-robot 0.294444 0.794444
-	robot-at-x08y16 robot-at-x07y16 0.116667 0.616667
-	robot-at-x08y16 broken-robot 0.383333 0.883333
-	robot-at-x09y16 robot-at-x08y16 0.027778 0.527778
-	robot-at-x09y16 broken-robot 0.472222 0.972222
-	robot-at-x10y16 robot-at-x09y16 0.000000 0.438889
-	robot-at-x10y16 broken-robot 0.561111 1.000000
-	robot-at-x01y17 robot-at-x01y17 0.650000 1.00000
-	robot-at-x01y17 broken-robot 0.000000 0.350000
-	robot-at-x02y17 robot-at-x01y17 0.650000 1.00000
-	robot-at-x02y17 broken-robot 0.000000 0.350000
-	robot-at-x03y17 robot-at-x02y17 0.561111 1.000000
-	robot-at-x03y17 broken-robot 0.000000 0.438889
-	robot-at-x04y17 robot-at-x03y17 0.472222 0.972222
-	robot-at-x04y17 broken-robot 0.027778 0.527778
-	robot-at-x05y17 robot-at-x04y17 0.383333 0.883333
-	robot-at-x05y17 broken-robot 0.116667 0.616667
-	robot-at-x06y17 robot-at-x05y17 0.294444 0.794444
-	robot-at-x06y17 broken-robot 0.205556 0.705556
-	robot-at-x07y17 robot-at-x06y17 0.205556 0.705556
-	robot-at-x07y17 broken-robot 0.294444 0.794444
-	robot-at-x08y17 robot-at-x07y17 0.116667 0.616667
-	robot-at-x08y17 broken-robot 0.383333 0.883333
-	robot-at-x09y17 robot-at-x08y17 0.027778 0.527778
-	robot-at-x09y17 broken-robot 0.472222 0.972222
-	robot-at-x10y17 robot-at-x09y17 0.000000 0.438889
-	robot-at-x10y17 broken-robot 0.561111 1.000000
-	robot-at-x01y18 robot-at-x01y18 0.650000 1.00000
-	robot-at-x01y18 broken-robot 0.000000 0.350000
-	robot-at-x02y18 robot-at-x01y18 0.650000 1.00000
-	robot-at-x02y18 broken-robot 0.000000 0.350000
-	robot-at-x03y18 robot-at-x02y18 0.561111 1.000000
-	robot-at-x03y18 broken-robot 0.000000 0.438889
-	robot-at-x04y18 robot-at-x03y18 0.472222 0.972222
-	robot-at-x04y18 broken-robot 0.027778 0.527778
-	robot-at-x05y18 robot-at-x04y18 0.383333 0.883333
-	robot-at-x05y18 broken-robot 0.116667 0.616667
-	robot-at-x06y18 robot-at-x05y18 0.294444 0.794444
-	robot-at-x06y18 broken-robot 0.205556 0.705556
-	robot-at-x07y18 robot-at-x06y18 0.205556 0.705556
-	robot-at-x07y18 broken-robot 0.294444 0.794444
-	robot-at-x08y18 robot-at-x07y18 0.116667 0.616667
-	robot-at-x08y18 broken-robot 0.383333 0.883333
-	robot-at-x09y18 robot-at-x08y18 0.027778 0.527778
-	robot-at-x09y18 broken-robot 0.472222 0.972222
-	robot-at-x10y18 robot-at-x09y18 0.000000 0.438889
-	robot-at-x10y18 broken-robot 0.561111 1.000000
-	robot-at-x01y19 robot-at-x01y19 0.650000 1.00000
-	robot-at-x01y19 broken-robot 0.000000 0.350000
-	robot-at-x02y19 robot-at-x01y19 0.650000 1.00000
-	robot-at-x02y19 broken-robot 0.000000 0.350000
-	robot-at-x03y19 robot-at-x02y19 0.561111 1.000000
-	robot-at-x03y19 broken-robot 0.000000 0.438889
-	robot-at-x04y19 robot-at-x03y19 0.472222 0.972222
-	robot-at-x04y19 broken-robot 0.027778 0.527778
-	robot-at-x05y19 robot-at-x04y19 0.383333 0.883333
-	robot-at-x05y19 broken-robot 0.116667 0.616667
-	robot-at-x06y19 robot-at-x05y19 0.294444 0.794444
-	robot-at-x06y19 broken-robot 0.205556 0.705556
-	robot-at-x07y19 robot-at-x06y19 0.205556 0.705556
-	robot-at-x07y19 broken-robot 0.294444 0.794444
-	robot-at-x08y19 robot-at-x07y19 0.116667 0.616667
-	robot-at-x08y19 broken-robot 0.383333 0.883333
-	robot-at-x09y19 robot-at-x08y19 0.027778 0.527778
-	robot-at-x09y19 broken-robot 0.472222 0.972222
-	robot-at-x10y19 robot-at-x09y19 0.000000 0.438889
-	robot-at-x10y19 broken-robot 0.561111 1.000000
-	robot-at-x01y20 robot-at-x01y20 1.000000 1.000000
-	robot-at-x02y20 robot-at-x01y20 1.000000 1.000000
-	robot-at-x03y20 robot-at-x02y20 1.000000 1.000000
-	robot-at-x04y20 robot-at-x03y20 1.000000 1.000000
-	robot-at-x05y20 robot-at-x04y20 1.000000 1.000000
-	robot-at-x06y20 robot-at-x05y20 1.000000 1.000000
-	robot-at-x07y20 robot-at-x06y20 1.000000 1.000000
-	robot-at-x08y20 robot-at-x07y20 1.000000 1.000000
-	robot-at-x09y20 robot-at-x08y20 1.000000 1.000000
-	robot-at-x10y20 robot-at-x10y20 1.000000 1.000000
-	broken-robot broken-robot 1.000000 1.000000
+	robot-at-x01y01 robot-at-x01y01 1.000000
+	robot-at-x02y01 robot-at-x01y01 1.000000
+	robot-at-x03y01 robot-at-x02y01 1.000000
+	robot-at-x04y01 robot-at-x03y01 1.000000
+	robot-at-x05y01 robot-at-x04y01 1.000000
+	robot-at-x06y01 robot-at-x05y01 1.000000
+	robot-at-x07y01 robot-at-x06y01 1.000000
+	robot-at-x08y01 robot-at-x07y01 1.000000
+	robot-at-x09y01 robot-at-x08y01 1.000000
+	robot-at-x10y01 robot-at-x09y01 1.000000
+	robot-at-x01y02 robot-at-x01y02 p719
+	robot-at-x01y02 broken-robot p720
+	robot-at-x02y02 robot-at-x01y02 p721
+	robot-at-x02y02 broken-robot p722
+	robot-at-x03y02 robot-at-x02y02 p723
+	robot-at-x03y02 broken-robot p724
+	robot-at-x04y02 robot-at-x03y02 p725
+	robot-at-x04y02 broken-robot p726
+	robot-at-x05y02 robot-at-x04y02 p727
+	robot-at-x05y02 broken-robot p728
+	robot-at-x06y02 robot-at-x05y02 p729
+	robot-at-x06y02 broken-robot p730
+	robot-at-x07y02 robot-at-x06y02 p731
+	robot-at-x07y02 broken-robot p732
+	robot-at-x08y02 robot-at-x07y02 p733
+	robot-at-x08y02 broken-robot p734
+	robot-at-x09y02 robot-at-x08y02 p735
+	robot-at-x09y02 broken-robot p736
+	robot-at-x10y02 robot-at-x09y02 p737
+	robot-at-x10y02 broken-robot p738
+	robot-at-x01y03 robot-at-x01y03 p739
+	robot-at-x01y03 broken-robot p740
+	robot-at-x02y03 robot-at-x01y03 p741
+	robot-at-x02y03 broken-robot p742
+	robot-at-x03y03 robot-at-x02y03 p743
+	robot-at-x03y03 broken-robot p744
+	robot-at-x04y03 robot-at-x03y03 p745
+	robot-at-x04y03 broken-robot p746
+	robot-at-x05y03 robot-at-x04y03 p747
+	robot-at-x05y03 broken-robot p748
+	robot-at-x06y03 robot-at-x05y03 p749
+	robot-at-x06y03 broken-robot p750
+	robot-at-x07y03 robot-at-x06y03 p751
+	robot-at-x07y03 broken-robot p752
+	robot-at-x08y03 robot-at-x07y03 p753
+	robot-at-x08y03 broken-robot p754
+	robot-at-x09y03 robot-at-x08y03 p755
+	robot-at-x09y03 broken-robot p756
+	robot-at-x10y03 robot-at-x09y03 p757
+	robot-at-x10y03 broken-robot p758
+	robot-at-x01y04 robot-at-x01y04 p759
+	robot-at-x01y04 broken-robot p760
+	robot-at-x02y04 robot-at-x01y04 p761
+	robot-at-x02y04 broken-robot p762
+	robot-at-x03y04 robot-at-x02y04 p763
+	robot-at-x03y04 broken-robot p764
+	robot-at-x04y04 robot-at-x03y04 p765
+	robot-at-x04y04 broken-robot p766
+	robot-at-x05y04 robot-at-x04y04 p767
+	robot-at-x05y04 broken-robot p768
+	robot-at-x06y04 robot-at-x05y04 p769
+	robot-at-x06y04 broken-robot p770
+	robot-at-x07y04 robot-at-x06y04 p771
+	robot-at-x07y04 broken-robot p772
+	robot-at-x08y04 robot-at-x07y04 p773
+	robot-at-x08y04 broken-robot p774
+	robot-at-x09y04 robot-at-x08y04 p775
+	robot-at-x09y04 broken-robot p776
+	robot-at-x10y04 robot-at-x09y04 p777
+	robot-at-x10y04 broken-robot p778
+	robot-at-x01y05 robot-at-x01y05 p779
+	robot-at-x01y05 broken-robot p780
+	robot-at-x02y05 robot-at-x01y05 p781
+	robot-at-x02y05 broken-robot p782
+	robot-at-x03y05 robot-at-x02y05 p783
+	robot-at-x03y05 broken-robot p784
+	robot-at-x04y05 robot-at-x03y05 p785
+	robot-at-x04y05 broken-robot p786
+	robot-at-x05y05 robot-at-x04y05 p787
+	robot-at-x05y05 broken-robot p788
+	robot-at-x06y05 robot-at-x05y05 p789
+	robot-at-x06y05 broken-robot p790
+	robot-at-x07y05 robot-at-x06y05 p791
+	robot-at-x07y05 broken-robot p792
+	robot-at-x08y05 robot-at-x07y05 p793
+	robot-at-x08y05 broken-robot p794
+	robot-at-x09y05 robot-at-x08y05 p795
+	robot-at-x09y05 broken-robot p796
+	robot-at-x10y05 robot-at-x09y05 p797
+	robot-at-x10y05 broken-robot p798
+	robot-at-x01y06 robot-at-x01y06 p799
+	robot-at-x01y06 broken-robot p800
+	robot-at-x02y06 robot-at-x01y06 p801
+	robot-at-x02y06 broken-robot p802
+	robot-at-x03y06 robot-at-x02y06 p803
+	robot-at-x03y06 broken-robot p804
+	robot-at-x04y06 robot-at-x03y06 p805
+	robot-at-x04y06 broken-robot p806
+	robot-at-x05y06 robot-at-x04y06 p807
+	robot-at-x05y06 broken-robot p808
+	robot-at-x06y06 robot-at-x05y06 p809
+	robot-at-x06y06 broken-robot p810
+	robot-at-x07y06 robot-at-x06y06 p811
+	robot-at-x07y06 broken-robot p812
+	robot-at-x08y06 robot-at-x07y06 p813
+	robot-at-x08y06 broken-robot p814
+	robot-at-x09y06 robot-at-x08y06 p815
+	robot-at-x09y06 broken-robot p816
+	robot-at-x10y06 robot-at-x09y06 p817
+	robot-at-x10y06 broken-robot p818
+	robot-at-x01y07 robot-at-x01y07 p819
+	robot-at-x01y07 broken-robot p820
+	robot-at-x02y07 robot-at-x01y07 p821
+	robot-at-x02y07 broken-robot p822
+	robot-at-x03y07 robot-at-x02y07 p823
+	robot-at-x03y07 broken-robot p824
+	robot-at-x04y07 robot-at-x03y07 p825
+	robot-at-x04y07 broken-robot p826
+	robot-at-x05y07 robot-at-x04y07 p827
+	robot-at-x05y07 broken-robot p828
+	robot-at-x06y07 robot-at-x05y07 p829
+	robot-at-x06y07 broken-robot p830
+	robot-at-x07y07 robot-at-x06y07 p831
+	robot-at-x07y07 broken-robot p832
+	robot-at-x08y07 robot-at-x07y07 p833
+	robot-at-x08y07 broken-robot p834
+	robot-at-x09y07 robot-at-x08y07 p835
+	robot-at-x09y07 broken-robot p836
+	robot-at-x10y07 robot-at-x09y07 p837
+	robot-at-x10y07 broken-robot p838
+	robot-at-x01y08 robot-at-x01y08 p839
+	robot-at-x01y08 broken-robot p840
+	robot-at-x02y08 robot-at-x01y08 p841
+	robot-at-x02y08 broken-robot p842
+	robot-at-x03y08 robot-at-x02y08 p843
+	robot-at-x03y08 broken-robot p844
+	robot-at-x04y08 robot-at-x03y08 p845
+	robot-at-x04y08 broken-robot p846
+	robot-at-x05y08 robot-at-x04y08 p847
+	robot-at-x05y08 broken-robot p848
+	robot-at-x06y08 robot-at-x05y08 p849
+	robot-at-x06y08 broken-robot p850
+	robot-at-x07y08 robot-at-x06y08 p851
+	robot-at-x07y08 broken-robot p852
+	robot-at-x08y08 robot-at-x07y08 p853
+	robot-at-x08y08 broken-robot p854
+	robot-at-x09y08 robot-at-x08y08 p855
+	robot-at-x09y08 broken-robot p856
+	robot-at-x10y08 robot-at-x09y08 p857
+	robot-at-x10y08 broken-robot p858
+	robot-at-x01y09 robot-at-x01y09 p859
+	robot-at-x01y09 broken-robot p860
+	robot-at-x02y09 robot-at-x01y09 p861
+	robot-at-x02y09 broken-robot p862
+	robot-at-x03y09 robot-at-x02y09 p863
+	robot-at-x03y09 broken-robot p864
+	robot-at-x04y09 robot-at-x03y09 p865
+	robot-at-x04y09 broken-robot p866
+	robot-at-x05y09 robot-at-x04y09 p867
+	robot-at-x05y09 broken-robot p868
+	robot-at-x06y09 robot-at-x05y09 p869
+	robot-at-x06y09 broken-robot p870
+	robot-at-x07y09 robot-at-x06y09 p871
+	robot-at-x07y09 broken-robot p872
+	robot-at-x08y09 robot-at-x07y09 p873
+	robot-at-x08y09 broken-robot p874
+	robot-at-x09y09 robot-at-x08y09 p875
+	robot-at-x09y09 broken-robot p876
+	robot-at-x10y09 robot-at-x09y09 p877
+	robot-at-x10y09 broken-robot p878
+	robot-at-x01y10 robot-at-x01y10 p879
+	robot-at-x01y10 broken-robot p880
+	robot-at-x02y10 robot-at-x01y10 p881
+	robot-at-x02y10 broken-robot p882
+	robot-at-x03y10 robot-at-x02y10 p883
+	robot-at-x03y10 broken-robot p884
+	robot-at-x04y10 robot-at-x03y10 p885
+	robot-at-x04y10 broken-robot p886
+	robot-at-x05y10 robot-at-x04y10 p887
+	robot-at-x05y10 broken-robot p888
+	robot-at-x06y10 robot-at-x05y10 p889
+	robot-at-x06y10 broken-robot p890
+	robot-at-x07y10 robot-at-x06y10 p891
+	robot-at-x07y10 broken-robot p892
+	robot-at-x08y10 robot-at-x07y10 p893
+	robot-at-x08y10 broken-robot p894
+	robot-at-x09y10 robot-at-x08y10 p895
+	robot-at-x09y10 broken-robot p896
+	robot-at-x10y10 robot-at-x09y10 p897
+	robot-at-x10y10 broken-robot p898
+	robot-at-x01y11 robot-at-x01y11 p899
+	robot-at-x01y11 broken-robot p900
+	robot-at-x02y11 robot-at-x01y11 p901
+	robot-at-x02y11 broken-robot p902
+	robot-at-x03y11 robot-at-x02y11 p903
+	robot-at-x03y11 broken-robot p904
+	robot-at-x04y11 robot-at-x03y11 p905
+	robot-at-x04y11 broken-robot p906
+	robot-at-x05y11 robot-at-x04y11 p907
+	robot-at-x05y11 broken-robot p908
+	robot-at-x06y11 robot-at-x05y11 p909
+	robot-at-x06y11 broken-robot p910
+	robot-at-x07y11 robot-at-x06y11 p911
+	robot-at-x07y11 broken-robot p912
+	robot-at-x08y11 robot-at-x07y11 p913
+	robot-at-x08y11 broken-robot p914
+	robot-at-x09y11 robot-at-x08y11 p915
+	robot-at-x09y11 broken-robot p916
+	robot-at-x10y11 robot-at-x09y11 p917
+	robot-at-x10y11 broken-robot p918
+	robot-at-x01y12 robot-at-x01y12 p919
+	robot-at-x01y12 broken-robot p920
+	robot-at-x02y12 robot-at-x01y12 p921
+	robot-at-x02y12 broken-robot p922
+	robot-at-x03y12 robot-at-x02y12 p923
+	robot-at-x03y12 broken-robot p924
+	robot-at-x04y12 robot-at-x03y12 p925
+	robot-at-x04y12 broken-robot p926
+	robot-at-x05y12 robot-at-x04y12 p927
+	robot-at-x05y12 broken-robot p928
+	robot-at-x06y12 robot-at-x05y12 p929
+	robot-at-x06y12 broken-robot p930
+	robot-at-x07y12 robot-at-x06y12 p931
+	robot-at-x07y12 broken-robot p932
+	robot-at-x08y12 robot-at-x07y12 p933
+	robot-at-x08y12 broken-robot p934
+	robot-at-x09y12 robot-at-x08y12 p935
+	robot-at-x09y12 broken-robot p936
+	robot-at-x10y12 robot-at-x09y12 p937
+	robot-at-x10y12 broken-robot p938
+	robot-at-x01y13 robot-at-x01y13 p939
+	robot-at-x01y13 broken-robot p940
+	robot-at-x02y13 robot-at-x01y13 p941
+	robot-at-x02y13 broken-robot p942
+	robot-at-x03y13 robot-at-x02y13 p943
+	robot-at-x03y13 broken-robot p944
+	robot-at-x04y13 robot-at-x03y13 p945
+	robot-at-x04y13 broken-robot p946
+	robot-at-x05y13 robot-at-x04y13 p947
+	robot-at-x05y13 broken-robot p948
+	robot-at-x06y13 robot-at-x05y13 p949
+	robot-at-x06y13 broken-robot p950
+	robot-at-x07y13 robot-at-x06y13 p951
+	robot-at-x07y13 broken-robot p952
+	robot-at-x08y13 robot-at-x07y13 p953
+	robot-at-x08y13 broken-robot p954
+	robot-at-x09y13 robot-at-x08y13 p955
+	robot-at-x09y13 broken-robot p956
+	robot-at-x10y13 robot-at-x09y13 p957
+	robot-at-x10y13 broken-robot p958
+	robot-at-x01y14 robot-at-x01y14 p959
+	robot-at-x01y14 broken-robot p960
+	robot-at-x02y14 robot-at-x01y14 p961
+	robot-at-x02y14 broken-robot p962
+	robot-at-x03y14 robot-at-x02y14 p963
+	robot-at-x03y14 broken-robot p964
+	robot-at-x04y14 robot-at-x03y14 p965
+	robot-at-x04y14 broken-robot p966
+	robot-at-x05y14 robot-at-x04y14 p967
+	robot-at-x05y14 broken-robot p968
+	robot-at-x06y14 robot-at-x05y14 p969
+	robot-at-x06y14 broken-robot p970
+	robot-at-x07y14 robot-at-x06y14 p971
+	robot-at-x07y14 broken-robot p972
+	robot-at-x08y14 robot-at-x07y14 p973
+	robot-at-x08y14 broken-robot p974
+	robot-at-x09y14 robot-at-x08y14 p975
+	robot-at-x09y14 broken-robot p976
+	robot-at-x10y14 robot-at-x09y14 p977
+	robot-at-x10y14 broken-robot p978
+	robot-at-x01y15 robot-at-x01y15 p979
+	robot-at-x01y15 broken-robot p980
+	robot-at-x02y15 robot-at-x01y15 p981
+	robot-at-x02y15 broken-robot p982
+	robot-at-x03y15 robot-at-x02y15 p983
+	robot-at-x03y15 broken-robot p984
+	robot-at-x04y15 robot-at-x03y15 p985
+	robot-at-x04y15 broken-robot p986
+	robot-at-x05y15 robot-at-x04y15 p987
+	robot-at-x05y15 broken-robot p988
+	robot-at-x06y15 robot-at-x05y15 p989
+	robot-at-x06y15 broken-robot p990
+	robot-at-x07y15 robot-at-x06y15 p991
+	robot-at-x07y15 broken-robot p992
+	robot-at-x08y15 robot-at-x07y15 p993
+	robot-at-x08y15 broken-robot p994
+	robot-at-x09y15 robot-at-x08y15 p995
+	robot-at-x09y15 broken-robot p996
+	robot-at-x10y15 robot-at-x09y15 p997
+	robot-at-x10y15 broken-robot p998
+	robot-at-x01y16 robot-at-x01y16 p999
+	robot-at-x01y16 broken-robot p1000
+	robot-at-x02y16 robot-at-x01y16 p1001
+	robot-at-x02y16 broken-robot p1002
+	robot-at-x03y16 robot-at-x02y16 p1003
+	robot-at-x03y16 broken-robot p1004
+	robot-at-x04y16 robot-at-x03y16 p1005
+	robot-at-x04y16 broken-robot p1006
+	robot-at-x05y16 robot-at-x04y16 p1007
+	robot-at-x05y16 broken-robot p1008
+	robot-at-x06y16 robot-at-x05y16 p1009
+	robot-at-x06y16 broken-robot p1010
+	robot-at-x07y16 robot-at-x06y16 p1011
+	robot-at-x07y16 broken-robot p1012
+	robot-at-x08y16 robot-at-x07y16 p1013
+	robot-at-x08y16 broken-robot p1014
+	robot-at-x09y16 robot-at-x08y16 p1015
+	robot-at-x09y16 broken-robot p1016
+	robot-at-x10y16 robot-at-x09y16 p1017
+	robot-at-x10y16 broken-robot p1018
+	robot-at-x01y17 robot-at-x01y17 p1019
+	robot-at-x01y17 broken-robot p1020
+	robot-at-x02y17 robot-at-x01y17 p1021
+	robot-at-x02y17 broken-robot p1022
+	robot-at-x03y17 robot-at-x02y17 p1023
+	robot-at-x03y17 broken-robot p1024
+	robot-at-x04y17 robot-at-x03y17 p1025
+	robot-at-x04y17 broken-robot p1026
+	robot-at-x05y17 robot-at-x04y17 p1027
+	robot-at-x05y17 broken-robot p1028
+	robot-at-x06y17 robot-at-x05y17 p1029
+	robot-at-x06y17 broken-robot p1030
+	robot-at-x07y17 robot-at-x06y17 p1031
+	robot-at-x07y17 broken-robot p1032
+	robot-at-x08y17 robot-at-x07y17 p1033
+	robot-at-x08y17 broken-robot p1034
+	robot-at-x09y17 robot-at-x08y17 p1035
+	robot-at-x09y17 broken-robot p1036
+	robot-at-x10y17 robot-at-x09y17 p1037
+	robot-at-x10y17 broken-robot p1038
+	robot-at-x01y18 robot-at-x01y18 p1039
+	robot-at-x01y18 broken-robot p1040
+	robot-at-x02y18 robot-at-x01y18 p1041
+	robot-at-x02y18 broken-robot p1042
+	robot-at-x03y18 robot-at-x02y18 p1043
+	robot-at-x03y18 broken-robot p1044
+	robot-at-x04y18 robot-at-x03y18 p1045
+	robot-at-x04y18 broken-robot p1046
+	robot-at-x05y18 robot-at-x04y18 p1047
+	robot-at-x05y18 broken-robot p1048
+	robot-at-x06y18 robot-at-x05y18 p1049
+	robot-at-x06y18 broken-robot p1050
+	robot-at-x07y18 robot-at-x06y18 p1051
+	robot-at-x07y18 broken-robot p1052
+	robot-at-x08y18 robot-at-x07y18 p1053
+	robot-at-x08y18 broken-robot p1054
+	robot-at-x09y18 robot-at-x08y18 p1055
+	robot-at-x09y18 broken-robot p1056
+	robot-at-x10y18 robot-at-x09y18 p1057
+	robot-at-x10y18 broken-robot p1058
+	robot-at-x01y19 robot-at-x01y19 p1059
+	robot-at-x01y19 broken-robot p1060
+	robot-at-x02y19 robot-at-x01y19 p1061
+	robot-at-x02y19 broken-robot p1062
+	robot-at-x03y19 robot-at-x02y19 p1063
+	robot-at-x03y19 broken-robot p1064
+	robot-at-x04y19 robot-at-x03y19 p1065
+	robot-at-x04y19 broken-robot p1066
+	robot-at-x05y19 robot-at-x04y19 p1067
+	robot-at-x05y19 broken-robot p1068
+	robot-at-x06y19 robot-at-x05y19 p1069
+	robot-at-x06y19 broken-robot p1070
+	robot-at-x07y19 robot-at-x06y19 p1071
+	robot-at-x07y19 broken-robot p1072
+	robot-at-x08y19 robot-at-x07y19 p1073
+	robot-at-x08y19 broken-robot p1074
+	robot-at-x09y19 robot-at-x08y19 p1075
+	robot-at-x09y19 broken-robot p1076
+	robot-at-x10y19 robot-at-x09y19 p1077
+	robot-at-x10y19 broken-robot p1078
+	robot-at-x01y20 robot-at-x01y20 1.000000
+	robot-at-x02y20 robot-at-x01y20 1.000000
+	robot-at-x03y20 robot-at-x02y20 1.000000
+	robot-at-x04y20 robot-at-x03y20 1.000000
+	robot-at-x05y20 robot-at-x04y20 1.000000
+	robot-at-x06y20 robot-at-x05y20 1.000000
+	robot-at-x07y20 robot-at-x06y20 1.000000
+	robot-at-x08y20 robot-at-x07y20 1.000000
+	robot-at-x09y20 robot-at-x08y20 1.000000
+	robot-at-x10y20 robot-at-x10y20 1.000000
+	broken-robot broken-robot 1.000000
 endaction
 
 action move-east
-	robot-at-x10y01 robot-at-x10y01 1.000000 1.000000
-	robot-at-x01y01 robot-at-x02y01 1.000000 1.000000
-	robot-at-x02y01 robot-at-x03y01 1.000000 1.000000
-	robot-at-x03y01 robot-at-x04y01 1.000000 1.000000
-	robot-at-x04y01 robot-at-x05y01 1.000000 1.000000
-	robot-at-x05y01 robot-at-x06y01 1.000000 1.000000
-	robot-at-x06y01 robot-at-x07y01 1.000000 1.000000
-	robot-at-x07y01 robot-at-x08y01 1.000000 1.000000
-	robot-at-x08y01 robot-at-x09y01 1.000000 1.000000
-	robot-at-x09y01 robot-at-x10y01 1.000000 1.000000
-	robot-at-x10y02 robot-at-x10y02 0.000000 0.350000
-	robot-at-x10y02 broken-robot 0.650000 1.00000
-	robot-at-x01y02 robot-at-x02y02 0.561111 1.000000
-	robot-at-x01y02 broken-robot 0.000000 0.438889
-	robot-at-x02y02 robot-at-x03y02 0.472222 0.972222
-	robot-at-x02y02 broken-robot 0.027778 0.527778
-	robot-at-x03y02 robot-at-x04y02 0.383333 0.883333
-	robot-at-x03y02 broken-robot 0.116667 0.616667
-	robot-at-x04y02 robot-at-x05y02 0.294444 0.794444
-	robot-at-x04y02 broken-robot 0.205556 0.705556
-	robot-at-x05y02 robot-at-x06y02 0.205556 0.705556
-	robot-at-x05y02 broken-robot 0.294444 0.794444
-	robot-at-x06y02 robot-at-x07y02 0.116667 0.616667
-	robot-at-x06y02 broken-robot 0.383333 0.883333
-	robot-at-x07y02 robot-at-x08y02 0.027778 0.527778
-	robot-at-x07y02 broken-robot 0.472222 0.972222
-	robot-at-x08y02 robot-at-x09y02 0.000000 0.438889
-	robot-at-x08y02 broken-robot 0.561111 1.000000
-	robot-at-x09y02 robot-at-x10y02 0.000000 0.350000
-	robot-at-x09y02 broken-robot 0.650000 1.00000
-	robot-at-x10y03 robot-at-x10y03 0.000000 0.350000
-	robot-at-x10y03 broken-robot 0.650000 1.00000
-	robot-at-x01y03 robot-at-x02y03 0.561111 1.000000
-	robot-at-x01y03 broken-robot 0.000000 0.438889
-	robot-at-x02y03 robot-at-x03y03 0.472222 0.972222
-	robot-at-x02y03 broken-robot 0.027778 0.527778
-	robot-at-x03y03 robot-at-x04y03 0.383333 0.883333
-	robot-at-x03y03 broken-robot 0.116667 0.616667
-	robot-at-x04y03 robot-at-x05y03 0.294444 0.794444
-	robot-at-x04y03 broken-robot 0.205556 0.705556
-	robot-at-x05y03 robot-at-x06y03 0.205556 0.705556
-	robot-at-x05y03 broken-robot 0.294444 0.794444
-	robot-at-x06y03 robot-at-x07y03 0.116667 0.616667
-	robot-at-x06y03 broken-robot 0.383333 0.883333
-	robot-at-x07y03 robot-at-x08y03 0.027778 0.527778
-	robot-at-x07y03 broken-robot 0.472222 0.972222
-	robot-at-x08y03 robot-at-x09y03 0.000000 0.438889
-	robot-at-x08y03 broken-robot 0.561111 1.000000
-	robot-at-x09y03 robot-at-x10y03 0.000000 0.350000
-	robot-at-x09y03 broken-robot 0.650000 1.00000
-	robot-at-x10y04 robot-at-x10y04 0.000000 0.350000
-	robot-at-x10y04 broken-robot 0.650000 1.00000
-	robot-at-x01y04 robot-at-x02y04 0.561111 1.000000
-	robot-at-x01y04 broken-robot 0.000000 0.438889
-	robot-at-x02y04 robot-at-x03y04 0.472222 0.972222
-	robot-at-x02y04 broken-robot 0.027778 0.527778
-	robot-at-x03y04 robot-at-x04y04 0.383333 0.883333
-	robot-at-x03y04 broken-robot 0.116667 0.616667
-	robot-at-x04y04 robot-at-x05y04 0.294444 0.794444
-	robot-at-x04y04 broken-robot 0.205556 0.705556
-	robot-at-x05y04 robot-at-x06y04 0.205556 0.705556
-	robot-at-x05y04 broken-robot 0.294444 0.794444
-	robot-at-x06y04 robot-at-x07y04 0.116667 0.616667
-	robot-at-x06y04 broken-robot 0.383333 0.883333
-	robot-at-x07y04 robot-at-x08y04 0.027778 0.527778
-	robot-at-x07y04 broken-robot 0.472222 0.972222
-	robot-at-x08y04 robot-at-x09y04 0.000000 0.438889
-	robot-at-x08y04 broken-robot 0.561111 1.000000
-	robot-at-x09y04 robot-at-x10y04 0.000000 0.350000
-	robot-at-x09y04 broken-robot 0.650000 1.00000
-	robot-at-x10y05 robot-at-x10y05 0.000000 0.350000
-	robot-at-x10y05 broken-robot 0.650000 1.00000
-	robot-at-x01y05 robot-at-x02y05 0.561111 1.000000
-	robot-at-x01y05 broken-robot 0.000000 0.438889
-	robot-at-x02y05 robot-at-x03y05 0.472222 0.972222
-	robot-at-x02y05 broken-robot 0.027778 0.527778
-	robot-at-x03y05 robot-at-x04y05 0.383333 0.883333
-	robot-at-x03y05 broken-robot 0.116667 0.616667
-	robot-at-x04y05 robot-at-x05y05 0.294444 0.794444
-	robot-at-x04y05 broken-robot 0.205556 0.705556
-	robot-at-x05y05 robot-at-x06y05 0.205556 0.705556
-	robot-at-x05y05 broken-robot 0.294444 0.794444
-	robot-at-x06y05 robot-at-x07y05 0.116667 0.616667
-	robot-at-x06y05 broken-robot 0.383333 0.883333
-	robot-at-x07y05 robot-at-x08y05 0.027778 0.527778
-	robot-at-x07y05 broken-robot 0.472222 0.972222
-	robot-at-x08y05 robot-at-x09y05 0.000000 0.438889
-	robot-at-x08y05 broken-robot 0.561111 1.000000
-	robot-at-x09y05 robot-at-x10y05 0.000000 0.350000
-	robot-at-x09y05 broken-robot 0.650000 1.00000
-	robot-at-x10y06 robot-at-x10y06 0.000000 0.350000
-	robot-at-x10y06 broken-robot 0.650000 1.00000
-	robot-at-x01y06 robot-at-x02y06 0.561111 1.000000
-	robot-at-x01y06 broken-robot 0.000000 0.438889
-	robot-at-x02y06 robot-at-x03y06 0.472222 0.972222
-	robot-at-x02y06 broken-robot 0.027778 0.527778
-	robot-at-x03y06 robot-at-x04y06 0.383333 0.883333
-	robot-at-x03y06 broken-robot 0.116667 0.616667
-	robot-at-x04y06 robot-at-x05y06 0.294444 0.794444
-	robot-at-x04y06 broken-robot 0.205556 0.705556
-	robot-at-x05y06 robot-at-x06y06 0.205556 0.705556
-	robot-at-x05y06 broken-robot 0.294444 0.794444
-	robot-at-x06y06 robot-at-x07y06 0.116667 0.616667
-	robot-at-x06y06 broken-robot 0.383333 0.883333
-	robot-at-x07y06 robot-at-x08y06 0.027778 0.527778
-	robot-at-x07y06 broken-robot 0.472222 0.972222
-	robot-at-x08y06 robot-at-x09y06 0.000000 0.438889
-	robot-at-x08y06 broken-robot 0.561111 1.000000
-	robot-at-x09y06 robot-at-x10y06 0.000000 0.350000
-	robot-at-x09y06 broken-robot 0.650000 1.00000
-	robot-at-x10y07 robot-at-x10y07 0.000000 0.350000
-	robot-at-x10y07 broken-robot 0.650000 1.00000
-	robot-at-x01y07 robot-at-x02y07 0.561111 1.000000
-	robot-at-x01y07 broken-robot 0.000000 0.438889
-	robot-at-x02y07 robot-at-x03y07 0.472222 0.972222
-	robot-at-x02y07 broken-robot 0.027778 0.527778
-	robot-at-x03y07 robot-at-x04y07 0.383333 0.883333
-	robot-at-x03y07 broken-robot 0.116667 0.616667
-	robot-at-x04y07 robot-at-x05y07 0.294444 0.794444
-	robot-at-x04y07 broken-robot 0.205556 0.705556
-	robot-at-x05y07 robot-at-x06y07 0.205556 0.705556
-	robot-at-x05y07 broken-robot 0.294444 0.794444
-	robot-at-x06y07 robot-at-x07y07 0.116667 0.616667
-	robot-at-x06y07 broken-robot 0.383333 0.883333
-	robot-at-x07y07 robot-at-x08y07 0.027778 0.527778
-	robot-at-x07y07 broken-robot 0.472222 0.972222
-	robot-at-x08y07 robot-at-x09y07 0.000000 0.438889
-	robot-at-x08y07 broken-robot 0.561111 1.000000
-	robot-at-x09y07 robot-at-x10y07 0.000000 0.350000
-	robot-at-x09y07 broken-robot 0.650000 1.00000
-	robot-at-x10y08 robot-at-x10y08 0.000000 0.350000
-	robot-at-x10y08 broken-robot 0.650000 1.00000
-	robot-at-x01y08 robot-at-x02y08 0.561111 1.000000
-	robot-at-x01y08 broken-robot 0.000000 0.438889
-	robot-at-x02y08 robot-at-x03y08 0.472222 0.972222
-	robot-at-x02y08 broken-robot 0.027778 0.527778
-	robot-at-x03y08 robot-at-x04y08 0.383333 0.883333
-	robot-at-x03y08 broken-robot 0.116667 0.616667
-	robot-at-x04y08 robot-at-x05y08 0.294444 0.794444
-	robot-at-x04y08 broken-robot 0.205556 0.705556
-	robot-at-x05y08 robot-at-x06y08 0.205556 0.705556
-	robot-at-x05y08 broken-robot 0.294444 0.794444
-	robot-at-x06y08 robot-at-x07y08 0.116667 0.616667
-	robot-at-x06y08 broken-robot 0.383333 0.883333
-	robot-at-x07y08 robot-at-x08y08 0.027778 0.527778
-	robot-at-x07y08 broken-robot 0.472222 0.972222
-	robot-at-x08y08 robot-at-x09y08 0.000000 0.438889
-	robot-at-x08y08 broken-robot 0.561111 1.000000
-	robot-at-x09y08 robot-at-x10y08 0.000000 0.350000
-	robot-at-x09y08 broken-robot 0.650000 1.00000
-	robot-at-x10y09 robot-at-x10y09 0.000000 0.350000
-	robot-at-x10y09 broken-robot 0.650000 1.00000
-	robot-at-x01y09 robot-at-x02y09 0.561111 1.000000
-	robot-at-x01y09 broken-robot 0.000000 0.438889
-	robot-at-x02y09 robot-at-x03y09 0.472222 0.972222
-	robot-at-x02y09 broken-robot 0.027778 0.527778
-	robot-at-x03y09 robot-at-x04y09 0.383333 0.883333
-	robot-at-x03y09 broken-robot 0.116667 0.616667
-	robot-at-x04y09 robot-at-x05y09 0.294444 0.794444
-	robot-at-x04y09 broken-robot 0.205556 0.705556
-	robot-at-x05y09 robot-at-x06y09 0.205556 0.705556
-	robot-at-x05y09 broken-robot 0.294444 0.794444
-	robot-at-x06y09 robot-at-x07y09 0.116667 0.616667
-	robot-at-x06y09 broken-robot 0.383333 0.883333
-	robot-at-x07y09 robot-at-x08y09 0.027778 0.527778
-	robot-at-x07y09 broken-robot 0.472222 0.972222
-	robot-at-x08y09 robot-at-x09y09 0.000000 0.438889
-	robot-at-x08y09 broken-robot 0.561111 1.000000
-	robot-at-x09y09 robot-at-x10y09 0.000000 0.350000
-	robot-at-x09y09 broken-robot 0.650000 1.00000
-	robot-at-x10y10 robot-at-x10y10 0.000000 0.350000
-	robot-at-x10y10 broken-robot 0.650000 1.00000
-	robot-at-x01y10 robot-at-x02y10 0.561111 1.000000
-	robot-at-x01y10 broken-robot 0.000000 0.438889
-	robot-at-x02y10 robot-at-x03y10 0.472222 0.972222
-	robot-at-x02y10 broken-robot 0.027778 0.527778
-	robot-at-x03y10 robot-at-x04y10 0.383333 0.883333
-	robot-at-x03y10 broken-robot 0.116667 0.616667
-	robot-at-x04y10 robot-at-x05y10 0.294444 0.794444
-	robot-at-x04y10 broken-robot 0.205556 0.705556
-	robot-at-x05y10 robot-at-x06y10 0.205556 0.705556
-	robot-at-x05y10 broken-robot 0.294444 0.794444
-	robot-at-x06y10 robot-at-x07y10 0.116667 0.616667
-	robot-at-x06y10 broken-robot 0.383333 0.883333
-	robot-at-x07y10 robot-at-x08y10 0.027778 0.527778
-	robot-at-x07y10 broken-robot 0.472222 0.972222
-	robot-at-x08y10 robot-at-x09y10 0.000000 0.438889
-	robot-at-x08y10 broken-robot 0.561111 1.000000
-	robot-at-x09y10 robot-at-x10y10 0.000000 0.350000
-	robot-at-x09y10 broken-robot 0.650000 1.00000
-	robot-at-x10y11 robot-at-x10y11 0.000000 0.350000
-	robot-at-x10y11 broken-robot 0.650000 1.00000
-	robot-at-x01y11 robot-at-x02y11 0.561111 1.000000
-	robot-at-x01y11 broken-robot 0.000000 0.438889
-	robot-at-x02y11 robot-at-x03y11 0.472222 0.972222
-	robot-at-x02y11 broken-robot 0.027778 0.527778
-	robot-at-x03y11 robot-at-x04y11 0.383333 0.883333
-	robot-at-x03y11 broken-robot 0.116667 0.616667
-	robot-at-x04y11 robot-at-x05y11 0.294444 0.794444
-	robot-at-x04y11 broken-robot 0.205556 0.705556
-	robot-at-x05y11 robot-at-x06y11 0.205556 0.705556
-	robot-at-x05y11 broken-robot 0.294444 0.794444
-	robot-at-x06y11 robot-at-x07y11 0.116667 0.616667
-	robot-at-x06y11 broken-robot 0.383333 0.883333
-	robot-at-x07y11 robot-at-x08y11 0.027778 0.527778
-	robot-at-x07y11 broken-robot 0.472222 0.972222
-	robot-at-x08y11 robot-at-x09y11 0.000000 0.438889
-	robot-at-x08y11 broken-robot 0.561111 1.000000
-	robot-at-x09y11 robot-at-x10y11 0.000000 0.350000
-	robot-at-x09y11 broken-robot 0.650000 1.00000
-	robot-at-x10y12 robot-at-x10y12 0.000000 0.350000
-	robot-at-x10y12 broken-robot 0.650000 1.00000
-	robot-at-x01y12 robot-at-x02y12 0.561111 1.000000
-	robot-at-x01y12 broken-robot 0.000000 0.438889
-	robot-at-x02y12 robot-at-x03y12 0.472222 0.972222
-	robot-at-x02y12 broken-robot 0.027778 0.527778
-	robot-at-x03y12 robot-at-x04y12 0.383333 0.883333
-	robot-at-x03y12 broken-robot 0.116667 0.616667
-	robot-at-x04y12 robot-at-x05y12 0.294444 0.794444
-	robot-at-x04y12 broken-robot 0.205556 0.705556
-	robot-at-x05y12 robot-at-x06y12 0.205556 0.705556
-	robot-at-x05y12 broken-robot 0.294444 0.794444
-	robot-at-x06y12 robot-at-x07y12 0.116667 0.616667
-	robot-at-x06y12 broken-robot 0.383333 0.883333
-	robot-at-x07y12 robot-at-x08y12 0.027778 0.527778
-	robot-at-x07y12 broken-robot 0.472222 0.972222
-	robot-at-x08y12 robot-at-x09y12 0.000000 0.438889
-	robot-at-x08y12 broken-robot 0.561111 1.000000
-	robot-at-x09y12 robot-at-x10y12 0.000000 0.350000
-	robot-at-x09y12 broken-robot 0.650000 1.00000
-	robot-at-x10y13 robot-at-x10y13 0.000000 0.350000
-	robot-at-x10y13 broken-robot 0.650000 1.00000
-	robot-at-x01y13 robot-at-x02y13 0.561111 1.000000
-	robot-at-x01y13 broken-robot 0.000000 0.438889
-	robot-at-x02y13 robot-at-x03y13 0.472222 0.972222
-	robot-at-x02y13 broken-robot 0.027778 0.527778
-	robot-at-x03y13 robot-at-x04y13 0.383333 0.883333
-	robot-at-x03y13 broken-robot 0.116667 0.616667
-	robot-at-x04y13 robot-at-x05y13 0.294444 0.794444
-	robot-at-x04y13 broken-robot 0.205556 0.705556
-	robot-at-x05y13 robot-at-x06y13 0.205556 0.705556
-	robot-at-x05y13 broken-robot 0.294444 0.794444
-	robot-at-x06y13 robot-at-x07y13 0.116667 0.616667
-	robot-at-x06y13 broken-robot 0.383333 0.883333
-	robot-at-x07y13 robot-at-x08y13 0.027778 0.527778
-	robot-at-x07y13 broken-robot 0.472222 0.972222
-	robot-at-x08y13 robot-at-x09y13 0.000000 0.438889
-	robot-at-x08y13 broken-robot 0.561111 1.000000
-	robot-at-x09y13 robot-at-x10y13 0.000000 0.350000
-	robot-at-x09y13 broken-robot 0.650000 1.00000
-	robot-at-x10y14 robot-at-x10y14 0.000000 0.350000
-	robot-at-x10y14 broken-robot 0.650000 1.00000
-	robot-at-x01y14 robot-at-x02y14 0.561111 1.000000
-	robot-at-x01y14 broken-robot 0.000000 0.438889
-	robot-at-x02y14 robot-at-x03y14 0.472222 0.972222
-	robot-at-x02y14 broken-robot 0.027778 0.527778
-	robot-at-x03y14 robot-at-x04y14 0.383333 0.883333
-	robot-at-x03y14 broken-robot 0.116667 0.616667
-	robot-at-x04y14 robot-at-x05y14 0.294444 0.794444
-	robot-at-x04y14 broken-robot 0.205556 0.705556
-	robot-at-x05y14 robot-at-x06y14 0.205556 0.705556
-	robot-at-x05y14 broken-robot 0.294444 0.794444
-	robot-at-x06y14 robot-at-x07y14 0.116667 0.616667
-	robot-at-x06y14 broken-robot 0.383333 0.883333
-	robot-at-x07y14 robot-at-x08y14 0.027778 0.527778
-	robot-at-x07y14 broken-robot 0.472222 0.972222
-	robot-at-x08y14 robot-at-x09y14 0.000000 0.438889
-	robot-at-x08y14 broken-robot 0.561111 1.000000
-	robot-at-x09y14 robot-at-x10y14 0.000000 0.350000
-	robot-at-x09y14 broken-robot 0.650000 1.00000
-	robot-at-x10y15 robot-at-x10y15 0.000000 0.350000
-	robot-at-x10y15 broken-robot 0.650000 1.00000
-	robot-at-x01y15 robot-at-x02y15 0.561111 1.000000
-	robot-at-x01y15 broken-robot 0.000000 0.438889
-	robot-at-x02y15 robot-at-x03y15 0.472222 0.972222
-	robot-at-x02y15 broken-robot 0.027778 0.527778
-	robot-at-x03y15 robot-at-x04y15 0.383333 0.883333
-	robot-at-x03y15 broken-robot 0.116667 0.616667
-	robot-at-x04y15 robot-at-x05y15 0.294444 0.794444
-	robot-at-x04y15 broken-robot 0.205556 0.705556
-	robot-at-x05y15 robot-at-x06y15 0.205556 0.705556
-	robot-at-x05y15 broken-robot 0.294444 0.794444
-	robot-at-x06y15 robot-at-x07y15 0.116667 0.616667
-	robot-at-x06y15 broken-robot 0.383333 0.883333
-	robot-at-x07y15 robot-at-x08y15 0.027778 0.527778
-	robot-at-x07y15 broken-robot 0.472222 0.972222
-	robot-at-x08y15 robot-at-x09y15 0.000000 0.438889
-	robot-at-x08y15 broken-robot 0.561111 1.000000
-	robot-at-x09y15 robot-at-x10y15 0.000000 0.350000
-	robot-at-x09y15 broken-robot 0.650000 1.00000
-	robot-at-x10y16 robot-at-x10y16 0.000000 0.350000
-	robot-at-x10y16 broken-robot 0.650000 1.00000
-	robot-at-x01y16 robot-at-x02y16 0.561111 1.000000
-	robot-at-x01y16 broken-robot 0.000000 0.438889
-	robot-at-x02y16 robot-at-x03y16 0.472222 0.972222
-	robot-at-x02y16 broken-robot 0.027778 0.527778
-	robot-at-x03y16 robot-at-x04y16 0.383333 0.883333
-	robot-at-x03y16 broken-robot 0.116667 0.616667
-	robot-at-x04y16 robot-at-x05y16 0.294444 0.794444
-	robot-at-x04y16 broken-robot 0.205556 0.705556
-	robot-at-x05y16 robot-at-x06y16 0.205556 0.705556
-	robot-at-x05y16 broken-robot 0.294444 0.794444
-	robot-at-x06y16 robot-at-x07y16 0.116667 0.616667
-	robot-at-x06y16 broken-robot 0.383333 0.883333
-	robot-at-x07y16 robot-at-x08y16 0.027778 0.527778
-	robot-at-x07y16 broken-robot 0.472222 0.972222
-	robot-at-x08y16 robot-at-x09y16 0.000000 0.438889
-	robot-at-x08y16 broken-robot 0.561111 1.000000
-	robot-at-x09y16 robot-at-x10y16 0.000000 0.350000
-	robot-at-x09y16 broken-robot 0.650000 1.00000
-	robot-at-x10y17 robot-at-x10y17 0.000000 0.350000
-	robot-at-x10y17 broken-robot 0.650000 1.00000
-	robot-at-x01y17 robot-at-x02y17 0.561111 1.000000
-	robot-at-x01y17 broken-robot 0.000000 0.438889
-	robot-at-x02y17 robot-at-x03y17 0.472222 0.972222
-	robot-at-x02y17 broken-robot 0.027778 0.527778
-	robot-at-x03y17 robot-at-x04y17 0.383333 0.883333
-	robot-at-x03y17 broken-robot 0.116667 0.616667
-	robot-at-x04y17 robot-at-x05y17 0.294444 0.794444
-	robot-at-x04y17 broken-robot 0.205556 0.705556
-	robot-at-x05y17 robot-at-x06y17 0.205556 0.705556
-	robot-at-x05y17 broken-robot 0.294444 0.794444
-	robot-at-x06y17 robot-at-x07y17 0.116667 0.616667
-	robot-at-x06y17 broken-robot 0.383333 0.883333
-	robot-at-x07y17 robot-at-x08y17 0.027778 0.527778
-	robot-at-x07y17 broken-robot 0.472222 0.972222
-	robot-at-x08y17 robot-at-x09y17 0.000000 0.438889
-	robot-at-x08y17 broken-robot 0.561111 1.000000
-	robot-at-x09y17 robot-at-x10y17 0.000000 0.350000
-	robot-at-x09y17 broken-robot 0.650000 1.00000
-	robot-at-x10y18 robot-at-x10y18 0.000000 0.350000
-	robot-at-x10y18 broken-robot 0.650000 1.00000
-	robot-at-x01y18 robot-at-x02y18 0.561111 1.000000
-	robot-at-x01y18 broken-robot 0.000000 0.438889
-	robot-at-x02y18 robot-at-x03y18 0.472222 0.972222
-	robot-at-x02y18 broken-robot 0.027778 0.527778
-	robot-at-x03y18 robot-at-x04y18 0.383333 0.883333
-	robot-at-x03y18 broken-robot 0.116667 0.616667
-	robot-at-x04y18 robot-at-x05y18 0.294444 0.794444
-	robot-at-x04y18 broken-robot 0.205556 0.705556
-	robot-at-x05y18 robot-at-x06y18 0.205556 0.705556
-	robot-at-x05y18 broken-robot 0.294444 0.794444
-	robot-at-x06y18 robot-at-x07y18 0.116667 0.616667
-	robot-at-x06y18 broken-robot 0.383333 0.883333
-	robot-at-x07y18 robot-at-x08y18 0.027778 0.527778
-	robot-at-x07y18 broken-robot 0.472222 0.972222
-	robot-at-x08y18 robot-at-x09y18 0.000000 0.438889
-	robot-at-x08y18 broken-robot 0.561111 1.000000
-	robot-at-x09y18 robot-at-x10y18 0.000000 0.350000
-	robot-at-x09y18 broken-robot 0.650000 1.00000
-	robot-at-x10y19 robot-at-x10y19 0.000000 0.350000
-	robot-at-x10y19 broken-robot 0.650000 1.00000
-	robot-at-x01y19 robot-at-x02y19 0.561111 1.000000
-	robot-at-x01y19 broken-robot 0.000000 0.438889
-	robot-at-x02y19 robot-at-x03y19 0.472222 0.972222
-	robot-at-x02y19 broken-robot 0.027778 0.527778
-	robot-at-x03y19 robot-at-x04y19 0.383333 0.883333
-	robot-at-x03y19 broken-robot 0.116667 0.616667
-	robot-at-x04y19 robot-at-x05y19 0.294444 0.794444
-	robot-at-x04y19 broken-robot 0.205556 0.705556
-	robot-at-x05y19 robot-at-x06y19 0.205556 0.705556
-	robot-at-x05y19 broken-robot 0.294444 0.794444
-	robot-at-x06y19 robot-at-x07y19 0.116667 0.616667
-	robot-at-x06y19 broken-robot 0.383333 0.883333
-	robot-at-x07y19 robot-at-x08y19 0.027778 0.527778
-	robot-at-x07y19 broken-robot 0.472222 0.972222
-	robot-at-x08y19 robot-at-x09y19 0.000000 0.438889
-	robot-at-x08y19 broken-robot 0.561111 1.000000
-	robot-at-x09y19 robot-at-x10y19 0.000000 0.350000
-	robot-at-x09y19 broken-robot 0.650000 1.00000
-	robot-at-x10y20 robot-at-x10y20 1.000000 1.000000
-	robot-at-x01y20 robot-at-x02y20 1.000000 1.000000
-	robot-at-x02y20 robot-at-x03y20 1.000000 1.000000
-	robot-at-x03y20 robot-at-x04y20 1.000000 1.000000
-	robot-at-x04y20 robot-at-x05y20 1.000000 1.000000
-	robot-at-x05y20 robot-at-x06y20 1.000000 1.000000
-	robot-at-x06y20 robot-at-x07y20 1.000000 1.000000
-	robot-at-x07y20 robot-at-x08y20 1.000000 1.000000
-	robot-at-x08y20 robot-at-x09y20 1.000000 1.000000
-	robot-at-x09y20 robot-at-x10y20 1.000000 1.000000
-	broken-robot broken-robot 1.000000 1.000000
+	robot-at-x10y01 robot-at-x10y01 1.000000
+	robot-at-x01y01 robot-at-x02y01 1.000000
+	robot-at-x02y01 robot-at-x03y01 1.000000
+	robot-at-x03y01 robot-at-x04y01 1.000000
+	robot-at-x04y01 robot-at-x05y01 1.000000
+	robot-at-x05y01 robot-at-x06y01 1.000000
+	robot-at-x06y01 robot-at-x07y01 1.000000
+	robot-at-x07y01 robot-at-x08y01 1.000000
+	robot-at-x08y01 robot-at-x09y01 1.000000
+	robot-at-x09y01 robot-at-x10y01 1.000000
+	robot-at-x10y02 robot-at-x10y02 p1079
+	robot-at-x10y02 broken-robot p1080
+	robot-at-x01y02 robot-at-x02y02 p1081
+	robot-at-x01y02 broken-robot p1082
+	robot-at-x02y02 robot-at-x03y02 p1083
+	robot-at-x02y02 broken-robot p1084
+	robot-at-x03y02 robot-at-x04y02 p1085
+	robot-at-x03y02 broken-robot p1086
+	robot-at-x04y02 robot-at-x05y02 p1087
+	robot-at-x04y02 broken-robot p1088
+	robot-at-x05y02 robot-at-x06y02 p1089
+	robot-at-x05y02 broken-robot p1090
+	robot-at-x06y02 robot-at-x07y02 p1091
+	robot-at-x06y02 broken-robot p1092
+	robot-at-x07y02 robot-at-x08y02 p1093
+	robot-at-x07y02 broken-robot p1094
+	robot-at-x08y02 robot-at-x09y02 p1095
+	robot-at-x08y02 broken-robot p1096
+	robot-at-x09y02 robot-at-x10y02 p1097
+	robot-at-x09y02 broken-robot p1098
+	robot-at-x10y03 robot-at-x10y03 p1099
+	robot-at-x10y03 broken-robot p1100
+	robot-at-x01y03 robot-at-x02y03 p1101
+	robot-at-x01y03 broken-robot p1102
+	robot-at-x02y03 robot-at-x03y03 p1103
+	robot-at-x02y03 broken-robot p1104
+	robot-at-x03y03 robot-at-x04y03 p1105
+	robot-at-x03y03 broken-robot p1106
+	robot-at-x04y03 robot-at-x05y03 p1107
+	robot-at-x04y03 broken-robot p1108
+	robot-at-x05y03 robot-at-x06y03 p1109
+	robot-at-x05y03 broken-robot p1110
+	robot-at-x06y03 robot-at-x07y03 p1111
+	robot-at-x06y03 broken-robot p1112
+	robot-at-x07y03 robot-at-x08y03 p1113
+	robot-at-x07y03 broken-robot p1114
+	robot-at-x08y03 robot-at-x09y03 p1115
+	robot-at-x08y03 broken-robot p1116
+	robot-at-x09y03 robot-at-x10y03 p1117
+	robot-at-x09y03 broken-robot p1118
+	robot-at-x10y04 robot-at-x10y04 p1119
+	robot-at-x10y04 broken-robot p1120
+	robot-at-x01y04 robot-at-x02y04 p1121
+	robot-at-x01y04 broken-robot p1122
+	robot-at-x02y04 robot-at-x03y04 p1123
+	robot-at-x02y04 broken-robot p1124
+	robot-at-x03y04 robot-at-x04y04 p1125
+	robot-at-x03y04 broken-robot p1126
+	robot-at-x04y04 robot-at-x05y04 p1127
+	robot-at-x04y04 broken-robot p1128
+	robot-at-x05y04 robot-at-x06y04 p1129
+	robot-at-x05y04 broken-robot p1130
+	robot-at-x06y04 robot-at-x07y04 p1131
+	robot-at-x06y04 broken-robot p1132
+	robot-at-x07y04 robot-at-x08y04 p1133
+	robot-at-x07y04 broken-robot p1134
+	robot-at-x08y04 robot-at-x09y04 p1135
+	robot-at-x08y04 broken-robot p1136
+	robot-at-x09y04 robot-at-x10y04 p1137
+	robot-at-x09y04 broken-robot p1138
+	robot-at-x10y05 robot-at-x10y05 p1139
+	robot-at-x10y05 broken-robot p1140
+	robot-at-x01y05 robot-at-x02y05 p1141
+	robot-at-x01y05 broken-robot p1142
+	robot-at-x02y05 robot-at-x03y05 p1143
+	robot-at-x02y05 broken-robot p1144
+	robot-at-x03y05 robot-at-x04y05 p1145
+	robot-at-x03y05 broken-robot p1146
+	robot-at-x04y05 robot-at-x05y05 p1147
+	robot-at-x04y05 broken-robot p1148
+	robot-at-x05y05 robot-at-x06y05 p1149
+	robot-at-x05y05 broken-robot p1150
+	robot-at-x06y05 robot-at-x07y05 p1151
+	robot-at-x06y05 broken-robot p1152
+	robot-at-x07y05 robot-at-x08y05 p1153
+	robot-at-x07y05 broken-robot p1154
+	robot-at-x08y05 robot-at-x09y05 p1155
+	robot-at-x08y05 broken-robot p1156
+	robot-at-x09y05 robot-at-x10y05 p1157
+	robot-at-x09y05 broken-robot p1158
+	robot-at-x10y06 robot-at-x10y06 p1159
+	robot-at-x10y06 broken-robot p1160
+	robot-at-x01y06 robot-at-x02y06 p1161
+	robot-at-x01y06 broken-robot p1162
+	robot-at-x02y06 robot-at-x03y06 p1163
+	robot-at-x02y06 broken-robot p1164
+	robot-at-x03y06 robot-at-x04y06 p1165
+	robot-at-x03y06 broken-robot p1166
+	robot-at-x04y06 robot-at-x05y06 p1167
+	robot-at-x04y06 broken-robot p1168
+	robot-at-x05y06 robot-at-x06y06 p1169
+	robot-at-x05y06 broken-robot p1170
+	robot-at-x06y06 robot-at-x07y06 p1171
+	robot-at-x06y06 broken-robot p1172
+	robot-at-x07y06 robot-at-x08y06 p1173
+	robot-at-x07y06 broken-robot p1174
+	robot-at-x08y06 robot-at-x09y06 p1175
+	robot-at-x08y06 broken-robot p1176
+	robot-at-x09y06 robot-at-x10y06 p1177
+	robot-at-x09y06 broken-robot p1178
+	robot-at-x10y07 robot-at-x10y07 p1179
+	robot-at-x10y07 broken-robot p1180
+	robot-at-x01y07 robot-at-x02y07 p1181
+	robot-at-x01y07 broken-robot p1182
+	robot-at-x02y07 robot-at-x03y07 p1183
+	robot-at-x02y07 broken-robot p1184
+	robot-at-x03y07 robot-at-x04y07 p1185
+	robot-at-x03y07 broken-robot p1186
+	robot-at-x04y07 robot-at-x05y07 p1187
+	robot-at-x04y07 broken-robot p1188
+	robot-at-x05y07 robot-at-x06y07 p1189
+	robot-at-x05y07 broken-robot p1190
+	robot-at-x06y07 robot-at-x07y07 p1191
+	robot-at-x06y07 broken-robot p1192
+	robot-at-x07y07 robot-at-x08y07 p1193
+	robot-at-x07y07 broken-robot p1194
+	robot-at-x08y07 robot-at-x09y07 p1195
+	robot-at-x08y07 broken-robot p1196
+	robot-at-x09y07 robot-at-x10y07 p1197
+	robot-at-x09y07 broken-robot p1198
+	robot-at-x10y08 robot-at-x10y08 p1199
+	robot-at-x10y08 broken-robot p1200
+	robot-at-x01y08 robot-at-x02y08 p1201
+	robot-at-x01y08 broken-robot p1202
+	robot-at-x02y08 robot-at-x03y08 p1203
+	robot-at-x02y08 broken-robot p1204
+	robot-at-x03y08 robot-at-x04y08 p1205
+	robot-at-x03y08 broken-robot p1206
+	robot-at-x04y08 robot-at-x05y08 p1207
+	robot-at-x04y08 broken-robot p1208
+	robot-at-x05y08 robot-at-x06y08 p1209
+	robot-at-x05y08 broken-robot p1210
+	robot-at-x06y08 robot-at-x07y08 p1211
+	robot-at-x06y08 broken-robot p1212
+	robot-at-x07y08 robot-at-x08y08 p1213
+	robot-at-x07y08 broken-robot p1214
+	robot-at-x08y08 robot-at-x09y08 p1215
+	robot-at-x08y08 broken-robot p1216
+	robot-at-x09y08 robot-at-x10y08 p1217
+	robot-at-x09y08 broken-robot p1218
+	robot-at-x10y09 robot-at-x10y09 p1219
+	robot-at-x10y09 broken-robot p1220
+	robot-at-x01y09 robot-at-x02y09 p1221
+	robot-at-x01y09 broken-robot p1222
+	robot-at-x02y09 robot-at-x03y09 p1223
+	robot-at-x02y09 broken-robot p1224
+	robot-at-x03y09 robot-at-x04y09 p1225
+	robot-at-x03y09 broken-robot p1226
+	robot-at-x04y09 robot-at-x05y09 p1227
+	robot-at-x04y09 broken-robot p1228
+	robot-at-x05y09 robot-at-x06y09 p1229
+	robot-at-x04y15 robot-at-x04y16 p495	robot-at-x05y09 broken-robot 0.294444 0.794444
+	robot-at-x06y09 robot-at-x07y09 p1230
+	robot-at-x06y09 broken-robot p1231
+	robot-at-x07y09 robot-at-x08y09 p1232
+	robot-at-x07y09 broken-robot p1233
+	robot-at-x08y09 robot-at-x09y09 p1234
+	robot-at-x08y09 broken-robot p1235
+	robot-at-x09y09 robot-at-x10y09 p1236
+	robot-at-x09y09 broken-robot p1237
+	robot-at-x10y10 robot-at-x10y10 p1238
+	robot-at-x10y10 broken-robot p1239
+	robot-at-x01y10 robot-at-x02y10 p1240
+	robot-at-x01y10 broken-robot p1241
+	robot-at-x02y10 robot-at-x03y10 p1242
+	robot-at-x02y10 broken-robot p1243
+	robot-at-x03y10 robot-at-x04y10 p1244
+	robot-at-x03y10 broken-robot p1245
+	robot-at-x04y10 robot-at-x05y10 p1246
+	robot-at-x04y10 broken-robot p1247
+	robot-at-x05y10 robot-at-x06y10 p1248
+	robot-at-x05y10 broken-robot p1249
+	robot-at-x06y10 robot-at-x07y10 p1250
+	robot-at-x06y10 broken-robot p1251
+	robot-at-x07y10 robot-at-x08y10 p1252
+	robot-at-x07y10 broken-robot p1253
+	robot-at-x08y10 robot-at-x09y10 p1254
+	robot-at-x08y10 broken-robot p1255
+	robot-at-x09y10 robot-at-x10y10 p1256
+	robot-at-x09y10 broken-robot p1257
+	robot-at-x10y11 robot-at-x10y11 p1258
+	robot-at-x10y11 broken-robot p1259
+	robot-at-x01y11 robot-at-x02y11 p1260
+	robot-at-x01y11 broken-robot p1261
+	robot-at-x02y11 robot-at-x03y11 p1262
+	robot-at-x02y11 broken-robot p1263
+	robot-at-x03y11 robot-at-x04y11 p1264
+	robot-at-x03y11 broken-robot p1265
+	robot-at-x04y11 robot-at-x05y11 p1266
+	robot-at-x04y11 broken-robot p1267
+	robot-at-x05y11 robot-at-x06y11 p1268
+	robot-at-x05y11 broken-robot p1269
+	robot-at-x06y11 robot-at-x07y11 p1270
+	robot-at-x06y11 broken-robot p1271
+	robot-at-x07y11 robot-at-x08y11 p1272
+	robot-at-x07y11 broken-robot p1273
+	robot-at-x04y18 broken-robot p502	robot-at-x02y13 robot-at-x03y13 0.472222 0.972222
+	robot-at-x02y13 broken-robot p1274
+	robot-at-x03y13 robot-at-x04y13 p1275
+	robot-at-x03y13 broken-robot p1276
+	robot-at-x04y13 robot-at-x05y13 p1277
+	robot-at-x04y13 broken-robot p1278
+	robot-at-x05y13 robot-at-x06y13 p1279
+	robot-at-x05y13 broken-robot p1280
+	robot-at-x06y13 robot-at-x07y13 p1281
+	robot-at-x06y13 broken-robot p1282
+	robot-at-x07y13 robot-at-x08y13 p1283
+	robot-at-x07y13 broken-robot p1284
+	robot-at-x08y13 robot-at-x09y13 p1285
+	robot-at-x08y13 broken-robot p1286
+	robot-at-x09y13 robot-at-x10y13 p1287
+	robot-at-x09y13 broken-robot p1288
+	robot-at-x10y14 robot-at-x10y14 p1289
+	robot-at-x10y14 broken-robot p1290
+	robot-at-x01y14 robot-at-x02y14 p1291
+	robot-at-x01y14 broken-robot p1292
+	robot-at-x02y14 robot-at-x03y14 p1293
+	robot-at-x02y14 broken-robot p1294
+	robot-at-x03y14 robot-at-x04y14 p1295
+	robot-at-x03y14 broken-robot p1296
+	robot-at-x04y14 robot-at-x05y14 p1297
+	robot-at-x04y14 broken-robot p1298
+	robot-at-x05y14 robot-at-x06y14 p1299
+	robot-at-x05y14 broken-robot p1300
+	robot-at-x06y14 robot-at-x07y14 p1301
+	robot-at-x06y14 broken-robot p1302
+	robot-at-x07y14 robot-at-x08y14 p1303
+	robot-at-x07y14 broken-robot p1304
+	robot-at-x08y14 robot-at-x09y14 p1305
+	robot-at-x08y14 broken-robot p1306
+	robot-at-x09y14 robot-at-x10y14 p1307
+	robot-at-x09y14 broken-robot p1308
+	robot-at-x10y15 robot-at-x10y15 p1309
+	robot-at-x10y15 broken-robot p1310
+	robot-at-x01y15 robot-at-x02y15 p1311
+	robot-at-x01y15 broken-robot p1312
+	robot-at-x02y15 robot-at-x03y15 p1313
+	robot-at-x02y15 broken-robot p1314
+	robot-at-x03y15 robot-at-x04y15 p1315
+	robot-at-x03y15 broken-robot p1316
+	robot-at-x04y15 robot-at-x05y15 p1317
+	robot-at-x04y15 broken-robot p1318
+	robot-at-x05y15 robot-at-x06y15 p1319
+	robot-at-x05y15 broken-robot p1320
+	robot-at-x06y15 robot-at-x07y15 p1321
+	robot-at-x06y15 broken-robot p1322
+	robot-at-x07y15 robot-at-x08y15 p1323
+	robot-at-x07y15 broken-robot p1324
+	robot-at-x08y15 robot-at-x09y15 p1325
+	robot-at-x08y15 broken-robot p1326
+	robot-at-x09y15 robot-at-x10y15 p1327
+	robot-at-x09y15 broken-robot p1328
+	robot-at-x10y16 robot-at-x10y16 p1329
+	robot-at-x10y16 broken-robot p1330
+	robot-at-x01y16 robot-at-x02y16 p1331
+	robot-at-x01y16 broken-robot p1332
+	robot-at-x02y16 robot-at-x03y16 p1333
+	robot-at-x02y16 broken-robot p1334
+	robot-at-x03y16 robot-at-x04y16 p1335
+	robot-at-x03y16 broken-robot p1336
+	robot-at-x04y16 robot-at-x05y16 p1337
+	robot-at-x04y16 broken-robot p1338
+	robot-at-x05y16 robot-at-x06y16 p1339
+	robot-at-x05y16 broken-robot p1340
+	robot-at-x06y16 robot-at-x07y16 p1341
+	robot-at-x06y16 broken-robot p1342
+	robot-at-x07y16 robot-at-x08y16 p1343
+	robot-at-x07y16 broken-robot p1344
+	robot-at-x08y16 robot-at-x09y16 p1345
+	robot-at-x08y16 broken-robot p1346
+	robot-at-x09y16 robot-at-x10y16 p1347
+	robot-at-x09y16 broken-robot p1348
+	robot-at-x10y17 robot-at-x10y17 p1349
+	robot-at-x10y17 broken-robot p1350
+	robot-at-x01y17 robot-at-x02y17 p1351
+	robot-at-x01y17 broken-robot p1352
+	robot-at-x02y17 robot-at-x03y17 p1353
+	robot-at-x02y17 broken-robot p1354
+	robot-at-x05y07 robot-at-x05y08 p515	robot-at-x03y17 robot-at-x04y17 0.383333 0.883333
+	robot-at-x03y17 broken-robot p1355
+	robot-at-x04y17 robot-at-x05y17 p1356
+	robot-at-x04y17 broken-robot p1357
+	robot-at-x05y17 robot-at-x06y17 p1358
+	robot-at-x05y17 broken-robot p1359
+	robot-at-x06y17 robot-at-x07y17 p1360
+	robot-at-x06y17 broken-robot p1361
+	robot-at-x07y17 robot-at-x08y17 p1362
+	robot-at-x07y17 broken-robot p1363
+	robot-at-x08y17 robot-at-x09y17 p1364
+	robot-at-x08y17 broken-robot p1365
+	robot-at-x09y17 robot-at-x10y17 p1366
+	robot-at-x09y17 broken-robot p1367
+	robot-at-x10y18 robot-at-x10y18 p1368
+	robot-at-x10y18 broken-robot p1369
+	robot-at-x01y18 robot-at-x02y18 p1370
+	robot-at-x01y18 broken-robot p1371
+	robot-at-x02y18 robot-at-x03y18 p1372
+	robot-at-x02y18 broken-robot p1373
+	robot-at-x03y18 robot-at-x04y18 p1374
+	robot-at-x03y18 broken-robot p1375
+	robot-at-x04y18 robot-at-x05y18 p1376
+	robot-at-x04y18 broken-robot p1377
+	robot-at-x05y18 robot-at-x06y18 p1378
+	robot-at-x05y18 broken-robot p1379
+	robot-at-x06y18 robot-at-x07y18 p1380
+	robot-at-x06y18 broken-robot p1381
+	robot-at-x07y18 robot-at-x08y18 p1382
+	robot-at-x07y18 broken-robot p1383
+	robot-at-x08y18 robot-at-x09y18 p1384
+	robot-at-x08y18 broken-robot p1385
+	robot-at-x09y18 robot-at-x10y18 p1386
+	robot-at-x09y18 broken-robot p1387
+	robot-at-x10y19 robot-at-x10y19 p1388
+	robot-at-x10y19 broken-robot p1389
+	robot-at-x01y19 robot-at-x02y19 p1390
+	robot-at-x01y19 broken-robot p1391
+	robot-at-x02y19 robot-at-x03y19 p1392
+	robot-at-x02y19 broken-robot p1393
+	robot-at-x03y19 robot-at-x04y19 p1394
+	robot-at-x03y19 broken-robot p1395
+	robot-at-x04y19 robot-at-x05y19 p1396
+	robot-at-x04y19 broken-robot p1397
+	robot-at-x05y19 robot-at-x06y19 p1398
+	robot-at-x05y19 broken-robot p1399
+	robot-at-x06y19 robot-at-x07y19 p1400
+	robot-at-x06y19 broken-robot p1401
+	robot-at-x07y19 robot-at-x08y19 p1402
+	robot-at-x07y19 broken-robot p1403
+	robot-at-x08y19 robot-at-x09y19 p1404
+	robot-at-x08y19 broken-robot p1405
+	robot-at-x09y19 robot-at-x10y19 p1406
+	robot-at-x09y19 broken-robot p1407
+	robot-at-x10y20 robot-at-x10y20 1.000000
+	robot-at-x01y20 robot-at-x02y20 1.000000
+	robot-at-x02y20 robot-at-x03y20 1.000000
+	robot-at-x03y20 robot-at-x04y20 1.000000
+	robot-at-x04y20 robot-at-x05y20 1.000000
+	robot-at-x05y20 robot-at-x06y20 1.000000
+	robot-at-x06y20 robot-at-x07y20 1.000000
+	robot-at-x07y20 robot-at-x08y20 1.000000
+	robot-at-x08y20 robot-at-x09y20 1.000000
+	robot-at-x09y20 robot-at-x10y20 1.000000
+	broken-robot broken-robot 1.000000
 endaction
+
+restrictions
+	p1 >= 0.650000
+	p1 <= 1.00000
+	p2 = 1 - p1
+	p3 >= 0.650000
+	p3 <= 1.00000
+	p4 = 1 - p3
+	p5 >= 0.650000
+	p5 <= 1.00000
+	p6 = 1 - p5
+	p7 >= 0.650000
+	p7 <= 1.00000
+	p8 = 1 - p7
+	p9 >= 0.650000
+	p9 <= 1.00000
+	p10 = 1 - p9
+	p11 >= 0.650000
+	p11 <= 1.00000
+	p12 = 1 - p11
+	p13 >= 0.650000
+	p13 <= 1.00000
+	p14 = 1 - p13
+	p15 >= 0.650000
+	p15 <= 1.00000
+	p16 = 1 - p15
+	p17 >= 0.650000
+	p17 <= 1.00000
+	p18 = 1 - p17
+	p19 >= 0.650000
+	p19 <= 1.00000
+	p20 = 1 - p19
+	p21 >= 0.650000
+	p21 <= 1.00000
+	p22 = 1 - p21
+	p23 >= 0.650000
+	p23 <= 1.00000
+	p24 = 1 - p23
+	p25 >= 0.650000
+	p25 <= 1.00000
+	p26 = 1 - p25
+	p27 >= 0.650000
+	p27 <= 1.00000
+	p28 = 1 - p27
+	p29 >= 0.650000
+	p29 <= 1.00000
+	p30 = 1 - p29
+	p31 >= 0.650000
+	p31 <= 1.00000
+	p32 = 1 - p31
+	p33 >= 0.650000
+	p33 <= 1.00000
+	p34 = 1 - p33
+	p35 >= 0.650000
+	p35 <= 1.00000
+	p36 = 1 - p35
+	p37 >= 0.561111
+	p37 <= 1.000000
+	p38 = 1 - p37
+	p39 >= 0.561111
+	p39 <= 1.000000
+	p40 = 1 - p39
+	p41 >= 0.561111
+	p41 <= 1.000000
+	p42 = 1 - p41
+	p43 >= 0.561111
+	p43 <= 1.000000
+	p44 = 1 - p43
+	p45 >= 0.561111
+	p45 <= 1.000000
+	p46 = 1 - p45
+	p47 >= 0.561111
+	p47 <= 1.000000
+	p48 = 1 - p47
+	p49 >= 0.561111
+	p49 <= 1.000000
+	p50 = 1 - p49
+	p51 >= 0.561111
+	p51 <= 1.000000
+	p52 = 1 - p51
+	p53 >= 0.561111
+	p53 <= 1.000000
+	p54 = 1 - p53
+	p55 >= 0.561111
+	p55 <= 1.000000
+	p56 = 1 - p55
+	p57 >= 0.561111
+	p57 <= 1.000000
+	p58 = 1 - p57
+	p59 >= 0.561111
+	p59 <= 1.000000
+	p60 = 1 - p59
+	p61 >= 0.561111
+	p61 <= 1.000000
+	p62 = 1 - p61
+	p63 >= 0.561111
+	p63 <= 1.000000
+	p64 = 1 - p63
+	p65 >= 0.561111
+	p65 <= 1.000000
+	p66 = 1 - p65
+	p67 >= 0.561111
+	p67 <= 1.000000
+	p68 = 1 - p67
+	p69 >= 0.561111
+	p69 <= 1.000000
+	p70 = 1 - p69
+	p71 >= 0.561111
+	p71 <= 1.000000
+	p72 = 1 - p71
+	p73 >= 0.472222
+	p73 <= 0.972222
+	p74 = 1 - p73
+	p75 >= 0.472222
+	p75 <= 0.972222
+	p76 = 1 - p75
+	p77 >= 0.472222
+	p77 <= 0.972222
+	p78 = 1 - p77
+	p79 >= 0.472222
+	p79 <= 0.972222
+	p80 = 1 - p79
+	p81 >= 0.472222
+	p81 <= 0.972222
+	p82 = 1 - p81
+	p83 >= 0.472222
+	p83 <= 0.972222
+	p84 = 1 - p83
+	p85 >= 0.472222
+	p85 <= 0.972222
+	p86 = 1 - p85
+	p87 >= 0.472222
+	p87 <= 0.972222
+	p88 = 1 - p87
+	p89 >= 0.472222
+	p89 <= 0.972222
+	p90 = 1 - p89
+	p91 >= 0.472222
+	p91 <= 0.972222
+	p92 = 1 - p91
+	p93 >= 0.472222
+	p93 <= 0.972222
+	p94 = 1 - p93
+	p95 >= 0.472222
+	p95 <= 0.972222
+	p96 = 1 - p95
+	p97 >= 0.472222
+	p97 <= 0.972222
+	p98 = 1 - p97
+	p99 >= 0.472222
+	p99 <= 0.972222
+	p100 = 1 - p99
+	p101 >= 0.472222
+	p101 <= 0.972222
+	p102 = 1 - p101
+	p103 >= 0.472222
+	p103 <= 0.972222
+	p104 = 1 - p103
+	p105 >= 0.472222
+	p105 <= 0.972222
+	p106 = 1 - p105
+	p107 >= 0.472222
+	p107 <= 0.972222
+	p108 = 1 - p107
+	p109 >= 0.383333
+	p109 <= 0.883333
+	p110 = 1 - p109
+	p111 >= 0.383333
+	p111 <= 0.883333
+	p112 = 1 - p111
+	p113 >= 0.383333
+	p113 <= 0.883333
+	p114 = 1 - p113
+	p115 >= 0.383333
+	p115 <= 0.883333
+	p116 = 1 - p115
+	p117 >= 0.383333
+	p117 <= 0.883333
+	p118 = 1 - p117
+	p119 >= 0.383333
+	p119 <= 0.883333
+	p120 = 1 - p119
+	p121 >= 0.383333
+	p121 <= 0.883333
+	p122 = 1 - p121
+	p123 >= 0.383333
+	p123 <= 0.883333
+	p124 = 1 - p123
+	p125 >= 0.383333
+	p125 <= 0.883333
+	p126 = 1 - p125
+	p127 >= 0.383333
+	p127 <= 0.883333
+	p128 = 1 - p127
+	p129 >= 0.383333
+	p129 <= 0.883333
+	p130 = 1 - p129
+	p131 >= 0.383333
+	p131 <= 0.883333
+	p132 = 1 - p131
+	p133 >= 0.383333
+	p133 <= 0.883333
+	p134 = 1 - p133
+	p135 >= 0.383333
+	p135 <= 0.883333
+	p136 = 1 - p135
+	p137 >= 0.383333
+	p137 <= 0.883333
+	p138 = 1 - p137
+	p139 >= 0.383333
+	p139 <= 0.883333
+	p140 = 1 - p139
+	p141 >= 0.383333
+	p141 <= 0.883333
+	p142 = 1 - p141
+	p143 >= 0.383333
+	p143 <= 0.883333
+	p144 = 1 - p143
+	p145 >= 0.294444
+	p145 <= 0.794444
+	p146 = 1 - p145
+	p147 >= 0.294444
+	p147 <= 0.794444
+	p148 = 1 - p147
+	p149 >= 0.294444
+	p149 <= 0.794444
+	p150 = 1 - p149
+	p151 >= 0.294444
+	p151 <= 0.794444
+	p152 = 1 - p151
+	p153 >= 0.294444
+	p153 <= 0.794444
+	p154 = 1 - p153
+	p155 >= 0.294444
+	p155 <= 0.794444
+	p156 = 1 - p155
+	p157 >= 0.294444
+	p157 <= 0.794444
+	p158 = 1 - p157
+	p159 >= 0.294444
+	p159 <= 0.794444
+	p160 = 1 - p159
+	p161 >= 0.294444
+	p161 <= 0.794444
+	p162 = 1 - p161
+	p163 >= 0.294444
+	p163 <= 0.794444
+	p164 = 1 - p163
+	p165 >= 0.294444
+	p165 <= 0.794444
+	p166 = 1 - p165
+	p167 >= 0.294444
+	p167 <= 0.794444
+	p168 = 1 - p167
+	p169 >= 0.294444
+	p169 <= 0.794444
+	p170 = 1 - p169
+	p171 >= 0.294444
+	p171 <= 0.794444
+	p172 = 1 - p171
+	p173 >= 0.294444
+	p173 <= 0.794444
+	p174 = 1 - p173
+	p175 >= 0.294444
+	p175 <= 0.794444
+	p176 = 1 - p175
+	p177 >= 0.294444
+	p177 <= 0.794444
+	p178 = 1 - p177
+	p179 >= 0.294444
+	p179 <= 0.794444
+	p180 = 1 - p179
+	p181 >= 0.205556
+	p181 <= 0.705556
+	p182 = 1 - p181
+	p183 >= 0.205556
+	p183 <= 0.705556
+	p184 = 1 - p183
+	p185 >= 0.205556
+	p185 <= 0.705556
+	p186 = 1 - p185
+	p187 >= 0.205556
+	p187 <= 0.705556
+	p188 = 1 - p187
+	p189 >= 0.205556
+	p189 <= 0.705556
+	p190 = 1 - p189
+	p191 >= 0.205556
+	p191 <= 0.705556
+	p192 = 1 - p191
+	p193 >= 0.205556
+	p193 <= 0.705556
+	p194 = 1 - p193
+	p195 >= 0.205556
+	p195 <= 0.705556
+	p196 = 1 - p195
+	p197 >= 0.205556
+	p197 <= 0.705556
+	p198 = 1 - p197
+	p199 >= 0.205556
+	p199 <= 0.705556
+	p200 = 1 - p199
+	p201 >= 0.205556
+	p201 <= 0.705556
+	p202 = 1 - p201
+	p203 >= 0.205556
+	p203 <= 0.705556
+	p204 = 1 - p203
+	p205 >= 0.205556
+	p205 <= 0.705556
+	p206 = 1 - p205
+	p207 >= 0.205556
+	p207 <= 0.705556
+	p208 = 1 - p207
+	p209 >= 0.205556
+	p209 <= 0.705556
+	p210 = 1 - p209
+	p211 >= 0.205556
+	p211 <= 0.705556
+	p212 = 1 - p211
+	p213 >= 0.205556
+	p213 <= 0.705556
+	p214 = 1 - p213
+	p215 >= 0.205556
+	p215 <= 0.705556
+	p216 = 1 - p215
+	p217 >= 0.116667
+	p217 <= 0.616667
+	p218 = 1 - p217
+	p219 >= 0.116667
+	p219 <= 0.616667
+	p220 = 1 - p219
+	p221 >= 0.116667
+	p221 <= 0.616667
+	p222 = 1 - p221
+	p223 >= 0.116667
+	p223 <= 0.616667
+	p224 = 1 - p223
+	p225 >= 0.116667
+	p225 <= 0.616667
+	p226 = 1 - p225
+	p227 >= 0.116667
+	p227 <= 0.616667
+	p228 = 1 - p227
+	p229 >= 0.116667
+	p229 <= 0.616667
+	p230 = 1 - p229
+	p231 >= 0.116667
+	p231 <= 0.616667
+	p232 = 1 - p231
+	p233 >= 0.116667
+	p233 <= 0.616667
+	p234 = 1 - p233
+	p235 >= 0.116667
+	p235 <= 0.616667
+	p236 = 1 - p235
+	p237 >= 0.116667
+	p237 <= 0.616667
+	p238 = 1 - p237
+	p239 >= 0.116667
+	p239 <= 0.616667
+	p240 = 1 - p239
+	p241 >= 0.116667
+	p241 <= 0.616667
+	p242 = 1 - p241
+	p243 >= 0.116667
+	p243 <= 0.616667
+	p244 = 1 - p243
+	p245 >= 0.116667
+	p245 <= 0.616667
+	p246 = 1 - p245
+	p247 >= 0.116667
+	p247 <= 0.616667
+	p248 = 1 - p247
+	p249 >= 0.116667
+	p249 <= 0.616667
+	p250 = 1 - p249
+	p251 >= 0.116667
+	p251 <= 0.616667
+	p252 = 1 - p251
+	p253 >= 0.027778
+	p253 <= 0.527778
+	p254 = 1 - p253
+	p255 >= 0.027778
+	p255 <= 0.527778
+	p256 = 1 - p255
+	p257 >= 0.027778
+	p257 <= 0.527778
+	p258 = 1 - p257
+	p259 >= 0.027778
+	p259 <= 0.527778
+	p260 = 1 - p259
+	p261 >= 0.027778
+	p261 <= 0.527778
+	p262 = 1 - p261
+	p263 >= 0.027778
+	p263 <= 0.527778
+	p264 = 1 - p263
+	p265 >= 0.027778
+	p265 <= 0.527778
+	p266 = 1 - p265
+	p267 >= 0.027778
+	p267 <= 0.527778
+	p268 = 1 - p267
+	p269 >= 0.027778
+	p269 <= 0.527778
+	p270 = 1 - p269
+	p271 >= 0.027778
+	p271 <= 0.527778
+	p272 = 1 - p271
+	p273 >= 0.027778
+	p273 <= 0.527778
+	p274 = 1 - p273
+	p275 >= 0.027778
+	p275 <= 0.527778
+	p276 = 1 - p275
+	p277 >= 0.027778
+	p277 <= 0.527778
+	p278 = 1 - p277
+	p279 >= 0.027778
+	p279 <= 0.527778
+	p280 = 1 - p279
+	p281 >= 0.027778
+	p281 <= 0.527778
+	p282 = 1 - p281
+	p283 >= 0.027778
+	p283 <= 0.527778
+	p284 = 1 - p283
+	p285 >= 0.027778
+	p285 <= 0.527778
+	p286 = 1 - p285
+	p287 >= 0.027778
+	p287 <= 0.527778
+	p288 = 1 - p287
+	p289 >= 0.000000
+	p289 <= 0.438889
+	p290 = 1 - p289
+	p291 >= 0.000000
+	p291 <= 0.438889
+	p292 = 1 - p291
+	p293 >= 0.000000
+	p293 <= 0.438889
+	p294 = 1 - p293
+	p295 >= 0.000000
+	p295 <= 0.438889
+	p296 = 1 - p295
+	p297 >= 0.000000
+	p297 <= 0.438889
+	p298 = 1 - p297
+	p299 >= 0.000000
+	p299 <= 0.438889
+	p300 = 1 - p299
+	p301 >= 0.000000
+	p301 <= 0.438889
+	p302 = 1 - p301
+	p303 >= 0.000000
+	p303 <= 0.438889
+	p304 = 1 - p303
+	p305 >= 0.000000
+	p305 <= 0.438889
+	p306 = 1 - p305
+	p307 >= 0.000000
+	p307 <= 0.438889
+	p308 = 1 - p307
+	p309 >= 0.000000
+	p309 <= 0.438889
+	p310 = 1 - p309
+	p311 >= 0.000000
+	p311 <= 0.438889
+	p312 = 1 - p311
+	p313 >= 0.000000
+	p313 <= 0.438889
+	p314 = 1 - p313
+	p315 >= 0.000000
+	p315 <= 0.438889
+	p316 = 1 - p315
+	p317 >= 0.000000
+	p317 <= 0.438889
+	p318 = 1 - p317
+	p319 >= 0.000000
+	p319 <= 0.438889
+	p320 = 1 - p319
+	p321 >= 0.000000
+	p321 <= 0.438889
+	p322 = 1 - p321
+	p323 >= 0.000000
+	p323 <= 0.438889
+	p324 = 1 - p323
+	p325 >= 0.000000
+	p325 <= 0.350000
+	p326 = 1 - p325
+	p327 >= 0.000000
+	p327 <= 0.350000
+	p328 = 1 - p327
+	p329 >= 0.000000
+	p329 <= 0.350000
+	p330 = 1 - p329
+	p331 >= 0.000000
+	p331 <= 0.350000
+	p332 = 1 - p331
+	p333 >= 0.000000
+	p333 <= 0.350000
+	p334 = 1 - p333
+	p335 >= 0.000000
+	p335 <= 0.350000
+	p336 = 1 - p335
+	p337 >= 0.000000
+	p337 <= 0.350000
+	p338 = 1 - p337
+	p339 >= 0.000000
+	p339 <= 0.350000
+	p340 = 1 - p339
+	p341 >= 0.000000
+	p341 <= 0.350000
+	p342 = 1 - p341
+	p343 >= 0.000000
+	p343 <= 0.350000
+	p344 = 1 - p343
+	p345 >= 0.000000
+	p345 <= 0.350000
+	p346 = 1 - p345
+	p347 >= 0.000000
+	p347 <= 0.350000
+	p348 = 1 - p347
+	p349 >= 0.000000
+	p349 <= 0.350000
+	p350 = 1 - p349
+	p351 >= 0.000000
+	p351 <= 0.350000
+	p352 = 1 - p351
+	p353 >= 0.000000
+	p353 <= 0.350000
+	p354 = 1 - p353
+	p355 >= 0.000000
+	p355 <= 0.350000
+	p356 = 1 - p355
+	p357 >= 0.000000
+	p357 <= 0.350000
+	p358 = 1 - p357
+	p359 >= 0.650000
+	p359 <= 1.00000
+	p360 = 1 - p359
+	p361 >= 0.650000
+	p361 <= 1.00000
+	p362 = 1 - p361
+	p363 >= 0.650000
+	p363 <= 1.00000
+	p364 = 1 - p363
+	p365 >= 0.650000
+	p365 <= 1.00000
+	p366 = 1 - p365
+	p367 >= 0.650000
+	p367 <= 1.00000
+	p368 = 1 - p367
+	p369 >= 0.650000
+	p369 <= 1.00000
+	p370 = 1 - p369
+	p371 >= 0.650000
+	p371 <= 1.00000
+	p372 = 1 - p371
+	p373 >= 0.650000
+	p373 <= 1.00000
+	p374 = 1 - p373
+	p375 >= 0.650000
+	p375 <= 1.00000
+	p376 = 1 - p375
+	p377 >= 0.650000
+	p377 <= 1.00000
+	p378 = 1 - p377
+	p379 >= 0.650000
+	p379 <= 1.00000
+	p380 = 1 - p379
+	p381 >= 0.650000
+	p381 <= 1.00000
+	p382 = 1 - p381
+	p383 >= 0.650000
+	p383 <= 1.00000
+	p384 = 1 - p383
+	p385 >= 0.650000
+	p385 <= 1.00000
+	p386 = 1 - p385
+	p387 >= 0.650000
+	p387 <= 1.00000
+	p388 = 1 - p387
+	p389 >= 0.650000
+	p389 <= 1.00000
+	p390 = 1 - p389
+	p391 >= 0.650000
+	p391 <= 1.00000
+	p392 = 1 - p391
+	p393 >= 0.650000
+	p393 <= 1.00000
+	p394 = 1 - p393
+	p395 >= 0.561111
+	p395 <= 1.000000
+	p396 = 1 - p395
+	p397 >= 0.561111
+	p397 <= 1.000000
+	p398 = 1 - p397
+	p399 >= 0.561111
+	p399 <= 1.000000
+	p400 = 1 - p399
+	p401 >= 0.561111
+	p401 <= 1.000000
+	p402 = 1 - p401
+	p403 >= 0.561111
+	p403 <= 1.000000
+	p404 = 1 - p403
+	p405 >= 0.561111
+	p405 <= 1.000000
+	p406 = 1 - p405
+	p407 >= 0.561111
+	p407 <= 1.000000
+	p408 = 1 - p407
+	p409 >= 0.561111
+	p409 <= 1.000000
+	p410 = 1 - p409
+	p411 >= 0.561111
+	p411 <= 1.000000
+	p412 = 1 - p411
+	p413 >= 0.561111
+	p413 <= 1.000000
+	p414 = 1 - p413
+	p415 >= 0.561111
+	p415 <= 1.000000
+	p416 = 1 - p415
+	p417 >= 0.561111
+	p417 <= 1.000000
+	p418 = 1 - p417
+	p419 >= 0.561111
+	p419 <= 1.000000
+	p420 = 1 - p419
+	p421 >= 0.561111
+	p421 <= 1.000000
+	p422 = 1 - p421
+	p423 >= 0.561111
+	p423 <= 1.000000
+	p424 = 1 - p423
+	p425 >= 0.561111
+	p425 <= 1.000000
+	p426 = 1 - p425
+	p427 >= 0.561111
+	p427 <= 1.000000
+	p428 = 1 - p427
+	p429 >= 0.561111
+	p429 <= 1.000000
+	p430 = 1 - p429
+	p431 >= 0.472222
+	p431 <= 0.972222
+	p432 = 1 - p431
+	p433 >= 0.472222
+	p433 <= 0.972222
+	p434 = 1 - p433
+	p435 >= 0.472222
+	p435 <= 0.972222
+	p436 = 1 - p435
+	p437 >= 0.472222
+	p437 <= 0.972222
+	p438 = 1 - p437
+	p439 >= 0.472222
+	p439 <= 0.972222
+	p440 = 1 - p439
+	p441 >= 0.472222
+	p441 <= 0.972222
+	p442 = 1 - p441
+	p443 >= 0.472222
+	p443 <= 0.972222
+	p444 = 1 - p443
+	p445 >= 0.472222
+	p445 <= 0.972222
+	p446 = 1 - p445
+	p447 >= 0.472222
+	p447 <= 0.972222
+	p448 = 1 - p447
+	p449 >= 0.472222
+	p449 <= 0.972222
+	p450 = 1 - p449
+	p451 >= 0.472222
+	p451 <= 0.972222
+	p452 = 1 - p451
+	p453 >= 0.472222
+	p453 <= 0.972222
+	p454 = 1 - p453
+	p455 >= 0.472222
+	p455 <= 0.972222
+	p456 = 1 - p455
+	p457 >= 0.472222
+	p457 <= 0.972222
+	p458 = 1 - p457
+	p459 >= 0.472222
+	p459 <= 0.972222
+	p460 = 1 - p459
+	p461 >= 0.472222
+	p461 <= 0.972222
+	p462 = 1 - p461
+	p463 >= 0.472222
+	p463 <= 0.972222
+	p464 = 1 - p463
+	p465 >= 0.472222
+	p465 <= 0.972222
+	p466 = 1 - p465
+	p467 >= 0.383333
+	p467 <= 0.883333
+	p468 = 1 - p467
+	p469 >= 0.383333
+	p469 <= 0.883333
+	p470 = 1 - p469
+	p471 >= 0.383333
+	p471 <= 0.883333
+	p472 = 1 - p471
+	p473 >= 0.383333
+	p473 <= 0.883333
+	p474 = 1 - p473
+	p475 >= 0.383333
+	p475 <= 0.883333
+	p476 = 1 - p475
+	p477 >= 0.383333
+	p477 <= 0.883333
+	p478 = 1 - p477
+	p479 >= 0.383333
+	p479 <= 0.883333
+	p480 = 1 - p479
+	p481 >= 0.383333
+	p481 <= 0.883333
+	p482 = 1 - p481
+	p483 >= 0.383333
+	p483 <= 0.883333
+	p484 = 1 - p483
+	p485 >= 0.383333
+	p485 <= 0.883333
+	p486 = 1 - p485
+	p487 >= 0.383333
+	p487 <= 0.883333
+	p488 = 1 - p487
+	p489 >= 0.383333
+	p489 <= 0.883333
+	p490 = 1 - p489
+	p491 >= 0.383333
+	p491 <= 0.883333
+	p492 = 1 - p491
+	p493 >= 0.383333
+	p493 <= 0.883333
+	p494 = 1 - p493
+	p495 >= 0.383333
+	p495 <= 0.883333
+	p496 = 1 - p495
+	p497 >= 0.383333
+	p497 <= 0.883333
+	p498 = 1 - p497
+	p499 >= 0.383333
+	p499 <= 0.883333
+	p500 = 1 - p499
+	p501 >= 0.383333
+	p501 <= 0.883333
+	p502 = 1 - p501
+	p503 >= 0.294444
+	p503 <= 0.794444
+	p504 = 1 - p503
+	p505 >= 0.294444
+	p505 <= 0.794444
+	p506 = 1 - p505
+	p507 >= 0.294444
+	p507 <= 0.794444
+	p508 = 1 - p507
+	p509 >= 0.294444
+	p509 <= 0.794444
+	p510 = 1 - p509
+	p511 >= 0.294444
+	p511 <= 0.794444
+	p512 = 1 - p511
+	p513 >= 0.294444
+	p513 <= 0.794444
+	p514 = 1 - p513
+	p515 >= 0.294444
+	p515 <= 0.794444
+	p516 = 1 - p515
+	p517 >= 0.294444
+	p517 <= 0.794444
+	p518 = 1 - p517
+	p519 >= 0.294444
+	p519 <= 0.794444
+	p520 = 1 - p519
+	p521 >= 0.294444
+	p521 <= 0.794444
+	p522 = 1 - p521
+	p523 >= 0.294444
+	p523 <= 0.794444
+	p524 = 1 - p523
+	p525 >= 0.294444
+	p525 <= 0.794444
+	p526 = 1 - p525
+	p527 >= 0.294444
+	p527 <= 0.794444
+	p528 = 1 - p527
+	p529 >= 0.294444
+	p529 <= 0.794444
+	p530 = 1 - p529
+	p531 >= 0.294444
+	p531 <= 0.794444
+	p532 = 1 - p531
+	p533 >= 0.294444
+	p533 <= 0.794444
+	p534 = 1 - p533
+	p535 >= 0.294444
+	p535 <= 0.794444
+	p536 = 1 - p535
+	p537 >= 0.294444
+	p537 <= 0.794444
+	p538 = 1 - p537
+	p539 >= 0.205556
+	p539 <= 0.705556
+	p540 = 1 - p539
+	p541 >= 0.205556
+	p541 <= 0.705556
+	p542 = 1 - p541
+	p543 >= 0.205556
+	p543 <= 0.705556
+	p544 = 1 - p543
+	p545 >= 0.205556
+	p545 <= 0.705556
+	p546 = 1 - p545
+	p547 >= 0.205556
+	p547 <= 0.705556
+	p548 = 1 - p547
+	p549 >= 0.205556
+	p549 <= 0.705556
+	p550 = 1 - p549
+	p551 >= 0.205556
+	p551 <= 0.705556
+	p552 = 1 - p551
+	p553 >= 0.205556
+	p553 <= 0.705556
+	p554 = 1 - p553
+	p555 >= 0.205556
+	p555 <= 0.705556
+	p556 = 1 - p555
+	p557 >= 0.205556
+	p557 <= 0.705556
+	p558 = 1 - p557
+	p559 >= 0.205556
+	p559 <= 0.705556
+	p560 = 1 - p559
+	p561 >= 0.205556
+	p561 <= 0.705556
+	p562 = 1 - p561
+	p563 >= 0.205556
+	p563 <= 0.705556
+	p564 = 1 - p563
+	p565 >= 0.205556
+	p565 <= 0.705556
+	p566 = 1 - p565
+	p567 >= 0.205556
+	p567 <= 0.705556
+	p568 = 1 - p567
+	p569 >= 0.205556
+	p569 <= 0.705556
+	p570 = 1 - p569
+	p571 >= 0.205556
+	p571 <= 0.705556
+	p572 = 1 - p571
+	p573 >= 0.205556
+	p573 <= 0.705556
+	p574 = 1 - p573
+	p575 >= 0.116667
+	p575 <= 0.616667
+	p576 = 1 - p575
+	p577 >= 0.116667
+	p577 <= 0.616667
+	p578 = 1 - p577
+	p579 >= 0.116667
+	p579 <= 0.616667
+	p580 = 1 - p579
+	p581 >= 0.116667
+	p581 <= 0.616667
+	p582 = 1 - p581
+	p583 >= 0.116667
+	p583 <= 0.616667
+	p584 = 1 - p583
+	p585 >= 0.116667
+	p585 <= 0.616667
+	p586 = 1 - p585
+	p587 >= 0.116667
+	p587 <= 0.616667
+	p588 = 1 - p587
+	p589 >= 0.116667
+	p589 <= 0.616667
+	p590 = 1 - p589
+	p591 >= 0.116667
+	p591 <= 0.616667
+	p592 = 1 - p591
+	p593 >= 0.116667
+	p593 <= 0.616667
+	p594 = 1 - p593
+	p595 >= 0.116667
+	p595 <= 0.616667
+	p596 = 1 - p595
+	p597 >= 0.116667
+	p597 <= 0.616667
+	p598 = 1 - p597
+	p599 >= 0.116667
+	p599 <= 0.616667
+	p600 = 1 - p599
+	p601 >= 0.116667
+	p601 <= 0.616667
+	p602 = 1 - p601
+	p603 >= 0.116667
+	p603 <= 0.616667
+	p604 = 1 - p603
+	p605 >= 0.116667
+	p605 <= 0.616667
+	p606 = 1 - p605
+	p607 >= 0.116667
+	p607 <= 0.616667
+	p608 = 1 - p607
+	p609 >= 0.116667
+	p609 <= 0.616667
+	p610 = 1 - p609
+	p611 >= 0.027778
+	p611 <= 0.527778
+	p612 = 1 - p611
+	p613 >= 0.027778
+	p613 <= 0.527778
+	p614 = 1 - p613
+	p615 >= 0.027778
+	p615 <= 0.527778
+	p616 = 1 - p615
+	p617 >= 0.027778
+	p617 <= 0.527778
+	p618 = 1 - p617
+	p619 >= 0.027778
+	p619 <= 0.527778
+	p620 = 1 - p619
+	p621 >= 0.027778
+	p621 <= 0.527778
+	p622 = 1 - p621
+	p623 >= 0.027778
+	p623 <= 0.527778
+	p624 = 1 - p623
+	p625 >= 0.027778
+	p625 <= 0.527778
+	p626 = 1 - p625
+	p627 >= 0.027778
+	p627 <= 0.527778
+	p628 = 1 - p627
+	p629 >= 0.027778
+	p629 <= 0.527778
+	p630 = 1 - p629
+	p631 >= 0.027778
+	p631 <= 0.527778
+	p632 = 1 - p631
+	p633 >= 0.027778
+	p633 <= 0.527778
+	p634 = 1 - p633
+	p635 >= 0.027778
+	p635 <= 0.527778
+	p636 = 1 - p635
+	p637 >= 0.027778
+	p637 <= 0.527778
+	p638 = 1 - p637
+	p639 >= 0.027778
+	p639 <= 0.527778
+	p640 = 1 - p639
+	p641 >= 0.027778
+	p641 <= 0.527778
+	p642 = 1 - p641
+	p643 >= 0.027778
+	p643 <= 0.527778
+	p644 = 1 - p643
+	p645 >= 0.027778
+	p645 <= 0.527778
+	p646 = 1 - p645
+	p647 >= 0.000000
+	p647 <= 0.438889
+	p648 = 1 - p647
+	p649 >= 0.000000
+	p649 <= 0.438889
+	p650 = 1 - p649
+	p651 >= 0.000000
+	p651 <= 0.438889
+	p652 = 1 - p651
+	p653 >= 0.000000
+	p653 <= 0.438889
+	p654 = 1 - p653
+	p655 >= 0.000000
+	p655 <= 0.438889
+	p656 = 1 - p655
+	p657 >= 0.000000
+	p657 <= 0.438889
+	p658 = 1 - p657
+	p659 >= 0.000000
+	p659 <= 0.438889
+	p660 = 1 - p659
+	p661 >= 0.000000
+	p661 <= 0.438889
+	p662 = 1 - p661
+	p663 >= 0.000000
+	p663 <= 0.438889
+	p664 = 1 - p663
+	p665 >= 0.000000
+	p665 <= 0.438889
+	p666 = 1 - p665
+	p667 >= 0.000000
+	p667 <= 0.438889
+	p668 = 1 - p667
+	p669 >= 0.000000
+	p669 <= 0.438889
+	p670 = 1 - p669
+	p671 >= 0.000000
+	p671 <= 0.438889
+	p672 = 1 - p671
+	p673 >= 0.000000
+	p673 <= 0.438889
+	p674 = 1 - p673
+	p675 >= 0.000000
+	p675 <= 0.438889
+	p676 = 1 - p675
+	p677 >= 0.000000
+	p677 <= 0.438889
+	p678 = 1 - p677
+	p679 >= 0.000000
+	p679 <= 0.438889
+	p680 = 1 - p679
+	p681 >= 0.000000
+	p681 <= 0.438889
+	p682 = 1 - p681
+	p683 >= 0.000000
+	p683 <= 0.350000
+	p684 = 1 - p683
+	p685 >= 0.000000
+	p685 <= 0.350000
+	p686 = 1 - p685
+	p687 >= 0.000000
+	p687 <= 0.350000
+	p688 = 1 - p687
+	p689 >= 0.000000
+	p689 <= 0.350000
+	p690 = 1 - p689
+	p691 >= 0.000000
+	p691 <= 0.350000
+	p692 = 1 - p691
+	p693 >= 0.000000
+	p693 <= 0.350000
+	p694 = 1 - p693
+	p695 >= 0.000000
+	p695 <= 0.350000
+	p696 = 1 - p695
+	p697 >= 0.000000
+	p697 <= 0.350000
+	p698 = 1 - p697
+	p699 >= 0.000000
+	p699 <= 0.350000
+	p700 = 1 - p699
+	p701 >= 0.000000
+	p701 <= 0.350000
+	p702 = 1 - p701
+	p703 >= 0.000000
+	p703 <= 0.350000
+	p704 = 1 - p703
+	p705 >= 0.000000
+	p705 <= 0.350000
+	p706 = 1 - p705
+	p707 >= 0.000000
+	p707 <= 0.350000
+	p708 = 1 - p707
+	p709 >= 0.000000
+	p709 <= 0.350000
+	p710 = 1 - p709
+	p711 >= 0.000000
+	p711 <= 0.350000
+	p712 = 1 - p711
+	p713 >= 0.000000
+	p713 <= 0.350000
+	p714 = 1 - p713
+	p715 >= 0.000000
+	p715 <= 0.350000
+	p716 = 1 - p715
+	p717 >= 0.000000
+	p717 <= 0.350000
+	p718 = 1 - p717
+	p719 >= 0.650000
+	p719 <= 1.00000
+	p720 = 1 - p719
+	p721 >= 0.650000
+	p721 <= 1.00000
+	p722 = 1 - p721
+	p723 >= 0.561111
+	p723 <= 1.000000
+	p724 = 1 - p723
+	p725 >= 0.472222
+	p725 <= 0.972222
+	p726 = 1 - p725
+	p727 >= 0.383333
+	p727 <= 0.883333
+	p728 = 1 - p727
+	p729 >= 0.294444
+	p729 <= 0.794444
+	p730 = 1 - p729
+	p731 >= 0.205556
+	p731 <= 0.705556
+	p732 = 1 - p731
+	p733 >= 0.116667
+	p733 <= 0.616667
+	p734 = 1 - p733
+	p735 >= 0.027778
+	p735 <= 0.527778
+	p736 = 1 - p735
+	p737 >= 0.000000
+	p737 <= 0.438889
+	p738 = 1 - p737
+	p739 >= 0.650000
+	p739 <= 1.00000
+	p740 = 1 - p739
+	p741 >= 0.650000
+	p741 <= 1.00000
+	p742 = 1 - p741
+	p743 >= 0.561111
+	p743 <= 1.000000
+	p744 = 1 - p743
+	p745 >= 0.472222
+	p745 <= 0.972222
+	p746 = 1 - p745
+	p747 >= 0.383333
+	p747 <= 0.883333
+	p748 = 1 - p747
+	p749 >= 0.294444
+	p749 <= 0.794444
+	p750 = 1 - p749
+	p751 >= 0.205556
+	p751 <= 0.705556
+	p752 = 1 - p751
+	p753 >= 0.116667
+	p753 <= 0.616667
+	p754 = 1 - p753
+	p755 >= 0.027778
+	p755 <= 0.527778
+	p756 = 1 - p755
+	p757 >= 0.000000
+	p757 <= 0.438889
+	p758 = 1 - p757
+	p759 >= 0.650000
+	p759 <= 1.00000
+	p760 = 1 - p759
+	p761 >= 0.650000
+	p761 <= 1.00000
+	p762 = 1 - p761
+	p763 >= 0.561111
+	p763 <= 1.000000
+	p764 = 1 - p763
+	p765 >= 0.472222
+	p765 <= 0.972222
+	p766 = 1 - p765
+	p767 >= 0.383333
+	p767 <= 0.883333
+	p768 = 1 - p767
+	p769 >= 0.294444
+	p769 <= 0.794444
+	p770 = 1 - p769
+	p771 >= 0.205556
+	p771 <= 0.705556
+	p772 = 1 - p771
+	p773 >= 0.116667
+	p773 <= 0.616667
+	p774 = 1 - p773
+	p775 >= 0.027778
+	p775 <= 0.527778
+	p776 = 1 - p775
+	p777 >= 0.000000
+	p777 <= 0.438889
+	p778 = 1 - p777
+	p779 >= 0.650000
+	p779 <= 1.00000
+	p780 = 1 - p779
+	p781 >= 0.650000
+	p781 <= 1.00000
+	p782 = 1 - p781
+	p783 >= 0.561111
+	p783 <= 1.000000
+	p784 = 1 - p783
+	p785 >= 0.472222
+	p785 <= 0.972222
+	p786 = 1 - p785
+	p787 >= 0.383333
+	p787 <= 0.883333
+	p788 = 1 - p787
+	p789 >= 0.294444
+	p789 <= 0.794444
+	p790 = 1 - p789
+	p791 >= 0.205556
+	p791 <= 0.705556
+	p792 = 1 - p791
+	p793 >= 0.116667
+	p793 <= 0.616667
+	p794 = 1 - p793
+	p795 >= 0.027778
+	p795 <= 0.527778
+	p796 = 1 - p795
+	p797 >= 0.000000
+	p797 <= 0.438889
+	p798 = 1 - p797
+	p799 >= 0.650000
+	p799 <= 1.00000
+	p800 = 1 - p799
+	p801 >= 0.650000
+	p801 <= 1.00000
+	p802 = 1 - p801
+	p803 >= 0.561111
+	p803 <= 1.000000
+	p804 = 1 - p803
+	p805 >= 0.472222
+	p805 <= 0.972222
+	p806 = 1 - p805
+	p807 >= 0.383333
+	p807 <= 0.883333
+	p808 = 1 - p807
+	p809 >= 0.294444
+	p809 <= 0.794444
+	p810 = 1 - p809
+	p811 >= 0.205556
+	p811 <= 0.705556
+	p812 = 1 - p811
+	p813 >= 0.116667
+	p813 <= 0.616667
+	p814 = 1 - p813
+	p815 >= 0.027778
+	p815 <= 0.527778
+	p816 = 1 - p815
+	p817 >= 0.000000
+	p817 <= 0.438889
+	p818 = 1 - p817
+	p819 >= 0.650000
+	p819 <= 1.00000
+	p820 = 1 - p819
+	p821 >= 0.650000
+	p821 <= 1.00000
+	p822 = 1 - p821
+	p823 >= 0.561111
+	p823 <= 1.000000
+	p824 = 1 - p823
+	p825 >= 0.472222
+	p825 <= 0.972222
+	p826 = 1 - p825
+	p827 >= 0.383333
+	p827 <= 0.883333
+	p828 = 1 - p827
+	p829 >= 0.294444
+	p829 <= 0.794444
+	p830 = 1 - p829
+	p831 >= 0.205556
+	p831 <= 0.705556
+	p832 = 1 - p831
+	p833 >= 0.116667
+	p833 <= 0.616667
+	p834 = 1 - p833
+	p835 >= 0.027778
+	p835 <= 0.527778
+	p836 = 1 - p835
+	p837 >= 0.000000
+	p837 <= 0.438889
+	p838 = 1 - p837
+	p839 >= 0.650000
+	p839 <= 1.00000
+	p840 = 1 - p839
+	p841 >= 0.650000
+	p841 <= 1.00000
+	p842 = 1 - p841
+	p843 >= 0.561111
+	p843 <= 1.000000
+	p844 = 1 - p843
+	p845 >= 0.472222
+	p845 <= 0.972222
+	p846 = 1 - p845
+	p847 >= 0.383333
+	p847 <= 0.883333
+	p848 = 1 - p847
+	p849 >= 0.294444
+	p849 <= 0.794444
+	p850 = 1 - p849
+	p851 >= 0.205556
+	p851 <= 0.705556
+	p852 = 1 - p851
+	p853 >= 0.116667
+	p853 <= 0.616667
+	p854 = 1 - p853
+	p855 >= 0.027778
+	p855 <= 0.527778
+	p856 = 1 - p855
+	p857 >= 0.000000
+	p857 <= 0.438889
+	p858 = 1 - p857
+	p859 >= 0.650000
+	p859 <= 1.00000
+	p860 = 1 - p859
+	p861 >= 0.650000
+	p861 <= 1.00000
+	p862 = 1 - p861
+	p863 >= 0.561111
+	p863 <= 1.000000
+	p864 = 1 - p863
+	p865 >= 0.472222
+	p865 <= 0.972222
+	p866 = 1 - p865
+	p867 >= 0.383333
+	p867 <= 0.883333
+	p868 = 1 - p867
+	p869 >= 0.294444
+	p869 <= 0.794444
+	p870 = 1 - p869
+	p871 >= 0.205556
+	p871 <= 0.705556
+	p872 = 1 - p871
+	p873 >= 0.116667
+	p873 <= 0.616667
+	p874 = 1 - p873
+	p875 >= 0.027778
+	p875 <= 0.527778
+	p876 = 1 - p875
+	p877 >= 0.000000
+	p877 <= 0.438889
+	p878 = 1 - p877
+	p879 >= 0.650000
+	p879 <= 1.00000
+	p880 = 1 - p879
+	p881 >= 0.650000
+	p881 <= 1.00000
+	p882 = 1 - p881
+	p883 >= 0.561111
+	p883 <= 1.000000
+	p884 = 1 - p883
+	p885 >= 0.472222
+	p885 <= 0.972222
+	p886 = 1 - p885
+	p887 >= 0.383333
+	p887 <= 0.883333
+	p888 = 1 - p887
+	p889 >= 0.294444
+	p889 <= 0.794444
+	p890 = 1 - p889
+	p891 >= 0.205556
+	p891 <= 0.705556
+	p892 = 1 - p891
+	p893 >= 0.116667
+	p893 <= 0.616667
+	p894 = 1 - p893
+	p895 >= 0.027778
+	p895 <= 0.527778
+	p896 = 1 - p895
+	p897 >= 0.000000
+	p897 <= 0.438889
+	p898 = 1 - p897
+	p899 >= 0.650000
+	p899 <= 1.00000
+	p900 = 1 - p899
+	p901 >= 0.650000
+	p901 <= 1.00000
+	p902 = 1 - p901
+	p903 >= 0.561111
+	p903 <= 1.000000
+	p904 = 1 - p903
+	p905 >= 0.472222
+	p905 <= 0.972222
+	p906 = 1 - p905
+	p907 >= 0.383333
+	p907 <= 0.883333
+	p908 = 1 - p907
+	p909 >= 0.294444
+	p909 <= 0.794444
+	p910 = 1 - p909
+	p911 >= 0.205556
+	p911 <= 0.705556
+	p912 = 1 - p911
+	p913 >= 0.116667
+	p913 <= 0.616667
+	p914 = 1 - p913
+	p915 >= 0.027778
+	p915 <= 0.527778
+	p916 = 1 - p915
+	p917 >= 0.000000
+	p917 <= 0.438889
+	p918 = 1 - p917
+	p919 >= 0.650000
+	p919 <= 1.00000
+	p920 = 1 - p919
+	p921 >= 0.650000
+	p921 <= 1.00000
+	p922 = 1 - p921
+	p923 >= 0.561111
+	p923 <= 1.000000
+	p924 = 1 - p923
+	p925 >= 0.472222
+	p925 <= 0.972222
+	p926 = 1 - p925
+	p927 >= 0.383333
+	p927 <= 0.883333
+	p928 = 1 - p927
+	p929 >= 0.294444
+	p929 <= 0.794444
+	p930 = 1 - p929
+	p931 >= 0.205556
+	p931 <= 0.705556
+	p932 = 1 - p931
+	p933 >= 0.116667
+	p933 <= 0.616667
+	p934 = 1 - p933
+	p935 >= 0.027778
+	p935 <= 0.527778
+	p936 = 1 - p935
+	p937 >= 0.000000
+	p937 <= 0.438889
+	p938 = 1 - p937
+	p939 >= 0.650000
+	p939 <= 1.00000
+	p940 = 1 - p939
+	p941 >= 0.650000
+	p941 <= 1.00000
+	p942 = 1 - p941
+	p943 >= 0.561111
+	p943 <= 1.000000
+	p944 = 1 - p943
+	p945 >= 0.472222
+	p945 <= 0.972222
+	p946 = 1 - p945
+	p947 >= 0.383333
+	p947 <= 0.883333
+	p948 = 1 - p947
+	p949 >= 0.294444
+	p949 <= 0.794444
+	p950 = 1 - p949
+	p951 >= 0.205556
+	p951 <= 0.705556
+	p952 = 1 - p951
+	p953 >= 0.116667
+	p953 <= 0.616667
+	p954 = 1 - p953
+	p955 >= 0.027778
+	p955 <= 0.527778
+	p956 = 1 - p955
+	p957 >= 0.000000
+	p957 <= 0.438889
+	p958 = 1 - p957
+	p959 >= 0.650000
+	p959 <= 1.00000
+	p960 = 1 - p959
+	p961 >= 0.650000
+	p961 <= 1.00000
+	p962 = 1 - p961
+	p963 >= 0.561111
+	p963 <= 1.000000
+	p964 = 1 - p963
+	p965 >= 0.472222
+	p965 <= 0.972222
+	p966 = 1 - p965
+	p967 >= 0.383333
+	p967 <= 0.883333
+	p968 = 1 - p967
+	p969 >= 0.294444
+	p969 <= 0.794444
+	p970 = 1 - p969
+	p971 >= 0.205556
+	p971 <= 0.705556
+	p972 = 1 - p971
+	p973 >= 0.116667
+	p973 <= 0.616667
+	p974 = 1 - p973
+	p975 >= 0.027778
+	p975 <= 0.527778
+	p976 = 1 - p975
+	p977 >= 0.000000
+	p977 <= 0.438889
+	p978 = 1 - p977
+	p979 >= 0.650000
+	p979 <= 1.00000
+	p980 = 1 - p979
+	p981 >= 0.650000
+	p981 <= 1.00000
+	p982 = 1 - p981
+	p983 >= 0.561111
+	p983 <= 1.000000
+	p984 = 1 - p983
+	p985 >= 0.472222
+	p985 <= 0.972222
+	p986 = 1 - p985
+	p987 >= 0.383333
+	p987 <= 0.883333
+	p988 = 1 - p987
+	p989 >= 0.294444
+	p989 <= 0.794444
+	p990 = 1 - p989
+	p991 >= 0.205556
+	p991 <= 0.705556
+	p992 = 1 - p991
+	p993 >= 0.116667
+	p993 <= 0.616667
+	p994 = 1 - p993
+	p995 >= 0.027778
+	p995 <= 0.527778
+	p996 = 1 - p995
+	p997 >= 0.000000
+	p997 <= 0.438889
+	p998 = 1 - p997
+	p999 >= 0.650000
+	p999 <= 1.00000
+	p1000 = 1 - p999
+	p1001 >= 0.650000
+	p1001 <= 1.00000
+	p1002 = 1 - p1001
+	p1003 >= 0.561111
+	p1003 <= 1.000000
+	p1004 = 1 - p1003
+	p1005 >= 0.472222
+	p1005 <= 0.972222
+	p1006 = 1 - p1005
+	p1007 >= 0.383333
+	p1007 <= 0.883333
+	p1008 = 1 - p1007
+	p1009 >= 0.294444
+	p1009 <= 0.794444
+	p1010 = 1 - p1009
+	p1011 >= 0.205556
+	p1011 <= 0.705556
+	p1012 = 1 - p1011
+	p1013 >= 0.116667
+	p1013 <= 0.616667
+	p1014 = 1 - p1013
+	p1015 >= 0.027778
+	p1015 <= 0.527778
+	p1016 = 1 - p1015
+	p1017 >= 0.000000
+	p1017 <= 0.438889
+	p1018 = 1 - p1017
+	p1019 >= 0.650000
+	p1019 <= 1.00000
+	p1020 = 1 - p1019
+	p1021 >= 0.650000
+	p1021 <= 1.00000
+	p1022 = 1 - p1021
+	p1023 >= 0.561111
+	p1023 <= 1.000000
+	p1024 = 1 - p1023
+	p1025 >= 0.472222
+	p1025 <= 0.972222
+	p1026 = 1 - p1025
+	p1027 >= 0.383333
+	p1027 <= 0.883333
+	p1028 = 1 - p1027
+	p1029 >= 0.294444
+	p1029 <= 0.794444
+	p1030 = 1 - p1029
+	p1031 >= 0.205556
+	p1031 <= 0.705556
+	p1032 = 1 - p1031
+	p1033 >= 0.116667
+	p1033 <= 0.616667
+	p1034 = 1 - p1033
+	p1035 >= 0.027778
+	p1035 <= 0.527778
+	p1036 = 1 - p1035
+	p1037 >= 0.000000
+	p1037 <= 0.438889
+	p1038 = 1 - p1037
+	p1039 >= 0.650000
+	p1039 <= 1.00000
+	p1040 = 1 - p1039
+	p1041 >= 0.650000
+	p1041 <= 1.00000
+	p1042 = 1 - p1041
+	p1043 >= 0.561111
+	p1043 <= 1.000000
+	p1044 = 1 - p1043
+	p1045 >= 0.472222
+	p1045 <= 0.972222
+	p1046 = 1 - p1045
+	p1047 >= 0.383333
+	p1047 <= 0.883333
+	p1048 = 1 - p1047
+	p1049 >= 0.294444
+	p1049 <= 0.794444
+	p1050 = 1 - p1049
+	p1051 >= 0.205556
+	p1051 <= 0.705556
+	p1052 = 1 - p1051
+	p1053 >= 0.116667
+	p1053 <= 0.616667
+	p1054 = 1 - p1053
+	p1055 >= 0.027778
+	p1055 <= 0.527778
+	p1056 = 1 - p1055
+	p1057 >= 0.000000
+	p1057 <= 0.438889
+	p1058 = 1 - p1057
+	p1059 >= 0.650000
+	p1059 <= 1.00000
+	p1060 = 1 - p1059
+	p1061 >= 0.650000
+	p1061 <= 1.00000
+	p1062 = 1 - p1061
+	p1063 >= 0.561111
+	p1063 <= 1.000000
+	p1064 = 1 - p1063
+	p1065 >= 0.472222
+	p1065 <= 0.972222
+	p1066 = 1 - p1065
+	p1067 >= 0.383333
+	p1067 <= 0.883333
+	p1068 = 1 - p1067
+	p1069 >= 0.294444
+	p1069 <= 0.794444
+	p1070 = 1 - p1069
+	p1071 >= 0.205556
+	p1071 <= 0.705556
+	p1072 = 1 - p1071
+	p1073 >= 0.116667
+	p1073 <= 0.616667
+	p1074 = 1 - p1073
+	p1075 >= 0.027778
+	p1075 <= 0.527778
+	p1076 = 1 - p1075
+	p1077 >= 0.000000
+	p1077 <= 0.438889
+	p1078 = 1 - p1077
+	p1079 >= 0.000000
+	p1079 <= 0.350000
+	p1080 = 1 - p1079
+	p1081 >= 0.561111
+	p1081 <= 1.000000
+	p1082 = 1 - p1081
+	p1083 >= 0.472222
+	p1083 <= 0.972222
+	p1084 = 1 - p1083
+	p1085 >= 0.383333
+	p1085 <= 0.883333
+	p1086 = 1 - p1085
+	p1087 >= 0.294444
+	p1087 <= 0.794444
+	p1088 = 1 - p1087
+	p1089 >= 0.205556
+	p1089 <= 0.705556
+	p1090 = 1 - p1089
+	p1091 >= 0.116667
+	p1091 <= 0.616667
+	p1092 = 1 - p1091
+	p1093 >= 0.027778
+	p1093 <= 0.527778
+	p1094 = 1 - p1093
+	p1095 >= 0.000000
+	p1095 <= 0.438889
+	p1096 = 1 - p1095
+	p1097 >= 0.000000
+	p1097 <= 0.350000
+	p1098 = 1 - p1097
+	p1099 >= 0.000000
+	p1099 <= 0.350000
+	p1100 = 1 - p1099
+	p1101 >= 0.561111
+	p1101 <= 1.000000
+	p1102 = 1 - p1101
+	p1103 >= 0.472222
+	p1103 <= 0.972222
+	p1104 = 1 - p1103
+	p1105 >= 0.383333
+	p1105 <= 0.883333
+	p1106 = 1 - p1105
+	p1107 >= 0.294444
+	p1107 <= 0.794444
+	p1108 = 1 - p1107
+	p1109 >= 0.205556
+	p1109 <= 0.705556
+	p1110 = 1 - p1109
+	p1111 >= 0.116667
+	p1111 <= 0.616667
+	p1112 = 1 - p1111
+	p1113 >= 0.027778
+	p1113 <= 0.527778
+	p1114 = 1 - p1113
+	p1115 >= 0.000000
+	p1115 <= 0.438889
+	p1116 = 1 - p1115
+	p1117 >= 0.000000
+	p1117 <= 0.350000
+	p1118 = 1 - p1117
+	p1119 >= 0.000000
+	p1119 <= 0.350000
+	p1120 = 1 - p1119
+	p1121 >= 0.561111
+	p1121 <= 1.000000
+	p1122 = 1 - p1121
+	p1123 >= 0.472222
+	p1123 <= 0.972222
+	p1124 = 1 - p1123
+	p1125 >= 0.383333
+	p1125 <= 0.883333
+	p1126 = 1 - p1125
+	p1127 >= 0.294444
+	p1127 <= 0.794444
+	p1128 = 1 - p1127
+	p1129 >= 0.205556
+	p1129 <= 0.705556
+	p1130 = 1 - p1129
+	p1131 >= 0.116667
+	p1131 <= 0.616667
+	p1132 = 1 - p1131
+	p1133 >= 0.027778
+	p1133 <= 0.527778
+	p1134 = 1 - p1133
+	p1135 >= 0.000000
+	p1135 <= 0.438889
+	p1136 = 1 - p1135
+	p1137 >= 0.000000
+	p1137 <= 0.350000
+	p1138 = 1 - p1137
+	p1139 >= 0.000000
+	p1139 <= 0.350000
+	p1140 = 1 - p1139
+	p1141 >= 0.561111
+	p1141 <= 1.000000
+	p1142 = 1 - p1141
+	p1143 >= 0.472222
+	p1143 <= 0.972222
+	p1144 = 1 - p1143
+	p1145 >= 0.383333
+	p1145 <= 0.883333
+	p1146 = 1 - p1145
+	p1147 >= 0.294444
+	p1147 <= 0.794444
+	p1148 = 1 - p1147
+	p1149 >= 0.205556
+	p1149 <= 0.705556
+	p1150 = 1 - p1149
+	p1151 >= 0.116667
+	p1151 <= 0.616667
+	p1152 = 1 - p1151
+	p1153 >= 0.027778
+	p1153 <= 0.527778
+	p1154 = 1 - p1153
+	p1155 >= 0.000000
+	p1155 <= 0.438889
+	p1156 = 1 - p1155
+	p1157 >= 0.000000
+	p1157 <= 0.350000
+	p1158 = 1 - p1157
+	p1159 >= 0.000000
+	p1159 <= 0.350000
+	p1160 = 1 - p1159
+	p1161 >= 0.561111
+	p1161 <= 1.000000
+	p1162 = 1 - p1161
+	p1163 >= 0.472222
+	p1163 <= 0.972222
+	p1164 = 1 - p1163
+	p1165 >= 0.383333
+	p1165 <= 0.883333
+	p1166 = 1 - p1165
+	p1167 >= 0.294444
+	p1167 <= 0.794444
+	p1168 = 1 - p1167
+	p1169 >= 0.205556
+	p1169 <= 0.705556
+	p1170 = 1 - p1169
+	p1171 >= 0.116667
+	p1171 <= 0.616667
+	p1172 = 1 - p1171
+	p1173 >= 0.027778
+	p1173 <= 0.527778
+	p1174 = 1 - p1173
+	p1175 >= 0.000000
+	p1175 <= 0.438889
+	p1176 = 1 - p1175
+	p1177 >= 0.000000
+	p1177 <= 0.350000
+	p1178 = 1 - p1177
+	p1179 >= 0.000000
+	p1179 <= 0.350000
+	p1180 = 1 - p1179
+	p1181 >= 0.561111
+	p1181 <= 1.000000
+	p1182 = 1 - p1181
+	p1183 >= 0.472222
+	p1183 <= 0.972222
+	p1184 = 1 - p1183
+	p1185 >= 0.383333
+	p1185 <= 0.883333
+	p1186 = 1 - p1185
+	p1187 >= 0.294444
+	p1187 <= 0.794444
+	p1188 = 1 - p1187
+	p1189 >= 0.205556
+	p1189 <= 0.705556
+	p1190 = 1 - p1189
+	p1191 >= 0.116667
+	p1191 <= 0.616667
+	p1192 = 1 - p1191
+	p1193 >= 0.027778
+	p1193 <= 0.527778
+	p1194 = 1 - p1193
+	p1195 >= 0.000000
+	p1195 <= 0.438889
+	p1196 = 1 - p1195
+	p1197 >= 0.000000
+	p1197 <= 0.350000
+	p1198 = 1 - p1197
+	p1199 >= 0.000000
+	p1199 <= 0.350000
+	p1200 = 1 - p1199
+	p1201 >= 0.561111
+	p1201 <= 1.000000
+	p1202 = 1 - p1201
+	p1203 >= 0.472222
+	p1203 <= 0.972222
+	p1204 = 1 - p1203
+	p1205 >= 0.383333
+	p1205 <= 0.883333
+	p1206 = 1 - p1205
+	p1207 >= 0.294444
+	p1207 <= 0.794444
+	p1208 = 1 - p1207
+	p1209 >= 0.205556
+	p1209 <= 0.705556
+	p1210 = 1 - p1209
+	p1211 >= 0.116667
+	p1211 <= 0.616667
+	p1212 = 1 - p1211
+	p1213 >= 0.027778
+	p1213 <= 0.527778
+	p1214 = 1 - p1213
+	p1215 >= 0.000000
+	p1215 <= 0.438889
+	p1216 = 1 - p1215
+	p1217 >= 0.000000
+	p1217 <= 0.350000
+	p1218 = 1 - p1217
+	p1219 >= 0.000000
+	p1219 <= 0.350000
+	p1220 = 1 - p1219
+	p1221 >= 0.561111
+	p1221 <= 1.000000
+	p1222 = 1 - p1221
+	p1223 >= 0.472222
+	p1223 <= 0.972222
+	p1224 = 1 - p1223
+	p1225 >= 0.383333
+	p1225 <= 0.883333
+	p1226 = 1 - p1225
+	p1227 >= 0.294444
+	p1227 <= 0.794444
+	p1228 = 1 - p1227
+	p1229 >= 0.205556
+	p1229 <= 0.705556
+	p1230 = 1 - p1229
+	p1231 >= 0.383333
+	p1231 <= 0.883333
+	p1232 = 1 - p1231
+	p1233 >= 0.472222
+	p1233 <= 0.972222
+	p1234 = 1 - p1233
+	p1235 >= 0.561111
+	p1235 <= 1.000000
+	p1236 = 1 - p1235
+	p1237 >= 0.650000
+	p1237 <= 1.00000
+	p1238 = 1 - p1237
+	p1239 >= 0.650000
+	p1239 <= 1.00000
+	p1240 = 1 - p1239
+	p1241 >= 0.000000
+	p1241 <= 0.438889
+	p1242 = 1 - p1241
+	p1243 >= 0.027778
+	p1243 <= 0.527778
+	p1244 = 1 - p1243
+	p1245 >= 0.116667
+	p1245 <= 0.616667
+	p1246 = 1 - p1245
+	p1247 >= 0.205556
+	p1247 <= 0.705556
+	p1248 = 1 - p1247
+	p1249 >= 0.294444
+	p1249 <= 0.794444
+	p1250 = 1 - p1249
+	p1251 >= 0.383333
+	p1251 <= 0.883333
+	p1252 = 1 - p1251
+	p1253 >= 0.472222
+	p1253 <= 0.972222
+	p1254 = 1 - p1253
+	p1255 >= 0.561111
+	p1255 <= 1.000000
+	p1256 = 1 - p1255
+	p1257 >= 0.650000
+	p1257 <= 1.00000
+	p1258 = 1 - p1257
+	p1259 >= 0.650000
+	p1259 <= 1.00000
+	p1260 = 1 - p1259
+	p1261 >= 0.000000
+	p1261 <= 0.438889
+	p1262 = 1 - p1261
+	p1263 >= 0.027778
+	p1263 <= 0.527778
+	p1264 = 1 - p1263
+	p1265 >= 0.116667
+	p1265 <= 0.616667
+	p1266 = 1 - p1265
+	p1267 >= 0.205556
+	p1267 <= 0.705556
+	p1268 = 1 - p1267
+	p1269 >= 0.294444
+	p1269 <= 0.794444
+	p1270 = 1 - p1269
+	p1271 >= 0.383333
+	p1271 <= 0.883333
+	p1272 = 1 - p1271
+	p1273 >= 0.472222
+	p1273 <= 0.972222
+	p1274 = 1 - p1273
+	p1275 >= 0.383333
+	p1275 <= 0.883333
+	p1276 = 1 - p1275
+	p1277 >= 0.294444
+	p1277 <= 0.794444
+	p1278 = 1 - p1277
+	p1279 >= 0.205556
+	p1279 <= 0.705556
+	p1280 = 1 - p1279
+	p1281 >= 0.116667
+	p1281 <= 0.616667
+	p1282 = 1 - p1281
+	p1283 >= 0.027778
+	p1283 <= 0.527778
+	p1284 = 1 - p1283
+	p1285 >= 0.000000
+	p1285 <= 0.438889
+	p1286 = 1 - p1285
+	p1287 >= 0.000000
+	p1287 <= 0.350000
+	p1288 = 1 - p1287
+	p1289 >= 0.000000
+	p1289 <= 0.350000
+	p1290 = 1 - p1289
+	p1291 >= 0.561111
+	p1291 <= 1.000000
+	p1292 = 1 - p1291
+	p1293 >= 0.472222
+	p1293 <= 0.972222
+	p1294 = 1 - p1293
+	p1295 >= 0.383333
+	p1295 <= 0.883333
+	p1296 = 1 - p1295
+	p1297 >= 0.294444
+	p1297 <= 0.794444
+	p1298 = 1 - p1297
+	p1299 >= 0.205556
+	p1299 <= 0.705556
+	p1300 = 1 - p1299
+	p1301 >= 0.116667
+	p1301 <= 0.616667
+	p1302 = 1 - p1301
+	p1303 >= 0.027778
+	p1303 <= 0.527778
+	p1304 = 1 - p1303
+	p1305 >= 0.000000
+	p1305 <= 0.438889
+	p1306 = 1 - p1305
+	p1307 >= 0.000000
+	p1307 <= 0.350000
+	p1308 = 1 - p1307
+	p1309 >= 0.000000
+	p1309 <= 0.350000
+	p1310 = 1 - p1309
+	p1311 >= 0.561111
+	p1311 <= 1.000000
+	p1312 = 1 - p1311
+	p1313 >= 0.472222
+	p1313 <= 0.972222
+	p1314 = 1 - p1313
+	p1315 >= 0.383333
+	p1315 <= 0.883333
+	p1316 = 1 - p1315
+	p1317 >= 0.294444
+	p1317 <= 0.794444
+	p1318 = 1 - p1317
+	p1319 >= 0.205556
+	p1319 <= 0.705556
+	p1320 = 1 - p1319
+	p1321 >= 0.116667
+	p1321 <= 0.616667
+	p1322 = 1 - p1321
+	p1323 >= 0.027778
+	p1323 <= 0.527778
+	p1324 = 1 - p1323
+	p1325 >= 0.000000
+	p1325 <= 0.438889
+	p1326 = 1 - p1325
+	p1327 >= 0.000000
+	p1327 <= 0.350000
+	p1328 = 1 - p1327
+	p1329 >= 0.000000
+	p1329 <= 0.350000
+	p1330 = 1 - p1329
+	p1331 >= 0.561111
+	p1331 <= 1.000000
+	p1332 = 1 - p1331
+	p1333 >= 0.472222
+	p1333 <= 0.972222
+	p1334 = 1 - p1333
+	p1335 >= 0.383333
+	p1335 <= 0.883333
+	p1336 = 1 - p1335
+	p1337 >= 0.294444
+	p1337 <= 0.794444
+	p1338 = 1 - p1337
+	p1339 >= 0.205556
+	p1339 <= 0.705556
+	p1340 = 1 - p1339
+	p1341 >= 0.116667
+	p1341 <= 0.616667
+	p1342 = 1 - p1341
+	p1343 >= 0.027778
+	p1343 <= 0.527778
+	p1344 = 1 - p1343
+	p1345 >= 0.000000
+	p1345 <= 0.438889
+	p1346 = 1 - p1345
+	p1347 >= 0.000000
+	p1347 <= 0.350000
+	p1348 = 1 - p1347
+	p1349 >= 0.000000
+	p1349 <= 0.350000
+	p1350 = 1 - p1349
+	p1351 >= 0.561111
+	p1351 <= 1.000000
+	p1352 = 1 - p1351
+	p1353 >= 0.472222
+	p1353 <= 0.972222
+	p1354 = 1 - p1353
+	p1355 >= 0.116667
+	p1355 <= 0.616667
+	p1356 = 1 - p1355
+	p1357 >= 0.205556
+	p1357 <= 0.705556
+	p1358 = 1 - p1357
+	p1359 >= 0.294444
+	p1359 <= 0.794444
+	p1360 = 1 - p1359
+	p1361 >= 0.383333
+	p1361 <= 0.883333
+	p1362 = 1 - p1361
+	p1363 >= 0.472222
+	p1363 <= 0.972222
+	p1364 = 1 - p1363
+	p1365 >= 0.561111
+	p1365 <= 1.000000
+	p1366 = 1 - p1365
+	p1367 >= 0.650000
+	p1367 <= 1.00000
+	p1368 = 1 - p1367
+	p1369 >= 0.650000
+	p1369 <= 1.00000
+	p1370 = 1 - p1369
+	p1371 >= 0.000000
+	p1371 <= 0.438889
+	p1372 = 1 - p1371
+	p1373 >= 0.027778
+	p1373 <= 0.527778
+	p1374 = 1 - p1373
+	p1375 >= 0.116667
+	p1375 <= 0.616667
+	p1376 = 1 - p1375
+	p1377 >= 0.205556
+	p1377 <= 0.705556
+	p1378 = 1 - p1377
+	p1379 >= 0.294444
+	p1379 <= 0.794444
+	p1380 = 1 - p1379
+	p1381 >= 0.383333
+	p1381 <= 0.883333
+	p1382 = 1 - p1381
+	p1383 >= 0.472222
+	p1383 <= 0.972222
+	p1384 = 1 - p1383
+	p1385 >= 0.561111
+	p1385 <= 1.000000
+	p1386 = 1 - p1385
+	p1387 >= 0.650000
+	p1387 <= 1.00000
+	p1388 = 1 - p1387
+	p1389 >= 0.650000
+	p1389 <= 1.00000
+	p1390 = 1 - p1389
+	p1391 >= 0.000000
+	p1391 <= 0.438889
+	p1392 = 1 - p1391
+	p1393 >= 0.027778
+	p1393 <= 0.527778
+	p1394 = 1 - p1393
+	p1395 >= 0.116667
+	p1395 <= 0.616667
+	p1396 = 1 - p1395
+	p1397 >= 0.205556
+	p1397 <= 0.705556
+	p1398 = 1 - p1397
+	p1399 >= 0.294444
+	p1399 <= 0.794444
+	p1400 = 1 - p1399
+	p1401 >= 0.383333
+	p1401 <= 0.883333
+	p1402 = 1 - p1401
+	p1403 >= 0.472222
+	p1403 <= 0.972222
+	p1404 = 1 - p1403
+	p1405 >= 0.561111
+	p1405 <= 1.000000
+	p1406 = 1 - p1405
+	p1407 >= 0.650000
+	p1407 <= 1.00000
+endrestrictions
 
 reward
 	robot-at-x01y01 -1
@@ -1582,7 +3672,7 @@ reward
 	robot-at-x03y02 -1
 	robot-at-x03y03 -1
 	robot-at-x03y04 -1
-	robot-at-x03y05 -1
+	robot-at-x06y19 robot-at-x06y20 1.000000	robot-at-x03y05 -1
 	robot-at-x03y06 -1
 	robot-at-x03y07 -1
 	robot-at-x03y08 -1

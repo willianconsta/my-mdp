@@ -2,100 +2,164 @@ states
 	robot-at-x01y01, robot-at-x01y02, robot-at-x01y03, robot-at-x02y01, robot-at-x02y02, robot-at-x02y03, robot-at-x03y01, robot-at-x03y02, robot-at-x03y03, robot-at-x04y01, robot-at-x04y02, robot-at-x04y03, robot-at-x05y01, robot-at-x05y02, robot-at-x05y03, broken-robot
 endstates
 
+vars
+	p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38
+endvars
+
 action move-south
-	robot-at-x01y01 robot-at-x01y01 1.00000 1.000000
-	robot-at-x01y02 robot-at-x01y01 1.000000 1.000000
-	robot-at-x01y03 robot-at-x01y02 0.650000 1.00000
-	robot-at-x01y03 broken-robot 0.000000 0.350000
-	robot-at-x02y01 robot-at-x02y01 1.000000 1.000000
-	robot-at-x02y02 robot-at-x02y01 1.000000 1.000000
-	robot-at-x02y03 robot-at-x02y02 0.450000 0.950000
-	robot-at-x02y03 broken-robot 0.050000 0.550000
-	robot-at-x03y01 robot-at-x03y01 1.000000 1.000000
-	robot-at-x03y02 robot-at-x03y01 1.000000 1.000000
-	robot-at-x03y03 robot-at-x03y02 0.250000 0.750000
-	robot-at-x03y03 broken-robot 0.250000 0.750000
-	robot-at-x04y01 robot-at-x04y01 1.000000 1.000000
-	robot-at-x04y02 robot-at-x04y01 1.000000 1.000000
-	robot-at-x04y03 robot-at-x04y02 0.050000 0.550000
-	robot-at-x04y03 broken-robot 0.450000 0.950000
-	robot-at-x05y01 robot-at-x05y01 1.000000 1.000000
-	robot-at-x05y02 robot-at-x05y01 1.000000 1.000000
-	robot-at-x05y03 robot-at-x05y03 1.000000 1.000000
-	broken-robot broken-robot 1.000000 1.000000
+	robot-at-x01y01 robot-at-x01y01 1.00000
+	robot-at-x01y02 robot-at-x01y01 1.000000
+	robot-at-x01y03 robot-at-x01y02 p1
+	robot-at-x01y03 broken-robot p2
+	robot-at-x02y01 robot-at-x02y01 1.000000
+	robot-at-x02y02 robot-at-x02y01 1.000000
+	robot-at-x02y03 robot-at-x02y02 p3
+	robot-at-x02y03 broken-robot p4
+	robot-at-x03y01 robot-at-x03y01 1.000000
+	robot-at-x03y02 robot-at-x03y01 1.000000
+	robot-at-x03y03 robot-at-x03y02 p5
+	robot-at-x03y03 broken-robot p6
+	robot-at-x04y01 robot-at-x04y01 1.000000
+	robot-at-x04y02 robot-at-x04y01 1.000000
+	robot-at-x04y03 robot-at-x04y02 p7
+	robot-at-x04y03 broken-robot p8
+	robot-at-x05y01 robot-at-x05y01 1.000000
+	robot-at-x05y02 robot-at-x05y01 1.000000
+	robot-at-x05y03 robot-at-x05y03 1.000000
+	broken-robot broken-robot 1.000000
 endaction
 
 action move-north
-	robot-at-x01y03 robot-at-x01y03 1.000000 1.000000
-	robot-at-x01y02 robot-at-x01y03 1.000000 1.000000
-	robot-at-x01y01 robot-at-x01y02 0.650000 1.00000
-	robot-at-x01y01 broken-robot 0.000000 0.350000
-	robot-at-x02y03 robot-at-x02y03 1.000000 1.000000
-	robot-at-x02y02 robot-at-x02y03 1.000000 1.000000
-	robot-at-x02y01 robot-at-x02y02 0.450000 0.950000
-	robot-at-x02y01 broken-robot 0.050000 0.550000
-	robot-at-x03y03 robot-at-x03y03 1.000000 1.000000
-	robot-at-x03y02 robot-at-x03y03 1.000000 1.000000
-	robot-at-x03y01 robot-at-x03y02 0.250000 0.750000
-	robot-at-x03y01 broken-robot 0.250000 0.750000
-	robot-at-x04y03 robot-at-x04y03 1.000000 1.000000
-	robot-at-x04y02 robot-at-x04y03 1.000000 1.000000
-	robot-at-x04y01 robot-at-x04y02 0.050000 0.550000
-	robot-at-x04y01 broken-robot 0.450000 0.950000
-	robot-at-x05y03 robot-at-x05y03 1.000000 1.000000
-	robot-at-x05y02 robot-at-x05y03 1.000000 1.000000
-	robot-at-x05y01 robot-at-x05y02 0.000000 0.350000
-	robot-at-x05y01 broken-robot 0.650000 1.00000
-	broken-robot broken-robot 1.000000 1.000000
+	robot-at-x01y03 robot-at-x01y03 1.000000
+	robot-at-x01y02 robot-at-x01y03 1.000000
+	robot-at-x01y01 robot-at-x01y02 p9
+	robot-at-x01y01 broken-robot p10
+	robot-at-x02y03 robot-at-x02y03 1.000000
+	robot-at-x02y02 robot-at-x02y03 1.000000
+	robot-at-x02y01 robot-at-x02y02 p11
+	robot-at-x02y01 broken-robot p12
+	robot-at-x03y03 robot-at-x03y03 1.000000
+	robot-at-x03y02 robot-at-x03y03 1.000000
+	robot-at-x03y01 robot-at-x03y02 p13
+	robot-at-x03y01 broken-robot p14
+	robot-at-x04y03 robot-at-x04y03 1.000000
+	robot-at-x04y02 robot-at-x04y03 1.000000
+	robot-at-x04y01 robot-at-x04y02 p15
+	robot-at-x04y01 broken-robot p16
+	robot-at-x05y03 robot-at-x05y03 1.000000
+	robot-at-x05y02 robot-at-x05y03 1.000000
+	robot-at-x05y01 robot-at-x05y02 p17
+	robot-at-x05y01 broken-robot p18
+	broken-robot broken-robot 1.000000
 endaction
 
 action move-west
-	robot-at-x01y01 robot-at-x01y01 1.000000 1.000000
-	robot-at-x02y01 robot-at-x01y01 1.000000 1.000000
-	robot-at-x03y01 robot-at-x02y01 1.000000 1.000000
-	robot-at-x04y01 robot-at-x03y01 1.000000 1.000000
-	robot-at-x05y01 robot-at-x04y01 1.000000 1.000000
-	robot-at-x01y02 robot-at-x01y02 0.650000 1.00000
-	robot-at-x01y02 broken-robot 0.000000 0.350000
-	robot-at-x02y02 robot-at-x01y02 0.650000 1.00000
-	robot-at-x02y02 broken-robot 0.000000 0.350000
-	robot-at-x03y02 robot-at-x02y02 0.450000 0.950000
-	robot-at-x03y02 broken-robot 0.050000 0.550000
-	robot-at-x04y02 robot-at-x03y02 0.250000 0.750000
-	robot-at-x04y02 broken-robot 0.250000 0.750000
-	robot-at-x05y02 robot-at-x04y02 0.050000 0.550000
-	robot-at-x05y02 broken-robot 0.450000 0.950000
-	robot-at-x01y03 robot-at-x01y03 1.000000 1.000000
-	robot-at-x02y03 robot-at-x01y03 1.000000 1.000000
-	robot-at-x03y03 robot-at-x02y03 1.000000 1.000000
-	robot-at-x04y03 robot-at-x03y03 1.000000 1.000000
-	robot-at-x05y03 robot-at-x05y03 1.000000 1.000000
-	broken-robot broken-robot 1.000000 1.000000
+	robot-at-x01y01 robot-at-x01y01 1.000000
+	robot-at-x02y01 robot-at-x01y01 1.000000
+	robot-at-x03y01 robot-at-x02y01 1.000000
+	robot-at-x04y01 robot-at-x03y01 1.000000
+	robot-at-x05y01 robot-at-x04y01 1.000000
+	robot-at-x01y02 robot-at-x01y02 p19
+	robot-at-x01y02 broken-robot p20
+	robot-at-x02y02 robot-at-x01y02 p21
+	robot-at-x02y02 broken-robot p22
+	robot-at-x03y02 robot-at-x02y02 p23
+	robot-at-x03y02 broken-robot p24
+	robot-at-x04y02 robot-at-x03y02 p25
+	robot-at-x04y02 broken-robot p26
+	robot-at-x05y02 robot-at-x04y02 p27
+	robot-at-x05y02 broken-robot p28
+	robot-at-x01y03 robot-at-x01y03 1.000000
+	robot-at-x02y03 robot-at-x01y03 1.000000
+	robot-at-x03y03 robot-at-x02y03 1.000000
+	robot-at-x04y03 robot-at-x03y03 1.000000
+	robot-at-x05y03 robot-at-x05y03 1.000000
+	broken-robot broken-robot 1.000000
 endaction
 
 action move-east
-	robot-at-x05y01 robot-at-x05y01 1.000000 1.000000
-	robot-at-x01y01 robot-at-x02y01 1.000000 1.000000
-	robot-at-x02y01 robot-at-x03y01 1.000000 1.000000
-	robot-at-x03y01 robot-at-x04y01 1.000000 1.000000
-	robot-at-x04y01 robot-at-x05y01 1.000000 1.000000
-	robot-at-x05y02 robot-at-x05y02 0.000000 0.350000
-	robot-at-x05y02 broken-robot 0.650000 1.00000
-	robot-at-x01y02 robot-at-x02y02 0.450000 0.950000
-	robot-at-x01y02 broken-robot 0.050000 0.550000
-	robot-at-x02y02 robot-at-x03y02 0.250000 0.750000
-	robot-at-x02y02 broken-robot 0.250000 0.750000
-	robot-at-x03y02 robot-at-x04y02 0.050000 0.550000
-	robot-at-x03y02 broken-robot 0.450000 0.950000
-	robot-at-x04y02 robot-at-x05y02 0.000000 0.350000
-	robot-at-x04y02 broken-robot 0.650000 1.00000
-	robot-at-x05y03 robot-at-x05y03 1.000000 1.000000
-	robot-at-x01y03 robot-at-x02y03 1.000000 1.000000
-	robot-at-x02y03 robot-at-x03y03 1.000000 1.000000
-	robot-at-x03y03 robot-at-x04y03 1.000000 1.000000
-	robot-at-x04y03 robot-at-x05y03 1.000000 1.000000
-	broken-robot broken-robot 1.000000 1.000000
+	robot-at-x05y01 robot-at-x05y01 1.000000
+	robot-at-x01y01 robot-at-x02y01 1.000000
+	robot-at-x02y01 robot-at-x03y01 1.000000
+	robot-at-x03y01 robot-at-x04y01 1.000000
+	robot-at-x04y01 robot-at-x05y01 1.000000
+	robot-at-x05y02 robot-at-x05y02 p29
+	robot-at-x05y02 broken-robot p30
+	robot-at-x01y02 robot-at-x02y02 p31
+	robot-at-x01y02 broken-robot p32
+	robot-at-x02y02 robot-at-x03y02 p33
+	robot-at-x02y02 broken-robot p34
+	robot-at-x03y02 robot-at-x04y02 p35
+	robot-at-x03y02 broken-robot p36
+	robot-at-x04y02 robot-at-x05y02 p37
+	robot-at-x04y02 broken-robot p38
+	robot-at-x05y03 robot-at-x05y03 1.000000
+	robot-at-x01y03 robot-at-x02y03 1.000000
+	robot-at-x02y03 robot-at-x03y03 1.000000
+	robot-at-x03y03 robot-at-x04y03 1.000000
+	robot-at-x04y03 robot-at-x05y03 1.000000
+	broken-robot broken-robot 1.000000
 endaction
+
+restrictions
+	p1 >= 0.650000
+	p1 <= 1.00000
+	p2 = 1 - p1
+	p3 >= 0.450000
+	p3 <= 0.950000
+	p4 = 1 - p3
+	p5 >= 0.250000
+	p5 <= 0.750000
+	p6 = 1 - p5
+	p7 >= 0.050000
+	p7 <= 0.550000
+	p8 = 1 - p7
+	p9 >= 0.650000
+	p9 <= 1.00000
+	p10 = 1 - p9
+	p11 >= 0.450000
+	p11 <= 0.950000
+	p12 = 1 - p11
+	p13 >= 0.250000
+	p13 <= 0.750000
+	p14 = 1 - p13
+	p15 >= 0.050000
+	p15 <= 0.550000
+	p16 = 1 - p15
+	p17 >= 0.000000
+	p17 <= 0.350000
+	p18 = 1 - p17
+	p19 >= 0.650000
+	p19 <= 1.00000
+	p20 = 1 - p19
+	p21 >= 0.650000
+	p21 <= 1.00000
+	p22 = 1 - p21
+	p23 >= 0.450000
+	p23 <= 0.950000
+	p24 = 1 - p23
+	p25 >= 0.250000
+	p25 <= 0.750000
+	p26 = 1 - p25
+	p27 >= 0.050000
+	p27 <= 0.550000
+	p28 = 1 - p27
+	p29 >= 0.000000
+	p29 <= 0.350000
+	p30 = 1 - p29
+	p31 >= 0.450000
+	p31 <= 0.950000
+	p32 = 1 - p31
+	p33 >= 0.250000
+	p33 <= 0.750000
+	p34 = 1 - p33
+	p35 >= 0.050000
+	p35 <= 0.550000
+	p36 = 1 - p35
+	p37 >= 0.000000
+	p37 <= 0.350000
+	p38 = 1 - p37
+endrestrictions
 
 reward
 	robot-at-x01y01 -1
