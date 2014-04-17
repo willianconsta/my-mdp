@@ -62,9 +62,9 @@ public final class SolutionReport {
 
 	@Override
 	public String toString() {
-		return toStringHelper(SolutionReport.class)
-				.add("\n\tpolicyResult", policyResult.toString().replaceAll(",", ",\n\t"))
-				.add("\n\tvalueResult", valueResult.toString().replaceAll(",", ",\n\t") + '\n')
+		return toStringHelper(this)
+				.add("policyResult", policyResult)
+				.add("valueResult", valueResult)
 				.toString();
 	}
 }

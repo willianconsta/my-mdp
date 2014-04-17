@@ -2,6 +2,7 @@ package mymdp.problem;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static mymdp.util.CollectionUtils.nullToEmpty;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -13,7 +14,6 @@ import mymdp.core.Action;
 import mymdp.core.MDP;
 import mymdp.core.State;
 import mymdp.core.TransitionProbability;
-import mymdp.util.CollectionUtils;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Objects;
@@ -176,7 +176,7 @@ public class MDPBuilder {
 			@Override
 			public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action) {
 				return TransitionProbability.Instance.createSimple(initialState, action,
-						CollectionUtils.nullToEmpty(transitions.get(action).get(initialState)));
+						nullToEmpty(transitions.get(action).get(initialState)));
 			}
 
 			@Override

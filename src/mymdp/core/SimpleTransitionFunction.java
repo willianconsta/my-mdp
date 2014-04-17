@@ -1,7 +1,6 @@
 package mymdp.core;
 
 import static com.google.common.base.Objects.firstNonNull;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -18,8 +17,8 @@ final class SimpleTransitionFunction implements TransitionProbability {
 	private final Action action;
 
 	SimpleTransitionFunction(final State currentState, final Action action, final Map<State, Double> distributions) {
-		this.currentState = checkNotNull(currentState);
-		this.action = checkNotNull(action);
+		this.currentState = currentState;
+		this.action = action;
 
 		double total = 0.0;
 		for (final Double prob : distributions.values()) {
@@ -66,5 +65,10 @@ final class SimpleTransitionFunction implements TransitionProbability {
 			return true;
 		}
 		return Sets.newHashSet(this).equals(Sets.newHashSet((TransitionProbability) arg0));
+	}
+
+	@Override
+	public String toString() {
+		return distributions.toString();
 	}
 }
