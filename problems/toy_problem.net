@@ -1,0 +1,36 @@
+states
+	state0, state1, state2
+endstates
+
+vars
+	p1, p2, p3, p4, p5, p6
+endvars
+
+action Move
+	state0 state0 p1
+	state0 state1 p2
+	state1 state1 p3
+	state1 state2 p4
+	state2 state2 p5
+	state2 state0 p6
+endaction
+
+action Stay
+	state0 state0 1
+	state1 state1 1
+	state2 state2 1
+endaction
+
+restrictions
+	p2 = 1 - p1
+	p4 = 1 - p3
+	p6 = 1 - p5
+endrestrictions
+
+reward
+	state0 0
+	state1 1
+	state2 2
+endreward
+
+discount factor 0.900000
