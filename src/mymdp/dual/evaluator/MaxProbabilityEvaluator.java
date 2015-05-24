@@ -2,7 +2,10 @@ package mymdp.dual.evaluator;
 
 import mymdp.solver.ProbLinearSolver;
 
-final class MaxProbabilityEvaluator extends AbstractProbabilityEvaluator {
+final class MaxProbabilityEvaluator
+	extends
+		AbstractProbabilityEvaluator
+{
 	public MaxProbabilityEvaluator(final String fullFilename) {
 		super(fullFilename);
 	}

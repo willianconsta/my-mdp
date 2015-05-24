@@ -3,7 +3,10 @@ package mymdp.problem;
 import static com.google.common.base.Preconditions.checkArgument;
 import mymdp.core.State;
 
-final class StateImpl implements State {
+final class StateImpl
+	implements
+		State
+{
 	private final String name;
 
 	StateImpl(final String name) {
@@ -23,10 +26,10 @@ final class StateImpl implements State {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (!(obj instanceof State)) {
+		if ( !( obj instanceof State ) ) {
 			return false;
 		}
-		return name.equals(((State) obj).name());
+		return name.equals(( (State) obj ).name());
 	}
 
 	@Override

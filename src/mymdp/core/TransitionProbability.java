@@ -10,7 +10,10 @@ import java.util.Map.Entry;
  * @author Willian
  * 
  */
-public interface TransitionProbability extends Iterable<Entry<State, Double>> {
+public interface TransitionProbability
+	extends
+		Iterable<Entry<State,Double>>
+{
 
 	/**
 	 * Returns the probability to go to {@code nextState}.
@@ -38,8 +41,7 @@ public interface TransitionProbability extends Iterable<Entry<State, Double>> {
 	Action getAction();
 
 	/**
-	 * Tells whether this probability density function is empty, i.e., does not
-	 * have probabilities for any states.
+	 * Tells whether this probability density function is empty, i.e., does not have probabilities for any states.
 	 * 
 	 * @return <code>true</code> if is empty, <code>false</code> c.c.
 	 */
@@ -50,9 +52,10 @@ public interface TransitionProbability extends Iterable<Entry<State, Double>> {
 	 * 
 	 * @author Willian
 	 */
-	public class Instance {
+	public class Instance
+	{
 		private static TransitionProbability emptyInstance = new SimpleTransitionFunction(null, null,
-				Collections.<State, Double> emptyMap());
+				Collections.<State,Double> emptyMap());
 
 		Instance() {
 			throw new UnsupportedOperationException();
@@ -64,8 +67,8 @@ public interface TransitionProbability extends Iterable<Entry<State, Double>> {
 		 * @param distributions
 		 * @return
 		 */
-		public static TransitionProbability createSimple(final State current, final Action action, final Map<State, Double> distributions) {
-			if (distributions.isEmpty()) {
+		public static TransitionProbability createSimple(final State current, final Action action, final Map<State,Double> distributions) {
+			if ( distributions.isEmpty() ) {
 				return empty();
 			}
 

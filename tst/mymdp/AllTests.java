@@ -1,5 +1,6 @@
 package mymdp;
 
-public class AllTests {
+public class AllTests
+{
 
 }

@@ -2,7 +2,8 @@ package mymdp.core;
 
 import java.util.Set;
 
-public interface MDP {
+public interface MDP
+{
 	Set<State> getStates();
 
 	Set<Action> getAllActions();

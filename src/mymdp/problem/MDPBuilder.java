@@ -1,5 +1,6 @@
 package mymdp.problem;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static mymdp.util.CollectionUtils.nullToEmpty;
@@ -10,20 +11,23 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Range;
+
 import mymdp.core.Action;
 import mymdp.core.MDP;
 import mymdp.core.State;
 import mymdp.core.TransitionProbability;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Range;
-
-public class MDPBuilder {
+public class MDPBuilder
+{
 	@VisibleForTesting
-	static class StateImpl implements State {
+	static class StateImpl
+		implements
+			State
+	{
 		private final String name;
 		private double reward;
 
@@ -44,10 +48,10 @@ public class MDPBuilder {
 
 		@Override
 		public boolean equals(final Object obj) {
-			if (!(obj instanceof State)) {
+			if ( !( obj instanceof State ) ) {
 				return false;
 			}
-			return name.equals(((State) obj).name());
+			return name.equals(( (State) obj ).name());
 		}
 
 		@Override
@@ -57,7 +61,10 @@ public class MDPBuilder {
 	}
 
 	@VisibleForTesting
-	static class ActionImpl implements Action {
+	static class ActionImpl
+		implements
+			Action
+	{
 		private final Set<State> appliableStates = new LinkedHashSet<>();
 		private final String name;
 
@@ -83,10 +90,10 @@ public class MDPBuilder {
 
 		@Override
 		public boolean equals(final Object obj) {
-			if (!(obj instanceof Action)) {
+			if ( !( obj instanceof Action ) ) {
 				return false;
 			}
-			return name.equals(((Action) obj).name());
+			return name.equals(( (Action) obj ).name());
 		}
 
 		@Override
@@ -95,8 +102,8 @@ public class MDPBuilder {
 		}
 	}
 
-	private final Map<String, StateImpl> states;
-	private final Map<Action, Map<State, Map<State, Double>>> transitions;
+	private final Map<String,StateImpl> states;
+	private final Map<Action,Map<State,Map<State,Double>>> transitions;
 	private double discountRate;
 
 	public MDPBuilder() {
@@ -105,7 +112,7 @@ public class MDPBuilder {
 	}
 
 	public MDPBuilder states(final Set<String> stateDefs) {
-		for (final String stateDef : stateDefs) {
+		for ( final String stateDef : stateDefs ) {
 			states.put(stateDef, new StateImpl(stateDef));
 		}
 		return this;
@@ -113,19 +120,19 @@ public class MDPBuilder {
 
 	public MDPBuilder actions(final String actionName, final Set<String[]> transitionDefs) {
 		final ActionImpl action = new ActionImpl(actionName);
-		for (final String[] transitionDef : transitionDefs) {
+		for ( final String[] transitionDef : transitionDefs ) {
 			final StateImpl state1 = checkNotNull(states.get(transitionDef[0]));
 			action.appliableStates.add(state1);
 
-			Map<State, Map<State, Double>> probs = transitions.get(action);
-			if (probs == null) {
+			Map<State,Map<State,Double>> probs = transitions.get(action);
+			if ( probs == null ) {
 				probs = new LinkedHashMap<>();
 				transitions.put(action, probs);
 			}
 
 			final State state2 = checkNotNull(states.get(transitionDef[1]));
-			Map<State, Double> map = probs.get(state1);
-			if (map == null) {
+			Map<State,Double> map = probs.get(state1);
+			if ( map == null ) {
 				map = new LinkedHashMap<>();
 				probs.put(state1, map);
 			}
@@ -134,8 +141,8 @@ public class MDPBuilder {
 		return this;
 	}
 
-	public MDPBuilder reward(final Map<String, Double> rewards) {
-		for (final Entry<String, Double> entry : rewards.entrySet()) {
+	public MDPBuilder reward(final Map<String,Double> rewards) {
+		for ( final Entry<String,Double> entry : rewards.entrySet() ) {
 			states.get(entry.getKey()).reward = entry.getValue();
 		}
 		return this;
@@ -150,7 +157,8 @@ public class MDPBuilder {
 	public MDP build() {
 		return new MDP() {
 			private final Set<State> states = ImmutableSet.<State> copyOf(MDPBuilder.this.states.values());
-			private final Map<Action, Map<State, Map<State, Double>>> transitions = ImmutableMap.copyOf(MDPBuilder.this.transitions);
+			private final Map<Action,Map<State,Map<State,Double>>> transitions = ImmutableMap
+					.copyOf(MDPBuilder.this.transitions);
 
 			@Override
 			public Set<State> getStates() {
@@ -165,8 +173,8 @@ public class MDPBuilder {
 			@Override
 			public Set<Action> getActionsFor(final State state) {
 				final Set<Action> appliableActions = new LinkedHashSet<>();
-				for (final Action action : transitions.keySet()) {
-					if (((ActionImpl) action).appliableStates.contains(state)) {
+				for ( final Action action : transitions.keySet() ) {
+					if ( ( (ActionImpl) action ).appliableStates.contains(state) ) {
 						appliableActions.add(action);
 					}
 				}
@@ -174,14 +182,15 @@ public class MDPBuilder {
 			}
 
 			@Override
-			public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action) {
+			public TransitionProbability getPossibleStatesAndProbability(final State initialState,
+					final Action action) {
 				return TransitionProbability.Instance.createSimple(initialState, action,
 						nullToEmpty(transitions.get(action).get(initialState)));
 			}
 
 			@Override
 			public double getRewardFor(final State state) {
-				return ((StateImpl) state).reward;
+				return ( (StateImpl) state ).reward;
 			}
 
 			@Override
@@ -191,8 +200,8 @@ public class MDPBuilder {
 
 			@Override
 			public String toString() {
-				return Objects.toStringHelper(this).add("states", states).add("transitions", transitions).add("discountRate", discountRate)
-						.toString();
+				return toStringHelper(this).add("states", states).add("transitions", transitions)
+						.add("discountRate", discountRate).toString();
 			}
 		};
 	}

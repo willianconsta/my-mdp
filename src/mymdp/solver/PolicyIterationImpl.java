@@ -13,7 +13,10 @@ import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
 import mymdp.util.Pair;
 
-public class PolicyIterationImpl implements PolicyIteration {
+public class PolicyIterationImpl
+	implements
+		PolicyIteration
+{
 	private final PolicyEvaluator evaluator;
 
 	public PolicyIterationImpl(final PolicyEvaluator evaluator) {
@@ -26,7 +29,7 @@ public class PolicyIterationImpl implements PolicyIteration {
 		boolean hasChanged = false;
 		do {
 			hasChanged = iteration(policy, function, mdp);
-		} while (hasChanged);
+		} while ( hasChanged );
 
 		return policy;
 	}
@@ -43,20 +46,20 @@ public class PolicyIterationImpl implements PolicyIteration {
 		boolean hasChanged = false;
 
 		// for each state
-		for (final State s : mdp.getStates()) {
+		for ( final State s : mdp.getStates() ) {
 			Action maxA = policy.getActionFor(s);
 			double maxValue = 0.0;
-			final Pair<Action, Double> greedyAction = getGreedyActionForState(s, evaluatedFunction, mdp);
-			if (greedyAction.first != null) {
+			final Pair<Action,Double> greedyAction = getGreedyActionForState(s, evaluatedFunction, mdp);
+			if ( greedyAction.first != null ) {
 				maxA = greedyAction.first;
 				maxValue = greedyAction.second.doubleValue();
 			}
 			double policyValue = 0.0;
-			for (final Entry<State, Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, policy.getActionFor(s))) {
+			for ( final Entry<State,Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, policy.getActionFor(s)) ) {
 				policyValue += nextStateAndProb.getValue() * evaluatedFunction.getUtility(nextStateAndProb.getKey());
 			}
 
-			if (maxValue > policyValue || maxValue == policyValue && policy.getActionFor(s).name().compareTo(maxA.name()) < 0) {
+			if ( maxValue > policyValue || maxValue == policyValue && policy.getActionFor(s).name().compareTo(maxA.name()) < 0 ) {
 				policy.updatePolicy(s, maxA);
 				hasChanged = true;
 			}

@@ -3,7 +3,8 @@ package mymdp.util;
 import static com.google.common.base.Objects.equal;
 import static java.util.Objects.hash;
 
-public final class Pair<F, S> {
+public final class Pair<F, S>
+{
 	public final F first;
 	public final S second;
 
@@ -12,8 +13,8 @@ public final class Pair<F, S> {
 		this.second = second;
 	}
 
-	public static <F, S> Pair<F, S> of(final F first, final S second) {
-		return new Pair<F, S>(first, second);
+	public static <F, S> Pair<F,S> of(final F first, final S second) {
+		return new Pair<F,S>(first, second);
 	}
 
 	@Override
@@ -23,11 +24,10 @@ public final class Pair<F, S> {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (obj == null || !(obj instanceof Pair<?, ?>)) {
+		if ( obj == null || !( obj instanceof Pair<?,?> ) ) {
 			return false;
 		}
-		@SuppressWarnings("unchecked")
-		final Pair<F, S> other = (Pair<F, S>) obj;
+		@SuppressWarnings("unchecked") final Pair<F,S> other = (Pair<F,S>) obj;
 		return equal(first, other.first) && equal(second, other.second);
 	}
 

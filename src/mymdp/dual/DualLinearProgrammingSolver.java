@@ -24,7 +24,10 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.Multimap;
 import com.google.common.primitives.Doubles;
 
-public class DualLinearProgrammingSolver implements ProblemSolver {
+public class DualLinearProgrammingSolver
+	implements
+		ProblemSolver
+{
 	private static final Logger log = LogManager.getLogger(DualLinearProgrammingSolver.class);
 	private static final String PROBLEMS_DIR = "precise_problems";
 
@@ -37,7 +40,7 @@ public class DualLinearProgrammingSolver implements ProblemSolver {
 		this.maxRelaxation = maxRelaxation;
 		try {
 			this.solveCaller = new SolveCaller("amplcml\\");
-		} catch (final IOException e) {
+		} catch ( final IOException e ) {
 			throw Throwables.propagate(e);
 		}
 	}
@@ -57,7 +60,7 @@ public class DualLinearProgrammingSolver implements ProblemSolver {
 		variables.add("discount");
 		constraints.add("discount = " + problem.getDiscountFactor());
 
-		for (final State s : problem.getStates()) {
+		for ( final State s : problem.getStates() ) {
 			final String valueVariable = 'v' + s.name().replace("-", "");
 			final String rewardVariable = 'r' + s.name().replace("-", "");
 
@@ -68,15 +71,15 @@ public class DualLinearProgrammingSolver implements ProblemSolver {
 
 			constraints.add(rewardVariable + " = " + problem.getRewardFor(s));
 
-			final Multimap<Action, State> nextStatesByAction = ProbabilityRestrictionUtils.nextStates(problem, s);
+			final Multimap<Action,State> nextStatesByAction = ProbabilityRestrictionUtils.nextStates(problem, s);
 
-			for (final Action a : problem.getActionsFor(s)) {
+			for ( final Action a : problem.getActionsFor(s) ) {
 				String actionConstraint = valueVariable + " >= " + rewardVariable + " + discount * ( ";
 
 				final List<String> allPossible = new ArrayList<>();
-				for (final State nextState : nextStatesByAction.get(a)) {
+				for ( final State nextState : nextStatesByAction.get(a) ) {
 					final String transitionVariable = ProbabilityRestrictionUtils.transitionVariable(problem, s, a, nextState);
-					if (Doubles.tryParse(transitionVariable) == null) {
+					if ( Doubles.tryParse(transitionVariable) == null ) {
 						probabilityVariables.add(transitionVariable);
 					}
 					allPossible.add(transitionVariable + " * v" + nextState.name().replace("-", ""));
@@ -96,7 +99,7 @@ public class DualLinearProgrammingSolver implements ProblemSolver {
 			solveCaller.callSolver();
 
 			log.info(solveCaller.getCurrentValuesProb());
-		} catch (final RuntimeException e) {
+		} catch ( final RuntimeException e ) {
 			log.error("Problem occurred while solving. Log: " + solveCaller.getLog());
 			log.error("File Contents: " + solveCaller.getFileContents());
 			log.error("Error", e);

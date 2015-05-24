@@ -4,6 +4,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.common.base.Stopwatch;
+
 import mymdp.core.MDPIP;
 import mymdp.core.Policy;
 import mymdp.core.SolutionReport;
@@ -14,12 +19,10 @@ import mymdp.solver.ModifiedPolicyEvaluatorIP;
 import mymdp.solver.PolicyIterationSatia;
 import mymdp.solver.ProbLinearSolver;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.common.base.Stopwatch;
-
-public class PolicyIterationSatiaGame implements ProblemSolver {
+public class PolicyIterationSatiaGame
+	implements
+		ProblemSolver
+{
 	private static final Logger log = LogManager.getLogger(PolicyIterationSatiaGame.class);
 
 	private static final String PROBLEMS_DIR = "precise_problems";
@@ -45,14 +48,14 @@ public class PolicyIterationSatiaGame implements ProblemSolver {
 		// problem
 		log.info("Current Problem: " + filename);
 		final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
-		final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile(PROBLEMS_DIR + "\\" + filename, initialProblemImprecisionGenerator);
+		final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile(PROBLEMS_DIR + "\\" + filename,
+				initialProblemImprecisionGenerator);
 		// log.info("Initial problem is " + mdpip.toString());
 		log.info("Problem read.");
 		log.debug("Starting MDPIP");
 		ProbLinearSolver.initializeCount();
-		final Stopwatch watchMDPIP = new Stopwatch();
-		watchMDPIP.start();
-		final Stopwatch watch1 = new Stopwatch().start();
+		final Stopwatch watchMDPIP = Stopwatch.createStarted();
+		final Stopwatch watch1 = Stopwatch.createStarted();
 		final Policy result = new PolicyIterationSatia(maxError).solve(mdpip);
 		watchMDPIP.stop();
 		log.debug("End of MDPIP: " + watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
@@ -66,7 +69,8 @@ public class PolicyIterationSatiaGame implements ProblemSolver {
 		log.info("Solving done. Generating report...\n");
 		try {
 			final ModifiedPolicyEvaluatorIP evaluator = new ModifiedPolicyEvaluatorIP(10);
-			return new SolutionReport(result, evaluator.policyEvaluation(result, new UtilityFunctionWithProbImpl(mdpip.getStates()), mdpip));
+			return new SolutionReport(result,
+					evaluator.policyEvaluation(result, new UtilityFunctionWithProbImpl(mdpip.getStates()), mdpip));
 		} finally {
 			log.info("End of problem " + filename + "\n\n\n\n\n");
 		}

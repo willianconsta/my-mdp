@@ -5,7 +5,10 @@ import mymdp.core.SolutionReport;
 import mymdp.dual.ProblemSolver;
 import mymdp.problem.MDPFileProblemReader;
 
-public class FileMDPDualLinearProgrammingSolver implements ProblemSolver {
+public class FileMDPDualLinearProgrammingSolver
+	implements
+		ProblemSolver
+{
 	private final MDPDualLinearProgrammingSolver delegate;
 
 	public FileMDPDualLinearProgrammingSolver(final String filename) {

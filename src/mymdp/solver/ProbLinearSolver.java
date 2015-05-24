@@ -22,23 +22,23 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
-public class ProbLinearSolver {
+public class ProbLinearSolver
+{
 	private static final Logger log = LogManager.getLogger(ProbLinearSolver.class);
 
 	// FIXME: não devia estar hard-coded este path :(
 	private static final SolveCaller solveCaller;
+
 	static {
 		try {
 			solveCaller = new SolveCaller("amplcml\\");
-		} catch (final IOException e) {
+		} catch ( final IOException e ) {
 			throw Throwables.propagate(e);
 		}
 	}
 
 	public static enum SolutionType {
-		MAXIMIZE,
-		MINIMIZE,
-		ANY_FEASIBLE;
+		MAXIMIZE, MINIMIZE, ANY_FEASIBLE;
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class ProbLinearSolver {
 	 * 
 	 * @return a pair with the request and the result.
 	 */
-	public static Pair<String, String> getLastFullLog() {
+	public static Pair<String,String> getLastFullLog() {
 		return Pair.of(solveCaller.getFileContents(), solveCaller.getLog());
 	}
 
@@ -107,12 +107,10 @@ public class ProbLinearSolver {
 	}
 
 	/**
-	 * Obtain the transition probabilities that minimize the expected value for
-	 * all next states.
+	 * Obtain the transition probabilities that minimize the expected value for all next states.
 	 * 
 	 * @param nextStates
-	 *            map which keys are the next states and the values are
-	 *            equations that define the probability of the transition
+	 *            map which keys are the next states and the values are equations that define the probability of the transition
 	 * @param initialReward
 	 *            initial reward already obtained
 	 * @param function
@@ -124,18 +122,16 @@ public class ProbLinearSolver {
 	 * 
 	 * @return a map defining the next states and the probability to reach them
 	 */
-	public static Map<State, Double> minimizeExpectedValues(final Map<State, String> nextStates, final double initialReward,
+	public static Map<State,Double> minimizeExpectedValues(final Map<State,String> nextStates, final double initialReward,
 			final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
 		return solve(SolutionType.MINIMIZE, nextStates, initialReward, function, variables, restrictions);
 	}
 
 	/**
-	 * Obtain the transition probabilities that maximize the expected value for
-	 * all next states.
+	 * Obtain the transition probabilities that maximize the expected value for all next states.
 	 * 
 	 * @param nextStates
-	 *            map which keys are the next states and the values are
-	 *            equations that define the probability of the transition
+	 *            map which keys are the next states and the values are equations that define the probability of the transition
 	 * @param initialReward
 	 *            initial reward already obtained
 	 * @param function
@@ -147,39 +143,39 @@ public class ProbLinearSolver {
 	 * 
 	 * @return a map defining the next states and the probability to reach them
 	 */
-	public static Map<State, Double> maximizeExpectedValues(final Map<State, String> nextStates, final double initialReward,
+	public static Map<State,Double> maximizeExpectedValues(final Map<State,String> nextStates, final double initialReward,
 			final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
 		return solve(SolutionType.MAXIMIZE, nextStates, initialReward, function, variables, restrictions);
 	}
 
-	public static Map<State, Double> solve(final Map<State, String> nextStates, final double initialReward,
+	public static Map<State,Double> solve(final Map<State,String> nextStates, final double initialReward,
 			final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
 		return solve(solution, nextStates, initialReward, function, variables, restrictions);
 	}
 
-	private static Map<State, Double> solve(final SolutionType type, final Map<State, String> nextStates, final double initialReward,
+	private static Map<State,Double> solve(final SolutionType type, final Map<State,String> nextStates, final double initialReward,
 			final UtilityFunction function, final Collection<String> variables, final Collection<String> restrictions) {
-		final Map<State, Double> result = new LinkedHashMap<>();
+		final Map<State,Double> result = new LinkedHashMap<>();
 
 		// if there are no next states, return
-		if (nextStates.isEmpty()) {
+		if ( nextStates.isEmpty() ) {
 			return result;
 		}
 
 		// if all equations are just constant there is no need to call the
 		// solver. Try to make them numbers.
-		for (final Entry<State, String> pair : nextStates.entrySet()) {
+		for ( final Entry<State,String> pair : nextStates.entrySet() ) {
 			try {
 				final double prob = Double.parseDouble(pair.getValue());
 				result.put(pair.getKey(), prob);
-			} catch (final NumberFormatException e) {
+			} catch ( final NumberFormatException e ) {
 				// at least one probability is an equation, clear the result map
 				// to call the solver
 				result.clear();
 				break;
 			}
 		}
-		if (!result.isEmpty()) {
+		if ( !result.isEmpty() ) {
 			// all probabilities were constants, return
 			return result;
 		}
@@ -189,19 +185,19 @@ public class ProbLinearSolver {
 		final List<String> obj = Lists.newArrayList();
 		obj.add(String.valueOf(initialReward));
 
-		for (final Entry<State, String> entry : nextStates.entrySet()) {
-			if (entry.getValue().contains("*0.0*") || entry.getValue().endsWith("*0.0")) {
+		for ( final Entry<State,String> entry : nextStates.entrySet() ) {
+			if ( entry.getValue().contains("*0.0*") || entry.getValue().endsWith("*0.0") ) {
 				log.debug("Escaping from zero probability. Restriction = " + entry.getValue());
 				continue;
 			}
 
 			final double value = function.getUtility(entry.getKey());
 			checkState(value != Double.POSITIVE_INFINITY);
-			if (value == Double.NEGATIVE_INFINITY) {
+			if ( value == Double.NEGATIVE_INFINITY ) {
 				log.debug("Escaping from useless utility. State = " + entry.getKey() + ", function = " + function);
 				continue;
 			}
-			if (Math.abs(value) < 0.00001) {
+			if ( Math.abs(value) < 0.00001 ) {
 				log.debug("Escaping from zero utility. State = " + entry.getKey() + ", function = " + function);
 				continue;
 			}
@@ -212,26 +208,26 @@ public class ProbLinearSolver {
 				type);
 		try {
 			solveCaller.callSolver();
-		} catch (final RuntimeException e) {
+		} catch ( final RuntimeException e ) {
 			log.error("Solver failed!\nProblem:" + solveCaller.getFileContents() + "\nError log: " + solveCaller.getLog());
 			log.catching(e);
 			throw Throwables.propagate(e);
 		}
-		final Map<String, Double> currentValuesProb = solveCaller.getCurrentValuesProb();
-		if (currentValuesProb.isEmpty()) {
+		final Map<String,Double> currentValuesProb = solveCaller.getCurrentValuesProb();
+		if ( currentValuesProb.isEmpty() ) {
 			log.error("Solver failed!\nProblem:" + solveCaller.getFileContents() + "\nError log: " + solveCaller.getLog());
 			throw new IllegalStateException();
 		}
 
-		for (final Entry<State, String> entry : nextStates.entrySet()) {
+		for ( final Entry<State,String> entry : nextStates.entrySet() ) {
 			final String constr = entry.getValue();
 			int i = 0;
 			final String[] values = constr.split("[\\*]");
 			double value = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i]).doubleValue() : Double
 					.parseDouble(values[i]);
 			final String[] ops = constr.split("[^\\*]");
-			for (final String op : ops) {
-				if (op.equals("*")) {
+			for ( final String op : ops ) {
+				if ( op.equals("*") ) {
 					final double val1 = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i]) : Double
 							.parseDouble(values[i]);
 					value *= val1;

@@ -20,13 +20,14 @@ import mymdp.util.Trio;
 
 import com.google.common.collect.Range;
 
-public class MDPIPBuilder {
-	private final Map<String, StateImpl> states;
-	private final Map<StateImpl, Double> rewards;
-	private final Map<Action, Map<State, Map<State, String>>> transitions;
+public class MDPIPBuilder
+{
+	private final Map<String,StateImpl> states;
+	private final Map<StateImpl,Double> rewards;
+	private final Map<Action,Map<State,Map<State,String>>> transitions;
 	private double discountRate;
 	private Set<String> restrictions;
-	private final Map<Trio<State, Action, State>, String> vars;
+	private final Map<Trio<State,Action,State>,String> vars;
 	private int i = 0;
 
 	public MDPIPBuilder() {
@@ -38,7 +39,7 @@ public class MDPIPBuilder {
 	}
 
 	public MDPIPBuilder states(final Set<String> stateDefs) {
-		for (final String stateDef : stateDefs) {
+		for ( final String stateDef : stateDefs ) {
 			states.put(stateDef, new StateImpl(stateDef));
 		}
 		return this;
@@ -47,23 +48,23 @@ public class MDPIPBuilder {
 	public MDPIPBuilder actions(final String actionName, final Set<String[]> transitionDefs) {
 		final Set<State> appliableStates = new LinkedHashSet<>();
 		final Action action = new ActionImpl(actionName, appliableStates);
-		final Map<State, String> sumOnePerState = new LinkedHashMap<>();
-		final Map<String, Double> lowestSum = new LinkedHashMap<>();
-		final Map<String, Double> greatestSum = new LinkedHashMap<>();
+		final Map<State,String> sumOnePerState = new LinkedHashMap<>();
+		final Map<String,Double> lowestSum = new LinkedHashMap<>();
+		final Map<String,Double> greatestSum = new LinkedHashMap<>();
 
-		for (final String[] transitionDef : transitionDefs) {
+		for ( final String[] transitionDef : transitionDefs ) {
 			final State state1 = checkNotNull(states.get(transitionDef[0]));
 			appliableStates.add(state1);
 
-			Map<State, Map<State, String>> probs = transitions.get(action);
-			if (probs == null) {
+			Map<State,Map<State,String>> probs = transitions.get(action);
+			if ( probs == null ) {
 				probs = new LinkedHashMap<>();
 				transitions.put(action, probs);
 			}
 
 			final State state2 = checkNotNull(states.get(transitionDef[1]));
-			Map<State, String> map = probs.get(state1);
-			if (map == null) {
+			Map<State,String> map = probs.get(state1);
+			if ( map == null ) {
 				map = new LinkedHashMap<>();
 				probs.put(state1, map);
 			}
@@ -71,23 +72,23 @@ public class MDPIPBuilder {
 			final String var = "p" + i++;
 			map.put(state2, checkNotNull(var));
 
-			lowestSum.put(transitionDef[0], (lowestSum.containsKey(transitionDef[0]) ? lowestSum.get(transitionDef[0]) : 0)
+			lowestSum.put(transitionDef[0], ( lowestSum.containsKey(transitionDef[0]) ? lowestSum.get(transitionDef[0]) : 0 )
 					+ Double.parseDouble(transitionDef[2]));
-			greatestSum.put(transitionDef[0], (greatestSum.containsKey(transitionDef[0]) ? greatestSum.get(transitionDef[0]) : 0)
+			greatestSum.put(transitionDef[0], ( greatestSum.containsKey(transitionDef[0]) ? greatestSum.get(transitionDef[0]) : 0 )
 					+ Double.parseDouble(transitionDef[3]));
-			if (transitionDef[2].equals(transitionDef[3])) {
+			if ( transitionDef[2].equals(transitionDef[3]) ) {
 				map.put(state2, transitionDef[3]);
 				continue;
 			} else {
-				if (!transitionDef[2].equals("0.0")) {
+				if ( !transitionDef[2].equals("0.0") ) {
 					restrictions.add(var + " >= " + transitionDef[2]);
 				}
-				if (!transitionDef[3].equals("1.0")) {
+				if ( !transitionDef[3].equals("1.0") ) {
 					restrictions.add(var + " <= " + transitionDef[3]);
 				}
 			}
 			String restrOne = sumOnePerState.get(state1);
-			if (restrOne != null) {
+			if ( restrOne != null ) {
 				restrOne += "+";
 			} else {
 				restrOne = "";
@@ -101,8 +102,8 @@ public class MDPIPBuilder {
 		checkState(Collections.min(greatestSum.values()) >= 1, "Expected geq than 1, got " + greatestSum);
 
 		// restrictions of sum one
-		for (final Entry<State, String> sumOne : sumOnePerState.entrySet()) {
-			if (sumOne.getValue().indexOf('p') < sumOne.getValue().lastIndexOf('p')) {
+		for ( final Entry<State,String> sumOne : sumOnePerState.entrySet() ) {
+			if ( sumOne.getValue().indexOf('p') < sumOne.getValue().lastIndexOf('p') ) {
 				// if there is more than one variable force their sum to be one.
 				restrictions.add(sumOne.getValue() + "=1");
 			} else {
@@ -110,9 +111,9 @@ public class MDPIPBuilder {
 				final String var = sumOne.getValue();
 				checkState(vars.values().remove(var));
 				// removes other restrictions over the variable being removed
-				for (final Iterator<String> it = restrictions.iterator(); it.hasNext();) {
+				for ( final Iterator<String> it = restrictions.iterator(); it.hasNext(); ) {
 					final String restriction = it.next();
-					if (restriction.matches(".*?" + var + "(\\b|[^\\d].*?)")) {
+					if ( restriction.matches(".*?" + var + "(\\b|[^\\d].*?)") ) {
 						it.remove();
 					}
 				}
@@ -128,8 +129,8 @@ public class MDPIPBuilder {
 		return this;
 	}
 
-	public MDPIPBuilder reward(final Map<String, Double> rewards) {
-		for (final Entry<String, Double> entry : rewards.entrySet()) {
+	public MDPIPBuilder reward(final Map<String,Double> rewards) {
+		for ( final Entry<String,Double> entry : rewards.entrySet() ) {
 			this.rewards.put(states.get(entry.getKey()), entry.getValue());
 		}
 		return this;

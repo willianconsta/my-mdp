@@ -1,9 +1,16 @@
 package mymdp.problem;
 
 import static mymdp.test.MDPAssertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.assertj.core.data.Offset;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import mymdp.core.MDP;
 import mymdp.core.UtilityFunction;
@@ -14,52 +21,38 @@ import mymdp.solver.ModifiedPolicyEvaluator;
 import mymdp.solver.PolicyIterationImpl;
 import mymdp.solver.ValueIterationImpl;
 
-import org.fest.assertions.Delta;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
 @RunWith(Parameterized.class)
-public class TestNavigationMDP {
+public class TestNavigationMDP
+{
 	private static final double ERROR = 0.01;
 
-	private interface Testable {
+	private interface Testable
+	{
 		UtilityFunction solve(String file, double maxError);
 	}
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] {
-				{
-						new Testable() {
-							@Override
-							public UtilityFunction solve(final String file, final double maxError) {
-								final MDP mdp = MDPFileProblemReader.readFromFile(file);
-								return new ValueIterationImpl().solve(mdp, maxError);
-							}
-						}
-		},
-				{
-						new Testable() {
-							@Override
-							public UtilityFunction solve(final String file, final double maxError) {
-								final MDP mdp = MDPFileProblemReader.readFromFile(file);
-								final ErrorBoundModifiedPolicyEvaluator evaluator = new ErrorBoundModifiedPolicyEvaluator(ERROR / 10.0);
-								return evaluator.policyEvaluation(new PolicyIterationImpl(new ModifiedPolicyEvaluator(100)).solve(mdp),
-										new UtilityFunctionImpl(mdp.getStates()), mdp);
-							}
-						}
-		},
-				{
-						new Testable() {
-							@Override
-							public UtilityFunction solve(final String file, final double maxError) {
-								return new FileMDPDualLinearProgrammingSolver(file).solve().getValueResult();
-							}
-						}
-		}
-		});
+		return Arrays.asList(new Object[][]{{new Testable() {
+			@Override
+			public UtilityFunction solve(final String file, final double maxError) {
+				final MDP mdp = MDPFileProblemReader.readFromFile(file);
+				return new ValueIterationImpl().solve(mdp, maxError);
+			}
+		}}, {new Testable() {
+			@Override
+			public UtilityFunction solve(final String file, final double maxError) {
+				final MDP mdp = MDPFileProblemReader.readFromFile(file);
+				final ErrorBoundModifiedPolicyEvaluator evaluator = new ErrorBoundModifiedPolicyEvaluator(ERROR / 10.0);
+				return evaluator.policyEvaluation(new PolicyIterationImpl(new ModifiedPolicyEvaluator(100)).solve(mdp),
+						new UtilityFunctionImpl(mdp.getStates()), mdp);
+			}
+		}}, {new Testable() {
+			@Override
+			public UtilityFunction solve(final String file, final double maxError) {
+				return new FileMDPDualLinearProgrammingSolver(file).solve().getValueResult();
+			}
+		}}});
 	}
 
 	private final Testable subject;
@@ -70,119 +63,85 @@ public class TestNavigationMDP {
 
 	@Test
 	public void valueTest01() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation01.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.991404955, delta)
-				.stateHasValue("robot-at-x01y01", -4.684730495, delta)
-				.stateHasValue("robot-at-x01y02", -3.439, delta)
-				.stateHasValue("robot-at-x01y03", -2.71, delta)
-				.stateHasValue("robot-at-x02y01", -5.216171495, delta)
-				.stateHasValue("robot-at-x02y02", -2.71, delta)
-				.stateHasValue("robot-at-x02y03", -1.9, delta)
-				.stateHasValue("robot-at-x03y01", -5.694468395, delta)
-				.stateHasValue("robot-at-x03y02", -1.9, delta)
-				.stateHasValue("robot-at-x03y03", -1.0, delta)
-				.stateHasValue("robot-at-x04y01", -6.124935605, delta)
-				.stateHasValue("robot-at-x04y02", -1.0, delta)
-				.stateHasValue("robot-at-x04y03", 0.0, delta);
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation01.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.991404955, delta)
+				.stateHasValue("robot-at-x01y01", -4.684730495, delta).stateHasValue("robot-at-x01y02", -3.439, delta)
+				.stateHasValue("robot-at-x01y03", -2.71, delta).stateHasValue("robot-at-x02y01", -5.216171495, delta)
+				.stateHasValue("robot-at-x02y02", -2.71, delta).stateHasValue("robot-at-x02y03", -1.9, delta)
+				.stateHasValue("robot-at-x03y01", -5.694468395, delta).stateHasValue("robot-at-x03y02", -1.9, delta)
+				.stateHasValue("robot-at-x03y03", -1.0, delta).stateHasValue("robot-at-x04y01", -6.124935605, delta)
+				.stateHasValue("robot-at-x04y02", -1.0, delta).stateHasValue("robot-at-x04y03", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest02() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation02.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation02.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -5.21617149554, delta)
-				.stateHasValue("robot-at-x01y02", -4.0951, delta)
-				.stateHasValue("robot-at-x01y03", -3.439, delta)
-				.stateHasValue("robot-at-x02y01", -5.69446839554, delta)
-				.stateHasValue("robot-at-x02y02", -3.439, delta)
-				.stateHasValue("robot-at-x02y03", -2.71, delta)
-				.stateHasValue("robot-at-x03y01", -6.12493560554, delta)
-				.stateHasValue("robot-at-x03y02", -2.71, delta)
-				.stateHasValue("robot-at-x03y03", -1.9, delta)
-				.stateHasValue("robot-at-x04y01", -6.51235609454, delta)
-				.stateHasValue("robot-at-x04y02", -1.9, delta)
-				.stateHasValue("robot-at-x04y03", -1.0, delta)
-				.stateHasValue("robot-at-x05y01", -6.86103453464, delta)
-				.stateHasValue("robot-at-x05y02", -1.0, delta)
-				.stateHasValue("robot-at-x05y03", 0.0, delta);
+				.stateHasValue("robot-at-x01y02", -4.0951, delta).stateHasValue("robot-at-x01y03", -3.439, delta)
+				.stateHasValue("robot-at-x02y01", -5.69446839554, delta).stateHasValue("robot-at-x02y02", -3.439, delta)
+				.stateHasValue("robot-at-x02y03", -2.71, delta).stateHasValue("robot-at-x03y01", -6.12493560554, delta)
+				.stateHasValue("robot-at-x03y02", -2.71, delta).stateHasValue("robot-at-x03y03", -1.9, delta)
+				.stateHasValue("robot-at-x04y01", -6.51235609454, delta).stateHasValue("robot-at-x04y02", -1.9, delta)
+				.stateHasValue("robot-at-x04y03", -1.0, delta).stateHasValue("robot-at-x05y01", -6.86103453464, delta)
+				.stateHasValue("robot-at-x05y02", -1.0, delta).stateHasValue("robot-at-x05y03", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest03() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation03.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation03.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -6.12416205153, delta)
 				.stateHasValue("robot-at-x01y02", -5.21617149554, delta)
-				.stateHasValue("robot-at-x01y03", -4.0951, delta)
-				.stateHasValue("robot-at-x01y04", -3.439, delta)
+				.stateHasValue("robot-at-x01y03", -4.0951, delta).stateHasValue("robot-at-x01y04", -3.439, delta)
 				.stateHasValue("robot-at-x02y01", -6.51158254053, delta)
-				.stateHasValue("robot-at-x02y02", -5.86399148663, delta)
-				.stateHasValue("robot-at-x02y03", -3.439, delta)
-				.stateHasValue("robot-at-x02y04", -2.71, delta)
-				.stateHasValue("robot-at-x03y01", -6.86026098063, delta)
-				.stateHasValue("robot-at-x03y02", -6.71520247772, delta)
-				.stateHasValue("robot-at-x03y03", -2.71, delta)
-				.stateHasValue("robot-at-x03y04", -1.9, delta)
-				.stateHasValue("robot-at-x04y01", -7.17407157672, delta)
-				.stateHasValue("robot-at-x04y02", -7.45650111321, delta)
-				.stateHasValue("robot-at-x04y03", -1.9, delta)
-				.stateHasValue("robot-at-x04y04", -1.0, delta)
-				.stateHasValue("robot-at-x05y01", -7.45650111321, delta)
-				.stateHasValue("robot-at-x05y02", -7.71068769604, delta)
-				.stateHasValue("robot-at-x05y03", -1.0, delta)
+				.stateHasValue("robot-at-x02y02", -5.86399148663, delta).stateHasValue("robot-at-x02y03", -3.439, delta)
+				.stateHasValue("robot-at-x02y04", -2.71, delta).stateHasValue("robot-at-x03y01", -6.86026098063, delta)
+				.stateHasValue("robot-at-x03y02", -6.71520247772, delta).stateHasValue("robot-at-x03y03", -2.71, delta)
+				.stateHasValue("robot-at-x03y04", -1.9, delta).stateHasValue("robot-at-x04y01", -7.17407157672, delta)
+				.stateHasValue("robot-at-x04y02", -7.45650111321, delta).stateHasValue("robot-at-x04y03", -1.9, delta)
+				.stateHasValue("robot-at-x04y04", -1.0, delta).stateHasValue("robot-at-x05y01", -7.45650111321, delta)
+				.stateHasValue("robot-at-x05y02", -7.71068769604, delta).stateHasValue("robot-at-x05y03", -1.0, delta)
 				.stateHasValue("robot-at-x05y04", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest04() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation04.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation04.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -7.45517833585, delta)
 				.stateHasValue("robot-at-x01y02", -6.85956478203, delta)
 				.stateHasValue("robot-at-x01y03", -6.12416205153, delta)
 				.stateHasValue("robot-at-x01y04", -5.21617149554, delta)
-				.stateHasValue("robot-at-x01y05", -4.0951, delta)
-				.stateHasValue("robot-at-x01y06", -3.439, delta)
+				.stateHasValue("robot-at-x01y05", -4.0951, delta).stateHasValue("robot-at-x01y06", -3.439, delta)
 				.stateHasValue("robot-at-x02y01", -7.70936491868, delta)
 				.stateHasValue("robot-at-x02y02", -7.45517833585, delta)
 				.stateHasValue("robot-at-x02y03", -6.85956478203, delta)
-				.stateHasValue("robot-at-x02y04", -5.86399148663, delta)
-				.stateHasValue("robot-at-x02y05", -3.439, delta)
-				.stateHasValue("robot-at-x02y06", -2.71, delta)
-				.stateHasValue("robot-at-x03y01", -7.93813284323, delta)
+				.stateHasValue("robot-at-x02y04", -5.86399148663, delta).stateHasValue("robot-at-x02y05", -3.439, delta)
+				.stateHasValue("robot-at-x02y06", -2.71, delta).stateHasValue("robot-at-x03y01", -7.93813284323, delta)
 				.stateHasValue("robot-at-x03y02", -8.14402397532, delta)
 				.stateHasValue("robot-at-x03y03", -8.01878425131, delta)
-				.stateHasValue("robot-at-x03y04", -6.71520247772, delta)
-				.stateHasValue("robot-at-x03y05", -2.71, delta)
-				.stateHasValue("robot-at-x03y06", -1.9, delta)
-				.stateHasValue("robot-at-x04y01", -8.14402397532, delta)
+				.stateHasValue("robot-at-x03y04", -6.71520247772, delta).stateHasValue("robot-at-x03y05", -2.71, delta)
+				.stateHasValue("robot-at-x03y06", -1.9, delta).stateHasValue("robot-at-x04y01", -8.14402397532, delta)
 				.stateHasValue("robot-at-x04y02", -8.32932599421, delta)
 				.stateHasValue("robot-at-x04y03", -9.10394494115, delta)
-				.stateHasValue("robot-at-x04y04", -7.80698346881, delta)
-				.stateHasValue("robot-at-x04y05", -1.9, delta)
-				.stateHasValue("robot-at-x04y06", -1.0, delta)
-				.stateHasValue("robot-at-x05y01", -8.32932599421, delta)
+				.stateHasValue("robot-at-x04y04", -7.80698346881, delta).stateHasValue("robot-at-x04y05", -1.9, delta)
+				.stateHasValue("robot-at-x04y06", -1.0, delta).stateHasValue("robot-at-x05y01", -8.32932599421, delta)
 				.stateHasValue("robot-at-x05y02", -8.49609781121, delta)
 				.stateHasValue("robot-at-x05y03", -9.75185654235, delta)
-				.stateHasValue("robot-at-x05y04", -9.1822644599, delta)
-				.stateHasValue("robot-at-x05y05", -1.0, delta)
+				.stateHasValue("robot-at-x05y04", -9.1822644599, delta).stateHasValue("robot-at-x05y05", -1.0, delta)
 				.stateHasValue("robot-at-x05y06", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest05() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation05.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation05.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -7.17484513073, delta)
 				.stateHasValue("robot-at-x01y02", -6.513215599, delta)
 				.stateHasValue("robot-at-x01y03", -6.12579511, delta)
@@ -190,37 +149,26 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x02y02", -6.12579511, delta)
 				.stateHasValue("robot-at-x02y03", -5.6953279, delta)
 				.stateHasValue("robot-at-x03y01", -7.19957648165, delta)
-				.stateHasValue("robot-at-x03y02", -5.6953279, delta)
-				.stateHasValue("robot-at-x03y03", -5.217031, delta)
+				.stateHasValue("robot-at-x03y02", -5.6953279, delta).stateHasValue("robot-at-x03y03", -5.217031, delta)
 				.stateHasValue("robot-at-x04y01", -7.27055758569, delta)
-				.stateHasValue("robot-at-x04y02", -5.217031, delta)
-				.stateHasValue("robot-at-x04y03", -4.68559, delta)
+				.stateHasValue("robot-at-x04y02", -5.217031, delta).stateHasValue("robot-at-x04y03", -4.68559, delta)
 				.stateHasValue("robot-at-x05y01", -7.39202570165, delta)
-				.stateHasValue("robot-at-x05y02", -4.68559, delta)
-				.stateHasValue("robot-at-x05y03", -4.0951, delta)
-				.stateHasValue("robot-at-x06y01", -7.5743091176, delta)
-				.stateHasValue("robot-at-x06y02", -4.0951, delta)
-				.stateHasValue("robot-at-x06y03", -3.439, delta)
-				.stateHasValue("robot-at-x07y01", -7.8164102538, delta)
-				.stateHasValue("robot-at-x07y02", -3.439, delta)
-				.stateHasValue("robot-at-x07y03", -2.71, delta)
-				.stateHasValue("robot-at-x08y01", -8.03430127637, delta)
-				.stateHasValue("robot-at-x08y02", -2.71, delta)
-				.stateHasValue("robot-at-x08y03", -1.9, delta)
-				.stateHasValue("robot-at-x09y01", -8.23040319669, delta)
-				.stateHasValue("robot-at-x09y02", -1.9, delta)
-				.stateHasValue("robot-at-x09y03", -1.0, delta)
-				.stateHasValue("robot-at-x10y01", -8.40689492498, delta)
-				.stateHasValue("robot-at-x10y02", -1.0, delta)
+				.stateHasValue("robot-at-x05y02", -4.68559, delta).stateHasValue("robot-at-x05y03", -4.0951, delta)
+				.stateHasValue("robot-at-x06y01", -7.5743091176, delta).stateHasValue("robot-at-x06y02", -4.0951, delta)
+				.stateHasValue("robot-at-x06y03", -3.439, delta).stateHasValue("robot-at-x07y01", -7.8164102538, delta)
+				.stateHasValue("robot-at-x07y02", -3.439, delta).stateHasValue("robot-at-x07y03", -2.71, delta)
+				.stateHasValue("robot-at-x08y01", -8.03430127637, delta).stateHasValue("robot-at-x08y02", -2.71, delta)
+				.stateHasValue("robot-at-x08y03", -1.9, delta).stateHasValue("robot-at-x09y01", -8.23040319669, delta)
+				.stateHasValue("robot-at-x09y02", -1.9, delta).stateHasValue("robot-at-x09y03", -1.0, delta)
+				.stateHasValue("robot-at-x10y01", -8.40689492498, delta).stateHasValue("robot-at-x10y02", -1.0, delta)
 				.stateHasValue("robot-at-x10y03", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest06() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation06.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation06.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -7.71068769604, delta)
 				.stateHasValue("robot-at-x01y02", -7.17484513073, delta)
 				.stateHasValue("robot-at-x01y03", -6.513215599, delta)
@@ -231,44 +179,31 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x02y04", -5.6953279, delta)
 				.stateHasValue("robot-at-x03y01", -8.1389527461, delta)
 				.stateHasValue("robot-at-x03y02", -7.19957648165, delta)
-				.stateHasValue("robot-at-x03y03", -5.6953279, delta)
-				.stateHasValue("robot-at-x03y04", -5.217031, delta)
+				.stateHasValue("robot-at-x03y03", -5.6953279, delta).stateHasValue("robot-at-x03y04", -5.217031, delta)
 				.stateHasValue("robot-at-x04y01", -8.32476343592, delta)
 				.stateHasValue("robot-at-x04y02", -7.27055758569, delta)
-				.stateHasValue("robot-at-x04y03", -5.217031, delta)
-				.stateHasValue("robot-at-x04y04", -4.68559, delta)
+				.stateHasValue("robot-at-x04y03", -5.217031, delta).stateHasValue("robot-at-x04y04", -4.68559, delta)
 				.stateHasValue("robot-at-x05y01", -8.49199305676, delta)
 				.stateHasValue("robot-at-x05y02", -7.39202570165, delta)
-				.stateHasValue("robot-at-x05y03", -4.68559, delta)
-				.stateHasValue("robot-at-x05y04", -4.0951, delta)
+				.stateHasValue("robot-at-x05y03", -4.68559, delta).stateHasValue("robot-at-x05y04", -4.0951, delta)
 				.stateHasValue("robot-at-x06y01", -8.64249971551, delta)
-				.stateHasValue("robot-at-x06y02", -7.5743091176, delta)
-				.stateHasValue("robot-at-x06y03", -4.0951, delta)
-				.stateHasValue("robot-at-x06y04", -3.439, delta)
-				.stateHasValue("robot-at-x07y01", -8.7779557084, delta)
-				.stateHasValue("robot-at-x07y02", -7.82942450635, delta)
-				.stateHasValue("robot-at-x07y03", -3.439, delta)
-				.stateHasValue("robot-at-x07y04", -2.71, delta)
-				.stateHasValue("robot-at-x08y01", -8.89986610199, delta)
-				.stateHasValue("robot-at-x08y02", -8.17129101173, delta)
-				.stateHasValue("robot-at-x08y03", -2.71, delta)
-				.stateHasValue("robot-at-x08y04", -1.9, delta)
-				.stateHasValue("robot-at-x09y01", -9.00958545622, delta)
-				.stateHasValue("robot-at-x09y02", -8.61602765481, delta)
-				.stateHasValue("robot-at-x09y03", -1.9, delta)
-				.stateHasValue("robot-at-x09y04", -1.0, delta)
-				.stateHasValue("robot-at-x10y01", -9.10833287503, delta)
-				.stateHasValue("robot-at-x10y02", -9.1822644599, delta)
-				.stateHasValue("robot-at-x10y03", -1.0, delta)
+				.stateHasValue("robot-at-x06y02", -7.5743091176, delta).stateHasValue("robot-at-x06y03", -4.0951, delta)
+				.stateHasValue("robot-at-x06y04", -3.439, delta).stateHasValue("robot-at-x07y01", -8.7779557084, delta)
+				.stateHasValue("robot-at-x07y02", -7.82942450635, delta).stateHasValue("robot-at-x07y03", -3.439, delta)
+				.stateHasValue("robot-at-x07y04", -2.71, delta).stateHasValue("robot-at-x08y01", -8.89986610199, delta)
+				.stateHasValue("robot-at-x08y02", -8.17129101173, delta).stateHasValue("robot-at-x08y03", -2.71, delta)
+				.stateHasValue("robot-at-x08y04", -1.9, delta).stateHasValue("robot-at-x09y01", -9.00958545622, delta)
+				.stateHasValue("robot-at-x09y02", -8.61602765481, delta).stateHasValue("robot-at-x09y03", -1.9, delta)
+				.stateHasValue("robot-at-x09y04", -1.0, delta).stateHasValue("robot-at-x10y01", -9.10833287503, delta)
+				.stateHasValue("robot-at-x10y02", -9.1822644599, delta).stateHasValue("robot-at-x10y03", -1.0, delta)
 				.stateHasValue("robot-at-x10y04", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest07() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation07.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation07.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -8.14465055407, delta)
 				.stateHasValue("robot-at-x01y02", -7.71068769604, delta)
 				.stateHasValue("robot-at-x01y03", -7.17484513073, delta)
@@ -282,51 +217,38 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x03y01", -8.49672438996, delta)
 				.stateHasValue("robot-at-x03y02", -8.17716532733, delta)
 				.stateHasValue("robot-at-x03y03", -7.19957648165, delta)
-				.stateHasValue("robot-at-x03y04", -5.6953279, delta)
-				.stateHasValue("robot-at-x03y05", -5.217031, delta)
+				.stateHasValue("robot-at-x03y04", -5.6953279, delta).stateHasValue("robot-at-x03y05", -5.217031, delta)
 				.stateHasValue("robot-at-x04y01", -8.64681902525, delta)
 				.stateHasValue("robot-at-x04y02", -8.44086752736, delta)
 				.stateHasValue("robot-at-x04y03", -7.27055758569, delta)
-				.stateHasValue("robot-at-x04y04", -5.217031, delta)
-				.stateHasValue("robot-at-x04y05", -4.68559, delta)
+				.stateHasValue("robot-at-x04y04", -5.217031, delta).stateHasValue("robot-at-x04y05", -4.68559, delta)
 				.stateHasValue("robot-at-x05y01", -8.78190419702, delta)
 				.stateHasValue("robot-at-x05y02", -8.71796493452, delta)
 				.stateHasValue("robot-at-x05y03", -7.39202570165, delta)
-				.stateHasValue("robot-at-x05y04", -4.68559, delta)
-				.stateHasValue("robot-at-x05y05", -4.0951, delta)
+				.stateHasValue("robot-at-x05y04", -4.68559, delta).stateHasValue("robot-at-x05y05", -4.0951, delta)
 				.stateHasValue("robot-at-x06y01", -8.90348085161, delta)
 				.stateHasValue("robot-at-x06y02", -9.00057306914, delta)
-				.stateHasValue("robot-at-x06y03", -7.5743091176, delta)
-				.stateHasValue("robot-at-x06y04", -4.0951, delta)
-				.stateHasValue("robot-at-x06y05", -3.439, delta)
-				.stateHasValue("robot-at-x07y01", -9.01289984074, delta)
+				.stateHasValue("robot-at-x06y03", -7.5743091176, delta).stateHasValue("robot-at-x06y04", -4.0951, delta)
+				.stateHasValue("robot-at-x06y05", -3.439, delta).stateHasValue("robot-at-x07y01", -9.01289984074, delta)
 				.stateHasValue("robot-at-x07y02", -9.11137693096, delta)
-				.stateHasValue("robot-at-x07y03", -7.82942450635, delta)
-				.stateHasValue("robot-at-x07y04", -3.439, delta)
-				.stateHasValue("robot-at-x07y05", -2.71, delta)
-				.stateHasValue("robot-at-x08y01", -9.11137693096, delta)
+				.stateHasValue("robot-at-x07y03", -7.82942450635, delta).stateHasValue("robot-at-x07y04", -3.439, delta)
+				.stateHasValue("robot-at-x07y05", -2.71, delta).stateHasValue("robot-at-x08y01", -9.11137693096, delta)
 				.stateHasValue("robot-at-x08y02", -9.20000631216, delta)
-				.stateHasValue("robot-at-x08y03", -8.17129101173, delta)
-				.stateHasValue("robot-at-x08y04", -2.71, delta)
-				.stateHasValue("robot-at-x08y05", -1.9, delta)
-				.stateHasValue("robot-at-x09y01", -9.20000631216, delta)
+				.stateHasValue("robot-at-x08y03", -8.17129101173, delta).stateHasValue("robot-at-x08y04", -2.71, delta)
+				.stateHasValue("robot-at-x08y05", -1.9, delta).stateHasValue("robot-at-x09y01", -9.20000631216, delta)
 				.stateHasValue("robot-at-x09y02", -9.27977275523, delta)
-				.stateHasValue("robot-at-x09y03", -8.61602765481, delta)
-				.stateHasValue("robot-at-x09y04", -1.9, delta)
-				.stateHasValue("robot-at-x09y05", -1.0, delta)
-				.stateHasValue("robot-at-x10y01", -9.27977275523, delta)
+				.stateHasValue("robot-at-x09y03", -8.61602765481, delta).stateHasValue("robot-at-x09y04", -1.9, delta)
+				.stateHasValue("robot-at-x09y05", -1.0, delta).stateHasValue("robot-at-x10y01", -9.27977275523, delta)
 				.stateHasValue("robot-at-x10y02", -9.351562554, delta)
-				.stateHasValue("robot-at-x10y03", -9.1822644599, delta)
-				.stateHasValue("robot-at-x10y04", -1.0, delta)
+				.stateHasValue("robot-at-x10y03", -9.1822644599, delta).stateHasValue("robot-at-x10y04", -1.0, delta)
 				.stateHasValue("robot-at-x10y05", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest08() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation08.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation08.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.01436959336, delta)
 				.stateHasValue("robot-at-x01y02", -8.78423345409, delta)
 				.stateHasValue("robot-at-x01y03", -8.64914828233, delta)
@@ -364,37 +286,26 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x12y02", -6.12579511, delta)
 				.stateHasValue("robot-at-x12y03", -5.6953279, delta)
 				.stateHasValue("robot-at-x13y01", -8.46550572188, delta)
-				.stateHasValue("robot-at-x13y02", -5.6953279, delta)
-				.stateHasValue("robot-at-x13y03", -5.217031, delta)
+				.stateHasValue("robot-at-x13y02", -5.6953279, delta).stateHasValue("robot-at-x13y03", -5.217031, delta)
 				.stateHasValue("robot-at-x14y01", -8.47647071123, delta)
-				.stateHasValue("robot-at-x14y02", -5.217031, delta)
-				.stateHasValue("robot-at-x14y03", -4.68559, delta)
+				.stateHasValue("robot-at-x14y02", -5.217031, delta).stateHasValue("robot-at-x14y03", -4.68559, delta)
 				.stateHasValue("robot-at-x15y01", -8.50883770855, delta)
-				.stateHasValue("robot-at-x15y02", -4.68559, delta)
-				.stateHasValue("robot-at-x15y03", -4.0951, delta)
+				.stateHasValue("robot-at-x15y02", -4.68559, delta).stateHasValue("robot-at-x15y03", -4.0951, delta)
 				.stateHasValue("robot-at-x16y01", -8.56721279929, delta)
-				.stateHasValue("robot-at-x16y02", -4.0951, delta)
-				.stateHasValue("robot-at-x16y03", -3.439, delta)
-				.stateHasValue("robot-at-x17y01", -8.65697680315, delta)
-				.stateHasValue("robot-at-x17y02", -3.439, delta)
-				.stateHasValue("robot-at-x17y03", -2.71, delta)
-				.stateHasValue("robot-at-x18y01", -8.7843798862, delta)
-				.stateHasValue("robot-at-x18y02", -2.71, delta)
-				.stateHasValue("robot-at-x18y03", -1.9, delta)
-				.stateHasValue("robot-at-x19y01", -8.9052407233, delta)
-				.stateHasValue("robot-at-x19y02", -1.9, delta)
-				.stateHasValue("robot-at-x19y03", -1.0, delta)
-				.stateHasValue("robot-at-x20y01", -9.01401547669, delta)
-				.stateHasValue("robot-at-x20y02", -1.0, delta)
-				.stateHasValue("robot-at-x20y03", 0.0, delta);
+				.stateHasValue("robot-at-x16y02", -4.0951, delta).stateHasValue("robot-at-x16y03", -3.439, delta)
+				.stateHasValue("robot-at-x17y01", -8.65697680315, delta).stateHasValue("robot-at-x17y02", -3.439, delta)
+				.stateHasValue("robot-at-x17y03", -2.71, delta).stateHasValue("robot-at-x18y01", -8.7843798862, delta)
+				.stateHasValue("robot-at-x18y02", -2.71, delta).stateHasValue("robot-at-x18y03", -1.9, delta)
+				.stateHasValue("robot-at-x19y01", -8.9052407233, delta).stateHasValue("robot-at-x19y02", -1.9, delta)
+				.stateHasValue("robot-at-x19y03", -1.0, delta).stateHasValue("robot-at-x20y01", -9.01401547669, delta)
+				.stateHasValue("robot-at-x20y02", -1.0, delta).stateHasValue("robot-at-x20y03", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest09() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation09.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation09.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.20070251077, delta)
 				.stateHasValue("robot-at-x01y02", -9.01436959336, delta)
 				.stateHasValue("robot-at-x01y03", -8.78423345409, delta)
@@ -445,44 +356,32 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x12y04", -5.6953279, delta)
 				.stateHasValue("robot-at-x13y01", -9.44944288392, delta)
 				.stateHasValue("robot-at-x13y02", -8.46550572188, delta)
-				.stateHasValue("robot-at-x13y03", -5.6953279, delta)
-				.stateHasValue("robot-at-x13y04", -5.217031, delta)
+				.stateHasValue("robot-at-x13y03", -5.6953279, delta).stateHasValue("robot-at-x13y04", -5.217031, delta)
 				.stateHasValue("robot-at-x14y01", -9.50377301674, delta)
 				.stateHasValue("robot-at-x14y02", -8.47647071123, delta)
-				.stateHasValue("robot-at-x14y03", -5.217031, delta)
-				.stateHasValue("robot-at-x14y04", -4.68559, delta)
+				.stateHasValue("robot-at-x14y03", -5.217031, delta).stateHasValue("robot-at-x14y04", -4.68559, delta)
 				.stateHasValue("robot-at-x15y01", -9.55267013627, delta)
 				.stateHasValue("robot-at-x15y02", -8.50883770855, delta)
-				.stateHasValue("robot-at-x15y03", -4.68559, delta)
-				.stateHasValue("robot-at-x15y04", -4.0951, delta)
+				.stateHasValue("robot-at-x15y03", -4.68559, delta).stateHasValue("robot-at-x15y04", -4.0951, delta)
 				.stateHasValue("robot-at-x16y01", -9.59667754385, delta)
 				.stateHasValue("robot-at-x16y02", -8.56721279929, delta)
-				.stateHasValue("robot-at-x16y03", -4.0951, delta)
-				.stateHasValue("robot-at-x16y04", -3.439, delta)
+				.stateHasValue("robot-at-x16y03", -4.0951, delta).stateHasValue("robot-at-x16y04", -3.439, delta)
 				.stateHasValue("robot-at-x17y01", -9.63628421067, delta)
-				.stateHasValue("robot-at-x17y02", -8.65697680315, delta)
-				.stateHasValue("robot-at-x17y03", -3.439, delta)
-				.stateHasValue("robot-at-x17y04", -2.71, delta)
-				.stateHasValue("robot-at-x18y01", -9.67193021081, delta)
-				.stateHasValue("robot-at-x18y02", -8.7843798862, delta)
-				.stateHasValue("robot-at-x18y03", -2.71, delta)
-				.stateHasValue("robot-at-x18y04", -1.9, delta)
-				.stateHasValue("robot-at-x19y01", -9.70401161094, delta)
-				.stateHasValue("robot-at-x19y02", -8.95668090425, delta)
-				.stateHasValue("robot-at-x19y03", -1.9, delta)
-				.stateHasValue("robot-at-x19y04", -1.0, delta)
-				.stateHasValue("robot-at-x20y01", -9.73288487105, delta)
-				.stateHasValue("robot-at-x20y02", -9.1822644599, delta)
-				.stateHasValue("robot-at-x20y03", -1.0, delta)
+				.stateHasValue("robot-at-x17y02", -8.65697680315, delta).stateHasValue("robot-at-x17y03", -3.439, delta)
+				.stateHasValue("robot-at-x17y04", -2.71, delta).stateHasValue("robot-at-x18y01", -9.67193021081, delta)
+				.stateHasValue("robot-at-x18y02", -8.7843798862, delta).stateHasValue("robot-at-x18y03", -2.71, delta)
+				.stateHasValue("robot-at-x18y04", -1.9, delta).stateHasValue("robot-at-x19y01", -9.70401161094, delta)
+				.stateHasValue("robot-at-x19y02", -8.95668090425, delta).stateHasValue("robot-at-x19y03", -1.9, delta)
+				.stateHasValue("robot-at-x19y04", -1.0, delta).stateHasValue("robot-at-x20y01", -9.73288487105, delta)
+				.stateHasValue("robot-at-x20y02", -9.1822644599, delta).stateHasValue("robot-at-x20y03", -1.0, delta)
 				.stateHasValue("robot-at-x20y04", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest10() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation10.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation10.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.351562554, delta)
 				.stateHasValue("robot-at-x01y02", -9.20070251077, delta)
 				.stateHasValue("robot-at-x01y03", -9.01436959336, delta)
@@ -546,51 +445,39 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x13y01", -9.75069161962, delta)
 				.stateHasValue("robot-at-x13y02", -9.44944288392, delta)
 				.stateHasValue("robot-at-x13y03", -8.46550572188, delta)
-				.stateHasValue("robot-at-x13y04", -5.6953279, delta)
-				.stateHasValue("robot-at-x13y05", -5.217031, delta)
+				.stateHasValue("robot-at-x13y04", -5.6953279, delta).stateHasValue("robot-at-x13y05", -5.217031, delta)
 				.stateHasValue("robot-at-x14y01", -9.7749535346, delta)
 				.stateHasValue("robot-at-x14y02", -9.51071897108, delta)
 				.stateHasValue("robot-at-x14y03", -8.47647071123, delta)
-				.stateHasValue("robot-at-x14y04", -5.217031, delta)
-				.stateHasValue("robot-at-x14y05", -4.68559, delta)
+				.stateHasValue("robot-at-x14y04", -5.217031, delta).stateHasValue("robot-at-x14y05", -4.68559, delta)
 				.stateHasValue("robot-at-x15y01", -9.79678925808, delta)
 				.stateHasValue("robot-at-x15y02", -9.57714972514, delta)
 				.stateHasValue("robot-at-x15y03", -8.50883770855, delta)
-				.stateHasValue("robot-at-x15y04", -4.68559, delta)
-				.stateHasValue("robot-at-x15y05", -4.0951, delta)
+				.stateHasValue("robot-at-x15y04", -4.68559, delta).stateHasValue("robot-at-x15y05", -4.0951, delta)
 				.stateHasValue("robot-at-x16y01", -9.81644140922, delta)
 				.stateHasValue("robot-at-x16y02", -9.64741210812, delta)
 				.stateHasValue("robot-at-x16y03", -8.56721279929, delta)
-				.stateHasValue("robot-at-x16y04", -4.0951, delta)
-				.stateHasValue("robot-at-x16y05", -3.439, delta)
+				.stateHasValue("robot-at-x16y04", -4.0951, delta).stateHasValue("robot-at-x16y05", -3.439, delta)
 				.stateHasValue("robot-at-x17y01", -9.83412834524, delta)
 				.stateHasValue("robot-at-x17y02", -9.7196467808, delta)
-				.stateHasValue("robot-at-x17y03", -8.65697680315, delta)
-				.stateHasValue("robot-at-x17y04", -3.439, delta)
-				.stateHasValue("robot-at-x17y05", -2.71, delta)
-				.stateHasValue("robot-at-x18y01", -9.85004658766, delta)
+				.stateHasValue("robot-at-x17y03", -8.65697680315, delta).stateHasValue("robot-at-x17y04", -3.439, delta)
+				.stateHasValue("robot-at-x17y05", -2.71, delta).stateHasValue("robot-at-x18y01", -9.85004658766, delta)
 				.stateHasValue("robot-at-x18y02", -9.79132155607, delta)
-				.stateHasValue("robot-at-x18y03", -8.7843798862, delta)
-				.stateHasValue("robot-at-x18y04", -2.71, delta)
-				.stateHasValue("robot-at-x18y05", -1.9, delta)
-				.stateHasValue("robot-at-x19y01", -9.86437300584, delta)
+				.stateHasValue("robot-at-x18y03", -8.7843798862, delta).stateHasValue("robot-at-x18y04", -2.71, delta)
+				.stateHasValue("robot-at-x18y05", -1.9, delta).stateHasValue("robot-at-x19y01", -9.86437300584, delta)
 				.stateHasValue("robot-at-x19y02", -9.85908679697, delta)
-				.stateHasValue("robot-at-x19y03", -8.95668090425, delta)
-				.stateHasValue("robot-at-x19y04", -1.9, delta)
-				.stateHasValue("robot-at-x19y05", -1.0, delta)
-				.stateHasValue("robot-at-x20y01", -9.8772667822, delta)
+				.stateHasValue("robot-at-x19y03", -8.95668090425, delta).stateHasValue("robot-at-x19y04", -1.9, delta)
+				.stateHasValue("robot-at-x19y05", -1.0, delta).stateHasValue("robot-at-x20y01", -9.8772667822, delta)
 				.stateHasValue("robot-at-x20y02", -9.88887118092, delta)
-				.stateHasValue("robot-at-x20y03", -9.1822644599, delta)
-				.stateHasValue("robot-at-x20y04", -1.0, delta)
+				.stateHasValue("robot-at-x20y03", -9.1822644599, delta).stateHasValue("robot-at-x20y04", -1.0, delta)
 				.stateHasValue("robot-at-x20y05", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest11() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation11.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation11.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.91414335341, delta)
 				.stateHasValue("robot-at-x01y02", -9.89586099366, delta)
 				.stateHasValue("robot-at-x01y03", -9.87327248273, delta)
@@ -649,8 +536,7 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x03y16", -8.81247334767, delta)
 				.stateHasValue("robot-at-x03y17", -8.17716532733, delta)
 				.stateHasValue("robot-at-x03y18", -7.19957648165, delta)
-				.stateHasValue("robot-at-x03y19", -5.6953279, delta)
-				.stateHasValue("robot-at-x03y20", -5.217031, delta)
+				.stateHasValue("robot-at-x03y19", -5.6953279, delta).stateHasValue("robot-at-x03y20", -5.217031, delta)
 				.stateHasValue("robot-at-x04y01", -9.93543085655, delta)
 				.stateHasValue("robot-at-x04y02", -9.94115727345, delta)
 				.stateHasValue("robot-at-x04y03", -9.94622890787, delta)
@@ -669,8 +555,7 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x04y16", -9.10781743222, delta)
 				.stateHasValue("robot-at-x04y17", -8.44086752736, delta)
 				.stateHasValue("robot-at-x04y18", -7.27055758569, delta)
-				.stateHasValue("robot-at-x04y19", -5.217031, delta)
-				.stateHasValue("robot-at-x04y20", -4.68559, delta)
+				.stateHasValue("robot-at-x04y19", -5.217031, delta).stateHasValue("robot-at-x04y20", -4.68559, delta)
 				.stateHasValue("robot-at-x05y01", -9.94115727345, delta)
 				.stateHasValue("robot-at-x05y02", -9.94631104866, delta)
 				.stateHasValue("robot-at-x05y03", -9.96570780256, delta)
@@ -689,8 +574,7 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x05y16", -9.36755856457, delta)
 				.stateHasValue("robot-at-x05y17", -8.71796493452, delta)
 				.stateHasValue("robot-at-x05y18", -7.39202570165, delta)
-				.stateHasValue("robot-at-x05y19", -4.68559, delta)
-				.stateHasValue("robot-at-x05y20", -4.0951, delta)
+				.stateHasValue("robot-at-x05y19", -4.68559, delta).stateHasValue("robot-at-x05y20", -4.0951, delta)
 				.stateHasValue("robot-at-x06y01", -9.94631104866, delta)
 				.stateHasValue("robot-at-x06y02", -9.95094944634, delta)
 				.stateHasValue("robot-at-x06y03", -9.97487695045, delta)
@@ -708,10 +592,8 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x06y15", -9.82491612493, delta)
 				.stateHasValue("robot-at-x06y16", -9.58524474509, delta)
 				.stateHasValue("robot-at-x06y17", -9.00057306914, delta)
-				.stateHasValue("robot-at-x06y18", -7.5743091176, delta)
-				.stateHasValue("robot-at-x06y19", -4.0951, delta)
-				.stateHasValue("robot-at-x06y20", -3.439, delta)
-				.stateHasValue("robot-at-x07y01", -9.95094944634, delta)
+				.stateHasValue("robot-at-x06y18", -7.5743091176, delta).stateHasValue("robot-at-x06y19", -4.0951, delta)
+				.stateHasValue("robot-at-x06y20", -3.439, delta).stateHasValue("robot-at-x07y01", -9.95094944634, delta)
 				.stateHasValue("robot-at-x07y02", -9.95512400426, delta)
 				.stateHasValue("robot-at-x07y03", -9.97947953328, delta)
 				.stateHasValue("robot-at-x07y04", -9.98504608171, delta)
@@ -728,10 +610,8 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x07y15", -9.91375175434, delta)
 				.stateHasValue("robot-at-x07y16", -9.75604536042, delta)
 				.stateHasValue("robot-at-x07y17", -9.27806631446, delta)
-				.stateHasValue("robot-at-x07y18", -7.82942450635, delta)
-				.stateHasValue("robot-at-x07y19", -3.439, delta)
-				.stateHasValue("robot-at-x07y20", -2.71, delta)
-				.stateHasValue("robot-at-x08y01", -9.95512400426, delta)
+				.stateHasValue("robot-at-x07y18", -7.82942450635, delta).stateHasValue("robot-at-x07y19", -3.439, delta)
+				.stateHasValue("robot-at-x07y20", -2.71, delta).stateHasValue("robot-at-x08y01", -9.95512400426, delta)
 				.stateHasValue("robot-at-x08y02", -9.95888110639, delta)
 				.stateHasValue("robot-at-x08y03", -9.98330982198, delta)
 				.stateHasValue("robot-at-x08y04", -9.98931189896, delta)
@@ -748,10 +628,8 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x08y15", -9.96297947466, delta)
 				.stateHasValue("robot-at-x08y16", -9.87768265414, delta)
 				.stateHasValue("robot-at-x08y17", -9.53644242539, delta)
-				.stateHasValue("robot-at-x08y18", -8.17129101173, delta)
-				.stateHasValue("robot-at-x08y19", -2.71, delta)
-				.stateHasValue("robot-at-x08y20", -1.9, delta)
-				.stateHasValue("robot-at-x09y01", -9.95888110639, delta)
+				.stateHasValue("robot-at-x08y18", -8.17129101173, delta).stateHasValue("robot-at-x08y19", -2.71, delta)
+				.stateHasValue("robot-at-x08y20", -1.9, delta).stateHasValue("robot-at-x09y01", -9.95888110639, delta)
 				.stateHasValue("robot-at-x09y02", -9.9622624983, delta)
 				.stateHasValue("robot-at-x09y03", -9.98647510282, delta)
 				.stateHasValue("robot-at-x09y04", -9.99057148285, delta)
@@ -768,10 +646,8 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x09y15", -9.98430000103, delta)
 				.stateHasValue("robot-at-x09y16", -9.95166751049, delta)
 				.stateHasValue("robot-at-x09y17", -9.7576213431, delta)
-				.stateHasValue("robot-at-x09y18", -8.61602765481, delta)
-				.stateHasValue("robot-at-x09y19", -1.9, delta)
-				.stateHasValue("robot-at-x09y20", -1.0, delta)
-				.stateHasValue("robot-at-x10y01", -9.9622624983, delta)
+				.stateHasValue("robot-at-x09y18", -8.61602765481, delta).stateHasValue("robot-at-x09y19", -1.9, delta)
+				.stateHasValue("robot-at-x09y20", -1.0, delta).stateHasValue("robot-at-x10y01", -9.9622624983, delta)
 				.stateHasValue("robot-at-x10y02", -9.96530575102, delta)
 				.stateHasValue("robot-at-x10y03", -9.98906892775, delta)
 				.stateHasValue("robot-at-x10y04", -9.99119600302, delta)
@@ -788,17 +664,15 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x10y15", -9.99019738098, delta)
 				.stateHasValue("robot-at-x10y16", -9.98465067997, delta)
 				.stateHasValue("robot-at-x10y17", -9.91859090589, delta)
-				.stateHasValue("robot-at-x10y18", -9.1822644599, delta)
-				.stateHasValue("robot-at-x10y19", -1.0, delta)
+				.stateHasValue("robot-at-x10y18", -9.1822644599, delta).stateHasValue("robot-at-x10y19", -1.0, delta)
 				.stateHasValue("robot-at-x10y20", 0.0, delta);
 	}
 
 	@Test
 	public void valueTest12() {
-		final Delta delta = Delta.delta(ERROR);
-		final UtilityFunction result = subject.solve("precise_problems\\navigation12.net", delta.doubleValue() / 10.0);
-		assertThat(result)
-				.stateHasValue("broken-robot", -9.99140495544, delta)
+		final Offset<Double> delta = offset(ERROR);
+		final UtilityFunction result = subject.solve("precise_problems\\navigation12.net", delta.value / 10.0);
+		assertThat(result).stateHasValue("broken-robot", -9.99140495544, delta)
 				.stateHasValue("robot-at-x01y01", -9.96530575102, delta)
 				.stateHasValue("robot-at-x01y02", -9.95902444751, delta)
 				.stateHasValue("robot-at-x01y03", -9.95125205537, delta)
@@ -1057,8 +931,7 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x13y16", -9.79891858685, delta)
 				.stateHasValue("robot-at-x13y17", -9.44944288392, delta)
 				.stateHasValue("robot-at-x13y18", -8.46550572188, delta)
-				.stateHasValue("robot-at-x13y19", -5.6953279, delta)
-				.stateHasValue("robot-at-x13y20", -5.217031, delta)
+				.stateHasValue("robot-at-x13y19", -5.6953279, delta).stateHasValue("robot-at-x13y20", -5.217031, delta)
 				.stateHasValue("robot-at-x14y01", -9.98573303943, delta)
 				.stateHasValue("robot-at-x14y02", -9.98642923804, delta)
 				.stateHasValue("robot-at-x14y03", -9.98987130998, delta)
@@ -1077,8 +950,7 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x14y16", -9.83888791029, delta)
 				.stateHasValue("robot-at-x14y17", -9.51071897108, delta)
 				.stateHasValue("robot-at-x14y18", -8.47647071123, delta)
-				.stateHasValue("robot-at-x14y19", -5.217031, delta)
-				.stateHasValue("robot-at-x14y20", -4.68559, delta)
+				.stateHasValue("robot-at-x14y19", -5.217031, delta).stateHasValue("robot-at-x14y20", -4.68559, delta)
 				.stateHasValue("robot-at-x15y01", -9.98642923804, delta)
 				.stateHasValue("robot-at-x15y02", -9.98705581679, delta)
 				.stateHasValue("robot-at-x15y03", -9.99022954691, delta)
@@ -1097,8 +969,7 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x15y16", -9.87565737382, delta)
 				.stateHasValue("robot-at-x15y17", -9.57714972514, delta)
 				.stateHasValue("robot-at-x15y18", -8.50883770855, delta)
-				.stateHasValue("robot-at-x15y19", -4.68559, delta)
-				.stateHasValue("robot-at-x15y20", -4.0951, delta)
+				.stateHasValue("robot-at-x15y19", -4.68559, delta).stateHasValue("robot-at-x15y20", -4.0951, delta)
 				.stateHasValue("robot-at-x16y01", -9.98705581679, delta)
 				.stateHasValue("robot-at-x16y02", -9.98761973766, delta)
 				.stateHasValue("robot-at-x16y03", -9.99052515488, delta)
@@ -1117,8 +988,7 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x16y16", -9.90832016433, delta)
 				.stateHasValue("robot-at-x16y17", -9.64741210812, delta)
 				.stateHasValue("robot-at-x16y18", -8.56721279929, delta)
-				.stateHasValue("robot-at-x16y19", -4.0951, delta)
-				.stateHasValue("robot-at-x16y20", -3.439, delta)
+				.stateHasValue("robot-at-x16y19", -4.0951, delta).stateHasValue("robot-at-x16y20", -3.439, delta)
 				.stateHasValue("robot-at-x17y01", -9.98761973766, delta)
 				.stateHasValue("robot-at-x17y02", -9.98812726645, delta)
 				.stateHasValue("robot-at-x17y03", -9.99076653768, delta)
@@ -1136,10 +1006,8 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x17y15", -9.9801347172, delta)
 				.stateHasValue("robot-at-x17y16", -9.93606201778, delta)
 				.stateHasValue("robot-at-x17y17", -9.7196467808, delta)
-				.stateHasValue("robot-at-x17y18", -8.65697680315, delta)
-				.stateHasValue("robot-at-x17y19", -3.439, delta)
-				.stateHasValue("robot-at-x17y20", -2.71, delta)
-				.stateHasValue("robot-at-x18y01", -9.98812726645, delta)
+				.stateHasValue("robot-at-x17y18", -8.65697680315, delta).stateHasValue("robot-at-x17y19", -3.439, delta)
+				.stateHasValue("robot-at-x17y20", -2.71, delta).stateHasValue("robot-at-x18y01", -9.98812726645, delta)
 				.stateHasValue("robot-at-x18y02", -9.98858404235, delta)
 				.stateHasValue("robot-at-x18y03", -9.99096104105, delta)
 				.stateHasValue("robot-at-x18y04", -9.9913357366, delta)
@@ -1156,10 +1024,8 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x18y15", -9.98590728537, delta)
 				.stateHasValue("robot-at-x18y16", -9.9582385214, delta)
 				.stateHasValue("robot-at-x18y17", -9.79132155607, delta)
-				.stateHasValue("robot-at-x18y18", -8.7843798862, delta)
-				.stateHasValue("robot-at-x18y19", -2.71, delta)
-				.stateHasValue("robot-at-x18y20", -1.9, delta)
-				.stateHasValue("robot-at-x19y01", -9.98858404235, delta)
+				.stateHasValue("robot-at-x18y18", -8.7843798862, delta).stateHasValue("robot-at-x18y19", -2.71, delta)
+				.stateHasValue("robot-at-x18y20", -1.9, delta).stateHasValue("robot-at-x19y01", -9.98858404235, delta)
 				.stateHasValue("robot-at-x19y02", -9.98899514067, delta)
 				.stateHasValue("robot-at-x19y03", -9.99111508593, delta)
 				.stateHasValue("robot-at-x19y04", -9.99137048787, delta)
@@ -1176,10 +1042,8 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x19y15", -9.98924129286, delta)
 				.stateHasValue("robot-at-x19y16", -9.9744846572, delta)
 				.stateHasValue("robot-at-x19y17", -9.85908679697, delta)
-				.stateHasValue("robot-at-x19y18", -8.95668090425, delta)
-				.stateHasValue("robot-at-x19y19", -1.9, delta)
-				.stateHasValue("robot-at-x19y20", -1.0, delta)
-				.stateHasValue("robot-at-x20y01", -9.98899514067, delta)
+				.stateHasValue("robot-at-x19y18", -8.95668090425, delta).stateHasValue("robot-at-x19y19", -1.9, delta)
+				.stateHasValue("robot-at-x19y20", -1.0, delta).stateHasValue("robot-at-x20y01", -9.98899514067, delta)
 				.stateHasValue("robot-at-x20y02", -9.98936512916, delta)
 				.stateHasValue("robot-at-x20y03", -9.99123427178, delta)
 				.stateHasValue("robot-at-x20y04", -9.99139088398, delta)
@@ -1196,8 +1060,7 @@ public class TestNavigationMDP {
 				.stateHasValue("robot-at-x20y15", -9.99081532495, delta)
 				.stateHasValue("robot-at-x20y16", -9.98485255049, delta)
 				.stateHasValue("robot-at-x20y17", -9.91859090589, delta)
-				.stateHasValue("robot-at-x20y18", -9.1822644599, delta)
-				.stateHasValue("robot-at-x20y19", -1.0, delta)
+				.stateHasValue("robot-at-x20y18", -9.1822644599, delta).stateHasValue("robot-at-x20y19", -1.0, delta)
 				.stateHasValue("robot-at-x20y20", 0.0, delta);
 	}
 }

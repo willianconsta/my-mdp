@@ -1,5 +1,6 @@
 package mymdp.problem;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
 import static mymdp.solver.ProbLinearSolver.solve;
 
 import java.util.Collection;
@@ -13,6 +14,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Ordering;
+
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
 import mymdp.core.State;
@@ -22,27 +28,24 @@ import mymdp.exception.InvalidProbabilityFunctionException;
 import mymdp.solver.ProbLinearSolver;
 import mymdp.util.Trio;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Ordering;
-
-final class MDPIPImpl implements MDPIP {
+final class MDPIPImpl
+	implements
+		MDPIP
+{
 	private final Set<State> states;
-	private final Map<State, Double> rewards;
-	private final Map<Action, Map<State, Map<State, String>>> transitions;
+	private final Map<State,Double> rewards;
+	private final Map<Action,Map<State,Map<State,String>>> transitions;
 	private final Set<String> restrictions;
-	private final Map<Trio<State, Action, State>, String> vars;
-	private final Map<Object, TransitionProbability> cache;
+	private final Map<Trio<State,Action,State>,String> vars;
+	private final Map<Object,TransitionProbability> cache;
 	private final double discountFactor;
 
 	MDPIPImpl(
 			final Collection<? extends State> states,
-			final Map<? extends State, Double> rewards,
-			final Map<Action, Map<State, Map<State, String>>> transitions,
+			final Map<? extends State,Double> rewards,
+			final Map<Action,Map<State,Map<State,String>>> transitions,
 			final Set<String> restrictions,
-			final Map<Trio<State, Action, State>, String> vars,
+			final Map<Trio<State,Action,State>,String> vars,
 			final double discountFactor) {
 		this.states = ImmutableSet.copyOf(states);
 		this.rewards = ImmutableMap.copyOf(rewards);
@@ -66,8 +69,8 @@ final class MDPIPImpl implements MDPIP {
 	@Override
 	public Set<Action> getActionsFor(final State state) {
 		final Set<Action> appliableActions = new LinkedHashSet<>();
-		for (final Entry<Action, Map<State, Map<State, String>>> entry : transitions.entrySet()) {
-			if (entry.getValue().containsKey(state) && !entry.getValue().get(state).isEmpty()) {
+		for ( final Entry<Action,Map<State,Map<State,String>>> entry : transitions.entrySet() ) {
+			if ( entry.getValue().containsKey(state) && !entry.getValue().get(state).isEmpty() ) {
 				appliableActions.add(entry.getKey());
 			}
 		}
@@ -77,12 +80,12 @@ final class MDPIPImpl implements MDPIP {
 	@Override
 	public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action,
 			final UtilityFunction function) {
-		final Map<State, Map<State, String>> actionMap = transitions.get(action);
-		if (actionMap == null) {
+		final Map<State,Map<State,String>> actionMap = transitions.get(action);
+		if ( actionMap == null ) {
 			return TransitionProbability.Instance.empty();
 		}
-		final Map<State, String> probabilityFunction = actionMap.get(initialState);
-		if (probabilityFunction == null) {
+		final Map<State,String> probabilityFunction = actionMap.get(initialState);
+		if ( probabilityFunction == null ) {
 			return TransitionProbability.Instance.empty();
 		}
 
@@ -94,20 +97,21 @@ final class MDPIPImpl implements MDPIP {
 				actionMap.get(initialState).keySet(),
 				getValues(actionMap.get(initialState).keySet(), function));
 
-		if (cache.containsKey(key)) {
+		if ( cache.containsKey(key) ) {
 			result = cache.get(key);
 
 			// FIXME: testar melhor URGENTEMENTE
 			assert TransitionProbability.Instance.createSimple(
 					initialState, action,
 					solve(probabilityFunction, getRewardFor(initialState),
-							function, vars.values(), restrictions)).equals(result);
+							function, vars.values(), restrictions))
+					.equals(result);
 		} else {
-			final Map<State, Double> minProb = solve(probabilityFunction, getRewardFor(initialState), function, vars.values(),
+			final Map<State,Double> minProb = solve(probabilityFunction, getRewardFor(initialState), function, vars.values(),
 					restrictions);
 			try {
 				result = TransitionProbability.Instance.createSimple(initialState, action, minProb);
-			} catch (final InvalidProbabilityFunctionException e) {
+			} catch ( final InvalidProbabilityFunctionException e ) {
 				throw new IllegalStateException("Problem evaluating state " + initialState + " and action " + action + ". Log: "
 						+ ProbLinearSolver.getLastFullLog(), e);
 			}
@@ -117,12 +121,11 @@ final class MDPIPImpl implements MDPIP {
 	}
 
 	/**
-	 * Gets the variable names associated with all transitions
-	 * <currentState,action,nextState>.
+	 * Gets the variable names associated with all transitions <currentState,action,nextState>.
 	 * 
 	 * @return
 	 */
-	Map<Trio<State, Action, State>, String> getVars() {
+	Map<Trio<State,Action,State>,String> getVars() {
 		return Collections.unmodifiableMap(vars);
 	}
 
@@ -130,7 +133,7 @@ final class MDPIPImpl implements MDPIP {
 	 * 
 	 * @return
 	 */
-	public Map<Action, Map<State, Map<State, String>>> getTransitions() {
+	public Map<Action,Map<State,Map<State,String>>> getTransitions() {
 		return Collections.unmodifiableMap(transitions);
 	}
 
@@ -146,7 +149,7 @@ final class MDPIPImpl implements MDPIP {
 
 	private Set<Double> getValues(final Set<State> states, final UtilityFunction func) {
 		final Set<Double> values = new HashSet<>(states.size());
-		for (final State state : states) {
+		for ( final State state : states ) {
 			values.add(func.getUtility(state));
 		}
 		return values;
@@ -164,31 +167,27 @@ final class MDPIPImpl implements MDPIP {
 
 	@Override
 	public String toString() {
-		final Map<Action, Map<State, Map<State, String>>> transitions = new TreeMap<>(Ordering.usingToString());
+		final Map<Action,Map<State,Map<State,String>>> transitions = new TreeMap<>(Ordering.usingToString());
 		transitions.putAll(this.transitions);
 
 		final Set<State> states = new TreeSet<>(Ordering.usingToString());
 		states.addAll(this.states);
 
-		final Map<Trio<State, Action, State>, String> vars = new TreeMap<>(Ordering.usingToString());
+		final Map<Trio<State,Action,State>,String> vars = new TreeMap<>(Ordering.usingToString());
 		vars.putAll(this.vars);
 
 		final Set<String> restrictions = new TreeSet<>(this.restrictions);
 		restrictions.addAll(this.restrictions);
 
-		return Objects
-				.toStringHelper(this)
-				.add("states",
-						states.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
-				.add("transitions",
-						transitions.toString().replaceAll("}, ", "},\n\t").replaceFirst("\\[", "\\[\n\t")
-								.replaceFirst("\\]", "\n\\]"))
+		return toStringHelper(this)
+				.add("states", states.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
+				.add("transitions", transitions.toString().replaceAll("}, ", "},\n\t").replaceFirst("\\[", "\\[\n\t")
+						.replaceFirst("\\]", "\n\\]"))
 				.add("discountFactor", discountFactor)
 				.add("vars", vars.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]")
 						.replaceFirst("\\{", "\\{\n\t").replaceFirst("\\}", "\n\\}"))
-				.add("restrictions",
-						restrictions.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t")
-								.replaceFirst("\\]", "\n\\]"))
+				.add("restrictions", restrictions.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t")
+						.replaceFirst("\\]", "\n\\]"))
 				.toString();
 	}
 }

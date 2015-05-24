@@ -4,7 +4,7 @@ import static com.google.common.collect.Sets.newHashSet;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static mymdp.test.MDPAssertions.assertThat;
-import static org.fest.assertions.Delta.delta;
+import static org.assertj.core.api.Assertions.offset;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -17,6 +17,13 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.assertj.core.data.Offset;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
 import mymdp.solver.MDPDualLinearProgrammingSolver;
 import mymdp.solver.ModifiedPolicyEvaluator;
 import mymdp.solver.PolicyIterationImpl;
@@ -24,18 +31,15 @@ import mymdp.solver.RTDP.ConvergencyCriteria;
 import mymdp.solver.RTDPImpl;
 import mymdp.solver.ValueIterationImpl;
 
-import org.fest.assertions.Delta;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
 @RunWith(Parameterized.class)
-public class TestAIMAExample1 {
+public class TestAIMAExample1
+{
 	public static final double DELTA_THRESHOLD = 1e-3;
 
-	private static class StateImpl implements State {
+	private static class StateImpl
+		implements
+			State
+	{
 		final int i;
 		final int j;
 
@@ -61,7 +65,7 @@ public class TestAIMAExample1 {
 
 		@Override
 		public boolean equals(final Object obj) {
-			if (obj == null) {
+			if ( obj == null ) {
 				return false;
 			}
 
@@ -69,25 +73,28 @@ public class TestAIMAExample1 {
 			return i == other.i && j == other.j;
 		}
 
-		private static Map<State, State> allStates = new LinkedHashMap<>();
+		private static Map<State,State> allStates = new LinkedHashMap<>();
 
 		static State createState(final int i, final int j) {
-			if (i == 2 && j == 2) {
+			if ( i == 2 && j == 2 ) {
 				return null;
 			}
 			final StateImpl s = new StateImpl(min(max(i, 1), 3), min(max(j, 1), 4));
-			if (!allStates.containsKey(s)) {
+			if ( !allStates.containsKey(s) ) {
 				allStates.put(s, s);
 			}
 			return allStates.get(s);
 		}
 	}
 
-	private static class ActionUp implements Action {
+	private static class ActionUp
+		implements
+			Action
+	{
 		@Override
 		public boolean isApplicableTo(final State state) {
 			final StateImpl s = (StateImpl) state;
-			return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
+			return !( s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4 );
 		}
 
 		@Override
@@ -95,32 +102,32 @@ public class TestAIMAExample1 {
 			return "ActionUp";
 		}
 
-		Map<State, Double> applyOver(final State state) {
-			if (!isApplicableTo(state)) {
+		Map<State,Double> applyOver(final State state) {
+			if ( !isApplicableTo(state) ) {
 				return Collections.emptyMap();
 			}
 
 			final StateImpl s = (StateImpl) state;
-			final Map<State, Double> states = new LinkedHashMap<>(4);
+			final Map<State,Double> states = new LinkedHashMap<>(4);
 			State next1 = StateImpl.createState(s.i + 1, s.j);
-			if (next1 == null) {
+			if ( next1 == null ) {
 				next1 = state;
 			}
 			State next2 = StateImpl.createState(s.i, s.j + 1);
-			if (next2 == null) {
+			if ( next2 == null ) {
 				next2 = state;
 			}
 			State next3 = StateImpl.createState(s.i, s.j - 1);
-			if (next3 == null) {
+			if ( next3 == null ) {
 				next3 = state;
 			}
 			states.put(next1, 0.8);
 			Double old = states.put(next2, 0.1);
-			if (old != null) {
+			if ( old != null ) {
 				states.put(next2, 0.1 + old);
 			}
 			old = states.put(next3, 0.1);
-			if (old != null) {
+			if ( old != null ) {
 				states.put(next3, 0.1 + old);
 			}
 			return Collections.unmodifiableMap(states);
@@ -132,11 +139,14 @@ public class TestAIMAExample1 {
 		}
 	}
 
-	private static class ActionDown implements Action {
+	private static class ActionDown
+		implements
+			Action
+	{
 		@Override
 		public boolean isApplicableTo(final State state) {
 			final StateImpl s = (StateImpl) state;
-			return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
+			return !( s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4 );
 		}
 
 		@Override
@@ -144,32 +154,32 @@ public class TestAIMAExample1 {
 			return "ActionDown";
 		}
 
-		Map<State, Double> applyOver(final State state) {
-			if (!isApplicableTo(state)) {
+		Map<State,Double> applyOver(final State state) {
+			if ( !isApplicableTo(state) ) {
 				return Collections.emptyMap();
 			}
 
 			final StateImpl s = (StateImpl) state;
-			final Map<State, Double> states = new LinkedHashMap<>(4);
+			final Map<State,Double> states = new LinkedHashMap<>(4);
 			State next1 = StateImpl.createState(s.i - 1, s.j);
-			if (next1 == null) {
+			if ( next1 == null ) {
 				next1 = state;
 			}
 			State next2 = StateImpl.createState(s.i, s.j + 1);
-			if (next2 == null) {
+			if ( next2 == null ) {
 				next2 = state;
 			}
 			State next3 = StateImpl.createState(s.i, s.j - 1);
-			if (next3 == null) {
+			if ( next3 == null ) {
 				next3 = state;
 			}
 			states.put(next1, 0.8);
 			Double old = states.put(next2, 0.1);
-			if (old != null) {
+			if ( old != null ) {
 				states.put(next2, 0.1 + old);
 			}
 			old = states.put(next3, 0.1);
-			if (old != null) {
+			if ( old != null ) {
 				states.put(next3, 0.1 + old);
 			}
 			return Collections.unmodifiableMap(states);
@@ -181,11 +191,14 @@ public class TestAIMAExample1 {
 		}
 	}
 
-	private static class ActionLeft implements Action {
+	private static class ActionLeft
+		implements
+			Action
+	{
 		@Override
 		public boolean isApplicableTo(final State state) {
 			final StateImpl s = (StateImpl) state;
-			return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
+			return !( s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4 );
 		}
 
 		@Override
@@ -193,32 +206,32 @@ public class TestAIMAExample1 {
 			return "ActionLeft";
 		}
 
-		Map<State, Double> applyOver(final State state) {
-			if (!isApplicableTo(state)) {
+		Map<State,Double> applyOver(final State state) {
+			if ( !isApplicableTo(state) ) {
 				return Collections.emptyMap();
 			}
 
 			final StateImpl s = (StateImpl) state;
-			final Map<State, Double> states = new LinkedHashMap<>(4);
+			final Map<State,Double> states = new LinkedHashMap<>(4);
 			State next1 = StateImpl.createState(s.i, s.j - 1);
-			if (next1 == null) {
+			if ( next1 == null ) {
 				next1 = state;
 			}
 			State next2 = StateImpl.createState(s.i + 1, s.j);
-			if (next2 == null) {
+			if ( next2 == null ) {
 				next2 = state;
 			}
 			State next3 = StateImpl.createState(s.i - 1, s.j);
-			if (next3 == null) {
+			if ( next3 == null ) {
 				next3 = state;
 			}
 			states.put(next1, 0.8);
 			Double old = states.put(next2, 0.1);
-			if (old != null) {
+			if ( old != null ) {
 				states.put(next2, 0.1 + old);
 			}
 			old = states.put(next3, 0.1);
-			if (old != null) {
+			if ( old != null ) {
 				states.put(next3, 0.1 + old);
 			}
 			return Collections.unmodifiableMap(states);
@@ -230,11 +243,14 @@ public class TestAIMAExample1 {
 		}
 	}
 
-	private static class ActionRight implements Action {
+	private static class ActionRight
+		implements
+			Action
+	{
 		@Override
 		public boolean isApplicableTo(final State state) {
 			final StateImpl s = (StateImpl) state;
-			return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
+			return !( s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4 );
 		}
 
 		@Override
@@ -242,32 +258,32 @@ public class TestAIMAExample1 {
 			return "ActionRight";
 		}
 
-		Map<State, Double> applyOver(final State state) {
-			if (!isApplicableTo(state)) {
+		Map<State,Double> applyOver(final State state) {
+			if ( !isApplicableTo(state) ) {
 				return Collections.emptyMap();
 			}
 
 			final StateImpl s = (StateImpl) state;
-			final Map<State, Double> states = new LinkedHashMap<>(4);
+			final Map<State,Double> states = new LinkedHashMap<>(4);
 			State next1 = StateImpl.createState(s.i, s.j + 1);
-			if (next1 == null) {
+			if ( next1 == null ) {
 				next1 = state;
 			}
 			State next2 = StateImpl.createState(s.i + 1, s.j);
-			if (next2 == null) {
+			if ( next2 == null ) {
 				next2 = state;
 			}
 			State next3 = StateImpl.createState(s.i - 1, s.j);
-			if (next3 == null) {
+			if ( next3 == null ) {
 				next3 = state;
 			}
 			states.put(next1, 0.8);
 			Double old = states.put(next2, 0.1);
-			if (old != null) {
+			if ( old != null ) {
 				states.put(next2, 0.1 + old);
 			}
 			old = states.put(next3, 0.1);
-			if (old != null) {
+			if ( old != null ) {
 				states.put(next3, 0.1 + old);
 			}
 			return Collections.unmodifiableMap(states);
@@ -279,11 +295,14 @@ public class TestAIMAExample1 {
 		}
 	}
 
-	private static class ActionNone implements Action {
+	private static class ActionNone
+		implements
+			Action
+	{
 		@Override
 		public boolean isApplicableTo(final State state) {
 			final StateImpl s = (StateImpl) state;
-			return !(s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4);
+			return !( s.i == 3 && s.j == 4 || s.i == 2 && s.j == 4 );
 		}
 
 		@Override
@@ -291,8 +310,8 @@ public class TestAIMAExample1 {
 			return "ActionNone";
 		}
 
-		Map<State, Double> applyOver(final State state) {
-			if (!isApplicableTo(state)) {
+		Map<State,Double> applyOver(final State state) {
+			if ( !isApplicableTo(state) ) {
 				return Collections.emptyMap();
 			}
 
@@ -305,40 +324,31 @@ public class TestAIMAExample1 {
 		}
 	}
 
-	private interface Testable {
+	private interface Testable
+	{
 		UtilityFunction solve(MDP mdp, double maxError);
 	}
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] {
-				{
-						new Testable() {
-							@Override
-							public UtilityFunction solve(final MDP mdp, final double maxError) {
-								return new ValueIterationImpl().solve(mdp, maxError);
-							}
-						}
-		},
-				{
-						new Testable() {
-							@Override
-							public UtilityFunction solve(final MDP mdp, final double maxError) {
-								final ModifiedPolicyEvaluator evaluator = new ModifiedPolicyEvaluator(100);
-								return evaluator.policyEvaluation(new PolicyIterationImpl(evaluator).solve(mdp),
-										new UtilityFunctionImpl(mdp.getStates()), mdp);
-							}
-						}
-		},
-				{
-						new Testable() {
-							@Override
-							public UtilityFunction solve(final MDP mdp, final double maxError) {
-								return new MDPDualLinearProgrammingSolver("AIMA Example", mdp).solve().getValueResult();
-							}
-						}
-		}
-		});
+		return Arrays.asList(new Object[][]{{new Testable() {
+			@Override
+			public UtilityFunction solve(final MDP mdp, final double maxError) {
+				return new ValueIterationImpl().solve(mdp, maxError);
+			}
+		}}, {new Testable() {
+			@Override
+			public UtilityFunction solve(final MDP mdp, final double maxError) {
+				final ModifiedPolicyEvaluator evaluator = new ModifiedPolicyEvaluator(100);
+				return evaluator.policyEvaluation(new PolicyIterationImpl(evaluator).solve(mdp),
+						new UtilityFunctionImpl(mdp.getStates()), mdp);
+			}
+		}}, {new Testable() {
+			@Override
+			public UtilityFunction solve(final MDP mdp, final double maxError) {
+				return new MDPDualLinearProgrammingSolver("AIMA Example", mdp).solve().getValueResult();
+			}
+		}}});
 	}
 
 	private final Testable subject;
@@ -351,7 +361,7 @@ public class TestAIMAExample1 {
 	public void testValueIteration() {
 		final UtilityFunction function = subject.solve(createMDP(), DELTA_THRESHOLD);
 
-		final Delta delta = delta(DELTA_THRESHOLD);
+		final Offset<Double> delta = offset(DELTA_THRESHOLD);
 		assertThat(function).stateHasValue("x01y01", 0.705, delta);
 		assertThat(function).stateHasValue("x01y02", 0.655, delta);
 		assertThat(function).stateHasValue("x01y03", 0.611, delta);
@@ -420,9 +430,9 @@ public class TestAIMAExample1 {
 	private MDP createMDP() {
 		return new MDP() {
 			private Set<State> states;
-			private final Map<State, Set<Action>> actionsByState = new LinkedHashMap<>();
-			private final Set<Action> actions = newHashSet(new ActionUp(), new ActionDown(), new ActionLeft(), new ActionRight(),
-					new ActionNone());
+			private final Map<State,Set<Action>> actionsByState = new LinkedHashMap<>();
+			private final Set<Action> actions = newHashSet(new ActionUp(), new ActionDown(), new ActionLeft(),
+					new ActionRight(), new ActionNone());
 
 			@Override
 			public Set<Action> getAllActions() {
@@ -431,11 +441,11 @@ public class TestAIMAExample1 {
 
 			@Override
 			public Set<State> getStates() {
-				if (states == null) {
+				if ( states == null ) {
 					states = new LinkedHashSet<>();
-					for (int j = 1; j <= 4; j++) {
-						for (int i = 1; i <= 3; i++) {
-							if (i == 2 & j == 2) {
+					for ( int j = 1; j <= 4; j++ ) {
+						for ( int i = 1; i <= 3; i++ ) {
+							if ( i == 2 & j == 2 ) {
 								continue;
 							}
 							states.add(StateImpl.createState(i, j));
@@ -449,32 +459,37 @@ public class TestAIMAExample1 {
 			@Override
 			public double getRewardFor(final State state) {
 				final StateImpl s = (StateImpl) state;
-				if (s.i == 3 && s.j == 4) {
+				if ( s.i == 3 && s.j == 4 ) {
 					return 1;
 				}
-				if (s.i == 2 && s.j == 4) {
+				if ( s.i == 2 && s.j == 4 ) {
 					return -1;
 				}
 				return -0.04;
 			}
 
 			@Override
-			public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action) {
-				if (action instanceof ActionUp) {
-					return TransitionProbability.Instance.createSimple(initialState, action, ((ActionUp) action).applyOver(initialState));
+			public TransitionProbability getPossibleStatesAndProbability(final State initialState,
+					final Action action) {
+				if ( action instanceof ActionUp ) {
+					return TransitionProbability.Instance.createSimple(initialState, action,
+							( (ActionUp) action ).applyOver(initialState));
 				}
-				if (action instanceof ActionDown) {
-					return TransitionProbability.Instance.createSimple(initialState, action, ((ActionDown) action).applyOver(initialState));
+				if ( action instanceof ActionDown ) {
+					return TransitionProbability.Instance.createSimple(initialState, action,
+							( (ActionDown) action ).applyOver(initialState));
 				}
-				if (action instanceof ActionLeft) {
-					return TransitionProbability.Instance.createSimple(initialState, action, ((ActionLeft) action).applyOver(initialState));
+				if ( action instanceof ActionLeft ) {
+					return TransitionProbability.Instance.createSimple(initialState, action,
+							( (ActionLeft) action ).applyOver(initialState));
 				}
-				if (action instanceof ActionRight) {
-					return TransitionProbability.Instance
-							.createSimple(initialState, action, ((ActionRight) action).applyOver(initialState));
+				if ( action instanceof ActionRight ) {
+					return TransitionProbability.Instance.createSimple(initialState, action,
+							( (ActionRight) action ).applyOver(initialState));
 				}
-				if (action instanceof ActionNone) {
-					return TransitionProbability.Instance.createSimple(initialState, action, ((ActionNone) action).applyOver(initialState));
+				if ( action instanceof ActionNone ) {
+					return TransitionProbability.Instance.createSimple(initialState, action,
+							( (ActionNone) action ).applyOver(initialState));
 				}
 				return TransitionProbability.Instance.empty();
 			}
@@ -487,10 +502,10 @@ public class TestAIMAExample1 {
 			@Override
 			public Set<Action> getActionsFor(final State state) {
 				Set<Action> actions = actionsByState.get(state);
-				if (actions == null) {
+				if ( actions == null ) {
 					actions = new HashSet<>();
-					for (final Action action : this.actions) {
-						if (action.isApplicableTo(state)) {
+					for ( final Action action : this.actions ) {
+						if ( action.isApplicableTo(state) ) {
 							actions.add(action);
 						}
 					}

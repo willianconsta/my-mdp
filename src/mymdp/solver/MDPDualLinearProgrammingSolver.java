@@ -28,7 +28,10 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
 
-public class MDPDualLinearProgrammingSolver implements ProblemSolver {
+public class MDPDualLinearProgrammingSolver
+	implements
+		ProblemSolver
+{
 	private static final Logger log = LogManager.getLogger(DualLinearProgrammingSolver.class);
 
 	private final String problemName;
@@ -40,7 +43,7 @@ public class MDPDualLinearProgrammingSolver implements ProblemSolver {
 		this.problem = checkNotNull(problem);
 		try {
 			this.solveCaller = new SolveCaller("amplcml\\");
-		} catch (final IOException e) {
+		} catch ( final IOException e ) {
 			throw Throwables.propagate(e);
 		}
 	}
@@ -57,7 +60,7 @@ public class MDPDualLinearProgrammingSolver implements ProblemSolver {
 		variables.add("discount");
 		constraints.add("discount = " + problem.getDiscountFactor());
 
-		for (final State s : problem.getStates()) {
+		for ( final State s : problem.getStates() ) {
 			final String valueVariable = stateToValueVariableName(s);
 			final String rewardVariable = stateToRewardVariableName(s);
 
@@ -68,11 +71,11 @@ public class MDPDualLinearProgrammingSolver implements ProblemSolver {
 
 			constraints.add(rewardVariable + " = " + problem.getRewardFor(s));
 
-			for (final Action a : problem.getActionsFor(s)) {
+			for ( final Action a : problem.getActionsFor(s) ) {
 				String actionConstraint = valueVariable + " >= " + rewardVariable + " + discount * ( ";
 
 				final List<String> allPossible = new ArrayList<>();
-				for (final Entry<State, Double> nextState : problem.getPossibleStatesAndProbability(s, a)) {
+				for ( final Entry<State,Double> nextState : problem.getPossibleStatesAndProbability(s, a) ) {
 					allPossible.add(nextState.getValue() + " * " + stateToValueVariableName(nextState.getKey()));
 				}
 				actionConstraint += Joiner.on(" + ").join(allPossible);
@@ -87,7 +90,7 @@ public class MDPDualLinearProgrammingSolver implements ProblemSolver {
 			solveCaller.callSolver();
 
 			log.info(new TreeMap<>(solveCaller.getCurrentValuesProb()));
-		} catch (final RuntimeException e) {
+		} catch ( final RuntimeException e ) {
 			log.error("Problem occurred while solving. Log: " + solveCaller.getLog());
 			log.error("File Contents: " + solveCaller.getFileContents());
 			throw e;
@@ -104,9 +107,9 @@ public class MDPDualLinearProgrammingSolver implements ProblemSolver {
 		return "r" + state.name().replaceAll("-", "");
 	}
 
-	private static UtilityFunction convertToValueFunction(final MDP mdp, final Map<String, Double> result) {
+	private static UtilityFunction convertToValueFunction(final MDP mdp, final Map<String,Double> result) {
 		final UtilityFunction valueFunction = new UtilityFunctionImpl(mdp.getStates());
-		for (final State state : mdp.getStates()) {
+		for ( final State state : mdp.getStates() ) {
 			valueFunction.updateUtility(state, result.get(stateToValueVariableName(state)));
 		}
 		return valueFunction;

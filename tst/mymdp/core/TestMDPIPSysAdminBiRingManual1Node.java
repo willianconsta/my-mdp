@@ -27,7 +27,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 
-public class TestMDPIPSysAdminBiRingManual1Node {
+public class TestMDPIPSysAdminBiRingManual1Node
+{
 
 	@Test
 	public void testValue() {
@@ -79,7 +80,7 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 
 			@Override
 			public double getRewardFor(final State state) {
-				switch ((States) state) {
+				switch ( (States) state ) {
 					case C1_OFF:
 						return 0;
 					case C1_ON:
@@ -94,8 +95,8 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 				return 0.90;
 			}
 
-			private final Multimap<Pair<? extends State, ? extends Action>, Pair<? extends State, String>> probs = ImmutableMultimap
-					.<Pair<? extends State, ? extends Action>, Pair<? extends State, String>> builder()
+			private final Multimap<Pair<? extends State,? extends Action>,Pair<? extends State,String>> probs = ImmutableMultimap
+					.<Pair<? extends State,? extends Action>,Pair<? extends State,String>> builder()
 					.put(of(States.C1_OFF, Actions.NOP), of(States.C1_OFF, "p2"))
 					.put(of(States.C1_OFF, Actions.NOP), of(States.C1_ON, "p4"))
 					.put(of(States.C1_OFF, Actions.REBOOT1), of(States.C1_OFF, "0"))
@@ -107,28 +108,28 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 
 			@Override
 			public TransitionProbability getPossibleStatesAndProbability(final State s, final Action a, final UtilityFunction function) {
-				final Pair<State, Action> transition = of(s, a);
-				final Map<State, Double> result = Maps.newLinkedHashMap();
-				final Collection<Pair<? extends State, String>> nextStates = probs.get(transition);
+				final Pair<State,Action> transition = of(s, a);
+				final Map<State,Double> result = Maps.newLinkedHashMap();
+				final Collection<Pair<? extends State,String>> nextStates = probs.get(transition);
 
-				for (final Pair<? extends State, String> pair : nextStates) {
+				for ( final Pair<? extends State,String> pair : nextStates ) {
 					try {
 						final double prob = Double.parseDouble(pair.second);
 						result.put(pair.first, prob);
-					} catch (final NumberFormatException e) {
+					} catch ( final NumberFormatException e ) {
 						result.clear();
 						break;
 					}
 				}
-				if (!result.isEmpty()) {
+				if ( !result.isEmpty() ) {
 					return TransitionProbability.Instance.empty();
 				}
 
 				final List<String> obj = Lists.newArrayList();
 				obj.add(String.valueOf(getRewardFor(s)));
 
-				for (final Pair<? extends State, String> pair : nextStates) {
-					if (pair.second.contains("*0.0*") || pair.second.endsWith("*0.0")) {
+				for ( final Pair<? extends State,String> pair : nextStates ) {
+					if ( pair.second.contains("*0.0*") || pair.second.endsWith("*0.0") ) {
 						continue;
 					}
 
@@ -137,8 +138,8 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 
 				SolveCaller solveCaller;
 				try {
-					solveCaller = new SolveCaller("D:\\Programação\\Mestrado\\amplcml\\");
-				} catch (final IOException e) {
+					solveCaller = new SolveCaller("amplcml\\");
+				} catch ( final IOException e ) {
 					throw Throwables.propagate(e);
 				}
 				final Set<String> variables = ImmutableSet.<String> of("p1", "p2", "p3", "p4");
@@ -146,24 +147,24 @@ public class TestMDPIPSysAdminBiRingManual1Node {
 						ImmutableList.<String> of("p1 >= 0.85 + p2", "p1 <= 0.95", "p2 <= 0.10", "p3 = 1 - p1", "p4 = 1 - p2"),
 						SolutionType.MINIMIZE);
 				solveCaller.callSolver();
-				final Map<String, Double> currentValuesProb = solveCaller.getCurrentValuesProb();
-				if (currentValuesProb.isEmpty()) {
+				final Map<String,Double> currentValuesProb = solveCaller.getCurrentValuesProb();
+				if ( currentValuesProb.isEmpty() ) {
 					System.out.println(solveCaller.getLog());
 					throw new IllegalStateException();
 				}
 
-				for (final Pair<? extends State, String> pair : nextStates) {
+				for ( final Pair<? extends State,String> pair : nextStates ) {
 					final String constr = pair.second;
 					int i = 0;
 					final String[] values = constr.split("[\\*]");
 					double value = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i]).doubleValue() : Double
 							.parseDouble(values[i]);
 					final String[] ops = constr.split("[^\\*]");
-					for (final String op : ops) {
-						if (op.equals("*")) {
+					for ( final String op : ops ) {
+						if ( op.equals("*") ) {
 							final double val1 = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i])
 									.doubleValue() : Double
-									.parseDouble(values[i]);
+											.parseDouble(values[i]);
 							value *= val1;
 							i++;
 						}

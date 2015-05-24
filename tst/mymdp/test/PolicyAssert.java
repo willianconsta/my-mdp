@@ -1,26 +1,31 @@
 package mymdp.test;
 
-import mymdp.core.Action;
-import mymdp.core.Policy;
+import static com.google.common.base.Objects.equal;
 
-import org.fest.assertions.GenericAssert;
-import org.fest.util.Objects;
+import org.assertj.core.api.AbstractAssert;
 
 import com.google.common.base.Optional;
 
-public final class PolicyAssert extends GenericAssert<PolicyAssert, Policy> {
+import mymdp.core.Action;
+import mymdp.core.Policy;
+
+public final class PolicyAssert
+	extends
+		AbstractAssert<PolicyAssert,Policy>
+{
 
 	PolicyAssert(final Policy actual) {
-		super(PolicyAssert.class, actual);
+		super(actual, PolicyAssert.class);
 	}
 
 	public PolicyAssert stateHasAction(final String stateName, final String actionName) {
-		final String policyActionName = Optional.fromNullable(actual.getActionFor(stateName)).transform(Action.toName).orNull();
-		if (Objects.areEqual(policyActionName, actionName)) {
-			return this;
+		final String policyActionName = Optional.fromNullable(actual.getActionFor(stateName)).transform(Action::name)
+				.orNull();
+		if ( !equal(policyActionName, actionName) ) {
+			failWithMessage(
+					"Policy has not the expected action for the state. State = %s, Expected Action = %s, Actual Action = %s.",
+					stateName, actionName, policyActionName);
 		}
-		failIfCustomMessageIsSet();
-		throw failure("Policy has not the expected action for the state. State = " + stateName + ", Expected Action =" + actionName
-				+ ", Actual Action = " + policyActionName);
+		return this;
 	}
 }

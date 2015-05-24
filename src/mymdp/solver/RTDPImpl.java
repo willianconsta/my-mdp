@@ -20,13 +20,16 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-public final class RTDPImpl implements RTDP {
+public final class RTDPImpl
+	implements
+		RTDP
+{
 
 	@Override
 	public UtilityFunction solve(final MDP mdp) {
 		final int size = randomSeed.nextInt(mdp.getStates().size());
 		final Set<State> initials = Sets.newLinkedHashSetWithExpectedSize(size);
-		for (int i = 0; i < size; i++) {
+		for ( int i = 0; i < size; i++ ) {
 			initials.add(Iterables.get(mdp.getStates(), i));
 		}
 		return solve(mdp, initials, new UtilityFunctionImpl(mdp.getStates(),
@@ -64,11 +67,11 @@ public final class RTDPImpl implements RTDP {
 			final Set<State> goals, final long maxDepth,
 			final UtilityFunction initialValues) {
 		UtilityFunction actualUpper = new UtilityFunctionImpl(initialValues);
-		while (!convergencyCriteria.hasConverged()) {
+		while ( !convergencyCriteria.hasConverged() ) {
 			long depth = 0;
 			final Deque<State> visitedStates = Lists.newLinkedList();
 			State s = pickOneAtRandom(initials);
-			while (s != null && depth < maxDepth && !goals.contains(s)) {
+			while ( s != null && depth < maxDepth && !goals.contains(s) ) {
 				depth++;
 				visitedStates.push(s);
 				actualUpper = backup(actualUpper, s, mdp);
@@ -77,8 +80,8 @@ public final class RTDPImpl implements RTDP {
 				s = chooseNextState(s, a, mdp);
 			}
 
-			for (final Iterator<State> it = visitedStates.descendingIterator(); it
-					.hasNext();) {
+			for ( final Iterator<State> it = visitedStates.descendingIterator(); it
+					.hasNext(); ) {
 				final State state = it.next();
 				actualUpper = backup(actualUpper, state, mdp);
 			}
@@ -96,8 +99,8 @@ public final class RTDPImpl implements RTDP {
 	private State chooseNextState(final State s, final Action a, final MDP mdp) {
 		final double random = randomSeed.nextDouble();
 		double accumulated = 0.0;
-		for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a)) {
-			if (random < accumulated + entry.getValue().doubleValue()) {
+		for ( final Entry<State,Double> entry : mdp.getPossibleStatesAndProbability(s, a) ) {
+			if ( random < accumulated + entry.getValue().doubleValue() ) {
 				return entry.getKey();
 			}
 			accumulated += entry.getValue().doubleValue();

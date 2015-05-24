@@ -11,13 +11,17 @@ import mymdp.util.Pair;
 
 import org.junit.Test;
 
-public class TestDual {
+public class TestDual
+{
 	private static final String FILENAME = "navigation01.net";
 	private static final double MAX_RELAXATION = 0.15;
 
-	private class DualTask implements Callable<Pair<UtilityFunction, Policy>> {
+	private class DualTask
+		implements
+			Callable<Pair<UtilityFunction,Policy>>
+	{
 		@Override
-		public Pair<UtilityFunction, Policy> call() {
+		public Pair<UtilityFunction,Policy> call() {
 			final DualGame dualGame = new DualGame(FILENAME, MAX_RELAXATION);
 			final SolutionReport report = dualGame.solve();
 			return Pair.of(report.getValueResult(), report.getPolicyResult());
@@ -26,7 +30,7 @@ public class TestDual {
 
 	@Test
 	public void test() {
-		final Pair<UtilityFunction, Policy> dualResult = new DualTask().call();
+		final Pair<UtilityFunction,Policy> dualResult = new DualTask().call();
 		final Policy result = dualResult.second;
 		MDPAssertions.assertThat(result)
 				.stateHasAction("robot-at-x01y01", "move-north")

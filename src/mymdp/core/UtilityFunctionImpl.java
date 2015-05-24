@@ -7,13 +7,17 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
 
-public class UtilityFunctionImpl implements UtilityFunction, Comparable<UtilityFunction> {
+public class UtilityFunctionImpl
+	implements
+		UtilityFunction,
+		Comparable<UtilityFunction>
+{
 
-	private final Map<State, Double> utilities = new LinkedHashMap<>();
-	private final Map<String, Double> utilitiesByName = new LinkedHashMap<>();
+	private final Map<State,Double> utilities = new LinkedHashMap<>();
+	private final Map<String,Double> utilitiesByName = new LinkedHashMap<>();
 
 	public UtilityFunctionImpl(final Set<State> states, final double constantValue) {
-		for (final State state : states) {
+		for ( final State state : states ) {
 			final Double value = Double.valueOf(constantValue);
 			utilities.put(state, value);
 			utilitiesByName.put(state.name(), value);
@@ -26,7 +30,7 @@ public class UtilityFunctionImpl implements UtilityFunction, Comparable<UtilityF
 
 	public UtilityFunctionImpl(final UtilityFunction function) {
 		this(function.getStates());
-		for (final State state : function.getStates()) {
+		for ( final State state : function.getStates() ) {
 			updateUtility(state, function.getUtility(state));
 		}
 	}
@@ -38,7 +42,7 @@ public class UtilityFunctionImpl implements UtilityFunction, Comparable<UtilityF
 
 	@Override
 	public void updateUtility(final State state, final double utility) {
-		if (utilities.get(state) == null) {
+		if ( utilities.get(state) == null ) {
 			throw new IllegalStateException("Updating inexistent state: " + state);
 		}
 		utilities.put(state, utility);
@@ -62,10 +66,10 @@ public class UtilityFunctionImpl implements UtilityFunction, Comparable<UtilityF
 
 	@Override
 	public boolean equals(final Object arg0) {
-		if (!(arg0 instanceof UtilityFunctionImpl)) {
+		if ( !( arg0 instanceof UtilityFunctionImpl ) ) {
 			return false;
 		}
-		return utilities.equals(((UtilityFunctionImpl) arg0).utilities);
+		return utilities.equals(( (UtilityFunctionImpl) arg0 ).utilities);
 	}
 
 	@Override
@@ -76,24 +80,24 @@ public class UtilityFunctionImpl implements UtilityFunction, Comparable<UtilityF
 	@Override
 	public int compareTo(final UtilityFunction o) {
 		UtilityFunction potentialGreater = null;
-		for (final State s : getStates()) {
+		for ( final State s : getStates() ) {
 			final int result = Double.compare(o.getUtility(s), getUtility(s));
-			if (result > 0) {
-				if (potentialGreater == this) {
+			if ( result > 0 ) {
+				if ( potentialGreater == this ) {
 					// nada se pode afirmar
 					return 0;
 				}
 				potentialGreater = o;
 			}
-			if (result < 0) {
-				if (potentialGreater == o) {
+			if ( result < 0 ) {
+				if ( potentialGreater == o ) {
 					// nada se pode afirmar
 					return 0;
 				}
 				potentialGreater = this;
 			}
 		}
-		if (potentialGreater == null) {
+		if ( potentialGreater == null ) {
 			return 0;
 		}
 		return potentialGreater == this ? 1 : -1;

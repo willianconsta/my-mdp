@@ -10,23 +10,26 @@ import mymdp.core.State;
 
 import com.google.common.collect.Range;
 
-public class ImprecisionGeneratorByMDP implements ImprecisionGenerator {
-	private final Map<String, Map<String, Map<String, Range<Double>>>> transitions;
+public class ImprecisionGeneratorByMDP
+	implements
+		ImprecisionGenerator
+{
+	private final Map<String,Map<String,Map<String,Range<Double>>>> transitions;
 	private final double stepVariation;
 
 	public ImprecisionGeneratorByMDP(final MDP mdp, final double maxVariation, final double stepVariation) {
 		this.stepVariation = stepVariation;
 		this.transitions = new LinkedHashMap<>();
-		for (final State s : mdp.getStates()) {
-			for (final Action a : mdp.getActionsFor(s)) {
-				for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a)) {
-					Map<String, Map<String, Range<Double>>> map = transitions.get(s.toString());
-					if (map == null) {
+		for ( final State s : mdp.getStates() ) {
+			for ( final Action a : mdp.getActionsFor(s) ) {
+				for ( final Entry<State,Double> entry : mdp.getPossibleStatesAndProbability(s, a) ) {
+					Map<String,Map<String,Range<Double>>> map = transitions.get(s.toString());
+					if ( map == null ) {
 						map = new LinkedHashMap<>();
 						transitions.put(s.toString(), map);
 					}
-					Map<String, Range<Double>> probs = map.get(a.toString());
-					if (probs == null) {
+					Map<String,Range<Double>> probs = map.get(a.toString());
+					if ( probs == null ) {
 						probs = new LinkedHashMap<>();
 						map.put(a.toString(), probs);
 					}

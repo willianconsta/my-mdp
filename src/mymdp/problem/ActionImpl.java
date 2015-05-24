@@ -8,7 +8,10 @@ import java.util.Set;
 import mymdp.core.Action;
 import mymdp.core.State;
 
-final class ActionImpl implements Action {
+final class ActionImpl
+	implements
+		Action
+{
 	private final Set<State> appliableStates;
 	private final String name;
 
@@ -36,10 +39,10 @@ final class ActionImpl implements Action {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (!(obj instanceof Action)) {
+		if ( !( obj instanceof Action ) ) {
 			return false;
 		}
-		return name.equals(((Action) obj).name());
+		return name.equals(( (Action) obj ).name());
 	}
 
 	@Override

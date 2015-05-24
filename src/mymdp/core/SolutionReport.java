@@ -1,7 +1,7 @@
 package mymdp.core;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Objects.equal;
-import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Objects;
@@ -11,7 +11,8 @@ import com.google.common.base.Objects;
  * 
  * @author Willian
  */
-public final class SolutionReport {
+public final class SolutionReport
+{
 	private final Policy policyResult;
 	private final UtilityFunction valueResult;
 
@@ -45,13 +46,13 @@ public final class SolutionReport {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj) {
+		if ( this == obj ) {
 			return true;
 		}
-		if (obj == null) {
+		if ( obj == null ) {
 			return false;
 		}
-		if (!(obj instanceof SolutionReport)) {
+		if ( !( obj instanceof SolutionReport ) ) {
 			return false;
 		}
 

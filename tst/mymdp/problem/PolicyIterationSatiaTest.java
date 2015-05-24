@@ -7,7 +7,8 @@ import mymdp.test.MDPAssertions;
 
 import org.junit.Test;
 
-public class PolicyIterationSatiaTest {
+public class PolicyIterationSatiaTest
+{
 	@Test
 	public void test() {
 		final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile("precise_problems\\navigation01.net", new ImprecisionGeneratorImpl(

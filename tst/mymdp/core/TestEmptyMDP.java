@@ -1,14 +1,16 @@
 package mymdp.core;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Collections;
 import java.util.Set;
 
-import mymdp.solver.ValueIterationImpl;
-
-import org.fest.assertions.Assertions;
 import org.junit.Test;
 
-public class TestEmptyMDP {
+import mymdp.solver.ValueIterationImpl;
+
+public class TestEmptyMDP
+{
 
 	@Test(timeout = 5000)
 	public void test() {
@@ -45,6 +47,6 @@ public class TestEmptyMDP {
 			}
 		}, 0.01);
 
-		Assertions.assertThat(function.getStates()).isEmpty();
+		assertThat(function.getStates()).isEmpty();
 	}
 }

@@ -1,12 +1,12 @@
 package mymdp.core;
 
 /**
- * Interface for policies. A policy defines which action to take in a given
- * state.
+ * Interface for policies. A policy defines which action to take in a given state.
  * 
  * @author Willian
  */
-public interface Policy {
+public interface Policy
+{
 
 	/**
 	 * Gets the action defined for the state.

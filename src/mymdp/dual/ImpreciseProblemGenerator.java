@@ -20,7 +20,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Range;
 
-final class ImpreciseProblemGenerator {
+final class ImpreciseProblemGenerator
+{
 	private static final Logger log = LogManager.getLogger(ImpreciseProblemGenerator.class);
 
 	private final Policy result;
@@ -36,7 +37,7 @@ final class ImpreciseProblemGenerator {
 	}
 
 	public void writeToFile(final String path, final State initialState, final Set<State> goalStates) {
-		try (FileWriter fileWriter = new FileWriter(path)) {
+		try ( FileWriter fileWriter = new FileWriter(path) ) {
 			writeStates(fileWriter);
 			writeActions(fileWriter);
 			writeRewards(fileWriter);
@@ -44,14 +45,14 @@ final class ImpreciseProblemGenerator {
 			writeDiscountRate(fileWriter);
 			writeInitialState(fileWriter, initialState);
 			writeGoalState(fileWriter, goalStates);
-		} catch (final IOException e) {
+		} catch ( final IOException e ) {
 			log.fatal(e);
 		}
 	}
 
 	private void writeGoalState(final FileWriter fileWriter, final Set<State> goalStates) throws IOException {
 		fileWriter.write("goalstate\n");
-		for (final State s : goalStates) {
+		for ( final State s : goalStates ) {
 			fileWriter.write("\t" + s.toString() + "\n");
 		}
 		fileWriter.write("endgoalstate\n\n");
@@ -69,7 +70,7 @@ final class ImpreciseProblemGenerator {
 
 	private void writeRewards(final FileWriter fileWriter) throws IOException {
 		fileWriter.write("reward\n");
-		for (final State s : mdp.getStates()) {
+		for ( final State s : mdp.getStates() ) {
 			fileWriter.write("\t" + s.toString() + " " + String.format(Locale.US, "%.10f", mdp.getRewardFor(s)) + "\n");
 		}
 		fileWriter.write("endreward\n\n");
@@ -78,26 +79,26 @@ final class ImpreciseProblemGenerator {
 	private void writeCosts(final FileWriter fileWriter) throws IOException {
 		fileWriter.write("cost\n");
 		final Set<Action> possibleActions = new HashSet<>();
-		for (final State s : mdp.getStates()) {
-			if (result != null) {
+		for ( final State s : mdp.getStates() ) {
+			if ( result != null ) {
 				possibleActions.add(result.getActionFor(s));
 			} else {
 				possibleActions.addAll(mdp.getActionsFor(s));
 			}
 		}
 
-		for (final Action a : possibleActions) {
+		for ( final Action a : possibleActions ) {
 			fileWriter.write("\t" + a.toString() + " " + String.format(Locale.US, "%.10f", 0.0) + "\n");
 		}
 		fileWriter.write("endcost\n\n");
 	}
 
 	private void writeActions(final FileWriter fileWriter) throws IOException {
-		for (final Action a : mdp.getAllActions()) {
+		for ( final Action a : mdp.getAllActions() ) {
 			fileWriter.write("action " + a.toString() + "\n");
-			for (final State s : mdp.getStates()) {
-				if (a.isApplicableTo(s) && (result == null || result.getActionFor(s).equals(a))) {
-					for (final Entry<State, Double> entry : mdp.getPossibleStatesAndProbability(s, a)) {
+			for ( final State s : mdp.getStates() ) {
+				if ( a.isApplicableTo(s) && ( result == null || result.getActionFor(s).equals(a) ) ) {
+					for ( final Entry<State,Double> entry : mdp.getPossibleStatesAndProbability(s, a) ) {
 						checkState(Range.closed(0.0, 1.0).contains(entry.getValue()), "Action " + a + " in state " + s
 								+ " has probability " + entry.getValue() + " to go to state " + entry.getKey());
 						fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
@@ -111,10 +112,10 @@ final class ImpreciseProblemGenerator {
 
 	private void writeStates(final FileWriter fileWriter) throws IOException {
 		fileWriter.write("states\n\t");
-		for (final Iterator<State> it = mdp.getStates().iterator(); it.hasNext();) {
+		for ( final Iterator<State> it = mdp.getStates().iterator(); it.hasNext(); ) {
 			final State s = it.next();
 			fileWriter.write(s.toString());
-			if (it.hasNext()) {
+			if ( it.hasNext() ) {
 				fileWriter.write(",");
 			}
 		}

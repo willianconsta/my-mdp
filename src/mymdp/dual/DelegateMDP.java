@@ -9,14 +9,17 @@ import mymdp.core.TransitionProbability;
 import mymdp.core.State;
 import mymdp.core.UtilityFunctionWithProbImpl;
 
-public class DelegateMDP implements MDP {
+public class DelegateMDP
+	implements
+		MDP
+{
 	private final MDPIP mdpip;
 	private UtilityFunctionWithProbImpl function;
 
 	public DelegateMDP(final MDPIP mdpip) {
 		this.mdpip = mdpip;
-		for (final State s : mdpip.getStates()) {
-			for (final Action a : mdpip.getAllActions()) {
+		for ( final State s : mdpip.getStates() ) {
+			for ( final Action a : mdpip.getAllActions() ) {
 
 			}
 		}

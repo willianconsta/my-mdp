@@ -12,23 +12,24 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 
-public final class ProbabilityRestrictionUtils {
+public final class ProbabilityRestrictionUtils
+{
 	private ProbabilityRestrictionUtils() {
 		throw new UnsupportedOperationException();
 	}
 
-	public static Pair<Set<String>, Set<String>> readProbabilityRestrictions(final MDPIP mdpip) {
+	public static Pair<Set<String>,Set<String>> readProbabilityRestrictions(final MDPIP mdpip) {
 		final MDPIPImpl impl = (MDPIPImpl) mdpip;
-		return Pair.<Set<String>, Set<String>> of(ImmutableSet.copyOf(impl.getVars().values()), impl.getRestrictions());
+		return Pair.<Set<String>,Set<String>> of(ImmutableSet.copyOf(impl.getVars().values()), impl.getRestrictions());
 	}
 
-	public static Multimap<Action, State> nextStates(final MDPIP mdpip, final State state) {
+	public static Multimap<Action,State> nextStates(final MDPIP mdpip, final State state) {
 		final MDPIPImpl impl = (MDPIPImpl) mdpip;
 		final Set<Action> actionsFor = impl.getActionsFor(state);
 
-		final Multimap<Action, State> result = HashMultimap.create();
-		for (final Action action : actionsFor) {
-			final Map<State, Map<State, String>> currentToNext = impl.getTransitions().get(action);
+		final Multimap<Action,State> result = HashMultimap.create();
+		for ( final Action action : actionsFor ) {
+			final Map<State,Map<State,String>> currentToNext = impl.getTransitions().get(action);
 			result.putAll(action, currentToNext.get(state).keySet());
 		}
 

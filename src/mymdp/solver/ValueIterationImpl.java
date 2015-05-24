@@ -10,7 +10,10 @@ import mymdp.core.UtilityFunctionImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ValueIterationImpl implements ValueIteration {
+public class ValueIterationImpl
+	implements
+		ValueIteration
+{
 	private static final Logger log = LogManager.getLogger(ValueIterationImpl.class);
 
 	@Override
@@ -23,13 +26,13 @@ public class ValueIterationImpl implements ValueIteration {
 			actualFunction = new UtilityFunctionImpl(oldFunction);
 			actualError = iteration(mdp, oldFunction, actualFunction);
 			oldFunction = actualFunction;
-		} while (actualError >= maxError);
+		} while ( actualError >= maxError );
 		return actualFunction;
 	}
 
 	private double iteration(final MDP mdp, final UtilityFunction oldFunction, final UtilityFunction actualFunction) {
 		double maxVariation = 0;
-		for (final State state : mdp.getStates()) {
+		for ( final State state : mdp.getStates() ) {
 			final double oldUtility = oldFunction.getUtility(state);
 			final double actualUtility = calculateUtility(mdp, state, oldFunction);
 			log.trace("Value of state " + state + " = " + actualUtility);

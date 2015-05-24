@@ -7,7 +7,9 @@ import com.google.common.collect.Range;
 import com.google.common.math.DoubleMath;
 
 public class ImprecisionGeneratorByRanges
-		implements ImprecisionGenerator {
+	implements
+		ImprecisionGenerator
+{
 	private final ImprecisionGeneratorImpl generator;
 	private final double stepVariation;
 
@@ -23,12 +25,13 @@ public class ImprecisionGeneratorByRanges
 		checkState(
 				DoubleMath.fuzzyEquals(actualProb, originalRange.lowerEndpoint(), 0.000001)
 						|| DoubleMath.fuzzyEquals(actualProb, originalRange.upperEndpoint(), 0.000001)
-						|| originalRange.contains(actualProb), actualProb + " is not in " + originalRange);
-		if (DoubleMath.fuzzyEquals(actualProb, originalRange.lowerEndpoint(), 0.000001)) {
+						|| originalRange.contains(actualProb),
+				actualProb + " is not in " + originalRange);
+		if ( DoubleMath.fuzzyEquals(actualProb, originalRange.lowerEndpoint(), 0.000001) ) {
 			return Range.closed(originalRange.lowerEndpoint(), actualProb + stepVariation).intersection(
 					originalRange);
 		}
-		if (DoubleMath.fuzzyEquals(actualProb, originalRange.upperEndpoint(), 0.000001)) {
+		if ( DoubleMath.fuzzyEquals(actualProb, originalRange.upperEndpoint(), 0.000001) ) {
 			return Range.closed(actualProb - stepVariation, originalRange.upperEndpoint()).intersection(
 					originalRange);
 		}

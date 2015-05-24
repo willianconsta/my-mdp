@@ -19,7 +19,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestLocalMinimum {
+public class TestLocalMinimum
+{
 	private static final double MAX_ERROR = 0.001;
 
 	private static final Logger log = LogManager.getLogger(TestLocalMinimum.class);
@@ -29,9 +30,8 @@ public class TestLocalMinimum {
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] {
-				{ "local_minimum_navigation.net", MAX_RELAXATION }
-		});
+		return Arrays.asList(new Object[][]{
+				{"local_minimum_navigation.net", MAX_RELAXATION}});
 	}
 
 	private final String filename;
@@ -53,7 +53,8 @@ public class TestLocalMinimum {
 	public void value() {
 		final UtilityFunction report = new ValueIterationIPImpl().solve(
 				MDPImpreciseFileProblemReader.readFromFile(PROBLEMS_DIR + "\\" + filename,
-						new ImprecisionGeneratorImpl(maxRelaxation)), MAX_ERROR);
+						new ImprecisionGeneratorImpl(maxRelaxation)),
+				MAX_ERROR);
 		log.info(report);
 		// createVectorField(report.getPolicyResult());
 	}
@@ -65,7 +66,7 @@ public class TestLocalMinimum {
 		createVectorField(report.getPolicyResult(), report.getValueResult());
 	}
 
-	private static final String[] states = new String[] { "robot-at-x01y01",
+	private static final String[] states = new String[]{"robot-at-x01y01",
 			"robot-at-x01y02",
 			"robot-at-x01y03",
 			"robot-at-x02y01",
@@ -76,29 +77,29 @@ public class TestLocalMinimum {
 			"robot-at-x03y03",
 			"robot-at-x04y01",
 			"robot-at-x04y02",
-			"robot-at-x04y03" };
+			"robot-at-x04y03"};
 
 	private void createVectorField(final Policy policy, final UtilityFunction value) {
-		for (final String state : states) {
+		for ( final String state : states ) {
 			final int x = Integer.parseInt(state.substring(10, 12));
 			final int y = Integer.parseInt(state.substring(13));
 			final int[] delta = action(policy.getActionFor(state));
 
-			log.info((x + 0.5 - delta[0] / 4.0) + " " + (y + 0.5 - delta[1] / 4.0) + " " + delta[0] / 2.0 + " " + delta[1] / 2.0);
-			log.info("set label \"" + value.getUtility(state) + "\" at " + (x + 0.5) + "," + (y + 0.5));
+			log.info(( x + 0.5 - delta[0] / 4.0 ) + " " + ( y + 0.5 - delta[1] / 4.0 ) + " " + delta[0] / 2.0 + " " + delta[1] / 2.0);
+			log.info("set label \"" + value.getUtility(state) + "\" at " + ( x + 0.5 ) + "," + ( y + 0.5 ));
 		}
 	}
 
 	private int[] action(final Action action) {
-		switch (action.name()) {
+		switch ( action.name() ) {
 			case "move-north":
-				return new int[] { 0, 1 };
+				return new int[]{0, 1};
 			case "move-west":
-				return new int[] { 1, 0 };
+				return new int[]{1, 0};
 			case "move-east":
-				return new int[] { -1, 0 };
+				return new int[]{-1, 0};
 			case "move-south":
-				return new int[] { 0, -1 };
+				return new int[]{0, -1};
 			default:
 				throw new IllegalStateException();
 		}

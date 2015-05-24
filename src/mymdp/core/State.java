@@ -5,7 +5,8 @@ package mymdp.core;
  * 
  * @author Willian
  */
-public interface State {
+public interface State
+{
 
 	/**
 	 * A name for the state. States with the same names <i>should</i> be equal.

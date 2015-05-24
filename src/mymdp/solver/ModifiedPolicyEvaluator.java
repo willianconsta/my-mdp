@@ -9,7 +9,10 @@ import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
 
-public class ModifiedPolicyEvaluator implements PolicyEvaluator {
+public class ModifiedPolicyEvaluator
+	implements
+		PolicyEvaluator
+{
 	private final int timesToExecute;
 
 	public ModifiedPolicyEvaluator(final int k) {
@@ -21,7 +24,7 @@ public class ModifiedPolicyEvaluator implements PolicyEvaluator {
 	public UtilityFunction policyEvaluation(final Policy policy,
 			final UtilityFunction function, final MDP mdp) {
 		UtilityFunction evaluatedFunction = function;
-		for (int i = 0; i < timesToExecute; i++) {
+		for ( int i = 0; i < timesToExecute; i++ ) {
 			evaluatedFunction = singleEvaluation(policy, evaluatedFunction, mdp);
 		}
 		return evaluatedFunction;
@@ -29,7 +32,7 @@ public class ModifiedPolicyEvaluator implements PolicyEvaluator {
 
 	private UtilityFunction singleEvaluation(final Policy policy, final UtilityFunction function, final MDP mdp) {
 		final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(function);
-		for (final State s : mdp.getStates()) {
+		for ( final State s : mdp.getStates() ) {
 			final Action a = policy.getActionFor(s);
 			double utility = calculateUtility(mdp, s, policy, evaluatedFunction);
 			evaluatedFunction.updateUtility(s, utility);

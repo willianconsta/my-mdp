@@ -23,9 +23,10 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 
-public class SolveCaller {
+public class SolveCaller
+{
 	private final String amplLocation;
-	private final Map<String, Double> currentValuesProb;
+	private final Map<String,Double> currentValuesProb;
 	private String fileContents;
 	private Set<String> variablesName;
 	private Double value;
@@ -54,8 +55,7 @@ public class SolveCaller {
 	 * 
 	 * @param objectiveFunctionMembers
 	 * @param allProbabilityVariables
-	 *            the name of all variables that represent a probability (their
-	 *            values belong to [0,1])
+	 *            the name of all variables that represent a probability (their values belong to [0,1])
 	 * @param allRealVariables
 	 *            the name of all variables defined within the real set.
 	 * @param constraints
@@ -74,21 +74,21 @@ public class SolveCaller {
 
 			setVariablesName(ImmutableSet.copyOf(Iterables.concat(allProbabilityVariables, allRealVariables)));
 
-			for (final String s : allProbabilityVariables) {
+			for ( final String s : allProbabilityVariables ) {
 				output.write("var " + s + ">=0, <=1;\n");
 			}
-			for (final String s : allRealVariables) {
+			for ( final String s : allRealVariables ) {
 				output.write("var " + s + ";\n");
 			}
 
-			if (solutionType != SolutionType.ANY_FEASIBLE) {
+			if ( solutionType != SolutionType.ANY_FEASIBLE ) {
 				fileData = objectiveFunctionMembers.get(0);
-				for (int i = 1; i < objectiveFunctionMembers.size(); i++) {
+				for ( int i = 1; i < objectiveFunctionMembers.size(); i++ ) {
 					fileData += " + " + objectiveFunctionMembers.get(i);
 				}
 			}
 
-			switch (solutionType) {
+			switch ( solutionType ) {
 				case MAXIMIZE:
 					output.write("maximize Profit: " + fileData + ";\n");
 					break;
@@ -103,13 +103,13 @@ public class SolveCaller {
 			}
 
 			int i = 0;
-			for (final String s : constraints) {
+			for ( final String s : constraints ) {
 				output.write("subject to Constraint" + i++ + ": " + s + ";\n");
 			}
 
 			output.close();
 			fileContents = output.getBuffer().toString();
-		} catch (final IOException e) {
+		} catch ( final IOException e ) {
 			throw Throwables.propagate(e);
 		}
 
@@ -129,60 +129,60 @@ public class SolveCaller {
 			process_in.println("display 'end';");
 			process_in.flush();
 
-			while (true) {
+			while ( true ) {
 				final int n = process_out.read(lineArray, 0, 32767);
-				if (n == -1) {
+				if ( n == -1 ) {
 					break;
 				}
 				log += new String(lineArray, 0, n);
-				if (log.contains("end")) {
+				if ( log.contains("end") ) {
 					break;
 				}
 			}
 
-			for (final String line : log.split("\n")) {
-				if (line != null) {
-					if (line.contains("end")) {
+			for ( final String line : log.split("\n") ) {
+				if ( line != null ) {
+					if ( line.contains("end") ) {
 						return;
 					}
-					if (line.contains("Sorry")) {
+					if ( line.contains("Sorry") ) {
 						// throws away the error message
-						while (process_out.readLine() != null) {
+						while ( process_out.readLine() != null ) {
 							;
 						}
 						throw new UnsupportedOperationException("Problem too big for student version of the solver.");
 					}
 				}
-				if (line == null) {
+				if ( line == null ) {
 					break;
 				}
 
 				final int pos = line.indexOf("objective");
-				if (pos >= 0) {
+				if ( pos >= 0 ) {
 					final int profit = line.indexOf("Profit");
-					if (profit >= 0) {
+					if ( profit >= 0 ) {
 						try {
 							value = Double.valueOf(line.substring(profit + 8, line.length() - 1));
 							// pos+characters of objective +1
-						} catch (final RuntimeException e) {
+						} catch ( final RuntimeException e ) {
 							throw e;
 						}
 					} else {
 						try {
 							value = Double.valueOf(line.substring(pos + 10));
 							// pos+characters of objective +1
-						} catch (final RuntimeException e) {
+						} catch ( final RuntimeException e ) {
 							throw e;
 						}
 					}
 				}
-				if (line.indexOf("=") > 0) {
+				if ( line.indexOf("=") > 0 ) {
 					final String key = line.substring(0, line.indexOf("=") - 1).trim();
 					final String value = line.substring(line.indexOf("=") + 1, line.length()).trim();
-					if (!key.equals("") && !value.equals("")) {
+					if ( !key.equals("") && !value.equals("") ) {
 						try {
 							currentValuesProb.put(key, Double.valueOf(value));
-						} catch (final NumberFormatException e) {
+						} catch ( final NumberFormatException e ) {
 							System.out.println(value);
 							System.err.println(fileContents);
 							throw e;
@@ -190,7 +190,7 @@ public class SolveCaller {
 					}
 				}
 			}
-		} catch (final IOException ioe) {
+		} catch ( final IOException ioe ) {
 			throw Throwables.propagate(ioe);
 		}
 	}
@@ -199,7 +199,7 @@ public class SolveCaller {
 		return log;
 	}
 
-	public Map<String, Double> getCurrentValuesProb() {
+	public Map<String,Double> getCurrentValuesProb() {
 		return currentValuesProb;
 	}
 
@@ -219,19 +219,19 @@ public class SolveCaller {
 	protected void finalize() throws Throwable {
 		try {
 			process_in.close();
-		} catch (final Exception e) {
+		} catch ( final Exception e ) {
 		}
 		try {
 			process_out.close();
-		} catch (final Exception e) {
+		} catch ( final Exception e ) {
 		}
 		try {
 			pros.waitFor();
-		} catch (final Exception e) {
+		} catch ( final Exception e ) {
 		}
 		try {
 			pros.destroy();
-		} catch (final Exception e) {
+		} catch ( final Exception e ) {
 		}
 	}
 }

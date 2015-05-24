@@ -3,6 +3,11 @@ package mymdp.solver;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.common.base.Stopwatch;
+
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
 import mymdp.core.Policy;
@@ -14,17 +19,13 @@ import mymdp.dual.evaluator.ProbabilityEvaluator;
 import mymdp.dual.evaluator.ProbabilityEvaluatorFactory;
 import mymdp.util.UtilityFunctionDistanceEvaluator;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.common.base.Stopwatch;
-
 /**
  * Policy Iteration as in Satia.
  * 
  * @author Willian
  */
-public final class PolicyIterationSatia {
+public final class PolicyIterationSatia
+{
 	private static final Logger log = LogManager.getLogger(PolicyIterationSatia.class);
 	private static final String SOLUTIONS_DIR = "solutions";
 
@@ -37,7 +38,7 @@ public final class PolicyIterationSatia {
 
 	private double calculate(final MDPIP mdpip, final State s, final Action a, final UtilityFunction value) {
 		double utilityOfAction = 0;
-		for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, value)) {
+		for ( final Entry<State,Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, value) ) {
 			utilityOfAction += nextStateAndProb.getValue().doubleValue() * value.getUtility(nextStateAndProb.getKey());
 		}
 		return mdpip.getRewardFor(s) + mdpip.getDiscountFactor() * utilityOfAction;
@@ -45,9 +46,9 @@ public final class PolicyIterationSatia {
 
 	public Policy solve(final MDPIP mdpip) {
 		ProbLinearSolver.initializeCount();
-		final Stopwatch watchEvaluating = new Stopwatch();
-		final Stopwatch watchImproving = new Stopwatch();
-		final Stopwatch watchAll = new Stopwatch().start();
+		final Stopwatch watchEvaluating = Stopwatch.createUnstarted();
+		final Stopwatch watchImproving = Stopwatch.createUnstarted();
+		final Stopwatch watchAll = Stopwatch.createStarted();
 		final PolicyImpl policy = new PolicyImpl(mdpip);
 
 		int numberOfSolverCallsInEvaluation = 0;
@@ -70,7 +71,7 @@ public final class PolicyIterationSatia {
 			numberOfSolverCallsInImprovement += ProbLinearSolver.getNumberOfSolverCalls() - numSolverCalls;
 			log.info("Values after improvement: " + valueFunction);
 			i++;
-		} while (improved);
+		} while ( improved );
 		watchAll.stop();
 		log.info("Summary:");
 		log.info("Number of iterations = " + i);
@@ -84,33 +85,34 @@ public final class PolicyIterationSatia {
 		return policy;
 	}
 
-	private boolean improvement(final MDPIP mdpip, final PolicyImpl policy,
-			final UtilityFunction valueFunction) {
+	private boolean improvement(final MDPIP mdpip, final PolicyImpl policy, final UtilityFunction valueFunction) {
 		// improvement
 		ProbLinearSolver.setMinimizing();
 		log.debug("Improving policy...");
 		boolean improvement = false;
-		for (final State s : mdpip.getStates()) {
+		for ( final State s : mdpip.getStates() ) {
 			double maxUtilityOfActions = 0;
 			Action maxAction = policy.getActionFor(s);
-			if (mdpip.getActionsFor(s).size() > 0) {
+			if ( mdpip.getActionsFor(s).size() > 0 ) {
 				maxUtilityOfActions = Double.NEGATIVE_INFINITY;
 			}
-			for (final Action action : mdpip.getActionsFor(s)) {
+			for ( final Action action : mdpip.getActionsFor(s) ) {
 				double utilityOfAction = 0;
-				for (final Entry<State, Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, action, valueFunction)) {
-					utilityOfAction += nextStateAndProb.getValue().doubleValue() * valueFunction.getUtility(nextStateAndProb.getKey());
+				for ( final Entry<State,Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, action,
+						valueFunction) ) {
+					utilityOfAction += nextStateAndProb.getValue().doubleValue()
+							* valueFunction.getUtility(nextStateAndProb.getKey());
 				}
-				if (maxUtilityOfActions < utilityOfAction || maxUtilityOfActions == utilityOfAction
-						&& maxAction.name().compareTo(action.name()) < 0) {
+				if ( maxUtilityOfActions < utilityOfAction
+						|| maxUtilityOfActions == utilityOfAction && maxAction.name().compareTo(action.name()) < 0 ) {
 					maxUtilityOfActions = utilityOfAction;
 					maxAction = action;
 				}
 			}
 
-			if (!policy.getActionFor(s).equals(maxAction)) {
-				log.debug("Policy improvement found. For state " + s + " was action " + policy.getActionFor(s) + " but turns out that "
-						+ maxAction + " is better.");
+			if ( !policy.getActionFor(s).equals(maxAction) ) {
+				log.debug("Policy improvement found. For state " + s + " was action " + policy.getActionFor(s)
+						+ " but turns out that " + maxAction + " is better.");
 				policy.updatePolicy(s, maxAction);
 				improvement = true;
 				// return true;
@@ -125,18 +127,18 @@ public final class PolicyIterationSatia {
 		log.debug("Evaluating policy...");
 		UtilityFunction value = new UtilityFunctionWithProbImpl(mdpip.getStates());
 		ProbLinearSolver.setFeasibilityOnly();
-		final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\evaluating_satia_" + i
-				+ ".txt");
+		final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory
+				.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\evaluating_satia_" + i + ".txt");
 		value = new ModifiedPolicyEvaluator(1000).policyEvaluation(policy, value, evaluator.evaluate(mdpip));
 		UtilityFunction newValue = new UtilityFunctionWithProbImpl(value);
 		ProbLinearSolver.setMinimizing();
 		do {
 			value = newValue;
 			newValue = new UtilityFunctionWithProbImpl(value);
-			for (final State s : mdpip.getStates()) {
+			for ( final State s : mdpip.getStates() ) {
 				newValue.updateUtility(s, calculate(mdpip, s, policy.getActionFor(s), value));
 			}
-		} while (UtilityFunctionDistanceEvaluator.distanceBetween(value, newValue) > delta);
+		} while ( UtilityFunctionDistanceEvaluator.distanceBetween(value, newValue) > delta );
 		return value;
 	}
 }

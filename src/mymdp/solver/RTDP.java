@@ -6,7 +6,8 @@ import mymdp.core.MDP;
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 
-public interface RTDP {
+public interface RTDP
+{
 	UtilityFunction solve(MDP mdp, Set<State> initials, Set<State> goals,
 			long maxDepth, UtilityFunction initialValues);
 
@@ -22,7 +23,8 @@ public interface RTDP {
 
 	UtilityFunction solve(MDP mdp);
 
-	public interface ConvergencyCriteria {
+	public interface ConvergencyCriteria
+	{
 		boolean hasConverged();
 	}
 }

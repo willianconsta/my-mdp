@@ -6,8 +6,11 @@ import java.util.Set;
 
 import mymdp.util.Pair;
 
-public class UtilityFunctionWithProbImpl extends UtilityFunctionImpl {
-	private final Map<State, Pair<Action, TransitionProbability>> actionAndProbByStates;
+public class UtilityFunctionWithProbImpl
+	extends
+		UtilityFunctionImpl
+{
+	private final Map<State,Pair<Action,TransitionProbability>> actionAndProbByStates;
 
 	public UtilityFunctionWithProbImpl(final Set<State> states) {
 		super(states);
@@ -21,10 +24,10 @@ public class UtilityFunctionWithProbImpl extends UtilityFunctionImpl {
 
 	public UtilityFunctionWithProbImpl(final UtilityFunction function) {
 		super(function);
-		if (!(function instanceof UtilityFunctionWithProbImpl)) {
+		if ( !( function instanceof UtilityFunctionWithProbImpl ) ) {
 			this.actionAndProbByStates = new LinkedHashMap<>();
 		} else {
-			this.actionAndProbByStates = new LinkedHashMap<>(((UtilityFunctionWithProbImpl) function).actionAndProbByStates);
+			this.actionAndProbByStates = new LinkedHashMap<>(( (UtilityFunctionWithProbImpl) function ).actionAndProbByStates);
 		}
 	}
 
@@ -33,7 +36,7 @@ public class UtilityFunctionWithProbImpl extends UtilityFunctionImpl {
 		actionAndProbByStates.put(state, Pair.of(action, prob));
 	}
 
-	public Pair<Action, TransitionProbability> getProbability(final State state) {
+	public Pair<Action,TransitionProbability> getProbability(final State state) {
 		return actionAndProbByStates.get(state);
 	}
 }

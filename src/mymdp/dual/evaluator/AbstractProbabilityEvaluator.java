@@ -7,7 +7,10 @@ import mymdp.problem.MDPFileProblemReader;
 import mymdp.solver.ProbLinearSolver;
 import mymdp.solver.ProbLinearSolver.SolutionType;
 
-abstract class AbstractProbabilityEvaluator implements ProbabilityEvaluator {
+abstract class AbstractProbabilityEvaluator
+	implements
+		ProbabilityEvaluator
+{
 	private final String fullFilename;
 
 	public AbstractProbabilityEvaluator(final String fullFilename) {

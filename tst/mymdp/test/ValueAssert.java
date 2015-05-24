@@ -1,36 +1,40 @@
 package mymdp.test;
 
 import static java.lang.Math.abs;
+
+import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.data.Offset;
+
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 
-import org.fest.assertions.Delta;
-import org.fest.assertions.GenericAssert;
-
-public class ValueAssert extends GenericAssert<ValueAssert, UtilityFunction> {
+public class ValueAssert
+	extends
+		AbstractAssert<ValueAssert,UtilityFunction>
+{
 
 	ValueAssert(final UtilityFunction actual) {
-		super(ValueAssert.class, actual);
+		super(actual, ValueAssert.class);
 	}
 
-	public ValueAssert stateHasValue(final State state, final double expectedValue, final Delta delta) {
+	public ValueAssert stateHasValue(final State state, final double expectedValue, final Offset<Double> delta) {
 		return stateHasValue(state.name(), expectedValue, delta);
 	}
 
-	public ValueAssert stateHasValue(final String stateName, final double expectedValue, final Delta delta) {
+	public ValueAssert stateHasValue(final String stateName, final double expectedValue, final Offset<Double> delta) {
 		final double actualValue = actual.getUtility(stateName);
-		if (equals(expectedValue, actualValue, delta)) {
-			return this;
+		if ( !equals(expectedValue, actualValue, delta) ) {
+			failWithMessage(
+					"Utility Function has not the expected value for the state. State = %s, Expected Value = %s, Actual Value = %s",
+					stateName, expectedValue, actualValue);
 		}
-		failIfCustomMessageIsSet();
-		throw failure("Utility Function has not the expected value for the state. State = " + stateName +
-				", Expected Value =" + expectedValue + ", Actual Value = " + actualValue);
+		return this;
 	}
 
-	private boolean equals(final double e, final double a, final Delta delta) {
-		if (Double.compare(e, a) == 0) {
+	private boolean equals(final double e, final double a, final Offset<Double> delta) {
+		if ( Double.compare(e, a) == 0 ) {
 			return true;
 		}
-		return abs(e - a) <= delta.doubleValue();
+		return abs(e - a) <= delta.value;
 	}
 }

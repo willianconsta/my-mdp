@@ -16,7 +16,10 @@ import mymdp.util.Trio;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ValueIterationProbImpl implements ValueIterationIP {
+public class ValueIterationProbImpl
+	implements
+		ValueIterationIP
+{
 	private static final Logger log = LogManager.getLogger(ValueIterationProbImpl.class);
 
 	private final UtilityFunction initialValues;
@@ -36,7 +39,7 @@ public class ValueIterationProbImpl implements ValueIterationIP {
 			actualError = iteration(mdpip, oldFunction, actualFunction);
 			log.debug("Actual error: " + actualError);
 			oldFunction = actualFunction;
-		} while (actualError > maxError);
+		} while ( actualError > maxError );
 		return actualFunction;
 	}
 
@@ -45,15 +48,14 @@ public class ValueIterationProbImpl implements ValueIterationIP {
 		log.debug("Starting iteration");
 		log.debug("Actual function = " + actualFunction);
 		double maxVariation = 0;
-		for (final State state : mdpip.getStates()) {
+		for ( final State state : mdpip.getStates() ) {
 			final double oldUtility = oldFunction.getUtility(state);
-			final Trio<Double, Action, TransitionProbability> trio =
-					calculateUtilityIP(mdpip, state, oldFunction);
+			final Trio<Double,Action,TransitionProbability> trio = calculateUtilityIP(mdpip, state, oldFunction);
 			final double actualUtility = trio.first;
 			log.trace("Value of state " + state + " = " + actualUtility);
 			actualFunction.updateUtility(state, actualUtility, trio.second, trio.third);
 
-			if (abs(actualUtility - oldUtility) > maxVariation) {
+			if ( abs(actualUtility - oldUtility) > maxVariation ) {
 				maxVariation = abs(actualUtility - oldUtility);
 			}
 			log.trace("Max variation = " + maxVariation);
@@ -62,27 +64,27 @@ public class ValueIterationProbImpl implements ValueIterationIP {
 		return maxVariation;
 	}
 
-	private static Trio<Double, Action, TransitionProbability> calculateUtilityIP(final MDPIP mdpip, final State state,
+	private static Trio<Double,Action,TransitionProbability> calculateUtilityIP(final MDPIP mdpip, final State state,
 			final UtilityFunctionWithProbImpl oldFunction) {
 		TransitionProbability probOfMaxAction = null;
 		Action maxAction = null;
 		double maxUtilityOfActions = 0;
-		if (!mdpip.getActionsFor(state).isEmpty()) {
+		if ( !mdpip.getActionsFor(state).isEmpty() ) {
 			maxUtilityOfActions = Double.NEGATIVE_INFINITY;
 		}
-		for (final Action action : mdpip.getActionsFor(state)) {
+		for ( final Action action : mdpip.getActionsFor(state) ) {
 			double utilityOfAction = 0;
 			final TransitionProbability possibleStatesAndProbability = mdpip.getPossibleStatesAndProbability(state, action, oldFunction);
-			for (final Entry<State, Double> nextStateAndProb : possibleStatesAndProbability) {
+			for ( final Entry<State,Double> nextStateAndProb : possibleStatesAndProbability ) {
 				utilityOfAction += nextStateAndProb.getValue().doubleValue() * oldFunction.getUtility(nextStateAndProb.getKey());
 			}
-			if (utilityOfAction > maxUtilityOfActions) {
+			if ( utilityOfAction > maxUtilityOfActions ) {
 				maxAction = action;
 				maxUtilityOfActions = utilityOfAction;
 				probOfMaxAction = possibleStatesAndProbability;
 			}
 		}
-		if (maxUtilityOfActions == Double.NEGATIVE_INFINITY) {
+		if ( maxUtilityOfActions == Double.NEGATIVE_INFINITY ) {
 			maxUtilityOfActions = 0;
 		}
 		return Trio.of(mdpip.getRewardFor(state) + mdpip.getDiscountFactor() * maxUtilityOfActions, maxAction, probOfMaxAction);
