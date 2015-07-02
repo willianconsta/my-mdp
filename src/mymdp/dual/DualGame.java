@@ -37,8 +37,8 @@ public class DualGame
 {
 	private static final Logger log = LogManager.getLogger(DualGame.class);
 
-	private static final String PROBLEMS_DIR = "precise_problems";
-	private static final String SOLUTIONS_DIR = "solutions";
+	private static final String PROBLEMS_DIR = ".\\precise_problems";
+	private static final String SOLUTIONS_DIR = ".\\solutions";
 
 	private final String filename;
 	private final double maxRelaxation;
