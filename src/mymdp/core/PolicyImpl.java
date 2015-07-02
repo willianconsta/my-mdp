@@ -1,11 +1,10 @@
 package mymdp.core;
 
-import static com.google.common.collect.Iterables.get;
+import static com.google.common.base.Preconditions.checkState;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import com.google.common.collect.Collections2;
@@ -15,27 +14,25 @@ public class PolicyImpl
 	implements
 		Policy
 {
-
 	private final Map<String,Action> policies = new LinkedHashMap<>();
 
 	public PolicyImpl(final MDP mdp) {
 		for ( final State state : mdp.getStates() ) {
 			final Set<Action> actionsForState = mdp.getActionsFor(state);
-			if ( !actionsForState.isEmpty() ) {
-
-				final String actionName = Collections.min(Collections2.transform(actionsForState, Action::name));
-				final Action action = Maps.uniqueIndex(actionsForState, Action::name).get(actionName);
-				policies.put(state.name(), action);
-			}
+			checkState(!actionsForState.isEmpty());
+			final String actionName = Collections.min(Collections2.transform(actionsForState, Action::name));
+			final Action action = Maps.uniqueIndex(actionsForState, Action::name).get(actionName);
+			policies.put(state.name(), action);
 		}
 	}
 
 	public PolicyImpl(final MDPIP mdpip) {
 		for ( final State state : mdpip.getStates() ) {
 			final Set<Action> actionsForState = mdpip.getActionsFor(state);
-			if ( !actionsForState.isEmpty() ) {
-				policies.put(state.name(), get(actionsForState, new Random(1234).nextInt(actionsForState.size())));
-			}
+			checkState(!actionsForState.isEmpty());
+			final String actionName = Collections.min(Collections2.transform(actionsForState, Action::name));
+			final Action action = Maps.uniqueIndex(actionsForState, Action::name).get(actionName);
+			policies.put(state.name(), action);
 		}
 	}
 

@@ -6,7 +6,7 @@ final class AnyFeasibleProbabilityEvaluator
 	extends
 		AbstractProbabilityEvaluator
 {
-	public AnyFeasibleProbabilityEvaluator(final String fullFilename) {
+	AnyFeasibleProbabilityEvaluator(final String fullFilename) {
 		super(fullFilename);
 	}
 

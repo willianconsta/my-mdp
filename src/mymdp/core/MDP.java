@@ -8,6 +8,13 @@ public interface MDP
 
 	Set<Action> getAllActions();
 
+	/**
+	 * Returns the actions the agent can execute in the given state. Should never be empty.
+	 * 
+	 * @param state
+	 *            the current state
+	 * @return all actions the agent can execute in the state.
+	 */
 	Set<Action> getActionsFor(State state);
 
 	TransitionProbability getPossibleStatesAndProbability(State initialState, Action action);

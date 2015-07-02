@@ -1,5 +1,7 @@
 package mymdp.solver;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 import static java.lang.Math.max;
 import static mymdp.util.Pair.of;
 
@@ -16,10 +18,8 @@ import mymdp.util.Pair;
 public final class BellmanUtils
 {
 	public static double calculateUtility(final MDP mdp, final State state, final UtilityFunction function) {
-		double maxUtilityOfActions = 0;
-		if ( mdp.getActionsFor(state).size() > 0 ) {
-			maxUtilityOfActions = Double.NEGATIVE_INFINITY;
-		}
+		double maxUtilityOfActions = Double.NEGATIVE_INFINITY;
+		checkState(!mdp.getActionsFor(state).isEmpty());
 		for ( final Action action : mdp.getActionsFor(state) ) {
 			double utilityOfAction = 0;
 			for ( final Entry<State,Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(state, action) ) {
@@ -33,7 +33,7 @@ public final class BellmanUtils
 	public static double calculateUtility(final MDP mdp, final State state, final Policy policy, final UtilityFunction function) {
 		double maxUtilityOfActions = Double.NEGATIVE_INFINITY;
 		final Action action = policy.getActionFor(state);
-
+		checkNotNull(action);
 		double utilityOfAction = 0;
 		for ( final Entry<State,Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(state, action) ) {
 			utilityOfAction += nextStateAndProb.getValue().doubleValue() * function.getUtility(nextStateAndProb.getKey());
@@ -44,10 +44,8 @@ public final class BellmanUtils
 	}
 
 	public static double calculateUtilityIP(final MDPIP mdpip, final State state, final UtilityFunction function) {
-		double maxUtilityOfActions = 0;
-		if ( mdpip.getActionsFor(state).size() > 0 ) {
-			maxUtilityOfActions = Double.NEGATIVE_INFINITY;
-		}
+		double maxUtilityOfActions = Double.NEGATIVE_INFINITY;
+		checkState(!mdpip.getActionsFor(state).isEmpty());
 		for ( final Action action : mdpip.getActionsFor(state) ) {
 			double utilityOfAction = 0;
 			for ( final Entry<State,Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(state, action, function) ) {
@@ -60,10 +58,8 @@ public final class BellmanUtils
 
 	public static Pair<Action,Double> getGreedyActionForState(final State s, final UtilityFunction function, final MDP mdp) {
 		Action maxA = null;
-		double maxValue = 0;
-		if ( mdp.getActionsFor(s).size() > 0 ) {
-			maxValue = Double.NEGATIVE_INFINITY;
-		}
+		double maxValue = Double.NEGATIVE_INFINITY;
+		checkState(!mdp.getActionsFor(s).isEmpty());
 		for ( final Action a : mdp.getActionsFor(s) ) {
 			double value = 0.0;
 			for ( final Entry<State,Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, a) ) {
@@ -79,10 +75,8 @@ public final class BellmanUtils
 
 	public static Pair<Action,Double> getGreedyActionForState(final State s, final UtilityFunction function, final MDPIP mdpip) {
 		Action maxA = null;
-		double maxValue = 0;
-		if ( mdpip.getActionsFor(s).size() > 0 ) {
-			maxValue = Double.NEGATIVE_INFINITY;
-		}
+		double maxValue = Double.NEGATIVE_INFINITY;
+		checkState(!mdpip.getActionsFor(s).isEmpty());
 		for ( final Action a : mdpip.getActionsFor(s) ) {
 			double value = 0.0;
 			for ( final Entry<State,Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, function) ) {

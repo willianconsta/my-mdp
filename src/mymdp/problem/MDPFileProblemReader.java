@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import mymdp.core.MDP;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Range;
+
+import mymdp.core.MDP;
 
 public final class MDPFileProblemReader
 {
@@ -60,7 +60,7 @@ public final class MDPFileProblemReader
 	}
 
 	private MDP read(final String absoluteFilepath) {
-		try ( BufferedReader reader = new BufferedReader(new FileReader(absoluteFilepath)) ) {
+		try ( final BufferedReader reader = new BufferedReader(new FileReader(absoluteFilepath)) ) {
 			String line;
 			while ( ( line = reader.readLine() ) != null ) {
 				log.trace(line);
@@ -173,7 +173,7 @@ public final class MDPFileProblemReader
 			}
 
 			final String[] stateReward = trimmedLine.split(" ");
-			checkState(allStates.contains(stateReward[0]));
+			checkState(allStates.contains(stateReward[0]), "%s should contain %s", allStates, stateReward[0]);
 			rewards.put(stateReward[0], Double.parseDouble(stateReward[1]));
 			return;
 		}

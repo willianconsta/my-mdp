@@ -6,7 +6,7 @@ final class MaxProbabilityEvaluator
 	extends
 		AbstractProbabilityEvaluator
 {
-	public MaxProbabilityEvaluator(final String fullFilename) {
+	MaxProbabilityEvaluator(final String fullFilename) {
 		super(fullFilename);
 	}
 

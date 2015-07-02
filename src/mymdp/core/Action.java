@@ -9,11 +9,12 @@ public interface Action
 {
 
 	/**
-	 * Returns whether this action is applicable or not to a given state.
+	 * Returns whether this action is applicable or not to a given state. All states should have at least one action appliable.
 	 * 
 	 * @param state
 	 *            a given state
 	 * @return <code>true</code> if this action is applicable, <code>false</code> if not.
+	 * @see MDP#getActionsFor(State)
 	 */
 	boolean isApplicableTo(State state);
 

@@ -6,7 +6,7 @@ final class MinProbabilityEvaluator
 	extends
 		AbstractProbabilityEvaluator
 {
-	public MinProbabilityEvaluator(final String fullFilename) {
+	MinProbabilityEvaluator(final String fullFilename) {
 		super(fullFilename);
 	}
 
