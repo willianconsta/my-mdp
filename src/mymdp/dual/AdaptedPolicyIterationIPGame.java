@@ -12,7 +12,7 @@ import com.google.common.base.Stopwatch;
 import mymdp.core.MDPIP;
 import mymdp.core.Policy;
 import mymdp.core.UtilityFunction;
-import mymdp.core.UtilityFunctionWithProbImpl;
+import mymdp.core.UtilityFunctionImpl;
 import mymdp.problem.ImprecisionGeneratorImpl;
 import mymdp.problem.MDPImpreciseFileProblemReader;
 import mymdp.solver.ModifiedPolicyEvaluatorIP;
@@ -60,8 +60,7 @@ public class AdaptedPolicyIterationIPGame
 
 		log.info("End of problem {}\n\n\n\n\n", filename);
 		this.policyResult = result;
-		this.valueResult = evaluator.policyEvaluation(result, new UtilityFunctionWithProbImpl(mdpip.getStates()),
-				mdpip);
+		this.valueResult = evaluator.policyEvaluation(result, new UtilityFunctionImpl(mdpip.getStates()), mdpip);
 	}
 
 	public Policy getPolicyResult() {

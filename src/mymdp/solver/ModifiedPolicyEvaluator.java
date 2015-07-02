@@ -2,7 +2,7 @@ package mymdp.solver;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static mymdp.solver.BellmanUtils.calculateUtility;
-import mymdp.core.Action;
+
 import mymdp.core.MDP;
 import mymdp.core.Policy;
 import mymdp.core.State;
@@ -33,8 +33,7 @@ public class ModifiedPolicyEvaluator
 	private UtilityFunction singleEvaluation(final Policy policy, final UtilityFunction function, final MDP mdp) {
 		final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(function);
 		for ( final State s : mdp.getStates() ) {
-			final Action a = policy.getActionFor(s);
-			double utility = calculateUtility(mdp, s, policy, evaluatedFunction);
+			final double utility = calculateUtility(mdp, s, policy, evaluatedFunction);
 			evaluatedFunction.updateUtility(s, utility);
 		}
 		return evaluatedFunction;

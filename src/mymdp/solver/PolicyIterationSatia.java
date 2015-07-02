@@ -14,6 +14,7 @@ import mymdp.core.Policy;
 import mymdp.core.PolicyImpl;
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
+import mymdp.core.UtilityFunctionImpl;
 import mymdp.core.UtilityFunctionWithProbImpl;
 import mymdp.dual.evaluator.ProbabilityEvaluator;
 import mymdp.dual.evaluator.ProbabilityEvaluatorFactory;
@@ -125,7 +126,7 @@ public final class PolicyIterationSatia
 	private UtilityFunction evaluate(final MDPIP mdpip, final PolicyImpl policy) {
 		// evaluation
 		log.debug("Evaluating policy...");
-		UtilityFunction value = new UtilityFunctionWithProbImpl(mdpip.getStates());
+		UtilityFunction value = new UtilityFunctionImpl(mdpip.getStates());
 		ProbLinearSolver.setFeasibilityOnly();
 		final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory
 				.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\evaluating_satia_" + i + ".txt");
