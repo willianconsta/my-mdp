@@ -69,8 +69,8 @@ public class TestAgainstAdaptedPI
 	public void both() throws InterruptedException, ExecutionException {
 		final Pair<UtilityFunction,Policy> singleResult = new SingleTask().call();
 		final Pair<UtilityFunction,Policy> dualResult = new DualTask().call();
-		assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.first, dualResult.first))
+		assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.getFirst(), dualResult.getFirst()))
 				.isLessThan(0.01);
-		assertThat(singleResult.second).isEqualTo(dualResult.second);
+		assertThat(singleResult.getSecond()).isEqualTo(dualResult.getSecond());
 	}
 }

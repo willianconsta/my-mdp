@@ -69,6 +69,6 @@ public class TestAgainstSatiaPolicyIteration
 		final Pair<UtilityFunction,Policy> dualResult = new DualTask().call();
 		// assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.first,
 		// dualResult.first)).isLessThan(0.001);
-		assertThat(singleResult.second).isEqualTo(dualResult.second);
+		assertThat(singleResult.getSecond()).isEqualTo(dualResult.getSecond());
 	}
 }

@@ -31,7 +31,7 @@ public class TestDual
 	@Test
 	public void test() {
 		final Pair<UtilityFunction,Policy> dualResult = new DualTask().call();
-		final Policy result = dualResult.second;
+		final Policy result = dualResult.getSecond();
 		MDPAssertions.assertThat(result)
 				.stateHasAction("robot-at-x01y01", "move-north")
 				.stateHasAction("robot-at-x01y02", "move-north")
