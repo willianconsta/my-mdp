@@ -82,11 +82,11 @@ final class MDPIPImpl
 			final UtilityFunction function) {
 		final Map<State,Map<State,String>> actionMap = transitions.get(action);
 		if ( actionMap == null ) {
-			return TransitionProbability.Instance.empty();
+			return TransitionProbability.empty(initialState, action);
 		}
 		final Map<State,String> probabilityFunction = actionMap.get(initialState);
 		if ( probabilityFunction == null ) {
-			return TransitionProbability.Instance.empty();
+			return TransitionProbability.empty(initialState, action);
 		}
 
 		TransitionProbability result;
@@ -101,7 +101,7 @@ final class MDPIPImpl
 			result = cache.get(key);
 
 			// FIXME: testar melhor URGENTEMENTE
-			assert TransitionProbability.Instance.createSimple(
+			assert TransitionProbability.createSimple(
 					initialState, action,
 					solve(probabilityFunction, getRewardFor(initialState),
 							function, vars.values(), restrictions))
@@ -110,7 +110,7 @@ final class MDPIPImpl
 			final Map<State,Double> minProb = solve(probabilityFunction, getRewardFor(initialState), function, vars.values(),
 					restrictions);
 			try {
-				result = TransitionProbability.Instance.createSimple(initialState, action, minProb);
+				result = TransitionProbability.createSimple(initialState, action, minProb);
 			} catch ( final InvalidProbabilityFunctionException e ) {
 				throw new IllegalStateException("Problem evaluating state " + initialState + " and action " + action + ". Log: "
 						+ ProbLinearSolver.getLastFullLog(), e);

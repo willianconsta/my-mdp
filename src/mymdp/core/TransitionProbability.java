@@ -1,6 +1,5 @@
 package mymdp.core;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -52,31 +51,11 @@ public interface TransitionProbability
 	 * 
 	 * @author Willian
 	 */
-	public class Instance
-	{
-		private static TransitionProbability emptyInstance = new SimpleTransitionFunction(null, null,
-				Collections.<State,Double> emptyMap());
+	static TransitionProbability createSimple(final State current, final Action action, final Map<State,Double> distributions) {
+		return SimpleTransitionFunction.create(current, action, distributions);
+	}
 
-		Instance() {
-			throw new UnsupportedOperationException();
-		}
-
-		/**
-		 * Creates a simple probability density function.
-		 * 
-		 * @param distributions
-		 * @return
-		 */
-		public static TransitionProbability createSimple(final State current, final Action action, final Map<State,Double> distributions) {
-			if ( distributions.isEmpty() ) {
-				return empty();
-			}
-
-			return new SimpleTransitionFunction(current, action, distributions);
-		}
-
-		public static TransitionProbability empty() {
-			return emptyInstance;
-		}
+	static TransitionProbability empty(final State current, final Action action) {
+		return SimpleTransitionFunction.empty(current, action);
 	}
 }

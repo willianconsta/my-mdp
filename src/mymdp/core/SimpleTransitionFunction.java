@@ -1,13 +1,18 @@
 package mymdp.core;
 
 import static com.google.common.base.MoreObjects.firstNonNull;
+import static com.google.common.base.Objects.equal;
+import static com.google.common.collect.Sets.newHashSet;
+import static java.util.Objects.hash;
+import static org.assertj.core.util.Preconditions.checkNotNull;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Nullable;
+
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Sets;
 
 import mymdp.exception.InvalidProbabilityFunctionException;
 
@@ -19,18 +24,23 @@ final class SimpleTransitionFunction
 	private final State currentState;
 	private final Action action;
 
-	SimpleTransitionFunction(final State currentState, final Action action, final Map<State,Double> distributions) {
-		this.currentState = currentState;
-		this.action = action;
-
-		double total = 0.0;
-		for ( final Double prob : distributions.values() ) {
-			total += prob;
+	static TransitionProbability create(final State currentState, final Action action, final Map<State,Double> distributions) {
+		final SimpleTransitionFunction result = new SimpleTransitionFunction(currentState, action, distributions);
+		final double total = distributions.values().stream().reduce(0.0, Double::sum);
+		if ( Math.abs(1 - total) >= 0.001 ) {
+			throw new InvalidProbabilityFunctionException(
+					"Invalid distribution. Transitions must sum 1 but sum " + total);
 		}
-		if ( !( distributions.isEmpty() || Math.abs(1 - total) < 0.001 ) ) {
-			throw new InvalidProbabilityFunctionException("Invalid distribution. Transitions must sum 1 but sum " + total);
-		}
+		return result;
+	}
 
+	static TransitionProbability empty(final State currentState, final Action action) {
+		return new SimpleTransitionFunction(currentState, action, ImmutableMap.of());
+	}
+
+	private SimpleTransitionFunction(final State currentState, final Action action, final Map<State,Double> distributions) {
+		this.currentState = checkNotNull(currentState);
+		this.action = checkNotNull(action);
 		this.distributions = ImmutableMap.copyOf(distributions);
 	}
 
@@ -46,7 +56,7 @@ final class SimpleTransitionFunction
 
 	@Override
 	public double getProbabilityFor(final State state) {
-		return firstNonNull(distributions.get(state), Double.valueOf(0.0));
+		return firstNonNull(distributions.get(checkNotNull(state)), Double.valueOf(0.0));
 	}
 
 	@Override
@@ -60,14 +70,24 @@ final class SimpleTransitionFunction
 	}
 
 	@Override
-	public boolean equals(final Object arg0) {
-		if ( !( arg0 instanceof TransitionProbability ) ) {
-			return false;
-		}
-		if ( arg0 == this ) {
+	public int hashCode() {
+		return hash(currentState, action);
+	}
+
+	@Override
+	public boolean equals(final @Nullable Object obj) {
+		if ( obj == this ) {
 			return true;
 		}
-		return Sets.newHashSet(this).equals(Sets.newHashSet((TransitionProbability) arg0));
+		if ( !( obj instanceof TransitionProbability ) ) {
+			return false;
+		}
+		final TransitionProbability other = (TransitionProbability) obj;
+		return equal(currentState, other.getCurrentState())
+				&& equal(action, other.getAction())
+				&& ( other instanceof SimpleTransitionFunction
+						? distributions.equals(( (SimpleTransitionFunction) other ).distributions)
+						: newHashSet(this).equals(newHashSet(other)) );
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class TestEmptyMDP
 
 			@Override
 			public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action) {
-				return TransitionProbability.Instance.empty();
+				return TransitionProbability.empty(initialState, action);
 			}
 
 			@Override

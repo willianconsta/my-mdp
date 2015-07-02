@@ -1,31 +1,26 @@
 package mymdp.core;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static mymdp.util.Pair.of;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import mymdp.solver.ModifiedPolicyEvaluatorIP;
-import mymdp.solver.PolicyIterationIPImpl;
-import mymdp.solver.ProbLinearSolver.SolutionType;
-import mymdp.solver.SolveCaller;
-import mymdp.solver.ValueIterationIPImpl;
-import mymdp.util.Pair;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+
+import mymdp.solver.ModifiedPolicyEvaluatorIP;
+import mymdp.solver.PolicyIterationIPImpl;
+import mymdp.solver.ProbLinearSolver;
+import mymdp.solver.ValueIterationIPImpl;
+import mymdp.util.Pair;
 
 public class TestMDPIPSysAdminBiRingManual1Node
 {
@@ -109,70 +104,15 @@ public class TestMDPIPSysAdminBiRingManual1Node
 			@Override
 			public TransitionProbability getPossibleStatesAndProbability(final State s, final Action a, final UtilityFunction function) {
 				final Pair<State,Action> transition = of(s, a);
-				final Map<State,Double> result = Maps.newLinkedHashMap();
 				final Collection<Pair<? extends State,String>> nextStates = probs.get(transition);
-
-				for ( final Pair<? extends State,String> pair : nextStates ) {
-					try {
-						final double prob = Double.parseDouble(pair.second);
-						result.put(pair.first, prob);
-					} catch ( final NumberFormatException e ) {
-						result.clear();
-						break;
-					}
-				}
-				if ( !result.isEmpty() ) {
-					return TransitionProbability.Instance.empty();
-				}
-
-				final List<String> obj = Lists.newArrayList();
-				obj.add(String.valueOf(getRewardFor(s)));
-
-				for ( final Pair<? extends State,String> pair : nextStates ) {
-					if ( pair.second.contains("*0.0*") || pair.second.endsWith("*0.0") ) {
-						continue;
-					}
-
-					obj.add(pair.second + "*" + function.getUtility(pair.first));
-				}
-
-				SolveCaller solveCaller;
-				try {
-					solveCaller = new SolveCaller("amplcml\\");
-				} catch ( final IOException e ) {
-					throw Throwables.propagate(e);
-				}
 				final Set<String> variables = ImmutableSet.<String> of("p1", "p2", "p3", "p4");
-				solveCaller.saveAMPLFile(obj, variables, ImmutableSet.<String> of(),
-						ImmutableList.<String> of("p1 >= 0.85 + p2", "p1 <= 0.95", "p2 <= 0.10", "p3 = 1 - p1", "p4 = 1 - p2"),
-						SolutionType.MINIMIZE);
-				solveCaller.callSolver();
-				final Map<String,Double> currentValuesProb = solveCaller.getCurrentValuesProb();
-				if ( currentValuesProb.isEmpty() ) {
-					System.out.println(solveCaller.getLog());
-					throw new IllegalStateException();
-				}
+				final List<String> restrictions = ImmutableList.<String> of("p1 >= 0.85 + p2", "p1 <= 0.95", "p2 <= 0.10", "p3 = 1 - p1",
+						"p4 = 1 - p2");
 
-				for ( final Pair<? extends State,String> pair : nextStates ) {
-					final String constr = pair.second;
-					int i = 0;
-					final String[] values = constr.split("[\\*]");
-					double value = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i]).doubleValue() : Double
-							.parseDouble(values[i]);
-					final String[] ops = constr.split("[^\\*]");
-					for ( final String op : ops ) {
-						if ( op.equals("*") ) {
-							final double val1 = currentValuesProb.containsKey(values[i]) ? currentValuesProb.get(values[i])
-									.doubleValue() : Double
-											.parseDouble(values[i]);
-							value *= val1;
-							i++;
-						}
-					}
-					checkNotNull(value);
-					result.put(pair.first, value);
-				}
-				return TransitionProbability.Instance.createSimple(s, a, result);
+				final Map<State,Double> result = ProbLinearSolver.solve(
+						nextStates.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)),
+						getRewardFor(s), function, variables, restrictions);
+				return TransitionProbability.createSimple(s, a, result);
 			}
 		};
 	}

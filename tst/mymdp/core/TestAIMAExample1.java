@@ -472,26 +472,26 @@ public class TestAIMAExample1
 			public TransitionProbability getPossibleStatesAndProbability(final State initialState,
 					final Action action) {
 				if ( action instanceof ActionUp ) {
-					return TransitionProbability.Instance.createSimple(initialState, action,
+					return TransitionProbability.createSimple(initialState, action,
 							( (ActionUp) action ).applyOver(initialState));
 				}
 				if ( action instanceof ActionDown ) {
-					return TransitionProbability.Instance.createSimple(initialState, action,
+					return TransitionProbability.createSimple(initialState, action,
 							( (ActionDown) action ).applyOver(initialState));
 				}
 				if ( action instanceof ActionLeft ) {
-					return TransitionProbability.Instance.createSimple(initialState, action,
+					return TransitionProbability.createSimple(initialState, action,
 							( (ActionLeft) action ).applyOver(initialState));
 				}
 				if ( action instanceof ActionRight ) {
-					return TransitionProbability.Instance.createSimple(initialState, action,
+					return TransitionProbability.createSimple(initialState, action,
 							( (ActionRight) action ).applyOver(initialState));
 				}
 				if ( action instanceof ActionNone ) {
-					return TransitionProbability.Instance.createSimple(initialState, action,
+					return TransitionProbability.createSimple(initialState, action,
 							( (ActionNone) action ).applyOver(initialState));
 				}
-				return TransitionProbability.Instance.empty();
+				return TransitionProbability.empty(initialState, action);
 			}
 
 			@Override
