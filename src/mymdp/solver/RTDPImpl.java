@@ -75,7 +75,7 @@ public final class RTDPImpl
 				depth++;
 				visitedStates.push(s);
 				actualUpper = backup(actualUpper, s, mdp);
-				final Action a = getGreedyActionForState(s, actualUpper, mdp).first;
+				final Action a = getGreedyActionForState(s, actualUpper, mdp).getFirst();
 				assert a != null;
 				s = chooseNextState(s, a, mdp);
 			}

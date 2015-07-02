@@ -47,13 +47,9 @@ public class PolicyIterationImpl
 
 		// for each state
 		for ( final State s : mdp.getStates() ) {
-			Action maxA = policy.getActionFor(s);
-			double maxValue = 0.0;
 			final Pair<Action,Double> greedyAction = getGreedyActionForState(s, evaluatedFunction, mdp);
-			if ( greedyAction.first != null ) {
-				maxA = greedyAction.first;
-				maxValue = greedyAction.second.doubleValue();
-			}
+			final Action maxA = greedyAction.getFirst();
+			final double maxValue = greedyAction.getSecond().doubleValue();
 			double policyValue = 0.0;
 			for ( final Entry<State,Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, policy.getActionFor(s)) ) {
 				policyValue += nextStateAndProb.getValue() * evaluatedFunction.getUtility(nextStateAndProb.getKey());

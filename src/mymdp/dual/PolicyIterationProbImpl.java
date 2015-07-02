@@ -52,9 +52,9 @@ public class PolicyIterationProbImpl
 			Action maxA = policy.getActionFor(s);
 			double maxValue = 0.0;
 			final Pair<Action,Double> greedyAction = getGreedyActionForState(s, evaluatedFunction, mdpip);
-			if ( greedyAction.first != null ) {
-				maxA = greedyAction.first;
-				maxValue = greedyAction.second.doubleValue();
+			if ( greedyAction.getFirst() != null ) {
+				maxA = greedyAction.getFirst();
+				maxValue = greedyAction.getSecond().doubleValue();
 			}
 			double policyValue = 0.0;
 			for ( final Entry<State,Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, policy.getActionFor(s),

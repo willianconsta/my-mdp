@@ -5,8 +5,8 @@ import static java.util.Objects.hash;
 
 public final class Pair<F, S>
 {
-	public final F first;
-	public final S second;
+	private final F first;
+	private final S second;
 
 	private Pair(final F first, final S second) {
 		this.first = first;
@@ -17,9 +17,17 @@ public final class Pair<F, S>
 		return new Pair<F,S>(first, second);
 	}
 
+	public F getFirst() {
+		return first;
+	}
+
+	public S getSecond() {
+		return second;
+	}
+
 	@Override
 	public int hashCode() {
-		return hash(first, second);
+		return hash(getFirst(), getSecond());
 	}
 
 	@Override
@@ -28,12 +36,12 @@ public final class Pair<F, S>
 			return false;
 		}
 		@SuppressWarnings("unchecked") final Pair<F,S> other = (Pair<F,S>) obj;
-		return equal(first, other.first) && equal(second, other.second);
+		return equal(getFirst(), other.getFirst()) && equal(getSecond(), other.getSecond());
 	}
 
 	@Override
 	public String toString() {
-		return "Pair:(" + String.valueOf(first) + "," + String.valueOf(second)
+		return "Pair:(" + String.valueOf(getFirst()) + "," + String.valueOf(getSecond())
 				+ ")";
 	}
 }

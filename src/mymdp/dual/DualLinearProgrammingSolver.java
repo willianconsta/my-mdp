@@ -92,7 +92,7 @@ public class DualLinearProgrammingSolver
 		}
 
 		probabilityVariables.addAll(ProbabilityRestrictionUtils.getAllVars(problem));
-		constraints.addAll(ProbabilityRestrictionUtils.readProbabilityRestrictions(problem).second);
+		constraints.addAll(ProbabilityRestrictionUtils.readProbabilityRestrictions(problem).getSecond());
 
 		try {
 			solveCaller.saveAMPLFile(objective, probabilityVariables, variables, constraints, SolutionType.MINIMIZE);

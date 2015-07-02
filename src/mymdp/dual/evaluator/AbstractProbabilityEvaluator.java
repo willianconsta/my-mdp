@@ -1,5 +1,7 @@
 package mymdp.dual.evaluator;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import mymdp.core.MDP;
 import mymdp.core.MDPIP;
 import mymdp.dual.EvaluatedProblemGenerator;
@@ -13,8 +15,8 @@ abstract class AbstractProbabilityEvaluator
 {
 	private final String fullFilename;
 
-	public AbstractProbabilityEvaluator(final String fullFilename) {
-		this.fullFilename = fullFilename;
+	AbstractProbabilityEvaluator(final String fullFilename) {
+		this.fullFilename = checkNotNull(fullFilename);
 	}
 
 	@Override
