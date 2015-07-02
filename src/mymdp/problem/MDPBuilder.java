@@ -3,6 +3,9 @@ package mymdp.problem;
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Predicates.in;
+import static com.google.common.base.Predicates.not;
+import static java.lang.Double.parseDouble;
 import static mymdp.util.CollectionUtils.nullToEmpty;
 
 import java.util.LinkedHashMap;
@@ -15,6 +18,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
+import com.google.common.collect.Sets;
 
 import mymdp.core.Action;
 import mymdp.core.MDP;
@@ -23,6 +27,70 @@ import mymdp.core.TransitionProbability;
 
 public class MDPBuilder
 {
+	static final class MDPImpl
+		implements
+			MDP
+	{
+		private final Set<State> states;
+		private final Map<Action,Map<State,Map<State,Double>>> transitions;
+		private final double discountRate;
+
+		MDPImpl(final Set<State> states, final Map<Action,Map<State,Map<State,Double>>> transitions, final double discountRate) {
+			this.states = ImmutableSet.copyOf(states);
+			checkArgument(transitions.keySet().containsAll(states),
+					"States must have at least one valid action. States %s have no action.",
+					Sets.filter(states, not(in(transitions.keySet()))));
+			this.transitions = ImmutableMap.copyOf(transitions);
+			checkArgument(Range.open(0., 1.).contains(discountRate), "Discount rate should be between 0..1. Is %s", discountRate);
+			this.discountRate = discountRate;
+		}
+
+		@Override
+		public Set<State> getStates() {
+			return states;
+		}
+
+		@Override
+		public Set<Action> getAllActions() {
+			return transitions.keySet();
+		}
+
+		@Override
+		public Set<Action> getActionsFor(final State state) {
+			final Set<Action> appliableActions = new LinkedHashSet<>();
+			for ( final Action action : transitions.keySet() ) {
+				if ( ( (ActionImpl) action ).appliableStates.contains(state) ) {
+					appliableActions.add(action);
+				}
+			}
+			return appliableActions;
+		}
+
+		@Override
+		public TransitionProbability getPossibleStatesAndProbability(final State initialState, final Action action) {
+			return TransitionProbability.createSimple(initialState, action, nullToEmpty(transitions.get(action).get(initialState)));
+		}
+
+		@Override
+		public double getRewardFor(final State state) {
+			return ( (StateImpl) state ).reward;
+		}
+
+		@Override
+		public double getDiscountFactor() {
+			return discountRate;
+		}
+
+		@Override
+		public String toString() {
+			return toStringHelper(this)
+					.add("states", states)
+					.add("transitions", transitions)
+					.add("discountRate", discountRate)
+					.toString();
+		}
+	}
+
 	@VisibleForTesting
 	static class StateImpl
 		implements
@@ -136,7 +204,7 @@ public class MDPBuilder
 				map = new LinkedHashMap<>();
 				probs.put(state1, map);
 			}
-			map.put(state2, Double.parseDouble(checkNotNull(transitionDef[2])));
+			map.put(state2, parseDouble(checkNotNull(transitionDef[2])));
 		}
 		return this;
 	}
@@ -149,60 +217,12 @@ public class MDPBuilder
 	}
 
 	public MDPBuilder discountRate(final double rate) {
-		checkArgument(Range.closed(0.0, 1.0).contains(rate));
+		checkArgument(Range.closed(0.0, 1.0).contains(rate), "Discount rate must be in 0..1 but is %s", rate);
 		this.discountRate = rate;
 		return this;
 	}
 
 	public MDP build() {
-		return new MDP() {
-			private final Set<State> states = ImmutableSet.<State> copyOf(MDPBuilder.this.states.values());
-			private final Map<Action,Map<State,Map<State,Double>>> transitions = ImmutableMap
-					.copyOf(MDPBuilder.this.transitions);
-
-			@Override
-			public Set<State> getStates() {
-				return states;
-			}
-
-			@Override
-			public Set<Action> getAllActions() {
-				return transitions.keySet();
-			}
-
-			@Override
-			public Set<Action> getActionsFor(final State state) {
-				final Set<Action> appliableActions = new LinkedHashSet<>();
-				for ( final Action action : transitions.keySet() ) {
-					if ( ( (ActionImpl) action ).appliableStates.contains(state) ) {
-						appliableActions.add(action);
-					}
-				}
-				return appliableActions;
-			}
-
-			@Override
-			public TransitionProbability getPossibleStatesAndProbability(final State initialState,
-					final Action action) {
-				return TransitionProbability.Instance.createSimple(initialState, action,
-						nullToEmpty(transitions.get(action).get(initialState)));
-			}
-
-			@Override
-			public double getRewardFor(final State state) {
-				return ( (StateImpl) state ).reward;
-			}
-
-			@Override
-			public double getDiscountFactor() {
-				return discountRate;
-			}
-
-			@Override
-			public String toString() {
-				return toStringHelper(this).add("states", states).add("transitions", transitions)
-						.add("discountRate", discountRate).toString();
-			}
-		};
+		return new MDPImpl(ImmutableSet.copyOf(states.values()), transitions, discountRate);
 	}
 }
