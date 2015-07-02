@@ -1,6 +1,7 @@
 package mymdp.test;
 
 import static java.lang.Math.abs;
+import static org.assertj.core.api.Assertions.offset;
 
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.data.Offset;
@@ -17,8 +18,8 @@ public class ValueAssert
 		super(actual, ValueAssert.class);
 	}
 
-	public ValueAssert stateHasValue(final State state, final double expectedValue, final Offset<Double> delta) {
-		return stateHasValue(state.name(), expectedValue, delta);
+	public ValueAssert stateHasValue(final State state, final double expectedValue, final double delta) {
+		return stateHasValue(state.name(), expectedValue, offset(delta));
 	}
 
 	public ValueAssert stateHasValue(final String stateName, final double expectedValue, final Offset<Double> delta) {
