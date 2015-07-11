@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdp xmlns="https://github.com/willianconsta/my-mdp"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://github.com/willianconsta/my-mdp ./mdp.model.xsd">
+	<discountFactor value="0.9"/>
+	<states>
+		<state name="robot-at-x01y01" />
+		<state name="robot-at-x01y02" />
+		<state name="robot-at-x01y03" />
+		<state name="robot-at-x02y01" />
+		<state name="robot-at-x02y02" />
+		<state name="robot-at-x02y03" />
+		<state name="robot-at-x03y01" />
+		<state name="robot-at-x03y02" />
+		<state name="robot-at-x03y03" />
+		<state name="robot-at-x04y01" />
+		<state name="robot-at-x04y02" />
+		<state name="robot-at-x04y03" />
+		<state name="broken-robot" />
+	</states>
+	<actions>
+		<action name="move-north" />
+		<action name="move-south" />
+		<action name="move-west" />
+		<action name="move-east" />
+	</actions>
+	<rewards>
+		<reward state="robot-at-x01y01" value="-1" />
+		<reward state="robot-at-x01y02" value="-1" />
+		<reward state="robot-at-x01y03" value="-1" />
+		<reward state="robot-at-x02y01" value="-1" />
+		<reward state="robot-at-x02y02" value="-1" />
+		<reward state="robot-at-x02y03" value="-1" />
+		<reward state="robot-at-x03y01" value="-1" />
+		<reward state="robot-at-x03y02" value="-1" />
+		<reward state="robot-at-x03y03" value="-1" />
+		<reward state="robot-at-x04y01" value="-1" />
+		<reward state="robot-at-x04y02" value="-1" />
+		<reward state="robot-at-x04y03" value="0" />
+		<reward state="broken-robot" value="-1" />
+	</rewards>
+	<transitions>
+		<transitionFromTo currentState="robot-at-x01y01" executing="move-south" nextState="robot-at-x01y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x01y02" executing="move-south" nextState="robot-at-x01y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x01y03" executing="move-south" nextState="robot-at-x01y02" probability="0.900000" />
+		<transitionFromTo currentState="robot-at-x01y03" executing="move-south" nextState="broken-robot" probability="0.100000" />
+		<transitionFromTo currentState="robot-at-x02y01" executing="move-south" nextState="robot-at-x02y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x02y02" executing="move-south" nextState="robot-at-x02y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x02y03" executing="move-south" nextState="robot-at-x02y02" probability="0.63333333333" />
+		<transitionFromTo currentState="robot-at-x02y03" executing="move-south" nextState="broken-robot" probability="0.36666666667" />
+		<transitionFromTo currentState="robot-at-x03y01" executing="move-south" nextState="robot-at-x03y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x03y02" executing="move-south" nextState="robot-at-x03y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x03y03" executing="move-south" nextState="robot-at-x03y02" probability="0.36666666667" />
+		<transitionFromTo currentState="robot-at-x03y03" executing="move-south" nextState="broken-robot" probability="0.63333333333" />
+		<transitionFromTo currentState="robot-at-x04y01" executing="move-south" nextState="robot-at-x04y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x04y02" executing="move-south" nextState="robot-at-x04y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x04y03" executing="move-south" nextState="robot-at-x04y03" probability="1.000000" />
+		<transitionFromTo currentState="broken-robot" executing="move-south" nextState="broken-robot" probability="1.000000" />
+		
+		<transitionFromTo currentState="robot-at-x01y03" executing="move-north" nextState="robot-at-x01y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x01y02" executing="move-north" nextState="robot-at-x01y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x01y01" executing="move-north" nextState="robot-at-x01y02" probability="0.900000" />
+		<transitionFromTo currentState="robot-at-x01y01" executing="move-north" nextState="broken-robot" probability="0.100000" />
+		<transitionFromTo currentState="robot-at-x02y03" executing="move-north" nextState="robot-at-x02y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x02y02" executing="move-north" nextState="robot-at-x02y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x02y01" executing="move-north" nextState="robot-at-x02y02" probability="0.63333333333" />
+		<transitionFromTo currentState="robot-at-x02y01" executing="move-north" nextState="broken-robot" probability="0.36666666667" />
+		<transitionFromTo currentState="robot-at-x03y03" executing="move-north" nextState="robot-at-x03y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x03y02" executing="move-north" nextState="robot-at-x03y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x03y01" executing="move-north" nextState="robot-at-x03y02" probability="0.36666666667" />
+		<transitionFromTo currentState="robot-at-x03y01" executing="move-north" nextState="broken-robot" probability="0.63333333333" />
+		<transitionFromTo currentState="robot-at-x04y03" executing="move-north" nextState="robot-at-x04y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x04y02" executing="move-north" nextState="robot-at-x04y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x04y01" executing="move-north" nextState="robot-at-x04y02" probability="0.100000" />
+		<transitionFromTo currentState="robot-at-x04y01" executing="move-north" nextState="broken-robot" probability="0.900000" />
+		<transitionFromTo currentState="broken-robot" executing="move-north" nextState="broken-robot" probability="1.000000" />
+		
+		<transitionFromTo currentState="robot-at-x01y01" executing="move-west" nextState="robot-at-x01y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x02y01" executing="move-west" nextState="robot-at-x01y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x03y01" executing="move-west" nextState="robot-at-x02y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x04y01" executing="move-west" nextState="robot-at-x03y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x01y02" executing="move-west" nextState="robot-at-x01y02" probability="0.900000" />
+		<transitionFromTo currentState="robot-at-x01y02" executing="move-west" nextState="broken-robot" probability="0.100000" />
+		<transitionFromTo currentState="robot-at-x02y02" executing="move-west" nextState="robot-at-x01y02" probability="0.900000" />
+		<transitionFromTo currentState="robot-at-x02y02" executing="move-west" nextState="broken-robot" probability="0.100000" />
+		<transitionFromTo currentState="robot-at-x03y02" executing="move-west" nextState="robot-at-x02y02" probability="0.63333333333" />
+		<transitionFromTo currentState="robot-at-x03y02" executing="move-west" nextState="broken-robot" probability="0.36666666667" />
+		<transitionFromTo currentState="robot-at-x04y02" executing="move-west" nextState="robot-at-x03y02" probability="0.36666666667" />
+		<transitionFromTo currentState="robot-at-x04y02" executing="move-west" nextState="broken-robot" probability="0.63333333333" />
+		<transitionFromTo currentState="robot-at-x01y03" executing="move-west" nextState="robot-at-x01y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x02y03" executing="move-west" nextState="robot-at-x01y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x03y03" executing="move-west" nextState="robot-at-x02y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x04y03" executing="move-west" nextState="robot-at-x04y03" probability="1.000000" />
+		<transitionFromTo currentState="broken-robot" executing="move-west" nextState="broken-robot" probability="1.000000" />
+		
+		<transitionFromTo currentState="robot-at-x04y01" executing="move-east" nextState="robot-at-x04y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x01y01" executing="move-east" nextState="robot-at-x02y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x02y01" executing="move-east" nextState="robot-at-x03y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x03y01" executing="move-east" nextState="robot-at-x04y01" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x04y02" executing="move-east" nextState="robot-at-x04y02" probability="0.100000" />
+		<transitionFromTo currentState="robot-at-x04y02" executing="move-east" nextState="broken-robot" probability="0.900000" />
+		<transitionFromTo currentState="robot-at-x01y02" executing="move-east" nextState="robot-at-x02y02" probability="0.63333333333" />
+		<transitionFromTo currentState="robot-at-x01y02" executing="move-east" nextState="broken-robot" probability="0.36666666667" />
+		<transitionFromTo currentState="robot-at-x02y02" executing="move-east" nextState="robot-at-x03y02" probability="0.36666666667" />
+		<transitionFromTo currentState="robot-at-x02y02" executing="move-east" nextState="broken-robot" probability="0.63333333333" />
+		<transitionFromTo currentState="robot-at-x03y02" executing="move-east" nextState="robot-at-x04y02" probability="0.100000" />
+		<transitionFromTo currentState="robot-at-x03y02" executing="move-east" nextState="broken-robot" probability="0.900000" />
+		<transitionFromTo currentState="robot-at-x04y03" executing="move-east" nextState="robot-at-x04y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x01y03" executing="move-east" nextState="robot-at-x02y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x02y03" executing="move-east" nextState="robot-at-x03y03" probability="1.000000" />
+		<transitionFromTo currentState="robot-at-x03y03" executing="move-east" nextState="robot-at-x04y03" probability="1.000000" />
+		<transitionFromTo currentState="broken-robot" executing="move-east" nextState="broken-robot" probability="1.000000" />
+	</transitions>
+</mdp>
