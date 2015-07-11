@@ -82,10 +82,10 @@ public final class MDPIPFileProblemReader
 		log.trace(discountFactor);
 		log.trace(initialState);
 		log.trace(goalState);
-		final MDPIPBuilder builder = new MDPIPBuilder();
-		builder.states(allStates).reward(rewards);
+		final MDPIPBuilder builder = MDPIPBuilder.newBuilder();
+		builder.states(allStates).rewards(rewards);
 		for ( final Entry<String,Set<String[]>> entry : transitions.entrySet() ) {
-			builder.actions(entry.getKey(), entry.getValue());
+			builder.action(entry.getKey(), entry.getValue());
 		}
 		builder.discountRate(discountFactor);
 		return builder.build();
