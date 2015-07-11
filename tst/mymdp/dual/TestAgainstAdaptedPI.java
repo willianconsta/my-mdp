@@ -5,24 +5,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import mymdp.core.Policy;
+import mymdp.core.MDPIP;
 import mymdp.core.SolutionReport;
-import mymdp.core.UtilityFunction;
-import mymdp.util.Pair;
+import mymdp.problem.ImprecisionGenerator;
+import mymdp.problem.ImprecisionGeneratorImpl;
+import mymdp.problem.MDPImpreciseFileProblemReader;
 import mymdp.util.UtilityFunctionDistanceEvaluator;
 
 @RunWith(Parameterized.class)
 public class TestAgainstAdaptedPI
 {
-
+	private static final Logger log = LogManager.getLogger(TestAgainstAdaptedPI.class);
 	private static final double MAX_RELAXATION = 0.15;
+	private static final double MAX_ERROR = 0.001;
 
 	@Parameters
 	public static Collection<Object[]> data() {
@@ -34,43 +37,76 @@ public class TestAgainstAdaptedPI
 	}
 
 	private final String filename;
-	private final double maxRelaxation;
+	private final MDPIP mdpip;
+	private final ImprecisionGeneratorImpl initialProblemImprecisionGenerator;
 
 	public TestAgainstAdaptedPI(final String filename, final double maxRelaxation) {
 		this.filename = filename;
-		this.maxRelaxation = maxRelaxation;
+		// Reads the MDP's definition from file and turns it to an imprecise
+		// problem
+		log.info("Current Problem: {}", filename);
+		initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
+		mdpip = MDPImpreciseFileProblemReader.readFromFile("precise_problems\\" + filename, initialProblemImprecisionGenerator);
+		// log.info("Initial problem is {}", mdpip);
+		log.info("Problem read.");
 	}
 
 	private class SingleTask
 		implements
-			Callable<Pair<UtilityFunction,Policy>>
+			Callable<SolutionReport>
 	{
 		@Override
-		public Pair<UtilityFunction,Policy> call() {
-			final AdaptedPolicyIterationIPGame singleGame = new AdaptedPolicyIterationIPGame(filename, maxRelaxation);
-			singleGame.solve();
-			return Pair.of(singleGame.getValueResult(), singleGame.getPolicyResult());
+		public SolutionReport call() {
+			return new AdaptedPolicyIterationIPGame().solve(new Problem<MDPIP,Void>() {
+				@Override
+				public MDPIP getModel() {
+					return mdpip;
+				}
+
+				@Override
+				public Void getComplement() {
+					return null;
+				}
+
+				@Override
+				public String getName() {
+					return filename;
+				}
+			});
 		}
 	}
 
 	private class DualTask
 		implements
-			Callable<Pair<UtilityFunction,Policy>>
+			Callable<SolutionReport>
 	{
 		@Override
-		public Pair<UtilityFunction,Policy> call() {
-			final DualGame dualGame = new DualGame(filename, maxRelaxation);
-			final SolutionReport report = dualGame.solve();
-			return Pair.of(report.getValueResult(), report.getPolicyResult());
+		public SolutionReport call() {
+			return new DualGame(MAX_ERROR).solve(new Problem<MDPIP,ImprecisionGenerator>() {
+				@Override
+				public MDPIP getModel() {
+					return mdpip;
+				}
+
+				@Override
+				public ImprecisionGenerator getComplement() {
+					return initialProblemImprecisionGenerator;
+				}
+
+				@Override
+				public String getName() {
+					return filename;
+				}
+			});
 		}
 	}
 
 	@Test
-	public void both() throws InterruptedException, ExecutionException {
-		final Pair<UtilityFunction,Policy> singleResult = new SingleTask().call();
-		final Pair<UtilityFunction,Policy> dualResult = new DualTask().call();
-		assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.getFirst(), dualResult.getFirst()))
+	public void both() {
+		final SolutionReport singleResult = new SingleTask().call();
+		final SolutionReport dualResult = new DualTask().call();
+		assertThat(UtilityFunctionDistanceEvaluator.distanceBetween(singleResult.getValueResult(), dualResult.getValueResult()))
 				.isLessThan(0.01);
-		assertThat(singleResult.getSecond()).isEqualTo(dualResult.getSecond());
+		assertThat(singleResult.getPolicyResult()).isEqualTo(dualResult.getPolicyResult());
 	}
 }

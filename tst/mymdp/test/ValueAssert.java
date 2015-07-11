@@ -1,10 +1,11 @@
 package mymdp.test;
 
-import static java.lang.Math.abs;
 import static org.assertj.core.api.Assertions.offset;
 
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.data.Offset;
+
+import com.google.common.math.DoubleMath;
 
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
@@ -24,18 +25,11 @@ public class ValueAssert
 
 	public ValueAssert stateHasValue(final String stateName, final double expectedValue, final Offset<Double> delta) {
 		final double actualValue = actual.getUtility(stateName);
-		if ( !equals(expectedValue, actualValue, delta) ) {
+		if ( !DoubleMath.fuzzyEquals(expectedValue, actualValue, delta.value) ) {
 			failWithMessage(
 					"Utility Function has not the expected value for the state. State = %s, Expected Value = %s, Actual Value = %s",
 					stateName, expectedValue, actualValue);
 		}
 		return this;
-	}
-
-	private boolean equals(final double e, final double a, final Offset<Double> delta) {
-		if ( Double.compare(e, a) == 0 ) {
-			return true;
-		}
-		return abs(e - a) <= delta.value;
 	}
 }
