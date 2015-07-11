@@ -4,19 +4,20 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%msg%n" />
 		</Console>
-		<File name="summary" filename="summary.log" immediateFlush="true">
+		<!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
+    	<RandomAccessFile name="summary" filename="summary.log" immediateFlush="false">
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n" />
-		</File>
+		</RandomAccessFile>
 	</appenders>
 	<loggers>
-		<logger name="mymdp.dual" level="INFO">
+		<asyncLogger name="mymdp.dual" level="INFO">
 			<appender-ref ref="summary" />
-		</logger>
-		<logger name="mymdp.solver" level="INFO">
+		</asyncLogger>
+		<asyncLogger name="mymdp.solver" level="INFO">
 			<appender-ref ref="summary" />
-		</logger>
-		<root level="INFO">
+		</asyncLogger>
+		<asyncRoot level="INFO">
 			<appender-ref ref="Console" />
-		</root>
+		</asyncRoot>
 	</loggers>
 </configuration>
