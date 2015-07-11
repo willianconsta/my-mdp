@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="https://github.com/willianconsta/my-mdp" 
+	targetNamespace="https://github.com/willianconsta/my-mdp"
+	elementFormDefault="qualified">
+    <complexType name="mdp">
+    	<all>
+    		<element name="discountFactor">
+    			<complexType>
+    				<attribute name="value" type="double" use="required"/>
+    			</complexType>
+    		</element>
+    		<element name="states">
+    			<complexType>
+    				<sequence>
+    					<element name="state" type="tns:state" minOccurs="1" maxOccurs="unbounded" />
+    				</sequence>
+    			</complexType>
+    		</element>
+    		<element name="actions">
+    			<complexType><sequence><element name="action" type="tns:action" minOccurs="1" maxOccurs="unbounded" /></sequence></complexType>
+    		</element>
+    		<element name="rewards">
+    			<complexType><sequence><element name="reward" type="tns:reward" minOccurs="1" maxOccurs="unbounded" /></sequence></complexType>
+    		</element>
+    		<element name="transitions">
+    			<complexType>
+			    	<choice>
+			    		<element name="transitionFromTo" maxOccurs="unbounded">
+			    			<complexType>
+					    		<attribute name="currentState" type="string" use="required"/>
+					    		<attribute name="executing" type="string" use="required"/>
+								<attribute name="nextState" type="string" use="required" />
+								<attribute name="probability" type="double" use="required" />
+			    			</complexType>
+			    		</element>
+			    	</choice>
+			    </complexType>
+    		</element>
+    	</all>
+    </complexType>
+
+    <complexType name="state">
+    	<attribute name="name" type="string" use="required"/>
+    </complexType>
+    <complexType name="action">
+    	<attribute name="name" type="string" use="required"/>
+    </complexType>
+    <complexType name="reward">
+    	<attribute name="state" type="string" use="required"/>
+    	<attribute name="action" type="string" use="optional"/>
+    	<attribute name="value" type="double" use="required" />
+    </complexType>
+
+	<!-- Root -->
+    <element name="mdp" type="tns:mdp">
+    	<key name="stateKey">
+			<selector xpath="tns:states/tns:state" />
+			<field xpath="@name" />
+		</key>
+		<key name="actionKey">
+			<selector xpath="tns:actions/tns:action" />
+			<field xpath="@name" />
+		</key>
+		<keyref name="rewardStateRef" refer="tns:stateKey">
+    		<selector xpath="tns:rewards/tns:reward" />
+    		<field xpath="@state" />
+		</keyref>
+		<keyref name="rewardActionRef" refer="tns:actionKey">
+    		<selector xpath="tns:rewards/tns:reward" />
+    		<field xpath="@action" />
+		</keyref>
+		<keyref name="transitionInitialStateRef" refer="tns:stateKey">
+    		<selector xpath="tns:rewards/tns:reward" />
+    		<field xpath="@state" />
+		</keyref>
+		<keyref name="transitionActionRef" refer="tns:actionKey">
+    		<selector xpath="tns:rewards/tns:reward" />
+    		<field xpath="@action" />
+		</keyref>
+    </element>
+</schema>
