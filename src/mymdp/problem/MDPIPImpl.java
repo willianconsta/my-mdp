@@ -5,19 +5,18 @@ import static mymdp.solver.ProbLinearSolver.solve;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Ordering;
 
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
@@ -147,7 +146,7 @@ final class MDPIPImpl
 		return Collections.unmodifiableSet(restrictions);
 	}
 
-	private Set<Double> getValues(final Set<State> states, final UtilityFunction func) {
+	private static Set<Double> getValues(final Set<State> states, final UtilityFunction func) {
 		final Set<Double> values = new HashSet<>(states.size());
 		for ( final State state : states ) {
 			values.add(func.getUtility(state));
@@ -167,27 +166,18 @@ final class MDPIPImpl
 
 	@Override
 	public String toString() {
-		final Map<Action,Map<State,Map<State,String>>> transitions = new TreeMap<>(Ordering.usingToString());
-		transitions.putAll(this.transitions);
-
-		final Set<State> states = new TreeSet<>(Ordering.usingToString());
-		states.addAll(this.states);
-
-		final Map<Trio<State,Action,State>,String> vars = new TreeMap<>(Ordering.usingToString());
-		vars.putAll(this.vars);
-
-		final Set<String> restrictions = new TreeSet<>(this.restrictions);
-		restrictions.addAll(this.restrictions);
-
 		return toStringHelper(this)
-				.add("states", states.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
-				.add("transitions", transitions.toString().replaceAll("}, ", "},\n\t").replaceFirst("\\[", "\\[\n\t")
+				.add("states", states.stream().sorted(Comparator.comparing(Object::toString)).collect(Collectors.toList()).toString()
+						.replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
+				.add("transitions", transitions.entrySet().stream().sorted(Comparator.comparing(Object::toString))
+						.collect(Collectors.toList()).toString().replaceAll("}, ", "},\n\t").replaceFirst("\\[", "\\[\n\t")
 						.replaceFirst("\\]", "\n\\]"))
 				.add("discountFactor", discountFactor)
-				.add("vars", vars.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]")
+				.add("vars", this.vars.entrySet().stream().sorted(Comparator.comparing(Object::toString)).collect(Collectors.toList())
+						.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]")
 						.replaceFirst("\\{", "\\{\n\t").replaceFirst("\\}", "\n\\}"))
-				.add("restrictions", restrictions.toString().replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t")
-						.replaceFirst("\\]", "\n\\]"))
+				.add("restrictions", restrictions.stream().sorted(String::compareTo).collect(Collectors.toList()).toString()
+						.replaceAll(", ", ",\n\t").replaceFirst("\\[", "\\[\n\t").replaceFirst("\\]", "\n\\]"))
 				.toString();
 	}
 }
