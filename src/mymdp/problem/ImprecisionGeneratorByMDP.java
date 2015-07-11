@@ -4,11 +4,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.common.collect.Range;
+
 import mymdp.core.Action;
 import mymdp.core.MDP;
 import mymdp.core.State;
-
-import com.google.common.collect.Range;
 
 public class ImprecisionGeneratorByMDP
 	implements
@@ -23,20 +23,19 @@ public class ImprecisionGeneratorByMDP
 		for ( final State s : mdp.getStates() ) {
 			for ( final Action a : mdp.getActionsFor(s) ) {
 				for ( final Entry<State,Double> entry : mdp.getPossibleStatesAndProbability(s, a) ) {
-					Map<String,Map<String,Range<Double>>> map = transitions.get(s.toString());
+					Map<String,Map<String,Range<Double>>> map = transitions.get(s.name());
 					if ( map == null ) {
 						map = new LinkedHashMap<>();
-						transitions.put(s.toString(), map);
+						transitions.put(s.name(), map);
 					}
-					Map<String,Range<Double>> probs = map.get(a.toString());
+					Map<String,Range<Double>> probs = map.get(a.name());
 					if ( probs == null ) {
 						probs = new LinkedHashMap<>();
-						map.put(a.toString(), probs);
+						map.put(a.name(), probs);
 					}
 					probs.put(
-							entry.getKey().toString(),
-							Range.closed(0.0, 1.0).intersection(
-									Range.closed(entry.getValue() - maxVariation, entry.getValue() + maxVariation)));
+							entry.getKey().name(),
+							Range.closed(0.0, 1.0).intersection(Range.closed(entry.getValue() - maxVariation, entry.getValue() + maxVariation)));
 				}
 			}
 		}
