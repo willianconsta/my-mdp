@@ -84,10 +84,10 @@ public final class MDPFileProblemReader
 		log.trace(discountFactor);
 		log.trace(initialState);
 		log.trace(goalState);
-		final MDPBuilder builder = new MDPBuilder();
-		builder.states(allStates).reward(rewards);
+		final MDPBuilder builder = MDPBuilder.newBuilder();
+		builder.states(allStates).rewards(rewards);
 		for ( final Entry<String,Set<String[]>> entry : transitions.entrySet() ) {
-			builder.actions(entry.getKey(), entry.getValue());
+			builder.action(entry.getKey(), entry.getValue());
 		}
 		builder.discountRate(discountFactor);
 		return builder.build();

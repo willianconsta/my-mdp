@@ -12,16 +12,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import mymdp.core.MDPIP;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Range;
 
+import mymdp.core.MDPIP;
+
 public final class MDPImpreciseFileProblemReader
 {
-	private static Logger log = LogManager.getLogger(MDPImpreciseFileProblemReader.class);
+	private static final Logger log = LogManager.getLogger(MDPImpreciseFileProblemReader.class);
 
 	private boolean readingStates;
 	private final Set<String> allStates;
@@ -86,10 +86,10 @@ public final class MDPImpreciseFileProblemReader
 		log.trace(discountFactor);
 		log.trace(initialState);
 		log.trace(goalState);
-		final MDPIPBuilder builder = new MDPIPBuilder();
-		builder.states(allStates).reward(rewards);
+		final MDPIPBuilder builder = MDPIPBuilder.newBuilder();
+		builder.states(allStates).rewards(rewards);
 		for ( final Entry<String,Set<String[]>> entry : transitions.entrySet() ) {
-			builder.actions(entry.getKey(), entry.getValue());
+			builder.action(entry.getKey(), entry.getValue());
 		}
 		builder.discountRate(discountFactor);
 		return builder.build();
