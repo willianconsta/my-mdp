@@ -6,16 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import mymdp.core.Action;
-import mymdp.core.MDPIP;
-import mymdp.core.SolutionReport;
-import mymdp.core.State;
-import mymdp.problem.ImprecisionGeneratorImpl;
-import mymdp.problem.MDPImpreciseFileProblemReader;
-import mymdp.problem.ProbabilityRestrictionUtils;
-import mymdp.solver.ProbLinearSolver.SolutionType;
-import mymdp.solver.SolveCaller;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,20 +14,24 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.Multimap;
 import com.google.common.primitives.Doubles;
 
+import mymdp.core.Action;
+import mymdp.core.MDPIP;
+import mymdp.core.SolutionReport;
+import mymdp.core.State;
+import mymdp.problem.MDPIPFileProblemReader;
+import mymdp.problem.ProbabilityRestrictionUtils;
+import mymdp.solver.ProbLinearSolver.SolutionType;
+import mymdp.solver.SolveCaller;
+
 public class DualLinearProgrammingSolver
 	implements
-		ProblemSolver
+		ProblemSolver<MDPIP,Void>
 {
 	private static final Logger log = LogManager.getLogger(DualLinearProgrammingSolver.class);
-	private static final String PROBLEMS_DIR = "precise_problems";
 
-	private final String filename;
-	private final double maxRelaxation;
 	private final SolveCaller solveCaller;
 
-	public DualLinearProgrammingSolver(final String filename, final double maxRelaxation) {
-		this.filename = filename;
-		this.maxRelaxation = maxRelaxation;
+	public DualLinearProgrammingSolver() {
 		try {
 			this.solveCaller = new SolveCaller("amplcml\\");
 		} catch ( final IOException e ) {
@@ -46,11 +40,8 @@ public class DualLinearProgrammingSolver
 	}
 
 	@Override
-	public SolutionReport solve() {
-		log.info("Current Problem: " + filename);
-		final ImprecisionGeneratorImpl imprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
-		final MDPIP problem = MDPImpreciseFileProblemReader.readFromFile(PROBLEMS_DIR + "\\" + filename,
-				imprecisionGenerator);
+	public SolutionReport solve(final Problem<MDPIP,Void> problem) {
+		final MDPIP mdpip = problem.getModel();
 
 		final Set<String> variables = new HashSet<>();
 		final Set<String> probabilityVariables = new HashSet<>();
@@ -58,9 +49,9 @@ public class DualLinearProgrammingSolver
 		final List<String> constraints = new ArrayList<>();
 
 		variables.add("discount");
-		constraints.add("discount = " + problem.getDiscountFactor());
+		constraints.add("discount = " + mdpip.getDiscountFactor());
 
-		for ( final State s : problem.getStates() ) {
+		for ( final State s : mdpip.getStates() ) {
 			final String valueVariable = 'v' + s.name().replace("-", "");
 			final String rewardVariable = 'r' + s.name().replace("-", "");
 
@@ -69,16 +60,16 @@ public class DualLinearProgrammingSolver
 
 			objective.add(valueVariable);
 
-			constraints.add(rewardVariable + " = " + problem.getRewardFor(s));
+			constraints.add(rewardVariable + " = " + mdpip.getRewardFor(s));
 
-			final Multimap<Action,State> nextStatesByAction = ProbabilityRestrictionUtils.nextStates(problem, s);
+			final Multimap<Action,State> nextStatesByAction = ProbabilityRestrictionUtils.nextStates(mdpip, s);
 
-			for ( final Action a : problem.getActionsFor(s) ) {
+			for ( final Action a : mdpip.getActionsFor(s) ) {
 				String actionConstraint = valueVariable + " >= " + rewardVariable + " + discount * ( ";
 
 				final List<String> allPossible = new ArrayList<>();
 				for ( final State nextState : nextStatesByAction.get(a) ) {
-					final String transitionVariable = ProbabilityRestrictionUtils.transitionVariable(problem, s, a, nextState);
+					final String transitionVariable = ProbabilityRestrictionUtils.transitionVariable(mdpip, s, a, nextState);
 					if ( Doubles.tryParse(transitionVariable) == null ) {
 						probabilityVariables.add(transitionVariable);
 					}
@@ -91,8 +82,8 @@ public class DualLinearProgrammingSolver
 			}
 		}
 
-		probabilityVariables.addAll(ProbabilityRestrictionUtils.getAllVars(problem));
-		constraints.addAll(ProbabilityRestrictionUtils.readProbabilityRestrictions(problem).getSecond());
+		probabilityVariables.addAll(ProbabilityRestrictionUtils.getAllVars(mdpip));
+		constraints.addAll(ProbabilityRestrictionUtils.readProbabilityRestrictions(mdpip).getSecond());
 
 		try {
 			solveCaller.saveAMPLFile(objective, probabilityVariables, variables, constraints, SolutionType.MINIMIZE);
@@ -110,6 +101,21 @@ public class DualLinearProgrammingSolver
 	}
 
 	public static void main(final String[] args) {
-		new DualLinearProgrammingSolver("navigation01.net", 0.05).solve();
+		new DualLinearProgrammingSolver().solve(new Problem<MDPIP,Void>() {
+			@Override
+			public String getName() {
+				return "navigation01";
+			}
+
+			@Override
+			public MDPIP getModel() {
+				return MDPIPFileProblemReader.readFromFile("precise_problems\\navigation01.net");
+			}
+
+			@Override
+			public Void getComplement() {
+				return null;
+			}
+		});
 	}
 }
