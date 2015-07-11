@@ -28,7 +28,6 @@ import mymdp.util.UtilityFunctionDistanceEvaluator;
 public final class PolicyIterationSatia
 {
 	private static final Logger log = LogManager.getLogger(PolicyIterationSatia.class);
-	private static final String SOLUTIONS_DIR = "solutions";
 
 	private final double delta;
 	private int i;
@@ -37,7 +36,7 @@ public final class PolicyIterationSatia
 		this.delta = delta;
 	}
 
-	private double calculate(final MDPIP mdpip, final State s, final Action a, final UtilityFunction value) {
+	private static double calculate(final MDPIP mdpip, final State s, final Action a, final UtilityFunction value) {
 		double utilityOfAction = 0;
 		for ( final Entry<State,Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, value) ) {
 			utilityOfAction += nextStateAndProb.getValue().doubleValue() * value.getUtility(nextStateAndProb.getKey());
@@ -86,7 +85,7 @@ public final class PolicyIterationSatia
 		return policy;
 	}
 
-	private boolean improvement(final MDPIP mdpip, final PolicyImpl policy, final UtilityFunction valueFunction) {
+	private static boolean improvement(final MDPIP mdpip, final PolicyImpl policy, final UtilityFunction valueFunction) {
 		// improvement
 		ProbLinearSolver.setMinimizing();
 		log.debug("Improving policy...");
@@ -128,9 +127,8 @@ public final class PolicyIterationSatia
 		log.debug("Evaluating policy...");
 		UtilityFunction value = new UtilityFunctionImpl(mdpip.getStates());
 		ProbLinearSolver.setFeasibilityOnly();
-		final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory
-				.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\evaluating_satia_" + i + ".txt");
-		value = new ModifiedPolicyEvaluator(1000).policyEvaluation(policy, value, evaluator.evaluate(mdpip));
+		final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory.getAnyFeasibleInstance();
+		value = new ModifiedPolicyEvaluator(1000).policyEvaluation(policy, value, evaluator.evaluate(mdpip, value));
 		UtilityFunction newValue = new UtilityFunctionWithProbImpl(value);
 		ProbLinearSolver.setMinimizing();
 		do {
