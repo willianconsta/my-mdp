@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import mymdp.solver.ProbLinearSolver.SolutionType;
-
 import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+
+import mymdp.solver.ProbLinearSolver.SolutionType;
 
 public class SolveCaller
 {
@@ -67,9 +67,7 @@ public class SolveCaller
 			final Collection<String> constraints,
 			final SolutionType solutionType) {
 		String fileData = "";
-		try {
-			final StringWriter output = new StringWriter();
-
+		try ( final StringWriter output = new StringWriter() ) {
 			checkState(Collections.disjoint(allRealVariables, allProbabilityVariables));
 
 			setVariablesName(ImmutableSet.copyOf(Iterables.concat(allProbabilityVariables, allRealVariables)));
@@ -112,7 +110,6 @@ public class SolveCaller
 		} catch ( final IOException e ) {
 			throw Throwables.propagate(e);
 		}
-
 	}
 
 	public void callSolver() {
@@ -148,7 +145,7 @@ public class SolveCaller
 					if ( line.contains("Sorry") ) {
 						// throws away the error message
 						while ( process_out.readLine() != null ) {
-							;
+							// nothing
 						}
 						throw new UnsupportedOperationException("Problem too big for student version of the solver.");
 					}
@@ -178,12 +175,12 @@ public class SolveCaller
 				}
 				if ( line.indexOf("=") > 0 ) {
 					final String key = line.substring(0, line.indexOf("=") - 1).trim();
-					final String value = line.substring(line.indexOf("=") + 1, line.length()).trim();
-					if ( !key.equals("") && !value.equals("") ) {
+					final String probValue = line.substring(line.indexOf("=") + 1, line.length()).trim();
+					if ( !key.equals("") && !probValue.equals("") ) {
 						try {
-							currentValuesProb.put(key, Double.valueOf(value));
+							currentValuesProb.put(key, Double.valueOf(probValue));
 						} catch ( final NumberFormatException e ) {
-							System.out.println(value);
+							System.out.println(probValue);
 							System.err.println(fileContents);
 							throw e;
 						}
@@ -216,22 +213,26 @@ public class SolveCaller
 	}
 
 	@Override
-	protected void finalize() throws Throwable {
+	protected void finalize() {
 		try {
 			process_in.close();
-		} catch ( final Exception e ) {
+		} catch ( @SuppressWarnings("unused") final Exception e ) {
+			// ignored
 		}
 		try {
 			process_out.close();
-		} catch ( final Exception e ) {
+		} catch ( @SuppressWarnings("unused") final Exception e ) {
+			// ignored
 		}
 		try {
 			pros.waitFor();
-		} catch ( final Exception e ) {
+		} catch ( @SuppressWarnings("unused") final Exception e ) {
+			// ignored
 		}
 		try {
 			pros.destroy();
-		} catch ( final Exception e ) {
+		} catch ( @SuppressWarnings("unused") final Exception e ) {
+			// ignored
 		}
 	}
 }

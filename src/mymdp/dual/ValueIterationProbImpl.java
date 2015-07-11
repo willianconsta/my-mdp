@@ -4,17 +4,17 @@ import static java.lang.Math.abs;
 
 import java.util.Map.Entry;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import mymdp.core.Action;
 import mymdp.core.MDPIP;
-import mymdp.core.TransitionProbability;
 import mymdp.core.State;
+import mymdp.core.TransitionProbability;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionWithProbImpl;
 import mymdp.solver.ValueIterationIP;
 import mymdp.util.Trio;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class ValueIterationProbImpl
 	implements
@@ -43,7 +43,7 @@ public class ValueIterationProbImpl
 		return actualFunction;
 	}
 
-	private double iteration(final MDPIP mdpip, final UtilityFunctionWithProbImpl oldFunction,
+	private static double iteration(final MDPIP mdpip, final UtilityFunctionWithProbImpl oldFunction,
 			final UtilityFunctionWithProbImpl actualFunction) {
 		log.debug("Starting iteration");
 		log.debug("Actual function = " + actualFunction);

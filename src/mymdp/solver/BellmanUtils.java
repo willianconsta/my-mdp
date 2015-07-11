@@ -19,7 +19,7 @@ public final class BellmanUtils
 {
 	public static double calculateUtility(final MDP mdp, final State state, final UtilityFunction function) {
 		double maxUtilityOfActions = Double.NEGATIVE_INFINITY;
-		checkState(!mdp.getActionsFor(state).isEmpty());
+		checkState(!mdp.getActionsFor(state).isEmpty(), "No actions found for state %s", state);
 		for ( final Action action : mdp.getActionsFor(state) ) {
 			double utilityOfAction = 0;
 			for ( final Entry<State,Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(state, action) ) {
@@ -59,7 +59,7 @@ public final class BellmanUtils
 	public static Pair<Action,Double> getGreedyActionForState(final State s, final UtilityFunction function, final MDP mdp) {
 		Action maxA = null;
 		double maxValue = Double.NEGATIVE_INFINITY;
-		checkState(!mdp.getActionsFor(s).isEmpty());
+		checkState(!mdp.getActionsFor(s).isEmpty(), "No actions found for state %s", s);
 		for ( final Action a : mdp.getActionsFor(s) ) {
 			double value = 0.0;
 			for ( final Entry<State,Double> nextStateAndProb : mdp.getPossibleStatesAndProbability(s, a) ) {

@@ -9,10 +9,8 @@ import com.google.common.collect.Ordering;
 
 public class UtilityFunctionImpl
 	implements
-		UtilityFunction,
-		Comparable<UtilityFunction>
+		UtilityFunction
 {
-
 	private final Map<State,Double> utilities = new LinkedHashMap<>();
 	private final Map<String,Double> utilitiesByName = new LinkedHashMap<>();
 

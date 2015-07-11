@@ -1,6 +1,7 @@
 package mymdp.core;
 
 import static com.google.common.base.Preconditions.checkState;
+import static java.util.Objects.hash;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -19,7 +20,7 @@ public class PolicyImpl
 	public PolicyImpl(final MDP mdp) {
 		for ( final State state : mdp.getStates() ) {
 			final Set<Action> actionsForState = mdp.getActionsFor(state);
-			checkState(!actionsForState.isEmpty());
+			checkState(!actionsForState.isEmpty(), "No actions found for state %s", state);
 			final String actionName = Collections.min(Collections2.transform(actionsForState, Action::name));
 			final Action action = Maps.uniqueIndex(actionsForState, Action::name).get(actionName);
 			policies.put(state.name(), action);
@@ -29,7 +30,7 @@ public class PolicyImpl
 	public PolicyImpl(final MDPIP mdpip) {
 		for ( final State state : mdpip.getStates() ) {
 			final Set<Action> actionsForState = mdpip.getActionsFor(state);
-			checkState(!actionsForState.isEmpty());
+			checkState(!actionsForState.isEmpty(), "No actions found for state %s", state);
 			final String actionName = Collections.min(Collections2.transform(actionsForState, Action::name));
 			final Action action = Maps.uniqueIndex(actionsForState, Action::name).get(actionName);
 			policies.put(state.name(), action);
@@ -53,6 +54,11 @@ public class PolicyImpl
 	@Override
 	public Action getActionFor(final String stateName) {
 		return policies.get(stateName);
+	}
+
+	@Override
+	public int hashCode() {
+		return hash(policies);
 	}
 
 	@Override

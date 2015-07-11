@@ -28,7 +28,7 @@ public class ModifiedPolicyEvaluatorIP
 		return evaluatedFunction;
 	}
 
-	private UtilityFunction singleEvaluation(final Policy policy, final UtilityFunction function, final MDPIP mdpip) {
+	private static UtilityFunction singleEvaluation(final Policy policy, final UtilityFunction function, final MDPIP mdpip) {
 		final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(function);
 		for ( final State s : mdpip.getStates() ) {
 			final Action a = policy.getActionFor(s);

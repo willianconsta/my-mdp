@@ -23,8 +23,7 @@ public class ErrorBoundModifiedPolicyEvaluator
 	}
 
 	@Override
-	public UtilityFunction policyEvaluation(final Policy policy,
-			final UtilityFunction function, final MDP mdp) {
+	public UtilityFunction policyEvaluation(final Policy policy, final UtilityFunction function, final MDP mdp) {
 		final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(function);
 		double error = Double.POSITIVE_INFINITY;
 		while ( error > maxError ) {
@@ -33,7 +32,7 @@ public class ErrorBoundModifiedPolicyEvaluator
 		return evaluatedFunction;
 	}
 
-	private double singleEvaluation(final Policy policy, final UtilityFunction updatedFunction, final MDP mdp) {
+	private static double singleEvaluation(final Policy policy, final UtilityFunction updatedFunction, final MDP mdp) {
 		final UtilityFunction referenceFunction = new UtilityFunctionImpl(updatedFunction);
 		double error = Double.NEGATIVE_INFINITY;
 		for ( final State s : mdp.getStates() ) {

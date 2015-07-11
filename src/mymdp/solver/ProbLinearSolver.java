@@ -10,10 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import mymdp.core.State;
-import mymdp.core.UtilityFunction;
-import mymdp.util.Pair;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +17,10 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+
+import mymdp.core.State;
+import mymdp.core.UtilityFunction;
+import mymdp.util.Pair;
 
 public class ProbLinearSolver
 {
@@ -168,7 +168,7 @@ public class ProbLinearSolver
 			try {
 				final double prob = Double.parseDouble(pair.getValue());
 				result.put(pair.getKey(), prob);
-			} catch ( final NumberFormatException e ) {
+			} catch ( @SuppressWarnings("unused") final NumberFormatException e ) {
 				// at least one probability is an equation, clear the result map
 				// to call the solver
 				result.clear();
@@ -204,8 +204,7 @@ public class ProbLinearSolver
 			obj.add(entry.getValue() + "*" + value);
 		}
 
-		solveCaller.saveAMPLFile(obj, ImmutableSet.copyOf(variables), ImmutableSet.<String> of(), ImmutableList.copyOf(restrictions),
-				type);
+		solveCaller.saveAMPLFile(obj, ImmutableSet.copyOf(variables), ImmutableSet.of(), ImmutableList.copyOf(restrictions), type);
 		try {
 			solveCaller.callSolver();
 		} catch ( final RuntimeException e ) {

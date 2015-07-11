@@ -43,7 +43,7 @@ public class EvaluatedProblemGenerator
 		}
 	}
 
-	private void writeGoalState(final FileWriter fileWriter, final Set<State> goalStates) throws IOException {
+	private static void writeGoalState(final FileWriter fileWriter, final Set<State> goalStates) throws IOException {
 		fileWriter.write("goalstate\n");
 		for ( final State s : goalStates ) {
 			fileWriter.write("\t" + s.name() + "\n");
@@ -51,7 +51,7 @@ public class EvaluatedProblemGenerator
 		fileWriter.write("endgoalstate\n\n");
 	}
 
-	private void writeInitialState(final FileWriter fileWriter, final State initialState) throws IOException {
+	private static void writeInitialState(final FileWriter fileWriter, final State initialState) throws IOException {
 		fileWriter.write("initialstate\n");
 		fileWriter.write("\t" + initialState.name() + "\n");
 		fileWriter.write("endinitialstate\n\n");

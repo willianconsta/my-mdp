@@ -1,5 +1,6 @@
 package mymdp.util;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Objects.equal;
 import static java.util.Objects.hash;
 
@@ -14,7 +15,7 @@ public final class Pair<F, S>
 	}
 
 	public static <F, S> Pair<F,S> of(final F first, final S second) {
-		return new Pair<F,S>(first, second);
+		return new Pair<>(first, second);
 	}
 
 	public F getFirst() {
@@ -41,7 +42,9 @@ public final class Pair<F, S>
 
 	@Override
 	public String toString() {
-		return "Pair:(" + String.valueOf(getFirst()) + "," + String.valueOf(getSecond())
-				+ ")";
+		return toStringHelper(this)
+				.add("first", first)
+				.add("second", second)
+				.toString();
 	}
 }

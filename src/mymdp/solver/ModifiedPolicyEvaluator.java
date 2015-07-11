@@ -21,8 +21,7 @@ public class ModifiedPolicyEvaluator
 	}
 
 	@Override
-	public UtilityFunction policyEvaluation(final Policy policy,
-			final UtilityFunction function, final MDP mdp) {
+	public UtilityFunction policyEvaluation(final Policy policy, final UtilityFunction function, final MDP mdp) {
 		UtilityFunction evaluatedFunction = function;
 		for ( int i = 0; i < timesToExecute; i++ ) {
 			evaluatedFunction = singleEvaluation(policy, evaluatedFunction, mdp);
@@ -30,7 +29,7 @@ public class ModifiedPolicyEvaluator
 		return evaluatedFunction;
 	}
 
-	private UtilityFunction singleEvaluation(final Policy policy, final UtilityFunction function, final MDP mdp) {
+	private static UtilityFunction singleEvaluation(final Policy policy, final UtilityFunction function, final MDP mdp) {
 		final UtilityFunction evaluatedFunction = new UtilityFunctionImpl(function);
 		for ( final State s : mdp.getStates() ) {
 			final double utility = calculateUtility(mdp, s, policy, evaluatedFunction);

@@ -2,13 +2,14 @@ package mymdp.solver;
 
 import static java.lang.Math.abs;
 import static mymdp.solver.BellmanUtils.calculateUtility;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import mymdp.core.MDP;
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class ValueIterationImpl
 	implements
@@ -30,12 +31,12 @@ public class ValueIterationImpl
 		return actualFunction;
 	}
 
-	private double iteration(final MDP mdp, final UtilityFunction oldFunction, final UtilityFunction actualFunction) {
+	private static double iteration(final MDP mdp, final UtilityFunction oldFunction, final UtilityFunction actualFunction) {
 		double maxVariation = 0;
 		for ( final State state : mdp.getStates() ) {
 			final double oldUtility = oldFunction.getUtility(state);
 			final double actualUtility = calculateUtility(mdp, state, oldFunction);
-			log.trace("Value of state " + state + " = " + actualUtility);
+			log.trace("Value of state {} = {}", state, actualUtility);
 			actualFunction.updateUtility(state, actualUtility);
 
 			maxVariation = Math.max(maxVariation, abs(actualUtility - oldUtility));

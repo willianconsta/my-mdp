@@ -1,5 +1,6 @@
 package mymdp.util;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Objects.equal;
 import static java.util.Objects.hash;
 
@@ -37,7 +38,7 @@ public final class Trio<F, S, T>
 	 */
 	public static <F, S, T> Trio<F,S,T> of(final F first,
 			final S second, final T third) {
-		return new Trio<F,S,T>(first, second, third);
+		return new Trio<>(first, second, third);
 	}
 
 	@Override
@@ -51,13 +52,17 @@ public final class Trio<F, S, T>
 			return false;
 		}
 		@SuppressWarnings("unchecked") final Trio<F,S,T> other = (Trio<F,S,T>) obj;
-		return equal(first, other.first) && equal(second, other.second)
+		return equal(first, other.first)
+				&& equal(second, other.second)
 				&& equal(third, other.third);
 	}
 
 	@Override
 	public String toString() {
-		return "Trio:(" + String.valueOf(first) + "," + String.valueOf(second)
-				+ "," + String.valueOf(third) + ")";
+		return toStringHelper(this)
+				.add("first", first)
+				.add("second", second)
+				.add("third", third)
+				.toString();
 	}
 }

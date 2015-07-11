@@ -56,7 +56,7 @@ public class TestMDPIPSysAdminBiRingManual1Node
 		final static Set<Action> allActions = ImmutableSet.<Action> copyOf(Actions.values());
 	}
 
-	private MDPIP createProblem() {
+	private static MDPIP createProblem() {
 		return new MDPIP() {
 			@Override
 			public Set<State> getStates() {

@@ -2,13 +2,14 @@ package mymdp.solver;
 
 import static java.lang.Math.abs;
 import static mymdp.solver.BellmanUtils.calculateUtilityIP;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import mymdp.core.MDPIP;
 import mymdp.core.State;
 import mymdp.core.UtilityFunction;
 import mymdp.core.UtilityFunctionImpl;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class ValueIterationIPImpl
 	implements
@@ -30,7 +31,7 @@ public class ValueIterationIPImpl
 		return actualFunction;
 	}
 
-	private double iteration(final MDPIP mdpip, final UtilityFunction oldFunction, final UtilityFunction actualFunction) {
+	private static double iteration(final MDPIP mdpip, final UtilityFunction oldFunction, final UtilityFunction actualFunction) {
 		double maxVariation = 0;
 		for ( final State state : mdpip.getStates() ) {
 			final double oldUtility = oldFunction.getUtility(state);
