@@ -10,15 +10,15 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import mymdp.core.Action;
-import mymdp.core.MDP;
-import mymdp.core.Policy;
-import mymdp.core.State;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Range;
+
+import mymdp.core.Action;
+import mymdp.core.MDP;
+import mymdp.core.Policy;
+import mymdp.core.State;
 
 final class ImpreciseProblemGenerator
 {
@@ -50,17 +50,17 @@ final class ImpreciseProblemGenerator
 		}
 	}
 
-	private void writeGoalState(final FileWriter fileWriter, final Set<State> goalStates) throws IOException {
+	private static void writeGoalState(final FileWriter fileWriter, final Set<State> goalStates) throws IOException {
 		fileWriter.write("goalstate\n");
 		for ( final State s : goalStates ) {
-			fileWriter.write("\t" + s.toString() + "\n");
+			fileWriter.write("\t" + s.name() + "\n");
 		}
 		fileWriter.write("endgoalstate\n\n");
 	}
 
-	private void writeInitialState(final FileWriter fileWriter, final State initialState) throws IOException {
+	private static void writeInitialState(final FileWriter fileWriter, final State initialState) throws IOException {
 		fileWriter.write("initialstate\n");
-		fileWriter.write("\t" + initialState.toString() + "\n");
+		fileWriter.write("\t" + initialState.name() + "\n");
 		fileWriter.write("endinitialstate\n\n");
 	}
 
@@ -71,7 +71,7 @@ final class ImpreciseProblemGenerator
 	private void writeRewards(final FileWriter fileWriter) throws IOException {
 		fileWriter.write("reward\n");
 		for ( final State s : mdp.getStates() ) {
-			fileWriter.write("\t" + s.toString() + " " + String.format(Locale.US, "%.10f", mdp.getRewardFor(s)) + "\n");
+			fileWriter.write("\t" + s.name() + " " + String.format(Locale.US, "%.10f", mdp.getRewardFor(s)) + "\n");
 		}
 		fileWriter.write("endreward\n\n");
 	}
@@ -88,20 +88,20 @@ final class ImpreciseProblemGenerator
 		}
 
 		for ( final Action a : possibleActions ) {
-			fileWriter.write("\t" + a.toString() + " " + String.format(Locale.US, "%.10f", 0.0) + "\n");
+			fileWriter.write("\t" + a.name() + " " + String.format(Locale.US, "%.10f", 0.0) + "\n");
 		}
 		fileWriter.write("endcost\n\n");
 	}
 
 	private void writeActions(final FileWriter fileWriter) throws IOException {
 		for ( final Action a : mdp.getAllActions() ) {
-			fileWriter.write("action " + a.toString() + "\n");
+			fileWriter.write("action " + a.name() + "\n");
 			for ( final State s : mdp.getStates() ) {
 				if ( a.isApplicableTo(s) && ( result == null || result.getActionFor(s).equals(a) ) ) {
 					for ( final Entry<State,Double> entry : mdp.getPossibleStatesAndProbability(s, a) ) {
 						checkState(Range.closed(0.0, 1.0).contains(entry.getValue()), "Action " + a + " in state " + s
 								+ " has probability " + entry.getValue() + " to go to state " + entry.getKey());
-						fileWriter.write("\t" + s.toString() + " " + entry.getKey() + " "
+						fileWriter.write("\t" + s.name() + " " + entry.getKey() + " "
 								+ String.format(Locale.US, "%.10f", entry.getValue()) + "\n");
 					}
 				}
@@ -114,7 +114,7 @@ final class ImpreciseProblemGenerator
 		fileWriter.write("states\n\t");
 		for ( final Iterator<State> it = mdp.getStates().iterator(); it.hasNext(); ) {
 			final State s = it.next();
-			fileWriter.write(s.toString());
+			fileWriter.write(s.name());
 			if ( it.hasNext() ) {
 				fileWriter.write(",");
 			}
