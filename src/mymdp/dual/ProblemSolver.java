@@ -2,7 +2,7 @@ package mymdp.dual;
 
 import mymdp.core.SolutionReport;
 
-public interface ProblemSolver
+public interface ProblemSolver<M, C>
 {
-	SolutionReport solve();
+	SolutionReport solve(Problem<M,C> problem);
 }
