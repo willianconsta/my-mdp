@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +14,11 @@ import java.util.Map.Entry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import mymdp.core.State;
@@ -50,6 +53,45 @@ public class ProbLinearSolver
 
 	public static void initializeCount() {
 		numberOfSolverCalls = 0;
+	}
+
+	public static enum Counter {
+		INSTANCE;
+
+		private final Map<String,Integer> labelToSolverCalls = new HashMap<>();
+		private final Map<String,Integer> currentCounting = new HashMap<>();
+
+		private Counter() {
+		}
+
+		public void startCounting(final String label) {
+			currentCounting.put(label, ProbLinearSolver.getNumberOfSolverCalls());
+		}
+
+		public void stopCounting(final String label) {
+			final int current = ProbLinearSolver.getNumberOfSolverCalls();
+			final Integer start = currentCounting.remove(label);
+			labelToSolverCalls.merge(label, current - start, Integer::sum);
+		}
+
+		public String getSummaryAndReset() {
+			final String summary = toString();
+			for ( final String label : currentCounting.keySet() ) {
+				stopCounting(label);
+			}
+			labelToSolverCalls.clear();
+			return summary;
+		}
+
+		@Override
+		public String toString() {
+			return Joiner.on('\n').join(Iterables.transform(labelToSolverCalls.entrySet(),
+					entry -> "Number of solver calls for label '" + entry.getKey() + "' = " + entry.getValue()));
+		}
+	}
+
+	public static Counter getCounter() {
+		return Counter.INSTANCE;
 	}
 
 	public static int getNumberOfSolverCalls() {

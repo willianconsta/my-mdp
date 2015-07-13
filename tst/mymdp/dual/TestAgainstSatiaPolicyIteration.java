@@ -17,6 +17,7 @@ import mymdp.core.MDPIP;
 import mymdp.core.Policy;
 import mymdp.core.SolutionReport;
 import mymdp.core.UtilityFunction;
+import mymdp.problem.CachedImprecisionGenerator;
 import mymdp.problem.ImprecisionGenerator;
 import mymdp.problem.ImprecisionGeneratorImpl;
 import mymdp.problem.MDPImpreciseFileProblemReader;
@@ -32,7 +33,7 @@ public class TestAgainstSatiaPolicyIteration
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][]{{"navigation07.net", MAX_RELAXATION},
+		return Arrays.asList(new Object[][]{{"navigation01.net", MAX_RELAXATION},
 				{"navigation02.net", MAX_RELAXATION}, {"navigation03.net", MAX_RELAXATION},
 				{"navigation04.net", MAX_RELAXATION}, {"navigation05.net", MAX_RELAXATION},
 				{"navigation06.net", MAX_RELAXATION}, {"navigation07.net", MAX_RELAXATION},
@@ -40,19 +41,11 @@ public class TestAgainstSatiaPolicyIteration
 	}
 
 	private final String filename;
-	private final MDPIP mdpip;
-	private final ImprecisionGeneratorImpl initialProblemImprecisionGenerator;
+	private final double maxRelaxation;
 
 	public TestAgainstSatiaPolicyIteration(final String filename, final double maxRelaxation) {
 		this.filename = filename;
-		// Reads the MDP's definition from file and turns it to an imprecise
-		// problem
-		log.info("Current Problem: {}", filename);
-		initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
-		mdpip = MDPImpreciseFileProblemReader.readFromFile("precise_problems\\" + filename, initialProblemImprecisionGenerator);
-		// log.info("Initial problem is {}", mdpip);
-		log.info("Problem read.");
-
+		this.maxRelaxation = maxRelaxation;
 	}
 
 	private class SingleTask
@@ -61,6 +54,14 @@ public class TestAgainstSatiaPolicyIteration
 	{
 		@Override
 		public Pair<UtilityFunction,Policy> call() {
+			// Reads the MDP's definition from file and turns it to an imprecise
+			// problem
+			log.info("Current Problem: {}", filename);
+			final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
+			final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile("precise_problems\\" + filename, initialProblemImprecisionGenerator);
+			// log.info("Initial problem is {}", mdpip);
+			log.info("Problem read.");
+
 			final SolutionReport report = new PolicyIterationSatiaGame(MAX_ERROR).solve(new Problem<MDPIP,Void>() {
 				@Override
 				public MDPIP getModel() {
@@ -87,6 +88,15 @@ public class TestAgainstSatiaPolicyIteration
 	{
 		@Override
 		public Pair<UtilityFunction,Policy> call() {
+			// Reads the MDP's definition from file and turns it to an imprecise
+			// problem
+			log.info("Current Problem: {}", filename);
+			final ImprecisionGenerator initialProblemImprecisionGenerator = new CachedImprecisionGenerator(
+					new ImprecisionGeneratorImpl(maxRelaxation));
+			final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile("precise_problems\\" + filename, initialProblemImprecisionGenerator);
+			// log.info("Initial problem is {}", mdpip);
+			log.info("Problem read.");
+
 			final SolutionReport report = new DualGame(MAX_ERROR).solve(new Problem<MDPIP,ImprecisionGenerator>() {
 				@Override
 				public MDPIP getModel() {

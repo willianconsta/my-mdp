@@ -15,6 +15,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 import mymdp.core.MDPIP;
 import mymdp.core.SolutionReport;
+import mymdp.problem.CachedImprecisionGenerator;
 import mymdp.problem.ImprecisionGenerator;
 import mymdp.problem.ImprecisionGeneratorImpl;
 import mymdp.problem.MDPImpreciseFileProblemReader;
@@ -38,14 +39,14 @@ public class TestAgainstAdaptedPI
 
 	private final String filename;
 	private final MDPIP mdpip;
-	private final ImprecisionGeneratorImpl initialProblemImprecisionGenerator;
+	private final ImprecisionGenerator initialProblemImprecisionGenerator;
 
 	public TestAgainstAdaptedPI(final String filename, final double maxRelaxation) {
 		this.filename = filename;
 		// Reads the MDP's definition from file and turns it to an imprecise
 		// problem
 		log.info("Current Problem: {}", filename);
-		initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
+		initialProblemImprecisionGenerator = new CachedImprecisionGenerator(new ImprecisionGeneratorImpl(maxRelaxation));
 		mdpip = MDPImpreciseFileProblemReader.readFromFile("precise_problems\\" + filename, initialProblemImprecisionGenerator);
 		// log.info("Initial problem is {}", mdpip);
 		log.info("Problem read.");

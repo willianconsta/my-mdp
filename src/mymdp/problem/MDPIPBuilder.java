@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Range;
+import com.google.common.math.DoubleMath;
 
 import mymdp.core.Action;
 import mymdp.core.MDP;
@@ -78,7 +79,8 @@ public class MDPIPBuilder
 	 * @param transitionDefs
 	 *            0th index current state, 1st index next state, 2nd and 3rd indexes are double values related to the probability.
 	 *            <ul>
-	 *            <li>If 2nd index is equal to 3rd index then the value must be a double and is the value of the probability of transition</li>
+	 *            <li>If 2nd index is equal to 3rd index then the value must be a double and is the value of the probability of transition
+	 *            </li>
 	 *            <li>If 2nd index is not equal to "0.0" then a restriction of var >= (value of 2nd index) is created.</li>
 	 *            <li>If 3rd index is not equal to "1.0" then a restriction of var <= (value of 3rd index) is created.</li>
 	 *            <li>All variables related to a current state must sum one.</li>
@@ -112,10 +114,8 @@ public class MDPIPBuilder
 			final String var = "p" + i++;
 			map.put(state2, checkNotNull(var));
 
-			lowestSum.put(transitionDef[0], ( lowestSum.containsKey(transitionDef[0]) ? lowestSum.get(transitionDef[0]) : 0 )
-					+ Double.parseDouble(transitionDef[2]));
-			greatestSum.put(transitionDef[0], ( greatestSum.containsKey(transitionDef[0]) ? greatestSum.get(transitionDef[0]) : 0 )
-					+ Double.parseDouble(transitionDef[3]));
+			lowestSum.merge(transitionDef[0], Double.valueOf(transitionDef[2]), (oldValue, newValue) -> oldValue + newValue);
+			greatestSum.merge(transitionDef[0], Double.valueOf(transitionDef[3]), (oldValue, newValue) -> oldValue + newValue);
 			if ( transitionDef[2].equals(transitionDef[3]) ) {
 				map.put(state2, transitionDef[3]);
 				continue;
@@ -131,8 +131,10 @@ public class MDPIPBuilder
 			vars.put(Trio.of(state1, action, state2), var);
 		}
 
-		checkState(Collections.max(lowestSum.values()) <= 1, "Expected leq than 1, got " + lowestSum);
-		checkState(Collections.min(greatestSum.values()) >= 1, "Expected geq than 1, got " + greatestSum);
+		checkState(DoubleMath.fuzzyCompare(Collections.max(lowestSum.values()), 1.0, 0.00001) <= 0,
+				"Expected leq than 1, got %s", lowestSum);
+		checkState(DoubleMath.fuzzyCompare(Collections.min(greatestSum.values()), 1.0, 0.00001) >= 0,
+				"Expected geq than 1, got %s", greatestSum);
 
 		// restrictions of sum one
 		for ( final Entry<State,String> sumOne : sumOnePerState.entrySet() ) {

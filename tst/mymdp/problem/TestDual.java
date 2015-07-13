@@ -31,7 +31,8 @@ public class TestDual
 			// Reads the MDP's definition from file and turns it to an imprecise
 			// problem
 			log.info("Current Problem: {}", FILENAME);
-			final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(MAX_RELAXATION);
+			final ImprecisionGenerator initialProblemImprecisionGenerator = new CachedImprecisionGenerator(
+					new ImprecisionGeneratorImpl(MAX_RELAXATION));
 			final MDPIP mdpip = MDPImpreciseFileProblemReader.readFromFile("precise_problems\\" + FILENAME, initialProblemImprecisionGenerator);
 			// log.info("Initial problem is {}", mdpip);
 			log.info("Problem read.");

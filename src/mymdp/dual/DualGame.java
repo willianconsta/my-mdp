@@ -1,7 +1,5 @@
 package mymdp.dual;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
@@ -23,154 +21,116 @@ import mymdp.core.UtilityFunctionWithProbImpl;
 import mymdp.dual.evaluator.ProbabilityEvaluator;
 import mymdp.dual.evaluator.ProbabilityEvaluatorFactory;
 import mymdp.problem.ImprecisionGenerator;
-import mymdp.problem.ImprecisionGeneratorByRanges;
-import mymdp.problem.ImprecisionGeneratorImpl;
-import mymdp.problem.MDPImpreciseFileProblemReader;
 import mymdp.solver.ModifiedPolicyEvaluator;
 import mymdp.solver.PolicyIterationImpl;
 import mymdp.solver.ProbLinearSolver;
+import mymdp.util.Pair;
 import mymdp.util.UtilityFunctionDistanceEvaluator;
 
 public class DualGame
 	implements
-		ProblemSolver
+		ProblemSolver<MDPIP,ImprecisionGenerator>
 {
 	private static final Logger log = LogManager.getLogger(DualGame.class);
 
-	private static final String PROBLEMS_DIR = ".\\precise_problems";
-	private static final String SOLUTIONS_DIR = ".\\solutions";
-
-	private final String filename;
-	private final double maxRelaxation;
-	private final double stepRelaxation;
 	private final double maxError;
 
-	public DualGame(final String filename, final double maxRelaxation) {
-		this(filename, maxRelaxation, maxRelaxation, 0.001);
-	}
+	private final Stopwatch watchInitialGuess = Stopwatch.createUnstarted();
+	private final Stopwatch watchMDP = Stopwatch.createUnstarted();
+	private final Stopwatch watchMDPIP = Stopwatch.createUnstarted();
+	private final Stopwatch watchAll = Stopwatch.createUnstarted();
 
-	public DualGame(final String filename, final double maxRelaxation, final double stepRelaxation,
-			final double maxError) {
-		this.filename = filename;
-		this.maxRelaxation = stepRelaxation;
-		this.stepRelaxation = stepRelaxation;
+	public DualGame(final double maxError) {
 		this.maxError = maxError;
 	}
 
 	@Override
-	public SolutionReport solve() {
+	public SolutionReport solve(final Problem<MDPIP,ImprecisionGenerator> problem) {
+		watchInitialGuess.reset();
+		watchMDP.reset();
+		watchMDPIP.reset();
+		watchAll.reset().start();
+
 		ProbLinearSolver.setMinimizing();
 		ProbLinearSolver.initializeCount();
-		final ModifiedPolicyEvaluator policyEvaluator = new ModifiedPolicyEvaluator(400);
 
-		// Reads the MDP's definition from file and turns it to an imprecise
-		// problem
-		log.info("Current Problem: " + filename);
-		final ImprecisionGeneratorImpl initialProblemImprecisionGenerator = new ImprecisionGeneratorImpl(maxRelaxation);
-		final MDPIP initialMdpip = MDPImpreciseFileProblemReader.readFromFile(PROBLEMS_DIR + "\\" + filename,
-				initialProblemImprecisionGenerator);
+		final MDPIP initialMdpip = problem.getModel();
 
-		final ImprecisionGenerator imprecisionGenerator = new ImprecisionGeneratorByRanges(
-				initialProblemImprecisionGenerator, stepRelaxation);
-		final ProbabilityEvaluator probabilityEvaluator = ProbabilityEvaluatorFactory
-				.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\initial_" + filename + ".txt");
-		// log.info("Initial problem is " + initialMdpip.toString());
-		ProbLinearSolver.initializeCount();
-		final Stopwatch watchInitialGuess = Stopwatch.createStarted();
-		MDP mdp = probabilityEvaluator.evaluate(initialMdpip);
-		watchInitialGuess.stop();
-		final int numberOfSolverCallsInInitialGuessing = ProbLinearSolver.getNumberOfSolverCalls();
-
-		int numberOfSolverCallsInImprovement = 0;
-		int numberOfSolverCallsInEvaluation = 0;
+		MDP mdp = guessFirstProbability(initialMdpip);
 
 		int i = 1;
-		ProbLinearSolver.initializeCount();
-		final Stopwatch watchMDP = Stopwatch.createUnstarted();
-		final Stopwatch watchMDPIP = Stopwatch.createUnstarted();
-		final Stopwatch watchAll = Stopwatch.createStarted();
 
-		Policy result = new PolicyImpl(mdp);
-		UtilityFunction result1;
-		UtilityFunctionWithProbImpl result2 = new UtilityFunctionWithProbImpl(mdp.getStates(), -10.0);
+		Policy currentPolicy = new PolicyImpl(mdp);
+		UtilityFunction currentValue;
+		UtilityFunctionWithProbImpl evaluatedValue = new UtilityFunctionWithProbImpl(mdp.getStates(), -10.0);
 		while ( true ) {
-			log.debug("Iteration " + i);
-			{
-				// log.debug("Starting MDP");
-				watchMDP.start();
-				final Stopwatch watch1 = Stopwatch.createStarted();
-				final int numSolverCalls = ProbLinearSolver.getNumberOfSolverCalls();
-				result = new PolicyIterationImpl(policyEvaluator).solve(mdp, result, result2);
-				watch1.stop();
-				watchMDP.stop();
-				// log.info("End of MDP: " +
-				// watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
-				result1 = policyEvaluator.policyEvaluation(result, new UtilityFunctionImpl(mdp.getStates()), mdp);
-				// checkState(result1.compareTo(result2) >= 0);
-				// log.info(result);
-				numberOfSolverCallsInImprovement += ProbLinearSolver.getNumberOfSolverCalls() - numSolverCalls;
-				log.info("Values after improve: " + result1);
-			}
+			log.debug("Iteration {}", i);
 
-			final ImpreciseProblemGenerator generator = new ImpreciseProblemGenerator(result, mdp);
-			generator.writeToFile(SOLUTIONS_DIR + "\\problem_for_evaluation_" + i + ".txt",
-					mdp.getStates().iterator().next(), mdp.getStates());
-			final MDPIP mdpip = MDPImpreciseFileProblemReader
-					.readFromFile(SOLUTIONS_DIR + "\\problem_for_evaluation_" + i + ".txt", imprecisionGenerator);
+			final Pair<Policy,UtilityFunction> improvements = improvePolicy(mdp, currentPolicy, evaluatedValue);
+			currentPolicy = improvements.getFirst();
+			currentValue = improvements.getSecond();
 
-			{
-				// log.debug("Starting MDPIP");
-				watchMDPIP.start();
-				final Stopwatch watch1 = Stopwatch.createStarted();
-				final int numSolverCalls = ProbLinearSolver.getNumberOfSolverCalls();
-				result2 = evaluate(result1, mdpip, result);
-				watch1.stop();
-				watchMDPIP.stop();
-				// log.info("End of MDPIP: " +
-				// watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
-				// log.info("MDPIP: " + result2);
-				numberOfSolverCallsInEvaluation += ProbLinearSolver.getNumberOfSolverCalls() - numSolverCalls;
-				log.info("Values after evaluation: " + result2);
-			}
+			final MDPIP mdpip = new DelegateMDPIP(mdp, currentPolicy, problem.getComplement());
+			log.info("MDPIP is {}", mdpip);
 
-			final double actualError = UtilityFunctionDistanceEvaluator.distanceBetween(result1, result2);
-			log.debug("Error between two MDPs = " + actualError);
-			if ( actualError < 0.01 ) {
-				log.info("Values: " + result2);
+			evaluatedValue = evaluate(currentValue, mdpip, currentPolicy);
+			log.info("Values after evaluation: {}", evaluatedValue);
+
+			final double actualError = UtilityFunctionDistanceEvaluator.distanceBetween(currentValue, evaluatedValue);
+			log.debug("Error between two MDPs = {}", actualError);
+			if ( actualError < maxError ) {
+				log.info("Values: {}", evaluatedValue);
 				watchAll.stop();
 				break;
 			}
 
-			mdp = new DelegateMDP(initialMdpip);
-			( (DelegateMDP) mdp ).setFunction(result2);
+			mdp = completeNaturesPolicy(initialMdpip, evaluatedValue);
+			log.info("MDP is {}", mdp);
 			i++;
 		}
-		log.info("Summary:");
-		log.info("Number of iterations = " + i);
-		log.info("Number of solver calls in initial guess = " + numberOfSolverCallsInInitialGuessing);
-		log.info("Number of solver calls in solving = " + ProbLinearSolver.getNumberOfSolverCalls());
-		log.info("Number of solver calls in evaluation = " + numberOfSolverCallsInEvaluation);
-		log.info("Number of solver calls in improvement = " + numberOfSolverCallsInImprovement);
+		printSummary(i);
+		return new SolutionReport(currentPolicy, evaluatedValue);
+	}
 
-		log.info("Time in Initial Guess = " + watchInitialGuess.elapsed(TimeUnit.MILLISECONDS) + "ms.");
-		log.info("Time in MDP = " + watchMDP.elapsed(TimeUnit.MILLISECONDS) + "ms.");
-		log.info("Time in MDPIP = " + watchMDPIP.elapsed(TimeUnit.MILLISECONDS) + "ms.");
-		log.info("Time Solving = " + watchAll.elapsed(TimeUnit.MILLISECONDS) + "ms.");
-		assertTrue(true);
+	private MDP guessFirstProbability(final MDPIP initialMdpip) {
+		ProbLinearSolver.getCounter().startCounting("InitialGuess");
+		watchInitialGuess.start();
+		final ProbabilityEvaluator probabilityEvaluator = ProbabilityEvaluatorFactory.getAnyFeasibleInstance();
+		final MDP mdp = probabilityEvaluator.evaluate(initialMdpip, new UtilityFunctionImpl(initialMdpip.getStates()));
+		watchInitialGuess.stop();
+		ProbLinearSolver.getCounter().stopCounting("InitialGuess");
+		return mdp;
+	}
 
-		log.info("End of problem " + filename + "\n\n\n\n\n");
-		return new SolutionReport(result, result2);
+	private static Pair<Policy,UtilityFunction> improvePolicy(final MDP mdp, final Policy currentPolicy, final UtilityFunction currentValue) {
+		final Stopwatch watchMDP = Stopwatch.createUnstarted();
+		final ModifiedPolicyEvaluator policyEvaluator = new ModifiedPolicyEvaluator(400);
+		// log.debug("Starting MDP");
+		watchMDP.start();
+		ProbLinearSolver.getCounter().startCounting("PolicyImprovement(MDP)");
+		final Policy improvedPolicy = new PolicyIterationImpl(policyEvaluator).solve(mdp, currentPolicy, currentValue);
+		watchMDP.stop();
+		// log.info("End of MDP: " +
+		// watch1.elapsed(TimeUnit.MILLISECONDS) + "ms");
+		final UtilityFunction improvedValue = policyEvaluator.policyEvaluation(improvedPolicy, new UtilityFunctionImpl(mdp.getStates()), mdp);
+		// checkState(improvedValue.compareTo(currentValue) >= 0, "Value function should not get worse.");
+		// log.info(result);
+		ProbLinearSolver.getCounter().stopCounting("PolicyImprovement(MDP)");
+		log.info("Values after improve: {}", improvedValue);
+		return Pair.of(improvedPolicy, improvedValue);
 	}
 
 	private UtilityFunctionWithProbImpl evaluate(final UtilityFunction baseValue, final MDPIP mdpip,
 			final Policy policy) {
+		ProbLinearSolver.getCounter().startCounting("PolicyEvaluation(MDPIP)");
+		watchMDPIP.start();
+
 		// evaluation
 		log.debug("Evaluating policy...");
 		UtilityFunction value = new UtilityFunctionWithProbImpl(baseValue);
 		ProbLinearSolver.setFeasibilityOnly();
-		final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory
-				.getAnyFeasibleInstance(SOLUTIONS_DIR + "\\evaluating_dual" + ".txt");
-		value = new ModifiedPolicyEvaluator(1000).policyEvaluation(policy, value, evaluator.evaluate(mdpip));
+		final ProbabilityEvaluator evaluator = ProbabilityEvaluatorFactory.getAnyFeasibleInstance();
+		value = new ModifiedPolicyEvaluator(1000).policyEvaluation(policy, value, evaluator.evaluate(mdpip, value));
 		UtilityFunction newValue = new UtilityFunctionWithProbImpl(value);
 		ProbLinearSolver.setMinimizing();
 		do {
@@ -180,14 +140,41 @@ public class DualGame
 				newValue.updateUtility(s, calculate(mdpip, s, policy.getActionFor(s), value));
 			}
 		} while ( UtilityFunctionDistanceEvaluator.distanceBetween(value, newValue) > maxError );
-		return new UtilityFunctionWithProbImpl(value);
+		final UtilityFunctionWithProbImpl utilityFunction = new UtilityFunctionWithProbImpl(value);
+		watchMDPIP.stop();
+
+		ProbLinearSolver.getCounter().stopCounting("PolicyEvaluation(MDPIP)");
+		return utilityFunction;
 	}
 
-	private double calculate(final MDPIP mdpip, final State s, final Action a, final UtilityFunction value) {
+	private static double calculate(final MDPIP mdpip, final State s, final Action a, final UtilityFunction value) {
 		double utilityOfAction = 0;
 		for ( final Entry<State,Double> nextStateAndProb : mdpip.getPossibleStatesAndProbability(s, a, value) ) {
 			utilityOfAction += nextStateAndProb.getValue().doubleValue() * value.getUtility(nextStateAndProb.getKey());
 		}
 		return mdpip.getRewardFor(s) + mdpip.getDiscountFactor() * utilityOfAction;
+	}
+
+	private MDP completeNaturesPolicy(final MDPIP initialMdpip, final UtilityFunctionWithProbImpl evaluatedValue) {
+		ProbLinearSolver.getCounter().startCounting("Nature'sPolicyCompletion(MDPIP)");
+		watchMDPIP.start();
+		final MDP mdp = new DelegateMDP(initialMdpip, evaluatedValue);
+		watchMDPIP.stop();
+		ProbLinearSolver.getCounter().stopCounting("Nature'sPolicyCompletion(MDPIP)");
+		return mdp;
+	}
+
+	private void printSummary(final int i) {
+		log.info("Summary:");
+		log.info("Number of iterations = {}", i);
+		log.info(ProbLinearSolver.getCounter().getSummaryAndReset());
+		log.info("Number of solver calls in total = {}", ProbLinearSolver.getNumberOfSolverCalls());
+
+		log.info("Time in Initial Guess = {}ms.", watchInitialGuess.elapsed(TimeUnit.MILLISECONDS));
+		log.info("Time in MDP = {}ms.", watchMDP.elapsed(TimeUnit.MILLISECONDS));
+		log.info("Time in MDPIP = {}ms.", watchMDPIP.elapsed(TimeUnit.MILLISECONDS));
+		log.info("Time Solving = {}ms.", watchAll.elapsed(TimeUnit.MILLISECONDS));
+
+		log.info("End of problem\n\n\n\n\n");
 	}
 }

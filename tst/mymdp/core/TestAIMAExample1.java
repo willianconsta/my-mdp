@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.assertj.core.data.Offset;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -32,6 +33,7 @@ import mymdp.solver.RTDP.ConvergencyCriteria;
 import mymdp.solver.RTDPImpl;
 import mymdp.solver.ValueIterationImpl;
 
+@Ignore
 @RunWith(Parameterized.class)
 public class TestAIMAExample1
 {
